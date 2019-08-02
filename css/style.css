@@ -133,9 +133,12 @@ iframe {
 
 /*** Basics ***/
 body {
-	font-family: Verdana, Sans-Serif;
-	font-size: 13px;
-	line-height: 1.7;
+	font-family: medium-content-serif-font, Georgia, Cambria, "Times New Roman", Times, serif;
+	font-size: 19px;
+	font-style: normal;
+	font-weight: 400;
+	letter-spacing: -0.004em;
+	line-height: 1.58;
 }
 
 a,
@@ -206,19 +209,19 @@ hr {
 }
 
 h1 {
-	font-size: 17px;
+	font-size: 2em;
 	margin: 0 0 10px 0;
 }
 h2 {
-	font-size: 15px;
+	font-size: 1.8em;
 	margin: 0 0 10px 0;
 }
 h3 {
-	font-size: 14px;
+	font-size: 1.6em;
 	margin: 0 0 10px 0;
 }
 h3 {
-	font-size: 13px;
+	font-size: 1.2em;
 	margin: 0 0 10px 0;
 }
 
@@ -311,7 +314,7 @@ h3 {
 	width: 500px;
 	margin: 20px auto;
 	padding-top: 10px;
-	font-size: 0.85em;
+	font-size: 0.65em;
 	border-top: 1px solid #073642;
 }
 
@@ -361,7 +364,7 @@ article {
 }
 
 article h1 {
-	font-size: 17px;
+	font-size: 1.2em;
 	margin: 0 0 10px 0;
 }
 article h1 a {
