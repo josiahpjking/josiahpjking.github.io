@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://josiahpjking.github.io/blog/</loc>
+  </url>
+  
+  <url>
+    <loc>https://josiahpjking.github.io/about/</loc>
+  </url>
+  
+  <url>
+    <loc>https://josiahpjking.github.io/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://josiahpjking.github.io/</loc>
+  </url>
+  
+  <url>
+    <loc>https://josiahpjking.github.io/resources/</loc>
+  </url>
+  
+  <url>
+    <loc>https://josiahpjking.github.io/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://josiahpjking.github.io/categories/unsure/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://josiahpjking.github.io/blog/archives/1/01/01/hello/</loc>
+  </url>
+  
+</urlset>
