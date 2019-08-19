@@ -133,7 +133,7 @@ iframe {
 
 /*** Basics ***/
 body {
-	font-family: medium-content-serif-font, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
 	font-size: 19px;
 	font-style: normal;
 	font-weight: 400;
@@ -439,7 +439,7 @@ pre[class*='language-'] {
 	white-space: pre-wrap;
 	word-break: break-all;
 	word-wrap: break-word;
-	font-family: Menlo, Monaco, 'Courier New', monospace;
+	font-family: "Source Sans Pro", Helvetica, sans-serif;
 	font-size: 1em;
 	line-height: 1.5;
 	text-shadow: 0;
@@ -528,7 +528,7 @@ pre[class*='language-'] {
 
 [class^='icon-']:before,
 [class*=' icon-']:before {
-	font-family: 'solarthemeicons';
+	font-family: "Source Sans Pro", Helvetica, sans-serif;
 	font-style: normal;
 	font-weight: normal;
 	speak: none;
