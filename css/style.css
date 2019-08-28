@@ -134,7 +134,7 @@ iframe {
 /*** Basics ***/
 body {
   font-family: "Source Sans Pro", Helvetica, sans-serif;
-	font-size: 19px;
+	font-size: 14px;
 	font-style: normal;
 	font-weight: 400;
 	letter-spacing: -0.004em;
@@ -193,7 +193,7 @@ blockquote {
 	margin: 22px 22px;
 	padding: 0 20px;
 	border-left: 2px solid #000000;
-	font-size: 1.2em;
+	font-size: 1em;
 	font-style: italic;
 	line-height: 1.5em;
 }
@@ -209,18 +209,18 @@ hr {
 }
 
 h1 {
-	font-size: 2em;
-	margin: 0 0 10px 0;
-}
-h2 {
 	font-size: 1.8em;
 	margin: 0 0 10px 0;
 }
-h3 {
+h2 {
 	font-size: 1.6em;
 	margin: 0 0 10px 0;
 }
 h3 {
+	font-size: 1.4em;
+	margin: 0 0 10px 0;
+}
+h4 {
 	font-size: 1.2em;
 	margin: 0 0 10px 0;
 }
@@ -364,7 +364,7 @@ article {
 }
 
 article h1 {
-	font-size: 1.2em;
+	font-size: 1em;
 	margin: 0 0 10px 0;
 }
 article h1 a {
