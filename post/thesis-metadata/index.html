@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>thesis_metadata</title>
+		<title>Thesis metadata</title>
 		<meta name="viewport" content="width=device-width">
 		
 		<link rel="stylesheet" href="../../css/hybrid.css">
@@ -42,17 +42,77 @@
 			<div id="content">
 				
 	<article class="post">
-		<h1><a href="../../post/thesis-metadata/">thesis_metadata</a> (Draft)</h1>
+		<h1><a href="../../post/thesis-metadata/">Thesis metadata</a> (Draft)</h1>
 
-		<div class="post-content"><p>intro recently submitted phd i wish i had set this up earlier (i.e., when I started), but in the middle of my second year (by which point i’d written some stuff already), i thought it would be fun to track my word count. - honestly, it was more just a procrastination aid one morning</p>
-<p>having submitted recently, i figured that the numbers will likely not change any more, so here we are. obviously, there’s a big issue of quality &gt; quantity, so i would encourage current phd students not to get too fixated on the wordcount. (that said, i’m not sure if i had either quality or quantity! provided you learnt something, and you had (some) fun, then that should count as a success)</p>
-<p>anyhow, here’s the progress of my work, and below i will talk through the process</p>
-<p>plot– the first thing which strikes me is - writing is quite slow. there are big gaps where i was doing an internship (a smaller one for christmas), but other than that it’s fairly consistent. you can see big increase - the motivation of being offered a job and the time pressure suddenly being real.</p>
-<p>let’s look at the different chapters. -plot i had imagined that there would be much more definite periods devoted to different chapters, but in reality the process was quite skittish for me - i often switched between different chapters - in fact, i edited multiple chapters in most weeks/days rather than focusing on only one -table/plot nr chapters edited in week/day.</p>
+		<div class="post-content"><div id="intro" class="section level2">
+<h2>intro</h2>
+<p>In the middle of the second year of my PhD (by which point I’d written a little bit already), I thought it would be fun to track my word count over the course of writing up (this was really more a means of procrastinating one morning). Having submitted earlier this year, I figured that now that the numbers won’t be changing further, I could do make some plots and write a little blog post about them. So here we are! We’ll have a look at some plots, and then below we’ll quickly go over how to set this up if you want to do it yourself.</p>
+<div id="disclaimer" class="section level4">
+<h4>Disclaimer</h4>
+<p>There’s a point which I can’t make strongly enough here: <strong>quality &gt; quantity</strong>. If you’re starting out/in the midst of your PhD, I would encourage you not to get too fixated on the wordcount of your thesis. The number of words you write can be a pretty useless metric of your progress. I’m not sure I had either quality or quantity, and instead I’m going to suggest that provided you feel like you learnt something, and that you had (at least some) fun, then the whole process should be viewed as a success.</p>
+<p>Anyway, let’s get into looking at what how thesis wordcount progresses over the end of a phd.</p>
+<p><img src="../../post/2019-09-16-thesis-metadata_files/figure-html/plot1-1.png" width="672" /></p>
+<p>The first thing (not a huge surprise to me) was that I’m quite slow at writing. There are some gaps where I was doing an internship (I had high hopes of being motivated and carrying on writing during this period, but that just didn’t happen), and a smaller one for christmas, but other than that it’s fairly steady. I like that you can see the panic writing as a result of being offered a new job in January ’19.</p>
+<p>I also have this information split up by the chapters which I was working on. <img src="../../post/2019-09-16-thesis-metadata_files/figure-html/plot2-1.png" width="672" /></p>
+<p>I had imagined that there would be much more definite periods devoted to different chapters, but in reality the process was quite skittish for me - I often switched between different chapters - in fact, I edited multiple chapters in most weeks/days rather than focusing on only one.</p>
+<p>nr chapters edited per week</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">.</th>
+<th align="right">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="right">33</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">11</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<p><img src="../../post/2019-09-16-thesis-metadata_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>productivity over the week. this is possibly inaccurate as words were counted on reboot. If I came in everyday, then this would simply mean the difference in word count could be attributable to the day prior. If i missed a day, it becomes hard to ascertain which day the words were actually written on -plot</p>
 <p>how to do it running linux, writing in latex. crontab -e <span class="citation">@reboot</span> /home/josiah/……/countingwords.sh</p>
 <p>i set it going on startup. i like to turn off my machine every evening, but in hindsight this setup makes it difficult to look at productivity by day of the week in situations where i miss a day. (if I had to leave it on for updates/running models, I would just come in the following morning and run the shell script directly if i remembered).</p>
 <p>the bash script itself is pretty simple. it just writes the date, and then the texcount (brief output) for any .tex files in the two directories I had content in</p>
+</div>
+</div>
 <div id="binbash" class="section level1">
 <h1>!/bin/bash</h1>
 <p>date +‘%Y-%m-%d’ &gt;&gt; ~/Desktop/…/wordcount.txt texcount -brief ~/Desktop/…/chapters/<em>.tex ~/Desktop/…/preface/</em>.tex &gt;&gt; ~/Desktop/…/wordcount.txt</p>

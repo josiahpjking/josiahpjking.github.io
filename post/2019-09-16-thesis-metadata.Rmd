@@ -1,36 +1,105 @@
 ---
-title: thesis_metadata
+title: Thesis metadata
 author: ~
 date: '2019-09-16'
 slug: thesis-metadata
 categories: []
-tags: []
+tags: [procrastination, wordcount, crontab]
 draft: yes
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(tidyverse)
+longwords<-readRDS("../../../beyond_words/wordslong.RDS")
+```
 
-intro
-recently submitted phd
-i wish i had set this up earlier (i.e., when I started), but in the middle of my second year (by which point i'd written some stuff already), i thought it would be fun to track my word count.
-- honestly, it was more just a procrastination aid one morning
+## intro  
 
-having submitted recently, i figured that the numbers will likely not change any more, so here we are.
-obviously, there's a big issue of quality > quantity, so i would encourage current phd students not to get too fixated on the wordcount.
-(that said, i'm not sure if i had either quality or quantity! provided you learnt something, and you had (some) fun, then that should count as a success)
-
-anyhow, here's the progress of my work, and below i will talk through the process
-
-plot--
-the first thing which strikes me is - writing is quite slow.
-there are big gaps where i was doing an internship (a smaller one for christmas), but other than that it's fairly consistent.
-you can see big increase - the motivation of being offered a job and the time pressure suddenly being real.
+In the middle of the second year of my PhD (by which point I'd written a little bit already), I thought it would be fun to track my word count over the course of writing up (this was really more a means of procrastinating one morning). Having submitted earlier this year, I figured that now that the numbers won't be changing further, I could do make some plots and write a little blog post about them. So here we are! We'll have a look at some plots, and then below we'll quickly go over how to set this up if you want to do it yourself.  
 
 
-let's look at the different chapters. 
--plot
-i had imagined that there would be much more definite periods devoted to different chapters, but in reality the process was quite skittish for me - i often switched between different chapters - in fact, i edited multiple chapters in most weeks/days rather than focusing on only one
--table/plot
-nr chapters edited in week/day.
+#### Disclaimer  
+There's a point which I can't make strongly enough here: **quality > quantity**. If you're starting out/in the midst of your PhD, I would encourage you not to get too fixated on the wordcount of your thesis. The number of words you write can be a pretty useless metric of your progress. I'm not sure I had either quality or quantity, and instead I'm going to suggest that provided you feel like you learnt something, and that you had (at least some) fun, then the whole process should be viewed as a success.  
+
+Anyway, let's get into looking at what how thesis wordcount progresses over the end of a phd. 
+
+```{r plot1, warning=FALSE}
+longwords %>% filter(chapter=="Total") %>%
+  mutate(n=n/1000) %>%
+  ggplot(.,aes(x=date,y=n))+
+  geom_line(lwd=1)+
+  ylim(0,70)+
+  theme_bw()+
+  labs(y="total wordcount")+
+  theme(axis.text.y = element_blank())+
+  #periods
+  annotate("rect", xmin = as.Date("2018-04-30"), xmax = as.Date("2018-08-13"), ymin = 0, ymax = 5,alpha = 0.1, fill = "grey50")+
+  annotate("text",x=as.Date("2018-04-30"),y=0,hjust=0,vjust=0,label="Internship\n(full time)",size=3)+
+  annotate("rect", xmin = as.Date("2018-11-19"), xmax = as.Date("2019-03-31"), ymin = 0, ymax = 5,alpha = 0.1, fill = "grey50")+
+  annotate("text",x=as.Date("2018-11-19"),y=0,hjust=0,vjust=0,label="SG Work\n(2 days p week)",size=3)+
+  annotate("rect", xmin = as.Date("2018-09-07"), xmax = as.Date("2019-02-28"), ymin = 11, ymax = 15,alpha = 0.1, fill = "blue")+
+  annotate("text",x=as.Date("2018-09-07"),y=11,hjust=0,vjust=0,label="RA Work\n(1 day p week)",size=3)+
+  annotate("rect", xmin = as.Date("2018-09-17"), xmax = as.Date("2019-03-01"), ymin = 5, ymax = 10,alpha = 0.1, fill = "green")+
+  annotate("text",x=as.Date("2018-09-17"),y=5,hjust=0,vjust=0,label="Teaching\n(1 day p week)",size=3)+
+  annotate("rect", xmin = as.Date("2019-04-01"), xmax = as.Date("2019-09-09"), ymin = 0, ymax = 5,alpha = 0.1, fill = "red")+
+  annotate("text",x=as.Date("2019-04-01"),y=0,hjust=0,vjust=0,label="Current job\n(full time)",size=3)+
+  #events
+
+  geom_label(aes(x=as.Date("2019-02-10"),y=40,label="job offer = panic"),col="#555555",size=3,label.size=NA,hjust=0,vjust=.5)+
+  geom_curve(aes(x=as.Date("2019-02-10"),y=40,xend=as.Date("2019-01-22"),yend=46.174),col="#555555",curvature=.2,arrow=arrow(length=unit(.03,"npc")))+
+  geom_label(aes(x=as.Date("2019-05-10"),y=55,label="submitted!"),col="#555555",size=3,label.size=NA,hjust=0,vjust=.5)+
+  geom_curve(aes(x=as.Date("2019-05-10"),y=55,xend=as.Date("2019-04-24"),yend=62.481),col="#555555",curvature=-.2,arrow=arrow(length=unit(.03,"npc")))+
+  geom_label(aes(x=as.Date("2019-05-10"),y=68,label="viva"),col="#555555",size=3,label.size=NA,hjust=0,vjust=.5)+
+  geom_curve(aes(x=as.Date("2019-05-25"),y=67,xend=as.Date("2019-06-11"),yend=62.481),col="#555555",curvature=-.2,arrow=arrow(length=unit(.03,"npc")))+
+  geom_label(aes(x=as.Date("2019-06-01"),y=70,label="wedding!"),col="#555555",size=3,label.size=NA,hjust=0,vjust=.5)+
+  geom_curve(aes(x=as.Date("2019-07-01"),y=69,xend=as.Date("2019-07-05"),yend=62.481),col="#555555",curvature=-.2,arrow=arrow(length=unit(.03,"npc")))+
+  geom_label(aes(x=as.Date("2019-08-01"),y=68,label="honeymoon :)"),col="#555555",size=3,label.size=NA,hjust=0,vjust=.5)+
+  geom_curve(aes(x=as.Date("2019-08-20"),y=67,xend=as.Date("2019-08-10"),yend=62.481),col="#555555",curvature=-.2,arrow=arrow(length=unit(.03,"npc")))+
+  geom_label(aes(x=as.Date("2019-08-07"),y=42,label="corrections"),col="#555555",size=3,label.size=NA,hjust=0,vjust=.5)+
+  geom_curve(aes(x=as.Date("2019-08-07"),y=42,xend=as.Date("2019-09-07"),yend=62.481),col="#555555",curvature=.2,arrow=arrow(length=unit(.03,"npc")))+
+  NULL
+```
+
+The first thing (not a huge surprise to me) was that I'm quite slow at writing. There are some gaps where I was doing an internship (I had high hopes of being motivated and carrying on writing during this period, but that just didn't happen), and a smaller one for christmas, but other than that it's fairly steady. I like that you can see the panic writing as a result of being offered a new job in January '19.  
+
+I also have this information split up by the chapters which I was working on.
+```{r plot2,warning=FALSE}
+longwords %>% filter(chapter!="Total") %>%
+  mutate(part=ifelse(grepl("1|2|3|4|5|pref",chapter),1,2)) %>%
+  mutate(n=n/1000) %>%
+  ggplot(.,aes(x=date,y=n,col=chapter))+
+  geom_line(lwd=1)+
+  facet_wrap(~part)+
+  #ylim(0,70)+
+  theme_bw()+
+  labs(y="wordcount")+
+  theme(axis.text.y = element_blank(),legend.position = "bottom")+
+  NULL
+```
+
+I had imagined that there would be much more definite periods devoted to different chapters, but in reality the process was quite skittish for me - I often switched between different chapters - in fact, I edited multiple chapters in most weeks/days rather than focusing on only one.
+
+nr chapters edited per week
+```{r}
+longwords %>% filter(!is.na(newwords)) %>% 
+  group_by(week,chapter) %>% 
+  summarise(new=sum(newwords)) %>%
+  group_by(week) %>% summarise(chaps=sum(new!=0)) %>% 
+  select(chaps) %>% table %>% knitr::kable()
+```
+
+
+```{r}
+longwords %>% filter(!is.na(newwords)) %>% 
+  group_by(date,chapter) %>% 
+  summarise(new=sum(newwords)) %>%
+  group_by(date) %>% summarise(chaps=sum(new!=0)) %>% 
+  mutate(week=lubridate::round_date(date,"week")) %>%
+  group_by(week) %>% summarise(me=mean(chaps)) %>%
+  ggplot(.,aes(x=week,y=me))+geom_path()+
+  ggtitle("weekly avg nr chapters edited each day")
+```
 
 productivity over the week.
 this is possibly inaccurate as words were counted on reboot. If I came in everyday, then this would simply mean the difference in word count could be attributable to the day prior. If i missed a day, it becomes hard to ascertain which day the words were actually written on
