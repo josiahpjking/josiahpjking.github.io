@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>thesis writing</title>
+		<meta name="viewport" content="width=device-width">
+		
+		<link rel="stylesheet" href="../../css/hybrid.css">
+		<link rel="stylesheet" href="../../css/style.css">
+		<link rel="stylesheet" href="../../css/colors-light.css">
+
+		
+	</head>
+	<body>
+		<header id="header">
+			<h1><a href="../../">Josiah King</a></h1>
+			<p></p>
+		</header>
+
+		<div id="page">
+			<div id="sidebar">
+				<nav>
+	
+		<ul class="nav">
+			
+				<li><a href="../../about"><span>About</span></a></li>
+			
+				<li><a href="../../blog"><span>Projects/Posts</span></a></li>
+			
+				<li><a href="../../resources"><span>Resources</span></a></li>
+			
+				<li><a href="../../about/#outputs"><span>Outputs</span></a></li>
+			
+				<li><a href="../../docs/cv.pdf"><span>CV</span></a></li>
+			
+		</ul>
+	
+</nav>
+
+			</div>
+
+			<div id="content">
+				
+	<article class="post">
+		<h1><a href="../../blog/thesismetadata/">thesis writing</a> (Draft)</h1>
+
+		<div class="post-content"><p><object data="thes.html" type="text/html"></object></p>
+
+<p>intro
+recently submitted phd
+i wish i had set this up earlier (i.e., when I started), but in the middle of my second year (by which point i&rsquo;d written some stuff already), i thought it would be fun to track my word count.
+- honestly, it was more just a procrastination aid one morning</p>
+
+<p>having submitted recently, i figured that the numbers will likely not change any more, so here we are.
+obviously, there&rsquo;s a big issue of quality &gt; quantity, so i would encourage current phd students not to get too fixated on the wordcount.
+(that said, i&rsquo;m not sure if i had either quality or quantity! provided you learnt something, and you had (some) fun, then that should count as a success)</p>
+
+<p>anyhow, here&rsquo;s the progress of my work, and below i will talk through the process</p>
+
+<p>plot&ndash;
+the first thing which strikes me is - writing is quite slow.
+there are big gaps where i was doing an internship (a smaller one for christmas), but other than that it&rsquo;s fairly consistent.
+you can see big increase - the motivation of being offered a job and the time pressure suddenly being real.</p>
+
+<p>let&rsquo;s look at the different chapters.
+-plot
+i had imagined that there would be much more definite periods devoted to different chapters, but in reality the process was quite skittish for me - i often switched between different chapters - in fact, i edited multiple chapters in most weeks/days rather than focusing on only one
+-table/plot
+nr chapters edited in week/day.</p>
+
+<p>productivity over the week.
+this is possibly inaccurate as words were counted on reboot. If I came in everyday, then this would simply mean the difference in word count could be attributable to the day prior. If i missed a day, it becomes hard to ascertain which day the words were actually written on
+-plot</p>
+
+<p>how to do it
+running linux, writing in latex.
+crontab -e
+@reboot /home/josiah/&hellip;&hellip;/countingwords.sh</p>
+
+<p>i set it going on startup. i like to turn off my machine every evening, but in hindsight this setup makes it difficult to look at productivity by day of the week in situations where i miss a day.
+(if I had to leave it on for updates/running models, I would just come in the following morning and run the shell script directly if i remembered).</p>
+
+<p>the bash script itself is pretty simple.
+it just writes the date, and then the texcount (brief output) for any .tex files in the two directories I had content in</p>
+
+<p>#!/bin/bash
+date +&lsquo;%Y-%m-%d&rsquo; &gt;&gt; ~/Desktop/&hellip;/wordcount.txt
+texcount -brief ~/Desktop/&hellip;/chapters/<em>.tex ~/Desktop/&hellip;/preface/</em>.tex &gt;&gt; ~/Desktop/&hellip;/wordcount.txt</p>
+
+<p>the output is pretty readable (as you&rsquo;d expect)</p>
+
+<p>next step is tidying this into something we can work with.</p>
+
+<p>R script.</p>
+
+<p>now that it&rsquo;s in long format, plotting is nice and easy.</p>
+
+<p>also possible to automate this via crontab, so that your plots update as you write, without any need for you to do anything at all!
+<a href="https://stackoverflow.com/questions/38778732/schedule-a-rscript-crontab-everyminute">https://stackoverflow.com/questions/38778732/schedule-a-rscript-crontab-everyminute</a></p>
+</div>
+
+		<p class="meta">Posted on <span class="postdate">28. August 2019</span></p>
+	</article>
+
+			</div>
+
+			<footer id="footer">
+				<p class="copyright">
+					
+						Powered by <a href="https://gohugo.io/">Hugo</a> and the
+						<a href="https://github.com/bake/solar-theme-hugo">Solar</a>-theme.
+					
+				</p>
+			</footer>
+		</div>
+
+		
+	</body>
+</html>

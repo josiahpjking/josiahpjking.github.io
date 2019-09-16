@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Crontab on Josiah King</title>
+    <link>/categories/crontab/</link>
+    <description>Recent content in Crontab on Josiah King</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 28 Aug 2019 14:43:55 +0100</lastBuildDate>
+    
+	<atom:link href="/categories/crontab/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>thesis writing</title>
+      <link>/blog/thesismetadata/</link>
+      <pubDate>Wed, 28 Aug 2019 14:43:55 +0100</pubDate>
+      
+      <guid>/blog/thesismetadata/</guid>
+      <description>intro recently submitted phd i wish i had set this up earlier (i.e., when I started), but in the middle of my second year (by which point i&amp;rsquo;d written some stuff already), i thought it would be fun to track my word count. - honestly, it was more just a procrastination aid one morning
+having submitted recently, i figured that the numbers will likely not change any more, so here we are.</description>
+    </item>
+    
+  </channel>
+</rss>

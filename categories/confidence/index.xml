@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Confidence on Josiah King</title>
+    <link>/categories/confidence/</link>
+    <description>Recent content in Confidence on Josiah King</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 05 Aug 2019 14:43:55 +0100</lastBuildDate>
+    
+	<atom:link href="/categories/confidence/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>It&#39;s not *what you know*...</title>
+      <link>/blog/beginning/</link>
+      <pubDate>Mon, 05 Aug 2019 14:43:55 +0100</pubDate>
+      
+      <guid>/blog/beginning/</guid>
+      <description>but how loud you shout about what you think.
+So much of the content found online about statistics seems to exude confidence and knowledge about complex methodologies. It almost seems like there is one group of people who are often over-confident, and (perhaps unintentionally) appear quite condescending in their explanations (see e.g., every stackoverflow answer ever), and another group who are perpetually terrified that they&amp;rsquo;re getting it wrong[^0 ].</description>
+    </item>
+    
+  </channel>
+</rss>

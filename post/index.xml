@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Josiah King</title>
+    <link>/post/</link>
+    <description>Recent content in Posts on Josiah King</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 16 Sep 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>thesis_metadata</title>
+      <link>/post/thesis-metadata/</link>
+      <pubDate>Mon, 16 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/thesis-metadata/</guid>
+      <description>intro recently submitted phd i wish i had set this up earlier (i.e., when I started), but in the middle of my second year (by which point i’d written some stuff already), i thought it would be fun to track my word count. - honestly, it was more just a procrastination aid one morning
+having submitted recently, i figured that the numbers will likely not change any more, so here we are.</description>
+    </item>
+    
+  </channel>
+</rss>

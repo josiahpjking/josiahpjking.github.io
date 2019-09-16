@@ -1,0 +1,74 @@
+---
+title: thesis_metadata
+author: ~
+date: '2019-09-16'
+slug: thesis-metadata
+categories: []
+tags: []
+draft: yes
+---
+
+
+intro
+recently submitted phd
+i wish i had set this up earlier (i.e., when I started), but in the middle of my second year (by which point i'd written some stuff already), i thought it would be fun to track my word count.
+- honestly, it was more just a procrastination aid one morning
+
+having submitted recently, i figured that the numbers will likely not change any more, so here we are.
+obviously, there's a big issue of quality > quantity, so i would encourage current phd students not to get too fixated on the wordcount.
+(that said, i'm not sure if i had either quality or quantity! provided you learnt something, and you had (some) fun, then that should count as a success)
+
+anyhow, here's the progress of my work, and below i will talk through the process
+
+plot--
+the first thing which strikes me is - writing is quite slow.
+there are big gaps where i was doing an internship (a smaller one for christmas), but other than that it's fairly consistent.
+you can see big increase - the motivation of being offered a job and the time pressure suddenly being real.
+
+
+let's look at the different chapters. 
+-plot
+i had imagined that there would be much more definite periods devoted to different chapters, but in reality the process was quite skittish for me - i often switched between different chapters - in fact, i edited multiple chapters in most weeks/days rather than focusing on only one
+-table/plot
+nr chapters edited in week/day.
+
+productivity over the week.
+this is possibly inaccurate as words were counted on reboot. If I came in everyday, then this would simply mean the difference in word count could be attributable to the day prior. If i missed a day, it becomes hard to ascertain which day the words were actually written on
+-plot
+
+
+how to do it
+running linux, writing in latex.
+crontab -e
+@reboot /home/josiah/....../countingwords.sh
+
+i set it going on startup. i like to turn off my machine every evening, but in hindsight this setup makes it difficult to look at productivity by day of the week in situations where i miss a day.
+(if I had to leave it on for updates/running models, I would just come in the following morning and run the shell script directly if i remembered).
+
+
+the bash script itself is pretty simple.
+it just writes the date, and then the texcount (brief output) for any .tex files in the two directories I had content in
+
+#!/bin/bash
+date +'%Y-%m-%d' >> ~/Desktop/.../wordcount.txt
+texcount -brief ~/Desktop/.../chapters/*.tex ~/Desktop/.../preface/*.tex >> ~/Desktop/.../wordcount.txt
+
+
+the output is pretty readable (as you'd expect)
+
+next step is tidying this into something we can work with.
+
+R script.
+
+now that it's in long format, plotting is nice and easy.
+
+
+also possible to automate this via crontab, so that your plots update as you write, without any need for you to do anything at all!
+https://stackoverflow.com/questions/38778732/schedule-a-rscript-crontab-everyminute
+
+
+
+
+
+
+
