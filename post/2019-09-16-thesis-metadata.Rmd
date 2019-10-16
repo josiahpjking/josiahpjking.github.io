@@ -5,6 +5,7 @@ date: '2019-10-16'
 slug: thesis-metadata
 categories: []
 tags: [procrastination, wordcount, crontab]
+description: "This is a pretty light-hearted first blog post. No doubt as time goes on, I'll attempt to write about more useful things, but I thought I would kick things off with what basically amounts to some self-congratulatory shouting of 'Look, I did a thing!'."
 draft: no
 ---
 
@@ -14,10 +15,8 @@ require(tidyverse)
 longwords<-readRDS("../../../beyond_words/wordslong.RDS")
 ```
 
-This is a pretty light-hearted first blog post. No doubt as time goes on, I'll attempt to write about more useful things, but I thought I would kick things off with what basically amounts to some self-congratulatory shouting of "Look, I did a thing!".
-
-<!--more-->
-
+This is a pretty light-hearted first blog post. No doubt as time goes on, I'll attempt to write about more useful things, but I thought I would kick things off with what basically amounts to some self-congratulatory shouting of "Look, I did a thing!".  
+<!--more-->  
 Back in the middle of the second year of my PhD (by which point I'd written a small amount already), I thought it would be fun to track my wordcount over the course of writing up (this was really just a means of procrastinating one morning instead of writing). Having finally finished it all, I figured that I should make a few quick plots, and take some time to look back on the process.   
 
 ***
@@ -151,7 +150,7 @@ tlong %>% #mutate(wday=fct_recode(wday,"Weekend"="Sat","Weekend"="Sun")) %>%
 
 ### So what?  
 
-**Take home message**: Don't count your words. You'll get some nice plots, but they won't really mean anything. PhD's can be a long long process, and a thesis will be finished (to quote my mother when asked about when dinner would be) "whenever it's ready". 
+**Take home message**: Don't count your words. You'll get some nice plots, but they won't really mean anything. PhD's can be a long long process, and a thesis will be finished (to quote my mother when asked at what time dinner would be) "whenever it's ready". 
 
 
 

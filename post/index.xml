@@ -2,22 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Josiah King</title>
-    <link>https://josiahpjking.github.io/post/</link>
+    <link>/post/</link>
     <description>Recent content in Posts on Josiah King</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 16 Oct 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://josiahpjking.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>&#39;Sometimes a scream is better than a thesis&#39;</title>
-      <link>https://josiahpjking.github.io/post/thesis-metadata/</link>
+      <link>/post/thesis-metadata/</link>
       <pubDate>Wed, 16 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://josiahpjking.github.io/post/thesis-metadata/</guid>
+      <guid>/post/thesis-metadata/</guid>
       <description>This is a pretty light-hearted first blog post. No doubt as time goes on, I’ll attempt to write about more useful things, but I thought I would kick things off with what basically amounts to some self-congratulatory shouting of “Look, I did a thing!”.
- Back in the middle of the second year of my PhD (by which point I’d written a small amount already), I thought it would be fun to track my wordcount over the course of writing up (this was really just a means of procrastinating one morning instead of writing).</description>
+
+Back in the middle of the second year of my PhD (by which point I’d written a small amount already), I thought it would be fun to track my wordcount over the course of writing up (this was really just a means of procrastinating one morning instead of writing).</description>
     </item>
     
   </channel>
