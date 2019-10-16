@@ -2,21 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Wordcount on Josiah King</title>
-    <link>/tags/wordcount/</link>
+    <link>https://josiahpjking.github.io/tags/wordcount/</link>
     <description>Recent content in Wordcount on Josiah King</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 16 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 16 Oct 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/wordcount/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://josiahpjking.github.io/tags/wordcount/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Thesis metadata</title>
-      <link>/post/thesis-metadata/</link>
-      <pubDate>Mon, 16 Sep 2019 00:00:00 +0000</pubDate>
+      <title>&#39;Sometimes a scream is better than a thesis&#39;</title>
+      <link>https://josiahpjking.github.io/post/thesis-metadata/</link>
+      <pubDate>Wed, 16 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/thesis-metadata/</guid>
-      <description>intro In the middle of the second year of my PhD (by which point I’d written a little bit already), I thought it would be fun to track my word count over the course of writing up (this was really more a means of procrastinating one morning). Having submitted earlier this year, I figured that now that the numbers won’t be changing further, I could do make some plots and write a little blog post about them.</description>
+      <guid>https://josiahpjking.github.io/post/thesis-metadata/</guid>
+      <description>This is a pretty light-hearted first blog post. No doubt as time goes on, I’ll attempt to write about more useful things, but I thought I would kick things off with what basically amounts to some self-congratulatory shouting of “Look, I did a thing!”.
+ Back in the middle of the second year of my PhD (by which point I’d written a small amount already), I thought it would be fun to track my wordcount over the course of writing up (this was really just a means of procrastinating one morning instead of writing).</description>
     </item>
     
   </channel>
