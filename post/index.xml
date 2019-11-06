@@ -1,24 +1,44 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Josiah King</title>
+    <title>Posts | Josiah King</title>
     <link>/post/</link>
-    <description>Recent content in Posts on Josiah King</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 16 Oct 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
-    
+      <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <description>Posts</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 16 Oct 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Posts</title>
+      <link>/post/</link>
+    </image>
     
     <item>
       <title>&#39;Sometimes a scream is better than a thesis&#39;</title>
       <link>/post/thesis-metadata/</link>
       <pubDate>Wed, 16 Oct 2019 00:00:00 +0000</pubDate>
-      
       <guid>/post/thesis-metadata/</guid>
-      <description>This is a pretty light-hearted first blog post. No doubt as time goes on, I’ll attempt to write about more useful things, but I thought I would kick things off with what basically amounts to some self-congratulatory shouting of “Look, I did a thing!”.
-
-Back in the middle of the second year of my PhD (by which point I’d written a small amount already), I thought it would be fun to track my wordcount over the course of writing up (this was really just a means of procrastinating one morning instead of writing).</description>
+      <description>&lt;br /&gt;
+Back in the middle of the second year of my PhD (by which point I’d written a small amount already), I thought it would be fun to track my wordcount over the course of writing up (this was really just a means of procrastinating one morning instead of writing). Having finally finished it all, I figured that I should make a few quick plots, and take some time to look back on the process.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;font size=&#34;2&#34;,style=&#34;margin:5px&#34;&gt; &lt;strong&gt;DISCLAIMER&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;There’s a point which can’t be made strongly enough about a thesis: &lt;strong&gt;quality &amp;gt; quantity&lt;/strong&gt;. If you’re starting out/in the midst of your PhD, I would encourage you not to get too fixated on the wordcount of your thesis. The number of words you write can be a pretty useless metric of progress. For that purpose, I have omitted any specific numbers of words and timescales from this blogpost, to avoid anyone from drawing comparisons between their own progress and mine. All PhDs are different - don’t compare yourself too much to others.&lt;br /&gt;
+By the end of it, I’m not sure that my thesis had either quality or quantity, and instead I would probably offer up different benchmarks of PhD success: 1) Learning things, and 2) Having fun. Provided you come out of the other end feeling that you’ve done those two things at least occasionally during your PhD, then you’ve probably done okay.&lt;br /&gt;
+&lt;/font&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;With that out of the way, let’s push on and see what happens…&lt;br /&gt;
+I set up the word counting using crontab to execute a bash script every day which saved the date and output of texcount into a .txt file. This meant I ended up with daily records of the words in each chapter, so I could work out thing such as how many words were added on each day.&lt;/p&gt;
+&lt;p&gt;First though, let’s just take a look at how the total word count of the thesis grew.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-09-16-thesis-metadata_files/figure-html/plot1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The first thing to note (not a huge surprise to me, or anyone) is that writing is fairly slow-going. There are some gaps where I was doing an internship (I had high hopes of being motivated and continuing to work on the thesis during this period, but that just didn’t happen), and a smaller one for Christmas, but other than that it’s fairly steady, and not that steep (although you won’t be able to tell that from the absence of axis labels!). I can retrofit certain memorable feelings that I had, for instance the panic writing which resulted from being offered a job. You can see all this in the figure above. For context, I’ve added some of the key life events for me (that was a pretty big year!), as well as the various jobs I was doing along the bottom.&lt;/p&gt;
+&lt;p&gt;I also recorded the wordcounts split up by the chapters which I was working on. At the start I imagined that there I would devote definite periods to different chapters, but in reality the process was quite skittish (see below - what a mess!). I seemed to switch between working on different chapters pretty frequently (46% of the days on which I actually did &lt;em&gt;some&lt;/em&gt; writing/editing, I did so in more than one chapter). I think this probably reflects various attempts to avoid dealing with problems by working on something else!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-09-16-thesis-metadata_files/figure-html/plot2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;I can also take a look at which days of the week I worked, and how many words were added/removed on each day. Some of this fits with how it felt when I was writing. I remember noting that I’d spend more time editing and deleting stuff on the Monday, and that Tuesday was a day for adding new content. The figure below shows the addition of content for each day of the week, excluding days that I did not do any work (the vertical dashed line is zero).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-09-16-thesis-metadata_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;so-what&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;So what?&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Take home message&lt;/strong&gt;: Don’t count your words. You’ll get some nice plots, but they won’t really mean anything. PhD’s can be a long long process, and a thesis will be finished (to quote my mother when asked at what time dinner would be) “whenever it’s ready”.&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
   </channel>

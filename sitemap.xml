@@ -1,73 +1,162 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://josiahpjking.github.io/blog/thesis-metadata/</loc>
+    <loc>/publication_types/2/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/a.-millen/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/b.-dering/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/c.-levitan/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/h.-rabagliati/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/j.-king/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/j.-loy/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/m.-corley/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/many-labs-5-crosby-monin-richardson/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/p.-hancock/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication_types/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/thesis-metadata/</loc>
     <lastmod>2019-10-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://josiahpjking.github.io/about/</loc>
-    <lastmod>2019-08-02T14:43:55+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://josiahpjking.github.io/blog/first/</loc>
-    <lastmod>2019-08-02T14:43:55+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://josiahpjking.github.io/</loc>
+    <loc>/tags/crontab/</loc>
     <lastmod>2019-10-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://josiahpjking.github.io/blog/</loc>
+    <loc>/post/</loc>
     <lastmod>2019-10-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://josiahpjking.github.io/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://josiahpjking.github.io/tags/crontab/</loc>
+    <loc>/tags/procrastination/</loc>
     <lastmod>2019-10-16T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://josiahpjking.github.io/resources/github/</loc>
-  </url>
-  
-  <url>
-    <loc>https://josiahpjking.github.io/tags/procrastination/</loc>
+    <loc>/tags/</loc>
     <lastmod>2019-10-16T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://josiahpjking.github.io/resources/</loc>
-  </url>
-  
-  <url>
-    <loc>https://josiahpjking.github.io/tags/</loc>
+    <loc>/tags/wordcount/</loc>
     <lastmod>2019-10-16T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://josiahpjking.github.io/categories/unsure/</loc>
-    <lastmod>2019-08-02T14:43:55+01:00</lastmod>
-    <priority>0</priority>
+    <loc>/publication_types/0/</loc>
+    <lastmod>2019-08-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://josiahpjking.github.io/tags/wordcount/</loc>
-    <lastmod>2019-10-16T00:00:00+00:00</lastmod>
-    <priority>0</priority>
+    <loc>/authors/ben-matthew/</loc>
+    <lastmod>2019-08-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/josiah-king/</loc>
+    <lastmod>2019-08-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/reconvictions-blog/</loc>
+    <lastmod>2019-08-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/contextual-effects-on-online-pragmatic-inferences-to-deception/</loc>
+    <lastmod>2018-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/jia-e.-loy/</loc>
+    <lastmod>2018-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/josiah-p.-j.-king/</loc>
+    <lastmod>2018-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/martin-corley/</loc>
+    <lastmod>2018-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/scottish-crime-justice-survey-shiny/</loc>
+    <lastmod>2018-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/admin/</loc>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>/talk/</loc>
   </url>
   
 </urlset>
