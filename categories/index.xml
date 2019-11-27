@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
+<<<<<<< HEAD
     <title>Categories on Josiah King</title>
     <link>https://josiahpjking.github.io/categories/</link>
     <description>Recent content in Categories on Josiah King</description>
@@ -18,6 +19,18 @@
       <guid>https://josiahpjking.github.io/categories/unsure/</guid>
       <description></description>
     </item>
+=======
+    <title>Categories | Josiah King</title>
+    <link>/categories/</link>
+      <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <description>Categories</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Categories</title>
+      <link>/categories/</link>
+    </image>
+>>>>>>> 90a92133d0be0a493af251ca0e19300ca2772a95
     
   </channel>
 </rss>
