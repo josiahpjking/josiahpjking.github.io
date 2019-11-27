@@ -1,0 +1,544 @@
+
+
+	####### B099222 R script #######
+
+library(psych, quietly = T)
+[1] 1
+[1] "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+install.packages("carData")
+[1] 2
+library(carData, quietly = T)
+[1] 3
+ [1] "carData"   "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"  
+[10] "base"     
+library(car, quietly = T)
+[1] 4
+ [1] "car"       "carData"   "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets" 
+[10] "methods"   "base"     
+install.packages("ez")
+[1] 5
+library(ez, quietly = T)
+[1] 6
+ [1] "ez"        "car"       "carData"   "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"    
+[10] "datasets"  "methods"   "base"     
+install.packages("ggplot2")
+[1] 7
+library(ggplot2, quietly = T)
+[1] 8
+ [1] "ggplot2"   "ez"        "car"       "carData"   "psych"     "readr"     "stats"     "graphics"  "grDevices"
+[10] "utils"     "datasets"  "methods"   "base"     
+install.packages("lme4")
+[1] 9
+library(lme4, quietly = T)
+[1] 10
+ [1] "lme4"      "Matrix"    "ggplot2"   "ez"        "car"       "carData"   "psych"     "readr"     "stats"    
+[10] "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+install.packages("lmtest")
+[1] 11
+library(lmtest, quietly = T)
+[1] 12
+ [1] "lmtest"    "zoo"       "lme4"      "Matrix"    "ggplot2"   "ez"        "car"       "carData"   "psych"    
+[10] "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+data <- read.csv("../RMS2_report_1920.csv")
+[1] 13
+describe(data)
+[1] 14
+          vars   n   mean    sd median trimmed   mad  min    max  range skew kurtosis   se
+subject      1 200 100.50 57.88 100.50  100.50 74.13 1.00 200.00 199.00 0.00    -1.22 4.09
+incidents    2 200   0.48  0.19   0.42    0.47  0.12 0.08   0.92   0.83 0.32    -0.31 0.01
+training     3 200   1.50  0.50   1.50    1.50  0.74 1.00   2.00   1.00 0.00    -2.01 0.04
+ [ reached 'max' / getOption("max.print") -- omitted 3 rows ]
+training <- as.factor(data$training)
+[1] 15
+feedback <- as.factor(data$feedback)
+[1] 16
+data$incidents[data$incidents > 1] <- NA
+[1] 17
+data$incidents[data$incidents < 0] <- NA
+[1] 18
+which(data$incidents, x = NA)
+[1] 19
+integer(0)
+data$empathy[data$empathy > 20] <- NA
+[1] 20
+data$empathy[data$empathy < 1] <- NA
+[1] 21
+which(data$empathy, x = NA)
+[1] 22
+integer(0)
+data$years[data$years > 30] <- NA
+[1] 23
+data$years[data$years < 0] <- NA
+[1] 24
+which(data$years, x = NA)
+[1] 25
+integer(0)
+describe(data)[c(2, 3, 4, 8, 9, 11, 12)]
+[1] 26
+            n   mean    sd  min    max  skew kurtosis
+subject   200 100.50 57.88 1.00 200.00  0.00    -1.22
+incidents 200   0.48  0.19 0.08   0.92  0.32    -0.31
+training  200   1.50  0.50 1.00   2.00  0.00    -2.01
+feedback  200   1.50  0.50 1.00   2.00  0.00    -2.01
+empathy   200  10.18  2.54 3.00  16.00 -0.37     0.23
+years     200   8.13  3.08 1.00  19.00  0.52     0.48
+describe(data)[c(2, 5, 6), c(2:4, 8, 9, 11, 12)]
+[1] 27
+            n  mean   sd  min   max  skew kurtosis
+incidents 200  0.48 0.19 0.08  0.92  0.32    -0.31
+empathy   200 10.18 2.54 3.00 16.00 -0.37     0.23
+years     200  8.13 3.08 1.00 19.00  0.52     0.48
+df1 <- cbind(data[1], data[3:4])
+[1] 28
+df1
+
+   subject training feedback
+1        1        2        2
+2        2        2        1
+3        3        2        2
+4        4        2        1
+5        5        2        2
+6        6        2        1
+7        7        2        2
+8        8        2        1
+9        9        2        2
+10      10        2        1
+11      11        2        2
+12      12        2        1
+13      13        2        2
+14      14        2        1
+15      15        2        2
+16      16        2        1
+ [ reached 'max' / getOption("max.print") -- omitted 184 rows ]
+
+
+plot(data$empathy, data$incidents, xlab = "Empathy", ylab = "Incidents", 
+    pch = 16)
+[1] 30
+plot(data$years, data$incidents, xlab = "Years", ylab = "Incidents", 
+    pch = 16)
+[1] 31
+boxplot(data$incidents ~ data$training, xlab = "Training", ylab = "Incidents")
+[1] 32
+boxplot(data$incidents ~ data$feedback, xlab = "Feedback", ylab = "Incidents")
+[1] 33
+describe(data$incidents[101:200])[c(2, 3, 4, 8, 9, 11, 12)]
+[1] 34
+     n mean   sd  min  max skew kurtosis
+X1 100 0.54 0.18 0.25 0.92 0.39    -0.73
+describe(data$incidents[1:100])[c(2, 3, 4, 8, 9, 11, 12)]
+[1] 35
+     n mean   sd  min  max skew kurtosis
+X1 100 0.41 0.17 0.08 0.92 0.38    -0.05
+cbind(data$incidents, data$feedback)
+[1] 36
+             [,1] [,2]
+  [1,] 0.66666667    2
+  [2,] 0.33333333    1
+  [3,] 0.33333333    2
+  [4,] 0.41666667    1
+  [5,] 0.50000000    2
+  [6,] 0.25000000    1
+  [7,] 0.83333333    2
+  [8,] 0.41666667    1
+  [9,] 0.50000000    2
+ [10,] 0.16666667    1
+ [11,] 0.75000000    2
+ [12,] 0.33333333    1
+ [13,] 0.91666667    2
+ [14,] 0.50000000    1
+ [15,] 0.58333333    2
+ [16,] 0.16666667    1
+ [17,] 0.16666667    2
+ [18,] 0.33333333    1
+ [19,] 0.75000000    2
+ [20,] 0.41666667    1
+ [21,] 0.16666667    2
+ [22,] 0.41666667    1
+ [23,] 0.41666667    2
+ [24,] 0.58333333    1
+ [25,] 0.41666667    2
+ [ reached getOption("max.print") -- omitted 175 rows ]
+feedback_score1 <- data$incidents[c(1, 3, 5, 7, 9, 11, 13, 15, 
+    17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 
+    47, 49, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73, 75, 
+    77, 79, 81, 83, 85, 87, 89, 91, 93, 95, 97, 99, 101, 103, 
+    105, 107, 109, 111, 113, 115, 117, 119, 121, 123, 125, 127, 
+    129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 149, 151, 
+    153, 155, 157, 159, 161, 163, 165, 167, 169, 171, 173, 175, 
+    177, 179, 181, 183, 185, 187, 189, 191, 193, 195, 197, 199)]
+[1] 37
+describe(feedback_score1)[c(2, 3, 4, 8, 9, 11, 12)]
+[1] 38
+     n mean   sd  min  max skew kurtosis
+X1 100 0.54 0.18 0.08 0.92 0.11    -0.44
+feedback_score2 <- data$incidents[c(2, 4, 6, 8, 10, 12, 14, 16, 
+    18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 
+    48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 
+    78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100, 102, 104, 
+    106, 108, 110, 112, 114, 116, 118, 120, 122, 124, 126, 128, 
+    130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 
+    154, 156, 158, 160, 162, 164, 166, 168, 170, 172, 174, 176, 
+    178, 180, 182, 184, 186, 188, 190, 192, 194, 196, 198, 200)]
+[1] 39
+describe(feedback_score2)[c(2, 3, 4, 8, 9, 11, 12)]
+[1] 40
+     n mean   sd  min  max skew kurtosis
+X1 100 0.41 0.17 0.08 0.92  0.6     0.36
+summary(data$empathy)
+[1] 41
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   3.00    9.00   10.00   10.18   12.00   16.00 
+summary(data$years)
+[1] 42
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   1.00    6.00    8.00    8.13   10.00   19.00 
+mean_empathy <- data$empathy - mean(data$empathy)
+[1] 43
+mean_years <- data$years - mean(data$years)
+[1] 44
+plot(mean_empathy ~ mean_years, xlab = "years", ylab = "empathy")
+[1] 45
+M1 <- lm(mean_empathy ~ mean_years)
+[1] 46
+summary(M1)
+[1] 47
+
+Call:
+lm(formula = mean_empathy ~ mean_years)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.5399 -1.5160  0.0708  1.6357  5.8533 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -6.013e-16  1.735e-01   0.000 1.000000    
+mean_years   2.176e-01  5.648e-02   3.852 0.000158 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.453 on 198 degrees of freedom
+Multiple R-squared:  0.06972,	Adjusted R-squared:  0.06502 
+F-statistic: 14.84 on 1 and 198 DF,  p-value: 0.0001582
+
+plot(data$empathy ~ data$years, xlab = "years", ylab = "empathy")
+[1] 48
+abline(M1)
+[1] 49
+lines(lowess(data$years, data$empathy))
+[1] 50
+crPlots(M1)
+[1] 51
+M12 <- lm(empathy ~ years + I(years^2), data = data)
+[1] 52
+summary(M12)
+[1] 53
+
+Call:
+lm(formula = empathy ~ years + I(years^2), data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5069 -1.4011 -0.0835  1.1707  6.0622 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  1.186356   0.791848   1.498    0.136    
+years        2.068508   0.181845  11.375   <2e-16 ***
+I(years^2)  -0.103645   0.009861 -10.510   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.969 on 197 degrees of freedom
+Multiple R-squared:  0.404,	Adjusted R-squared:  0.3979 
+F-statistic: 66.75 on 2 and 197 DF,  p-value: < 2.2e-16
+
+crPlots(M12)
+[1] 54
+plot(empathy ~ years, data = data)
+[1] 55
+points(data$years, fitted(M12), col = "red", pch = 20)
+[1] 56
+NULL
+abline(M1, col = "blue")
+[1] 57
+qqPlot(M12)
+[1] 58
+hist(M12$residuals)
+[1] 59
+shapiro.test(M12$residuals)
+[1] 60
+
+	Shapiro-Wilk normality test
+
+data:  M12$residuals
+W = 0.9941, p-value = 0.6155
+
+residualPlots(M12)
+[1] 61
+ncvTest(M12)
+[1] 62
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.5107658, Df = 1, p = 0.47481
+durbinWatsonTest(M12)
+[1] 63
+ lag Autocorrelation D-W Statistic p-value
+   1      0.01288905      1.973855   0.868
+ Alternative hypothesis: rho != 0
+cooks <- cooks.distance(M12)
+[1] 64
+plot(cooks)
+[1] 65
+cooks[154]
+[1] 66
+      154 
+0.1694213 
+training <- as.factor(data$training)
+[1] 67
+levels(training)
+[1] 68
+[1] "1" "2"
+M21 <- lm(incidents ~ training + mean_empathy + mean_years, data = data)
+[1] 69
+summary(M21)
+[1] 70
+
+Call:
+lm(formula = incidents ~ training + mean_empathy + mean_years, 
+    data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35648 -0.12270 -0.01474  0.10105  0.53180 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.703640   0.036592  19.229  < 2e-16 ***
+training     -0.152427   0.023166  -6.580 4.20e-10 ***
+mean_empathy  0.025396   0.004735   5.363 2.29e-07 ***
+mean_years   -0.014085   0.003889  -3.622 0.000372 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1621 on 196 degrees of freedom
+Multiple R-squared:  0.2565,	Adjusted R-squared:  0.2451 
+F-statistic: 22.53 on 3 and 196 DF,  p-value: 1.408e-12
+
+crPlots(M21)
+[1] 71
+qqPlot(M21)
+[1] 72
+ncvTest(M21)
+[1] 73
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.0293323, Df = 1, p = 0.86401
+durbinWatsonTest(M21)
+[1] 74
+ lag Autocorrelation D-W Statistic p-value
+   1      -0.1072849      2.199897   0.176
+ Alternative hypothesis: rho != 0
+cooks2 <- cooks.distance(M21)
+[1] 75
+plot(cooks2)
+[1] 76
+which(cooks2 > 0.06)
+[1] 77
+137 
+137 
+cooks2[137]
+[1] 78
+       137 
+0.08073842 
+shapiro.test(M21$residuals)
+[1] 79
+
+	Shapiro-Wilk normality test
+
+data:  M21$residuals
+W = 0.97994, p-value = 0.005838
+
+skew(M21$residuals)
+[1] 80
+[1] 0.470533
+incidents_1 <- data$incidents + 1
+[1] 81
+log_incidents <- log(incidents_1 + (-1 * min(incidents_1) + 1))
+[1] 82
+M21_log <- lm(log_incidents ~ training + mean_empathy + mean_years, 
+    data = data)
+[1] 83
+summary(M21_log)
+[1] 84
+
+Call:
+lm(formula = log_incidents ~ training + mean_empathy + mean_years, 
+    data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.27676 -0.08678 -0.00271  0.07438  0.35035 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.488538   0.026058  18.748  < 2e-16 ***
+training     -0.111288   0.016497  -6.746 1.67e-10 ***
+mean_empathy  0.018550   0.003372   5.501 1.17e-07 ***
+mean_years   -0.010283   0.002769  -3.713 0.000266 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1155 on 196 degrees of freedom
+Multiple R-squared:  0.2661,	Adjusted R-squared:  0.2549 
+F-statistic: 23.69 on 3 and 196 DF,  p-value: 3.963e-13
+
+shapiro.test(M21_log$residuals)
+[1] 85
+
+	Shapiro-Wilk normality test
+
+data:  M21_log$residuals
+W = 0.9905, p-value = 0.2109
+
+skew(M21_log$residuals)
+[1] 86
+[1] 0.2197987
+feedback <- as.factor(data$feedback)
+[1] 87
+M31 <- lm(incidents ~ feedback + mean_empathy + mean_years, data = data)
+[1] 88
+summary(M31)
+[1] 89
+
+Call:
+lm(formula = incidents ~ feedback + mean_empathy + mean_years, 
+    data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35580 -0.11148 -0.01097  0.11092  0.53552 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.276803   0.037281   7.425 3.38e-12 ***
+feedback      0.132132   0.023585   5.602 7.09e-08 ***
+mean_empathy  0.023187   0.004829   4.802 3.11e-06 ***
+mean_years   -0.012689   0.003975  -3.192  0.00165 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1663 on 196 degrees of freedom
+Multiple R-squared:  0.2175,	Adjusted R-squared:  0.2055 
+F-statistic: 18.16 on 3 and 196 DF,  p-value: 1.933e-10
+
+boxplot(incidents ~ feedback, data = data)
+[1] 90
+crPlots(M31)
+[1] 91
+qqPlot(M31)
+[1] 92
+ncvTest(M31)
+[1] 93
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.01731234, Df = 1, p = 0.89532
+durbinWatsonTest(M31)
+[1] 94
+ lag Autocorrelation D-W Statistic p-value
+   1       0.2738264      1.444081       0
+ Alternative hypothesis: rho != 0
+cooks3 <- cooks.distance(M31)
+[1] 95
+plot(cooks3)
+[1] 96
+which(cooks3 > 0.06)
+[1] 97
+137 
+137 
+cooks3[137]
+[1] 98
+       137 
+0.07122374 
+shapiro.test(M31$residuals)
+[1] 99
+
+	Shapiro-Wilk normality test
+
+data:  M31$residuals
+W = 0.98772, p-value = 0.08174
+
+AIC(M21, M31)
+[1] 100
+    df       AIC
+M21  5 -154.1654
+M31  5 -143.9591
+BIC(M21, M31)
+[1] 101
+    df       BIC
+M21  5 -137.6738
+M31  5 -127.4675
+M51 <- lm(incidents ~ training + feedback + training * feedback, 
+    data = data)
+[1] 102
+summary(M51)
+[1] 103
+
+Call:
+lm(formula = incidents ~ training + feedback + training * feedback, 
+    data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.40000 -0.10500  0.00000  0.08333  0.43333 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        0.61000    0.11568   5.273 3.53e-07 ***
+training          -0.21333    0.07316  -2.916  0.00396 ** 
+feedback           0.04333    0.07316   0.592  0.55433    
+training:feedback  0.05333    0.04627   1.153  0.25047    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1636 on 196 degrees of freedom
+Multiple R-squared:  0.2431,	Adjusted R-squared:  0.2315 
+F-statistic: 20.99 on 3 and 196 DF,  p-value: 7.827e-12
+
+dummy_training <- dummy.code(data$training)
+[1] 104
+dummy_feedback <- dummy.code(data$feedback)
+[1] 105
+M5 <- lm(incidents ~ dummy_training + dummy_feedback + dummy_training * 
+    dummy_feedback, data = data)
+[1] 106
+summary(M5)
+[1] 107
+
+Call:
+lm(formula = incidents ~ dummy_training + dummy_feedback + dummy_training * 
+    dummy_feedback, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.40000 -0.10500  0.00000  0.08333  0.43333 
+
+Coefficients: (5 not defined because of singularities)
+                                Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                      0.48333    0.02314  20.891  < 2e-16 ***
+dummy_training1                  0.10667    0.03272   3.260  0.00131 ** 
+dummy_training2                       NA         NA      NA       NA    
+dummy_feedback1                 -0.15000    0.03272  -4.585  8.1e-06 ***
+dummy_feedback2                       NA         NA      NA       NA    
+dummy_training1:dummy_feedback1  0.05333    0.04627   1.153  0.25047    
+dummy_training2:dummy_feedback1       NA         NA      NA       NA    
+dummy_training1:dummy_feedback2       NA         NA      NA       NA    
+dummy_training2:dummy_feedback2       NA         NA      NA       NA    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1636 on 196 degrees of freedom
+Multiple R-squared:  0.2431,	Adjusted R-squared:  0.2315 
+F-statistic: 20.99 on 3 and 196 DF,  p-value: 7.827e-12
+

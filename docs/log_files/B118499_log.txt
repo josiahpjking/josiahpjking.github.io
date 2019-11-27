@@ -1,0 +1,401 @@
+
+
+	####### B118499 R script #######
+
+install.packages("psych")
+[1] 1
+install.packages("interactions")
+[1] 2
+install.packages("car")
+[1] 3
+install.packages("MASS")
+[1] 4
+install.packages("ggplot2")
+[1] 5
+library(psych, quietly = T)
+[1] 6
+[1] "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(interactions, quietly = T)
+[1] 7
+ [1] "interactions" "psych"        "readr"        "stats"        "graphics"     "grDevices"    "utils"       
+ [8] "datasets"     "methods"      "base"        
+library(car, quietly = T)
+[1] 8
+ [1] "car"          "carData"      "interactions" "psych"        "readr"        "stats"        "graphics"    
+ [8] "grDevices"    "utils"        "datasets"     "methods"      "base"        
+library(ggplot2, quietly = T)
+[1] 9
+ [1] "ggplot2"      "car"          "carData"      "interactions" "psych"        "readr"        "stats"       
+ [8] "graphics"     "grDevices"    "utils"        "datasets"     "methods"      "base"        
+data <- read.csv("../RMS2_report_1920.csv")
+[1] 10
+describe(data)
+[1] 11
+          vars   n   mean    sd median trimmed   mad  min    max  range skew kurtosis   se
+subject      1 200 100.50 57.88 100.50  100.50 74.13 1.00 200.00 199.00 0.00    -1.22 4.09
+incidents    2 200   0.48  0.19   0.42    0.47  0.12 0.08   0.92   0.83 0.32    -0.31 0.01
+training     3 200   1.50  0.50   1.50    1.50  0.74 1.00   2.00   1.00 0.00    -2.01 0.04
+ [ reached 'max' / getOption("max.print") -- omitted 3 rows ]
+sum(is.na(data))
+[1] 12
+[1] 0
+str(data)
+[1] 13
+'data.frame':	200 obs. of  6 variables:
+ $ subject  : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ incidents: num  0.667 0.333 0.333 0.417 0.5 ...
+ $ training : int  2 2 2 2 2 2 2 2 2 2 ...
+ $ feedback : int  2 1 2 1 2 1 2 1 2 1 ...
+ $ empathy  : int  11 10 10 9 12 11 13 14 12 12 ...
+ $ years    : int  10 7 5 7 12 10 8 10 7 9 ...
+NULL
+sum(is.na(data))
+[1] 14
+[1] 0
+sum(is.nan(as.matrix(data)))
+[1] 15
+[1] 0
+data$training <- factor(data$training, levels = c(1, 2), labels = c("no traininng", 
+    "training"))
+[1] 16
+table(data$training)
+[1] 17
+
+no traininng     training 
+         100          100 
+data$feedback <- factor(data$feedback, levels = c(1, 2), labels = c("no feedback", 
+    "feedback"))
+[1] 18
+table(data$feedback)
+[1] 19
+
+no feedback    feedback 
+        100         100 
+data$incidents <- (data$incidents * 100)
+[1] 20
+M1 <- lm(scale(empathy) ~ years, data = data)
+[1] 21
+summary(M1)
+[1] 22
+
+Call:
+lm(formula = scale(empathy) ~ years, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.97192 -0.59754  0.02792  0.64474  2.30713 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -0.69717    0.19347  -3.603 0.000397 ***
+years        0.08575    0.02226   3.852 0.000158 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.9669 on 198 degrees of freedom
+Multiple R-squared:  0.06972,	Adjusted R-squared:  0.06502 
+F-statistic: 14.84 on 1 and 198 DF,  p-value: 0.0001582
+
+crPlots(M1)
+[1] 23
+plot(data$years, data$empathy, xlab = "empathy", ylab = "experience", 
+    main = "Relationship between empathy and experience", pch = 16)
+[1] 24
+plot(M1, which = 1)
+[1] 25
+M1a <- lm(scale(empathy) ~ years + I(years^2), data = data)
+[1] 26
+summary(M1a)
+[1] 27
+
+Call:
+lm(formula = scale(empathy) ~ years + I(years^2), data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.77645 -0.55225 -0.03293  0.46143  2.38949 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -3.542969   0.312115  -11.35   <2e-16 ***
+years        0.815324   0.071676   11.38   <2e-16 ***
+I(years^2)  -0.040853   0.003887  -10.51   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.776 on 197 degrees of freedom
+Multiple R-squared:  0.404,	Adjusted R-squared:  0.3979 
+F-statistic: 66.75 on 2 and 197 DF,  p-value: < 2.2e-16
+
+cooks1 <- cooks.distance(M1a)
+[1] 28
+which(cooks1 > 4/(200 - 1 - 1))
+[1] 29
+ 61  89 137 141 154 163 165 175 
+ 61  89 137 141 154 163 165 175 
+plot(M1a, which = 4)
+[1] 30
+abline(h = cooks.distance(M1a) > (4/(200 - 1 - 1)), col = "red")
+[1] 31
+plot(M1a, which = 5)
+[1] 32
+qqPlot(M1a$residuals)
+[1] 33
+hist(M1a$residuals)
+[1] 34
+shapiro.test(M1a$residuals)
+[1] 35
+
+	Shapiro-Wilk normality test
+
+data:  M1a$residuals
+W = 0.9941, p-value = 0.6155
+
+residualPlots(M1a)
+[1] 36
+ncvTest(M1a)
+[1] 37
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.5107658, Df = 1, p = 0.47481
+crPlots(M1a)
+[1] 38
+durbinWatsonTest(M1a)
+[1] 39
+ lag Autocorrelation D-W Statistic p-value
+   1      0.01288905      1.973855   0.896
+ Alternative hypothesis: rho != 0
+M2 <- lm(incidents ~ training + scale(empathy) + years, data = data)
+[1] 40
+summary(M2)
+[1] 41
+
+Call:
+lm(formula = incidents ~ training + scale(empathy) + years, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-35.648 -12.270  -1.474  10.105  53.180 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       66.5721     3.6551  18.214  < 2e-16 ***
+trainingtraining -15.2427     2.3166  -6.580 4.20e-10 ***
+scale(empathy)     6.4430     1.2014   5.363 2.29e-07 ***
+years             -1.4085     0.3889  -3.622 0.000372 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 16.21 on 196 degrees of freedom
+Multiple R-squared:  0.2565,	Adjusted R-squared:  0.2451 
+F-statistic: 22.53 on 3 and 196 DF,  p-value: 1.408e-12
+
+plot(M2, which = 1)
+[1] 42
+cooks2 <- cooks.distance(M2)
+[1] 43
+which(cooks2 > 4/(200 - 3 - 1))
+[1] 44
+ 13  35  74 137 165 
+ 13  35  74 137 165 
+plot(M2a, which = 4)
+[1] 45
+
+
+####################################################################################################
+
+[1] "Error in plot(M2a, which = 4) : object 'M2a' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in plot(M2a, which = 4): object 'M2a' not found>
+####################################################################################################
+
+
+abline(h = cooks.distance(M2) > (4/(200 - 3 - 1)), col = "red")
+[1] 46
+plot(M2, which = 5)
+[1] 47
+qqPlot(M2$residuals)
+[1] 48
+hist(M2$residuals)
+[1] 49
+shapiro.test(M2a$residuals)
+[1] 50
+[1] "Error : object 'M2a' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError: object 'M2a' not found>
+
+
+####################################################################################################
+
+[1] "Error : object 'M2a' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError: object 'M2a' not found>
+####################################################################################################
+
+
+residualPlots(M2)
+[1] 51
+ncvTest(M2)
+[1] 52
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.0293323, Df = 1, p = 0.86401
+crPlots(M2)
+[1] 53
+durbinWatsonTest(M2)
+[1] 54
+ lag Autocorrelation D-W Statistic p-value
+   1      -0.1072849      2.199897    0.12
+ Alternative hypothesis: rho != 0
+vif(M2)
+[1] 55
+      training scale(empathy)          years 
+      1.020633       1.092467       1.085089 
+M3 <- lm(incidents ~ feedback + scale(empathy) + years, data = data)
+[1] 56
+summary(M3)
+[1] 57
+
+Call:
+lm(formula = incidents ~ feedback + scale(empathy) + years, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-35.580 -11.148  -1.097  11.092  53.552 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       51.2093     3.5846  14.286  < 2e-16 ***
+feedbackfeedback  13.2132     2.3585   5.602 7.09e-08 ***
+scale(empathy)     5.8827     1.2251   4.802 3.11e-06 ***
+years             -1.2689     0.3975  -3.192  0.00165 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 16.63 on 196 degrees of freedom
+Multiple R-squared:  0.2175,	Adjusted R-squared:  0.2055 
+F-statistic: 18.16 on 3 and 196 DF,  p-value: 1.933e-10
+
+plot(M3, which = 1)
+[1] 58
+cooks3 <- cooks.distance(M3)
+[1] 59
+which(cooks3 > 4/(200 - 3 - 1))
+[1] 60
+ 73  74  89 137 156 160 165 176 
+ 73  74  89 137 156 160 165 176 
+plot(M3, which = 4)
+[1] 61
+abline(h = cooks.distance(M3) > (4/(200 - 3 - 1)), col = "red")
+[1] 62
+plot(M3, which = 5)
+[1] 63
+qqPlot(M3$residuals)
+[1] 64
+hist(M3$residuals)
+[1] 65
+shapiro.test(M3$residuals)
+[1] 66
+
+	Shapiro-Wilk normality test
+
+data:  M3$residuals
+W = 0.98772, p-value = 0.08174
+
+residualPlots(M3)
+[1] 67
+ncvTest(M3)
+[1] 68
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.01731234, Df = 1, p = 0.89532
+crPlots(M3)
+[1] 69
+durbinWatsonTest(M3)
+[1] 70
+ lag Autocorrelation D-W Statistic p-value
+   1       0.2738264      1.444081       0
+ Alternative hypothesis: rho != 0
+vif(M3)
+[1] 71
+      feedback scale(empathy)          years 
+      1.005211       1.079397       1.077467 
+BIC(M2, M3)
+[1] 72
+   df      BIC
+M2  5 1704.394
+M3  5 1714.601
+M4 <- lm(incidents ~ training * feedback, data = data)
+[1] 73
+summary(M4)
+[1] 74
+
+Call:
+lm(formula = incidents ~ training * feedback, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-40.000 -10.500   0.000   8.333  43.333 
+
+Coefficients:
+                                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                         49.333      2.314  21.323  < 2e-16 ***
+trainingtraining                   -16.000      3.272  -4.890 2.09e-06 ***
+feedbackfeedback                     9.667      3.272   2.954  0.00352 ** 
+trainingtraining:feedbackfeedback    5.333      4.627   1.153  0.25047    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 16.36 on 196 degrees of freedom
+Multiple R-squared:  0.2431,	Adjusted R-squared:  0.2315 
+F-statistic: 20.99 on 3 and 196 DF,  p-value: 7.827e-12
+
+ggplot(data, aes(x = feedback, incidents, fill = training)) + 
+    geom_boxplot()
+[1] 75
+cooks4 <- cooks.distance(M4)
+[1] 76
+which(cooks4 > (4/(200 - 3 - 1)))
+[1] 77
+  7  13  89 131 150 159 160 165 176 181 
+  7  13  89 131 150 159 160 165 176 181 
+plot(M4, which = 4)
+[1] 78
+abline(h = cooks.distance(M4) > (4/(200 - 3 - 1)), col = "red")
+[1] 79
+plot(M4, which = 5)
+[1] 80
+qqPlot(M4)
+[1] 81
+hist(M4$residuals)
+[1] 82
+shapiro.test(M4$residuals)
+[1] 83
+
+	Shapiro-Wilk normality test
+
+data:  M4$residuals
+W = 0.9767, p-value = 0.002072
+
+residualPlots(M4)
+[1] 84
+ncvTest(M4)
+[1] 85
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 1.881673, Df = 1, p = 0.17014
+durbinWatsonTest(M4)
+[1] 86
+ lag Autocorrelation D-W Statistic p-value
+   1       0.1114255      1.770733   0.118
+ Alternative hypothesis: rho != 0
+vif(M4)
+[1] 87
+         training          feedback training:feedback 
+                2                 2                 3 

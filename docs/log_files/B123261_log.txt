@@ -1,0 +1,620 @@
+
+
+	####### B123261 R script #######
+
+rm(list = ls())
+[1] 1
+library(psych, quietly = T)
+[1] 2
+[1] "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(lm.beta, quietly = T)
+[1] 3
+ [1] "lm.beta"   "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"  
+[10] "base"     
+library(car, quietly = T)
+[1] 4
+ [1] "car"       "carData"   "lm.beta"   "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"    
+[10] "datasets"  "methods"   "base"     
+library(interactions, quietly = T)
+[1] 5
+ [1] "interactions" "car"          "carData"      "lm.beta"      "psych"        "readr"        "stats"       
+ [8] "graphics"     "grDevices"    "utils"        "datasets"     "methods"      "base"        
+library(sandwich, quietly = T)
+[1] 6
+ [1] "sandwich"     "interactions" "car"          "carData"      "lm.beta"      "psych"        "readr"       
+ [8] "stats"        "graphics"     "grDevices"    "utils"        "datasets"     "methods"      "base"        
+library(lattice, quietly = T)
+[1] 7
+ [1] "lattice"      "sandwich"     "interactions" "car"          "carData"      "lm.beta"      "psych"       
+ [8] "readr"        "stats"        "graphics"     "grDevices"    "utils"        "datasets"     "methods"     
+[15] "base"        
+setwd("C:/Users/user/Desktop/RMS2/CW")
+[1] 8
+df <- read.csv("../RMS2_report_1920.csv")
+[1] 9
+str(df)
+[1] 10
+'data.frame':	200 obs. of  6 variables:
+ $ subject  : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ incidents: num  0.667 0.333 0.333 0.417 0.5 ...
+ $ training : int  2 2 2 2 2 2 2 2 2 2 ...
+ $ feedback : int  2 1 2 1 2 1 2 1 2 1 ...
+ $ empathy  : int  11 10 10 9 12 11 13 14 12 12 ...
+ $ years    : int  10 7 5 7 12 10 8 10 7 9 ...
+NULL
+df$training <- as.factor(df$training)
+[1] 11
+df$feedback <- as.factor(df$feedback)
+[1] 12
+describe(df)[c(2, 5, 6), c(2, 3, 4, 8, 9, 11, 12, 13)]
+[1] 13
+            n  mean   sd  min   max  skew kurtosis   se
+incidents 200  0.48 0.19 0.08  0.92  0.32    -0.31 0.01
+empathy   200 10.18 2.54 3.00 16.00 -0.37     0.23 0.18
+years     200  8.13 3.08 1.00 19.00  0.52     0.48 0.22
+summary(df[, c(3, 4)])
+[1] 14
+ training feedback
+ 1:100    1:100   
+ 2:100    2:100   
+xyplot(df$empathy ~ df$years, type = c("smooth", "p"), main = "relationship between years and empathy", 
+    xlab = "years", ylab = "empathy")
+[1] 15
+df$years_sq <- df$years^2
+[1] 16
+m1 <- lm(empathy ~ years + years_sq, data = df)
+[1] 17
+crPlots(m1)
+[1] 18
+hist(m1$residuals, main = "Histogram of residuals")
+[1] 19
+qqPlot(m1, main = "QQ-plot")
+[1] 20
+shapiro.test(m1$residuals)
+[1] 21
+
+	Shapiro-Wilk normality test
+
+data:  m1$residuals
+W = 0.9941, p-value = 0.6155
+
+residualPlots(m1, main = "Residual plots")
+[1] 22
+ncvTest(m1)
+[1] 23
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.5107658, Df = 1, p = 0.47481
+durbinWatsonTest(m1)
+[1] 24
+ lag Autocorrelation D-W Statistic p-value
+   1      0.01288905      1.973855   0.812
+ Alternative hypothesis: rho != 0
+vif(m1)
+[1] 25
+   years years_sq 
+ 16.0978  16.0978 
+plot(cooks.distance((m1)), main = "Cook's distance")
+[1] 26
+line <- 4/(200 - 1 - 1)
+[1] 27
+abline(h = line, col = "red")
+[1] 28
+out <- which(cooks.distance(m1) > line)
+[1] 29
+m1a <- lm(empathy ~ years + years_sq, data = df[-out, ])
+[1] 30
+summary(lm.beta(m1))
+[1] 31
+
+Call:
+lm(formula = empathy ~ years + years_sq, data = df)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5069 -1.4011 -0.0835  1.1707  6.0622 
+
+Coefficients:
+             Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)  1.186356     0.000000   0.791848   1.498    0.136    
+years        2.068508     2.510418   0.181845  11.375   <2e-16 ***
+years_sq    -0.103645    -2.319583   0.009861 -10.510   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.969 on 197 degrees of freedom
+Multiple R-squared:  0.404,	Adjusted R-squared:  0.3979 
+F-statistic: 66.75 on 2 and 197 DF,  p-value: < 2.2e-16
+
+summary(lm.beta(m1a))
+[1] 32
+
+Call:
+lm(formula = empathy ~ years + years_sq, data = df[-out, ])
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5344 -1.1205  0.1144  1.2235  4.8795 
+
+Coefficients:
+            Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)  0.84747      0.00000    0.96042   0.882    0.379    
+years        2.14585      2.51243    0.23421   9.162  < 2e-16 ***
+years_sq    -0.10772     -2.18326    0.01353  -7.962 1.54e-13 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.912 on 189 degrees of freedom
+Multiple R-squared:  0.3587,	Adjusted R-squared:  0.3519 
+F-statistic: 52.86 on 2 and 189 DF,  p-value: < 2.2e-16
+
+m2 <- lm(incidents ~ training + empathy + years, data = df)
+[1] 33
+summary(lm.beta(m2))
+[1] 34
+
+Call:
+lm(formula = incidents ~ training + empathy + years, data = df)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35648 -0.12270 -0.01474  0.10105  0.53180 
+
+Coefficients:
+             Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)  0.407320     0.000000   0.051814   7.861 2.48e-13 ***
+training2   -0.152427    -0.409414   0.023166  -6.580 4.20e-10 ***
+empathy      0.025396     0.345246   0.004735   5.363 2.29e-07 ***
+years       -0.014085    -0.232381   0.003889  -3.622 0.000372 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1621 on 196 degrees of freedom
+Multiple R-squared:  0.2565,	Adjusted R-squared:  0.2451 
+F-statistic: 22.53 on 3 and 196 DF,  p-value: 1.408e-12
+
+crPlots(m2)
+[1] 35
+hist(m2$residuals, main = "Histogram of residual")
+[1] 36
+qqPlot(m2, main = "QQ-plot")
+[1] 37
+shapiro.test(m2$residuals)
+[1] 38
+
+	Shapiro-Wilk normality test
+
+data:  m2$residuals
+W = 0.97994, p-value = 0.005838
+
+residualPlots(m2, main = "Residual plots")
+[1] 39
+ncvTest(m2)
+[1] 40
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.0293323, Df = 1, p = 0.86401
+durbinWatsonTest(m2)
+[1] 41
+ lag Autocorrelation D-W Statistic p-value
+   1      -0.1072849      2.199897   0.182
+ Alternative hypothesis: rho != 0
+vif(m2)
+[1] 42
+training  empathy    years 
+1.020633 1.092467 1.085089 
+plot(cooks.distance((m2)), main = "Cooks's distance")
+[1] 43
+line2 <- 4/(200 - 3 - 1)
+[1] 44
+abline(h = line2, col = "red")
+[1] 45
+out2 <- which(cooks.distance(m2) > line2)
+[1] 46
+m2a <- lm(incidents ~ training + empathy + years, data = df[-out2, 
+    ])
+[1] 47
+summary(lm.beta(m2))
+[1] 48
+
+Call:
+lm(formula = incidents ~ training + empathy + years, data = df)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35648 -0.12270 -0.01474  0.10105  0.53180 
+
+Coefficients:
+             Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)  0.407320     0.000000   0.051814   7.861 2.48e-13 ***
+training2   -0.152427    -0.409414   0.023166  -6.580 4.20e-10 ***
+empathy      0.025396     0.345246   0.004735   5.363 2.29e-07 ***
+years       -0.014085    -0.232381   0.003889  -3.622 0.000372 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1621 on 196 degrees of freedom
+Multiple R-squared:  0.2565,	Adjusted R-squared:  0.2451 
+F-statistic: 22.53 on 3 and 196 DF,  p-value: 1.408e-12
+
+summary(lm.beta(m2a))
+[1] 49
+
+Call:
+lm(formula = incidents ~ training + empathy + years, data = df[-out2, 
+    ])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.28818 -0.11426 -0.00621  0.09990  0.40582 
+
+Coefficients:
+             Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)  0.387561     0.000000   0.049420   7.842 3.04e-13 ***
+training2   -0.153846    -0.426157   0.021969  -7.003 4.16e-11 ***
+empathy      0.028505     0.396530   0.004568   6.240 2.76e-09 ***
+years       -0.016177    -0.267520   0.003838  -4.215 3.84e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1521 on 191 degrees of freedom
+Multiple R-squared:  0.3042,	Adjusted R-squared:  0.2932 
+F-statistic: 27.83 on 3 and 191 DF,  p-value: 5.621e-15
+
+m3 <- lm(incidents ~ feedback + empathy + years, data = df)
+[1] 50
+summary(lm.beta(m3))
+[1] 51
+
+Call:
+lm(formula = incidents ~ feedback + empathy + years, data = df)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35580 -0.11148 -0.01097  0.11092  0.53552 
+
+Coefficients:
+             Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)  0.276161     0.000000   0.054108   5.104 7.84e-07 ***
+feedback2    0.132132     0.354902   0.023585   5.602 7.09e-08 ***
+empathy      0.023187     0.315225   0.004829   4.802 3.11e-06 ***
+years       -0.012689    -0.209350   0.003975  -3.192  0.00165 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1663 on 196 degrees of freedom
+Multiple R-squared:  0.2175,	Adjusted R-squared:  0.2055 
+F-statistic: 18.16 on 3 and 196 DF,  p-value: 1.933e-10
+
+crPlots(m3)
+[1] 52
+hist(m3$residuals, main = "Histogram of residuals")
+[1] 53
+qqPlot(m3, main = "QQ-plot")
+[1] 54
+shapiro.test(m3$residuals)
+[1] 55
+
+	Shapiro-Wilk normality test
+
+data:  m3$residuals
+W = 0.98772, p-value = 0.08174
+
+residualPlots(m3, main = "Residual plots")
+[1] 56
+ncvTest(m3)
+[1] 57
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.01731234, Df = 1, p = 0.89532
+durbinWatsonTest(m3)
+[1] 58
+ lag Autocorrelation D-W Statistic p-value
+   1       0.2738264      1.444081       0
+ Alternative hypothesis: rho != 0
+vif(m3)
+[1] 59
+feedback  empathy    years 
+1.005211 1.079397 1.077467 
+plot(cooks.distance((m3)), main = "Cook's distance")
+[1] 60
+line3 <- 4/(200 - 3 - 1)
+[1] 61
+abline(h = line3, col = "red")
+[1] 62
+out3 <- which(cooks.distance(m3) > line3)
+[1] 63
+m3a <- lm(incidents ~ feedback + empathy + years, data = df[-out3, 
+    ])
+[1] 64
+summary(lm.beta(m3))
+[1] 65
+
+Call:
+lm(formula = incidents ~ feedback + empathy + years, data = df)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35580 -0.11148 -0.01097  0.11092  0.53552 
+
+Coefficients:
+             Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)  0.276161     0.000000   0.054108   5.104 7.84e-07 ***
+feedback2    0.132132     0.354902   0.023585   5.602 7.09e-08 ***
+empathy      0.023187     0.315225   0.004829   4.802 3.11e-06 ***
+years       -0.012689    -0.209350   0.003975  -3.192  0.00165 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1663 on 196 degrees of freedom
+Multiple R-squared:  0.2175,	Adjusted R-squared:  0.2055 
+F-statistic: 18.16 on 3 and 196 DF,  p-value: 1.933e-10
+
+summary(lm.beta(m3a))
+[1] 66
+
+Call:
+lm(formula = incidents ~ feedback + empathy + years, data = df[-out3, 
+    ])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.33584 -0.10475 -0.01065  0.11221  0.43819 
+
+Coefficients:
+             Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)  0.228136     0.000000   0.049968   4.566 8.98e-06 ***
+feedback2    0.143324     0.406888   0.021760   6.586 4.39e-10 ***
+empathy      0.026288     0.372103   0.004614   5.697 4.63e-08 ***
+years       -0.011985    -0.202136   0.003870  -3.097  0.00225 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1506 on 188 degrees of freedom
+Multiple R-squared:  0.2838,	Adjusted R-squared:  0.2724 
+F-statistic: 24.83 on 3 and 188 DF,  p-value: 1.402e-13
+
+m4 <- lm(incidents ~ training + feedback, data = df)
+[1] 67
+m4_c1 <- lm(incidents ~ training + feedback + empathy, data = df)
+[1] 68
+m4_c2 <- lm(incidents ~ training + feedback + years, data = df)
+[1] 69
+m4_c3 <- lm(incidents ~ training + feedback + empathy + years, 
+    data = df)
+[1] 70
+AIC(m4, m4_c1, m4_c2, m4_c3)
+[1] 71
+      df       AIC
+m4     4 -151.2608
+m4_c1  5 -174.0881
+m4_c2  5 -155.1796
+m4_c3  6 -190.0499
+BIC(m4, m4_c1, m4_c2, m4_c3)
+[1] 72
+      df       BIC
+m4     4 -138.0675
+m4_c1  5 -157.5965
+m4_c2  5 -138.6880
+m4_c3  6 -170.2600
+crPlots(m4_c3)
+[1] 73
+hist(m4_c3$residuals, main = "Histogrm of residuals")
+[1] 74
+qqPlot(m4_c3, main = "QQ-plot")
+[1] 75
+shapiro.test(m4_c3$residuals)
+[1] 76
+
+	Shapiro-Wilk normality test
+
+data:  m4_c3$residuals
+W = 0.98734, p-value = 0.07172
+
+residualPlots(m4_c3, main = "Residual plots")
+[1] 77
+ncvTest(m4_c3)
+[1] 78
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 3.684027, Df = 1, p = 0.054936
+durbinWatsonTest(m4_c3)
+[1] 79
+ lag Autocorrelation D-W Statistic p-value
+   1      0.07303546      1.841386   0.256
+ Alternative hypothesis: rho != 0
+vif(m4_c3)
+[1] 80
+training feedback  empathy    years 
+1.020743 1.005320 1.097109 1.087722 
+plot(cooks.distance((m4_c3)), main = "Cook's distance")
+[1] 81
+line4 <- 4/(200 - 4 - 1)
+[1] 82
+abline(h = line4, col = "red")
+[1] 83
+out4 <- which(cooks.distance(m4_c3) > line4)
+[1] 84
+m4a <- lm(incidents ~ training + feedback + empathy + years, 
+    df[-out4, ])
+[1] 85
+summary(lm.beta(m4_c3))
+[1] 86
+
+Call:
+lm(formula = incidents ~ training + feedback + empathy + years, 
+    data = df)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.31626 -0.10096 -0.00949  0.09165  0.46650 
+
+Coefficients:
+             Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)  0.331953     0.000000   0.048708   6.815 1.15e-10 ***
+training2   -0.153824    -0.413166   0.021128  -7.281 7.98e-12 ***
+feedback2    0.133715     0.359153   0.020968   6.377 1.28e-09 ***
+empathy      0.027191     0.369652   0.004328   6.283 2.12e-09 ***
+years       -0.015199    -0.250763   0.003551  -4.281 2.92e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1479 on 195 degrees of freedom
+Multiple R-squared:  0.3848,	Adjusted R-squared:  0.3721 
+F-statistic: 30.49 on 4 and 195 DF,  p-value: < 2.2e-16
+
+summary(lm.beta(m4a))
+[1] 87
+
+Call:
+lm(formula = incidents ~ training + feedback + empathy + years, 
+    data = df[-out4, ])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30197 -0.09301 -0.00430  0.09141  0.36025 
+
+Coefficients:
+             Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)  0.328404     0.000000   0.045243   7.259 1.05e-11 ***
+training2   -0.153419    -0.431957   0.019134  -8.018 1.19e-13 ***
+feedback2    0.140371     0.395284   0.019014   7.383 5.12e-12 ***
+empathy      0.028642     0.399073   0.004022   7.121 2.30e-11 ***
+years       -0.017718    -0.295169   0.003365  -5.266 3.85e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.131 on 185 degrees of freedom
+Multiple R-squared:  0.4702,	Adjusted R-squared:  0.4588 
+F-statistic: 41.05 on 4 and 185 DF,  p-value: < 2.2e-16
+
+int_training <- as.integer(df$training) - 1
+[1] 88
+int_feedback <- as.integer(df$feedback) - 1
+[1] 89
+training_feedback <- int_training * int_feedback
+[1] 90
+m5 <- lm(incidents ~ training + feedback + empathy + years + 
+    training_feedback, data = df)
+[1] 91
+summary(lm.beta(m5))
+[1] 92
+
+Call:
+lm(formula = incidents ~ training + feedback + empathy + years + 
+    training_feedback, data = df)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30367 -0.10365 -0.00795  0.08806  0.44359 
+
+Coefficients:
+                   Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)        0.345467     0.000000   0.048515   7.121 2.04e-11 ***
+training2         -0.203496    -0.546585   0.029874  -6.812 1.18e-10 ***
+feedback2          0.085558     0.229806   0.029299   2.920  0.00391 ** 
+empathy            0.028695     0.390098   0.004328   6.630 3.25e-10 ***
+years             -0.015720    -0.259362   0.003518  -4.468 1.34e-05 ***
+training_feedback  0.097334     0.226410   0.041840   2.326  0.02103 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1462 on 194 degrees of freedom
+Multiple R-squared:  0.4015,	Adjusted R-squared:  0.386 
+F-statistic: 26.02 on 5 and 194 DF,  p-value: < 2.2e-16
+
+crPlots(m5)
+[1] 93
+hist(m5$residuals, main = "Histogram of residuals")
+[1] 94
+qqPlot(m5, main = "QQ-plot")
+[1] 95
+shapiro.test(m5$residuals)
+[1] 96
+
+	Shapiro-Wilk normality test
+
+data:  m5$residuals
+W = 0.98794, p-value = 0.08817
+
+residualPlots(m5, main = "Residual plots")
+[1] 97
+ncvTest(m5)
+[1] 98
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 4.398557, Df = 1, p = 0.035969
+durbinWatsonTest(m5)
+[1] 99
+ lag Autocorrelation D-W Statistic p-value
+   1      0.09456969      1.801048   0.164
+ Alternative hypothesis: rho != 0
+vif(m5)
+[1] 100
+         training          feedback           empathy             years training_feedback 
+         2.086826          2.007327          1.122147          1.092150          3.070068 
+plot(cooks.distance((m5)), main = "Cook's distance")
+[1] 101
+line5 <- 4/(200 - 5 - 1)
+[1] 102
+abline(h = line5, col = "red")
+[1] 103
+out5 <- which(cooks.distance(m5) > line5)
+[1] 104
+training_feedback_out <- training_feedback[-out5]
+[1] 105
+m5a <- lm(incidents ~ training + feedback + empathy + years + 
+    training_feedback_out, data = df[-out5, ])
+[1] 106
+summary(lm.beta(m5))
+[1] 107
+
+Call:
+lm(formula = incidents ~ training + feedback + empathy + years + 
+    training_feedback, data = df)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30367 -0.10365 -0.00795  0.08806  0.44359 
+
+Coefficients:
+                   Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)        0.345467     0.000000   0.048515   7.121 2.04e-11 ***
+training2         -0.203496    -0.546585   0.029874  -6.812 1.18e-10 ***
+feedback2          0.085558     0.229806   0.029299   2.920  0.00391 ** 
+empathy            0.028695     0.390098   0.004328   6.630 3.25e-10 ***
+years             -0.015720    -0.259362   0.003518  -4.468 1.34e-05 ***
+training_feedback  0.097334     0.226410   0.041840   2.326  0.02103 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1462 on 194 degrees of freedom
+Multiple R-squared:  0.4015,	Adjusted R-squared:  0.386 
+F-statistic: 26.02 on 5 and 194 DF,  p-value: < 2.2e-16
+
+summary(lm.beta(m5a))
+[1] 108
+
+Call:
+lm(formula = incidents ~ training + feedback + empathy + years + 
+    training_feedback_out, data = df[-out5, ])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.28269 -0.09632  0.00081  0.09067  0.34167 
+
+Coefficients:
+                       Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)            0.312353     0.000000   0.044361   7.041 3.62e-11 ***
+training2             -0.184679    -0.529162   0.027340  -6.755 1.80e-10 ***
+feedback2              0.094956     0.272048   0.027103   3.504 0.000576 ***
+empathy                0.030839     0.443082   0.004103   7.516 2.35e-12 ***
+years                 -0.016135    -0.274287   0.003427  -4.708 4.89e-06 ***
+training_feedback_out  0.084936     0.209650   0.038572   2.202 0.028899 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1315 on 185 degrees of freedom
+Multiple R-squared:  0.4496,	Adjusted R-squared:  0.4348 
+F-statistic: 30.23 on 5 and 185 DF,  p-value: < 2.2e-16
+

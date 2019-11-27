@@ -1,0 +1,1496 @@
+
+
+	####### B120636 R script #######
+
+library(psych, quietly = T)
+[1] 1
+[1] "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(car, quietly = T)
+[1] 2
+ [1] "car"       "carData"   "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets" 
+[10] "methods"   "base"     
+library(jtools, quietly = T)
+[1] 3
+ [1] "jtools"    "car"       "carData"   "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"    
+[10] "datasets"  "methods"   "base"     
+library(interactions, quietly = T)
+[1] 4
+ [1] "interactions" "jtools"       "car"          "carData"      "psych"        "readr"        "stats"       
+ [8] "graphics"     "grDevices"    "utils"        "datasets"     "methods"      "base"        
+library(ggplot2, quietly = T)
+[1] 5
+ [1] "ggplot2"      "interactions" "jtools"       "car"          "carData"      "psych"        "readr"       
+ [8] "stats"        "graphics"     "grDevices"    "utils"        "datasets"     "methods"      "base"        
+library(sandwich, quietly = T)
+[1] 6
+ [1] "sandwich"     "ggplot2"      "interactions" "jtools"       "car"          "carData"      "psych"       
+ [8] "readr"        "stats"        "graphics"     "grDevices"    "utils"        "datasets"     "methods"     
+[15] "base"        
+library(lm.beta, quietly = T)
+[1] 7
+ [1] "lm.beta"      "sandwich"     "ggplot2"      "interactions" "jtools"       "car"          "carData"     
+ [8] "psych"        "readr"        "stats"        "graphics"     "grDevices"    "utils"        "datasets"    
+[15] "methods"      "base"        
+library(sjPlot, quietly = T)
+[1] 8
+ [1] "sjPlot"       "lm.beta"      "sandwich"     "ggplot2"      "interactions" "jtools"       "car"         
+ [8] "carData"      "psych"        "readr"        "stats"        "graphics"     "grDevices"    "utils"       
+[15] "datasets"     "methods"      "base"        
+cwrk <- read.csv("../RMS2_report_1920.csv")
+[1] 9
+describe(cwrk)[, c(2:4, 8, 9)]
+[1] 10
+            n   mean    sd  min    max
+subject   200 100.50 57.88 1.00 200.00
+incidents 200   0.48  0.19 0.08   0.92
+training  200   1.50  0.50 1.00   2.00
+feedback  200   1.50  0.50 1.00   2.00
+empathy   200  10.18  2.54 3.00  16.00
+years     200   8.13  3.08 1.00  19.00
+head(cwrk)
+[1] 11
+  subject incidents training feedback empathy years
+1       1 0.6666667        2        2      11    10
+2       2 0.3333333        2        1      10     7
+3       3 0.3333333        2        2      10     5
+4       4 0.4166667        2        1       9     7
+5       5 0.5000000        2        2      12    12
+6       6 0.2500000        2        1      11    10
+str(cwrk)
+[1] 12
+'data.frame':	200 obs. of  6 variables:
+ $ subject  : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ incidents: num  0.667 0.333 0.333 0.417 0.5 ...
+ $ training : int  2 2 2 2 2 2 2 2 2 2 ...
+ $ feedback : int  2 1 2 1 2 1 2 1 2 1 ...
+ $ empathy  : int  11 10 10 9 12 11 13 14 12 12 ...
+ $ years    : int  10 7 5 7 12 10 8 10 7 9 ...
+NULL
+cwrk$training <- as.factor(cwrk$training)
+[1] 13
+str(cwrk$training)
+[1] 14
+ Factor w/ 2 levels "1","2": 2 2 2 2 2 2 2 2 2 2 ...
+NULL
+cwrk$training <- factor(cwrk$training, labels = c("No Training", 
+    "Training"))
+[1] 15
+str(cwrk$training)
+[1] 16
+ Factor w/ 2 levels "No Training",..: 2 2 2 2 2 2 2 2 2 2 ...
+NULL
+contrasts(cwrk$training)
+[1] 17
+            Training
+No Training        0
+Training           1
+cwrk$feedback <- as.factor(cwrk$feedback)
+[1] 18
+str(cwrk$feedback)
+[1] 19
+ Factor w/ 2 levels "1","2": 2 1 2 1 2 1 2 1 2 1 ...
+NULL
+cwrk$feedback <- factor(cwrk$feedback, labels = c("No Feedback", 
+    "Feedback"))
+[1] 20
+str(cwrk$feedback)
+[1] 21
+ Factor w/ 2 levels "No Feedback",..: 2 1 2 1 2 1 2 1 2 1 ...
+NULL
+contrasts(cwrk$feedback)
+[1] 22
+            Feedback
+No Feedback        0
+Feedback           1
+tab <- summary(cwrk[, 3:4])
+[1] 23
+mean(cwrk$years)
+[1] 24
+[1] 8.13
+cwrk$year_mean <- cwrk$years - mean(cwrk$years)
+[1] 25
+lmee <- lm(scale(empathy) ~ year_mean, data = cwrk)
+[1] 26
+plot(cwrk$year_mean, cwrk$empathy, xlab = "Experience(years, mean centred)", 
+    ylab = "Baseline Empathy", pch = 16)
+[1] 27
+lines(lowess(cwrk$year_mean, cwrk$empathy))
+[1] 28
+summary(lmee)
+[1] 29
+
+Call:
+lm(formula = scale(empathy) ~ year_mean, data = cwrk)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.97192 -0.59754  0.02792  0.64474  2.30713 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -3.544e-16  6.837e-02   0.000 1.000000    
+year_mean    8.575e-02  2.226e-02   3.852 0.000158 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.9669 on 198 degrees of freedom
+Multiple R-squared:  0.06972,	Adjusted R-squared:  0.06502 
+F-statistic: 14.84 on 1 and 198 DF,  p-value: 0.0001582
+
+plot(lmee, ask = F)
+[1] 30
+ggplot(data = cwrk, aes(year_mean, scale(empathy))) + geom_point() + 
+    geom_smooth(method = "loess", level = 0.95) + geom_smooth(method = "lm", 
+    level = 0.95) + labs(x = "Experience (years, mean-centred)", 
+    y = "Standardised Empathy (SD units)")
+[1] 31
+qqPlot(lmee)
+[1] 32
+hist(lmee$residuals, breaks = 20)
+[1] 33
+shapiro.test(lmee$residuals)
+[1] 34
+
+	Shapiro-Wilk normality test
+
+data:  lmee$residuals
+W = 0.98911, p-value = 0.1321
+
+residualPlots(lmee)
+[1] 35
+ncvTest(lmee)
+[1] 36
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.9815033, Df = 1, p = 0.32183
+crPlots(lmee)
+[1] 37
+cooksee <- cooks.distance(lmee)
+[1] 38
+which(cooksee > (4/(200 - 1 - 1)))
+[1] 39
+ 16  61  88  89  94 108 137 141 154 163 171 175 192 200 
+ 16  61  88  89  94 108 137 141 154 163 171 175 192 200 
+plot(lmee, which = 4)
+[1] 40
+abline(h = (4/(200 - 1 - 1)))
+[1] 41
+lmee1 <- lm(scale(empathy) ~ year_mean, data = cwrk[-c(137, 154), 
+    ])
+[1] 42
+summary(lmee1)
+[1] 43
+
+Call:
+lm(formula = scale(empathy) ~ year_mean, data = cwrk[-c(137, 
+    154), ])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.53450 -0.69427  0.03609  0.59103  2.30953 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.01275    0.06667   0.191    0.849    
+year_mean    0.12173    0.02295   5.304 3.04e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.9375 on 196 degrees of freedom
+Multiple R-squared:  0.1255,	Adjusted R-squared:  0.1211 
+F-statistic: 28.13 on 1 and 196 DF,  p-value: 3.041e-07
+
+plot(lmee1, which = 4)
+[1] 44
+abline(h = (4/(198 - 1 - 1)))
+[1] 45
+qqPlot(lmee1)
+[1] 46
+hist(lmee1$residuals, breaks = 20)
+[1] 47
+shapiro.test(lmee1$residuals)
+[1] 48
+
+	Shapiro-Wilk normality test
+
+data:  lmee1$residuals
+W = 0.99227, p-value = 0.3796
+
+residualPlots(lmee1)
+[1] 49
+ncvTest(lmee1)
+[1] 50
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.05234551, Df = 1, p = 0.81903
+crPlots(lmee1)
+[1] 51
+lmee4 <- lm(scale(empathy) ~ year_mean + I((year_mean^2)), data = cwrk)
+[1] 52
+summary(lmee4)
+[1] 53
+
+Call:
+lm(formula = scale(empathy) ~ year_mean + I((year_mean^2)), data = cwrk)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.77645 -0.55225 -0.03293  0.46143  2.38949 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.385369   0.065991   5.840 2.13e-08 ***
+year_mean         0.151057   0.018914   7.986 1.13e-13 ***
+I((year_mean^2)) -0.040853   0.003887 -10.510  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.776 on 197 degrees of freedom
+Multiple R-squared:  0.404,	Adjusted R-squared:  0.3979 
+F-statistic: 66.75 on 2 and 197 DF,  p-value: < 2.2e-16
+
+plot(lmee4, ask = F)
+[1] 54
+plot_model(lmee4, type = "diag")
+[1] 55
+NULL
+cooksee2 <- cooks.distance(lmee4)
+[1] 56
+which(cooksee2 > (4/(200 - 2 - 1)))
+[1] 57
+ 61  89 137 141 154 163 165 175 
+ 61  89 137 141 154 163 165 175 
+plot(lmee4, which = 4)
+[1] 58
+abline(h = (4/(200 - 2 - 1)))
+[1] 59
+lmee5 <- lm(scale(empathy) ~ year_mean + I((year_mean^2)), data = cwrk[-c(154), 
+    ])
+[1] 60
+plot(lmee5, which = 4)
+[1] 61
+abline(h = (4/(199 - 2 - 1)))
+[1] 62
+plot(lmee5, ask = F)
+[1] 63
+cooksee3 <- cooks.distance(lmee5)
+[1] 64
+which(cooksee3 > (4/(198 - 2 - 1)))
+[1] 65
+ 89 137 163 165 175 
+ 89 137 162 164 174 
+lmee6 <- lm(scale(empathy) ~ year_mean + I(year_mean^2), data = cwrk[-c(154, 
+    137), ])
+[1] 66
+plot(lmee6, which = 4)
+[1] 67
+abline(h = (4/(198 - 2 - 1)))
+[1] 68
+summary(lmee4)
+[1] 69
+
+Call:
+lm(formula = scale(empathy) ~ year_mean + I((year_mean^2)), data = cwrk)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.77645 -0.55225 -0.03293  0.46143  2.38949 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.385369   0.065991   5.840 2.13e-08 ***
+year_mean         0.151057   0.018914   7.986 1.13e-13 ***
+I((year_mean^2)) -0.040853   0.003887 -10.510  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.776 on 197 degrees of freedom
+Multiple R-squared:  0.404,	Adjusted R-squared:  0.3979 
+F-statistic: 66.75 on 2 and 197 DF,  p-value: < 2.2e-16
+
+summary(lmee5)
+[1] 70
+
+Call:
+lm(formula = scale(empathy) ~ year_mean + I((year_mean^2)), data = cwrk[-c(154), 
+    ])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.79586 -0.54488  0.02395  0.49215  2.40815 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.395782   0.068206   5.803 2.59e-08 ***
+year_mean         0.150062   0.019149   7.836 2.88e-13 ***
+I((year_mean^2)) -0.043614   0.004446  -9.809  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.7816 on 196 degrees of freedom
+Multiple R-squared:  0.3953,	Adjusted R-squared:  0.3891 
+F-statistic: 64.05 on 2 and 196 DF,  p-value: < 2.2e-16
+
+summary(lmee6)
+[1] 71
+
+Call:
+lm(formula = scale(empathy) ~ year_mean + I(year_mean^2), data = cwrk[-c(154, 
+    137), ])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.80685 -0.51504  0.02481  0.50578  2.41744 
+
+Coefficients:
+                Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     0.405627   0.070301   5.770 3.08e-08 ***
+year_mean       0.147901   0.019426   7.614 1.12e-12 ***
+I(year_mean^2) -0.046227   0.005028  -9.195  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.785 on 195 degrees of freedom
+Multiple R-squared:   0.39,	Adjusted R-squared:  0.3837 
+F-statistic: 62.33 on 2 and 195 DF,  p-value: < 2.2e-16
+
+residualPlots(lmee4)
+[1] 72
+residualPlots(lmee5)
+[1] 73
+residualPlots(lmee6)
+[1] 74
+ncvTest(lmee4)
+[1] 75
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.5107658, Df = 1, p = 0.47481
+ncvTest(lmee5)
+[1] 76
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.5950424, Df = 1, p = 0.44048
+ncvTest(lmee6)
+[1] 77
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.7326832, Df = 1, p = 0.39201
+crPlots(lmee4)
+[1] 78
+crPlots(lmee5)
+[1] 79
+crPlots(lmee6)
+[1] 80
+qqPlot(lmee4)
+[1] 81
+qqPlot(lmee5)
+[1] 82
+qqPlot(lmee6)
+[1] 83
+hist(lmee4$residuals, breaks = 20)
+[1] 84
+hist(lmee5$residuals, breaks = 20)
+[1] 85
+hist(lmee6$residuals, breaks = 20)
+[1] 86
+shapiro.test(lmee4$residuals)
+[1] 87
+
+	Shapiro-Wilk normality test
+
+data:  lmee4$residuals
+W = 0.9941, p-value = 0.6155
+
+shapiro.test(lmee5$residuals)
+[1] 88
+
+	Shapiro-Wilk normality test
+
+data:  lmee5$residuals
+W = 0.9944, p-value = 0.6637
+
+shapiro.test(lmee6$residuals)
+[1] 89
+
+	Shapiro-Wilk normality test
+
+data:  lmee6$residuals
+W = 0.99451, p-value = 0.6835
+
+durbinWatsonTest(lmee)
+[1] 90
+ lag Autocorrelation D-W Statistic p-value
+   1       0.1017162      1.769879   0.102
+ Alternative hypothesis: rho != 0
+durbinWatsonTest(lmee4)
+[1] 91
+ lag Autocorrelation D-W Statistic p-value
+   1      0.01288905      1.973855    0.84
+ Alternative hypothesis: rho != 0
+durbinWatsonTest(lmee5)
+[1] 92
+ lag Autocorrelation D-W Statistic p-value
+   1     0.006047804      1.987541    0.91
+ Alternative hypothesis: rho != 0
+durbinWatsonTest(lmee6)
+[1] 93
+ lag Autocorrelation D-W Statistic p-value
+   1     -0.01475371      2.029029   0.868
+ Alternative hypothesis: rho != 0
+vif(lmee4)
+[1] 94
+       year_mean I((year_mean^2)) 
+        1.120963         1.120963 
+vif(lmee5)
+[1] 95
+       year_mean I((year_mean^2)) 
+        1.061165         1.061165 
+vif(lmee6)
+[1] 96
+     year_mean I(year_mean^2) 
+      1.021945       1.021945 
+lmee4_coef <- summary(lmee4)
+[1] 97
+lmee5_coef <- summary(lmee5)
+[1] 98
+lmee6_coef <- summary(lmee6)
+[1] 99
+lmee4_coef
+
+
+Call:
+lm(formula = scale(empathy) ~ year_mean + I((year_mean^2)), data = cwrk)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.77645 -0.55225 -0.03293  0.46143  2.38949 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.385369   0.065991   5.840 2.13e-08 ***
+year_mean         0.151057   0.018914   7.986 1.13e-13 ***
+I((year_mean^2)) -0.040853   0.003887 -10.510  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.776 on 197 degrees of freedom
+Multiple R-squared:  0.404,	Adjusted R-squared:  0.3979 
+F-statistic: 66.75 on 2 and 197 DF,  p-value: < 2.2e-16
+
+
+
+compare_lmee <- data.frame(round(lmee4_coef$coefficients[, 1], 
+    3), round(lmee4_coef$coefficients[, 4], 4), round(lmee5_coef$coefficients[, 
+    1], 3), round(lmee5_coef$coefficients[, 4], 4), round(lmee6_coef$coefficients[, 
+    1], 3), round(lmee6_coef$coefficients[, 4], 4))
+[1] 101
+colnames(compare_lmee) <- c("lmee4 Coef", "lmee4 p-value", "lmee5 Coef", 
+    "lmee5 p-value", "lmee6 Coef", "lmee6 p-value")
+[1] 102
+compare_lmee
+
+                 lmee4 Coef lmee4 p-value lmee5 Coef lmee5 p-value lmee6 Coef lmee6 p-value
+(Intercept)           0.385             0      0.396             0      0.406             0
+year_mean             0.151             0      0.150             0      0.148             0
+I((year_mean^2))     -0.041             0     -0.044             0     -0.046             0
+
+
+(-0.151)/(2 * (-0.041))
+[1] 104
+[1] 1.841463
+plot(cwrk$empathy, cwrk$incidents)
+[1] 105
+mod1 <- lm(incidents ~ empathy, data = cwrk)
+[1] 106
+abline(mod1)
+[1] 107
+lines(lowess(cwrk$empathy, cwrk$incidents))
+[1] 108
+plot(cwrk$years, cwrk$incidents)
+[1] 109
+mod2 <- lm(incidents ~ years, data = cwrk)
+[1] 110
+abline(mod2)
+[1] 111
+lines(lowess(cwrk$years, cwrk$incidents))
+[1] 112
+describe(cwrk)
+[1] 113
+          vars   n   mean    sd median trimmed   mad  min    max  range skew kurtosis   se
+subject      1 200 100.50 57.88 100.50  100.50 74.13 1.00 200.00 199.00 0.00    -1.22 4.09
+incidents    2 200   0.48  0.19   0.42    0.47  0.12 0.08   0.92   0.83 0.32    -0.31 0.01
+training*    3 200   1.50  0.50   1.50    1.50  0.74 1.00   2.00   1.00 0.00    -2.01 0.04
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+contrasts(cwrk$training)
+[1] 114
+            Training
+No Training        0
+Training           1
+lmt <- lm(incidents ~ training + scale(empathy) + year_mean, 
+    data = cwrk)
+[1] 115
+summary(lmt)
+[1] 116
+
+Call:
+lm(formula = incidents ~ training + scale(empathy) + year_mean, 
+    data = cwrk)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35648 -0.12270 -0.01474  0.10105  0.53180 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.551213   0.016298  33.821  < 2e-16 ***
+trainingTraining -0.152427   0.023166  -6.580 4.20e-10 ***
+scale(empathy)    0.064430   0.012014   5.363 2.29e-07 ***
+year_mean        -0.014085   0.003889  -3.622 0.000372 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1621 on 196 degrees of freedom
+Multiple R-squared:  0.2565,	Adjusted R-squared:  0.2451 
+F-statistic: 22.53 on 3 and 196 DF,  p-value: 1.408e-12
+
+plot(cwrk$training, cwrk$incidents)
+[1] 117
+ggplot(data = cwrk, aes(training, incidents)) + geom_boxplot() + 
+    labs(y = "Incidents", x = "Training")
+[1] 118
+reslmt <- summary(lmt)
+[1] 119
+pt(coef(reslmt)[, 3], lmt$df, lower = FALSE)
+[1] 120
+     (Intercept) trainingTraining   scale(empathy)        year_mean 
+    4.767346e-84     1.000000e+00     1.146454e-07     9.998138e-01 
+cookst <- cooks.distance(lmt)
+[1] 121
+which(cookst > 4/(200 - 3 - 1))
+[1] 122
+ 13  35  74 137 165 
+ 13  35  74 137 165 
+plot(lmt, which = 4)
+[1] 123
+abline(h = (4/(200 - 3 - 1)))
+[1] 124
+plot(lmt, ask = F)
+[1] 125
+plot_model(lmt, type = "diag")
+[1] 126
+NULL
+lmt1 <- lm(incidents ~ training + scale(empathy) + year_mean, 
+    data = cwrk[-c(137), ])
+[1] 127
+summary(lmt)
+[1] 128
+
+Call:
+lm(formula = incidents ~ training + scale(empathy) + year_mean, 
+    data = cwrk)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35648 -0.12270 -0.01474  0.10105  0.53180 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.551213   0.016298  33.821  < 2e-16 ***
+trainingTraining -0.152427   0.023166  -6.580 4.20e-10 ***
+scale(empathy)    0.064430   0.012014   5.363 2.29e-07 ***
+year_mean        -0.014085   0.003889  -3.622 0.000372 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1621 on 196 degrees of freedom
+Multiple R-squared:  0.2565,	Adjusted R-squared:  0.2451 
+F-statistic: 22.53 on 3 and 196 DF,  p-value: 1.408e-12
+
+summary(lmt1)
+[1] 129
+
+Call:
+lm(formula = incidents ~ training + scale(empathy) + year_mean, 
+    data = cwrk[-c(137), ])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.36356 -0.12093 -0.01069  0.09901  0.53229 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.549533   0.016261  33.795  < 2e-16 ***
+trainingTraining -0.150984   0.023048  -6.551 4.97e-10 ***
+scale(empathy)    0.068142   0.012098   5.633 6.13e-08 ***
+year_mean        -0.016009   0.004011  -3.991 9.30e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1612 on 195 degrees of freedom
+Multiple R-squared:  0.2674,	Adjusted R-squared:  0.2561 
+F-statistic: 23.73 on 3 and 195 DF,  p-value: 3.911e-13
+
+plot(lmt1, ask = F)
+[1] 130
+plot(lmt1, which = 4)
+[1] 131
+abline(h = (4/(199 - 3 - 1)))
+[1] 132
+reslmt1 <- summary(lmt1)
+[1] 133
+pt(coef(reslmt1)[, 3], lmt1$df, lower = FALSE)
+[1] 134
+     (Intercept) trainingTraining   scale(empathy)        year_mean 
+    9.266001e-84     1.000000e+00     3.067171e-08     9.999535e-01 
+qqPlot(lmt)
+[1] 135
+qqPlot(lmt1)
+[1] 136
+hist(lmt$residuals, breaks = 20)
+[1] 137
+hist(lmt1$residuals, breaks = 20)
+[1] 138
+shapiro.test(lmt$residuals)
+[1] 139
+
+	Shapiro-Wilk normality test
+
+data:  lmt$residuals
+W = 0.97994, p-value = 0.005838
+
+shapiro.test(lmt1$residuals)
+[1] 140
+
+	Shapiro-Wilk normality test
+
+data:  lmt1$residuals
+W = 0.98092, p-value = 0.008294
+
+lmt3 <- (lm((sqrt(incidents)) ~ training + scale(empathy) + year_mean, 
+    data = cwrk))
+[1] 141
+summary(lmt3)
+[1] 142
+
+Call:
+lm(formula = (sqrt(incidents)) ~ training + scale(empathy) + 
+    year_mean, data = cwrk)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30419 -0.08520  0.00119  0.07633  0.35234 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.733845   0.012120  60.550  < 2e-16 ***
+trainingTraining -0.118020   0.017227  -6.851 9.26e-11 ***
+scale(empathy)    0.050049   0.008934   5.602 7.10e-08 ***
+year_mean        -0.011010   0.002892  -3.807 0.000188 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1206 on 196 degrees of freedom
+Multiple R-squared:  0.273,	Adjusted R-squared:  0.2619 
+F-statistic: 24.53 on 3 and 196 DF,  p-value: 1.604e-13
+
+shapiro.test(lmt3$residuals)
+[1] 143
+
+	Shapiro-Wilk normality test
+
+data:  lmt3$residuals
+W = 0.99413, p-value = 0.6202
+
+qqPlot(lmt3)
+[1] 144
+hist(lmt3$residuals, breaks = 20)
+[1] 145
+plot_model(lmt3, type = "diag")
+[1] 146
+NULL
+ncvTest(lmt3)
+[1] 147
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 3.940792, Df = 1, p = 0.047129
+plot(lmt3, which = 4)
+[1] 148
+abline(h = (4/(200 - 3 - 1)))
+[1] 149
+plot(lmt3, ask = F)
+[1] 150
+lmt4 <- (lm((sqrt(incidents)) ~ training + scale(empathy) + year_mean, 
+    data = cwrk[-c(137), ]))
+[1] 151
+summary(lmt4)
+[1] 152
+
+Call:
+lm(formula = (sqrt(incidents)) ~ training + scale(empathy) + 
+    year_mean, data = cwrk[-c(137), ])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30983 -0.08604  0.00353  0.08118  0.35273 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.732495   0.012077  60.653  < 2e-16 ***
+trainingTraining -0.116870   0.017118  -6.827 1.07e-10 ***
+scale(empathy)    0.053014   0.008985   5.900 1.58e-08 ***
+year_mean        -0.012544   0.002979  -4.211 3.88e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1197 on 195 degrees of freedom
+Multiple R-squared:  0.2852,	Adjusted R-squared:  0.2742 
+F-statistic: 25.94 on 3 and 195 DF,  p-value: 3.652e-14
+
+shapiro.test(lmt4$residuals)
+[1] 153
+
+	Shapiro-Wilk normality test
+
+data:  lmt4$residuals
+W = 0.99479, p-value = 0.722
+
+qqPlot(lmt4)
+[1] 154
+hist(lmt4$residuals, breaks = 20)
+[1] 155
+plot_model(lmt4, type = "diag")
+[1] 156
+NULL
+ncvTest(lmt4)
+[1] 157
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 2.778988, Df = 1, p = 0.095508
+plot(lmt4, which = 4)
+[1] 158
+abline(h = (4/(199 - 3 - 1)))
+[1] 159
+plot(lmt4, ask = F)
+[1] 160
+summary(lmt4)
+[1] 161
+
+Call:
+lm(formula = (sqrt(incidents)) ~ training + scale(empathy) + 
+    year_mean, data = cwrk[-c(137), ])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30983 -0.08604  0.00353  0.08118  0.35273 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.732495   0.012077  60.653  < 2e-16 ***
+trainingTraining -0.116870   0.017118  -6.827 1.07e-10 ***
+scale(empathy)    0.053014   0.008985   5.900 1.58e-08 ***
+year_mean        -0.012544   0.002979  -4.211 3.88e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1197 on 195 degrees of freedom
+Multiple R-squared:  0.2852,	Adjusted R-squared:  0.2742 
+F-statistic: 25.94 on 3 and 195 DF,  p-value: 3.652e-14
+
+reslmt4 <- summary(lmt4)
+[1] 162
+pt(coef(reslmt4)[, 3], lmt4$df, lower = FALSE)
+[1] 163
+     (Intercept) trainingTraining   scale(empathy)        year_mean 
+   7.970015e-129     1.000000e+00     7.904189e-09     9.999806e-01 
+ncvTest(lmt)
+[1] 164
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.0293323, Df = 1, p = 0.86401
+ncvTest(lmt4)
+[1] 165
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 2.778988, Df = 1, p = 0.095508
+crPlots(lmt)
+[1] 166
+crPlots(lmt4)
+[1] 167
+durbinWatsonTest(lmt)
+[1] 168
+ lag Autocorrelation D-W Statistic p-value
+   1      -0.1072849      2.199897    0.17
+ Alternative hypothesis: rho != 0
+durbinWatsonTest(lmt4)
+[1] 169
+ lag Autocorrelation D-W Statistic p-value
+   1      -0.1300562       2.24425   0.092
+ Alternative hypothesis: rho != 0
+vif(lmt)
+[1] 170
+      training scale(empathy)      year_mean 
+      1.020633       1.092467       1.085089 
+vif(lmt4)
+[1] 171
+      training scale(empathy)      year_mean 
+      1.016728       1.114878       1.107130 
+plot(cwrk$training, cwrk$incidents)
+[1] 172
+ggplot(data = cwrk, aes(training, sqrt(incidents))) + geom_boxplot() + 
+    labs(y = "SqRt(Incidents)", x = "Training")
+[1] 173
+describe(cwrk)
+[1] 174
+          vars   n   mean    sd median trimmed   mad  min    max  range skew kurtosis   se
+subject      1 200 100.50 57.88 100.50  100.50 74.13 1.00 200.00 199.00 0.00    -1.22 4.09
+incidents    2 200   0.48  0.19   0.42    0.47  0.12 0.08   0.92   0.83 0.32    -0.31 0.01
+training*    3 200   1.50  0.50   1.50    1.50  0.74 1.00   2.00   1.00 0.00    -2.01 0.04
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+contrasts(cwrk$feedback)
+[1] 175
+            Feedback
+No Feedback        0
+Feedback           1
+lmf <- lm(incidents ~ feedback + scale(empathy) + year_mean, 
+    data = cwrk)
+[1] 176
+summary(lmf)
+[1] 177
+
+Call:
+lm(formula = incidents ~ feedback + scale(empathy) + year_mean, 
+    data = cwrk)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35580 -0.11148 -0.01097  0.11092  0.53552 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.408934   0.016655  24.553  < 2e-16 ***
+feedbackFeedback  0.132132   0.023585   5.602 7.09e-08 ***
+scale(empathy)    0.058827   0.012251   4.802 3.11e-06 ***
+year_mean        -0.012689   0.003975  -3.192  0.00165 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1663 on 196 degrees of freedom
+Multiple R-squared:  0.2175,	Adjusted R-squared:  0.2055 
+F-statistic: 18.16 on 3 and 196 DF,  p-value: 1.933e-10
+
+reslmf <- summary(lmf)
+[1] 178
+pt(coef(reslmf)[, 3], lmf$df, lower = FALSE)
+[1] 179
+     (Intercept) feedbackFeedback   scale(empathy)        year_mean 
+    5.190417e-62     3.544917e-08     1.556427e-06     9.991771e-01 
+plot(cwrk$feedback, cwrk$incidents)
+[1] 180
+ggplot(data = cwrk, aes(feedback, incidents)) + geom_boxplot() + 
+    labs(y = "Incidents", x = "Feedback")
+[1] 181
+cooksf <- cooks.distance(lmf)
+[1] 182
+which(cooksf > (4/(200 - 3 - 1)))
+[1] 183
+ 73  74  89 137 156 160 165 176 
+ 73  74  89 137 156 160 165 176 
+plot(lmf, which = 4)
+[1] 184
+abline(h = (4/(200 - 3 - 1)))
+[1] 185
+plot(lmf, ask = F)
+[1] 186
+plot_model(lmf, type = "diag")
+[1] 187
+NULL
+lmf1 <- lm(incidents ~ feedback + scale(empathy) + year_mean, 
+    data = cwrk[-c(137), ])
+[1] 188
+summary(lmf)
+[1] 189
+
+Call:
+lm(formula = incidents ~ feedback + scale(empathy) + year_mean, 
+    data = cwrk)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35580 -0.11148 -0.01097  0.11092  0.53552 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.408934   0.016655  24.553  < 2e-16 ***
+feedbackFeedback  0.132132   0.023585   5.602 7.09e-08 ***
+scale(empathy)    0.058827   0.012251   4.802 3.11e-06 ***
+year_mean        -0.012689   0.003975  -3.192  0.00165 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1663 on 196 degrees of freedom
+Multiple R-squared:  0.2175,	Adjusted R-squared:  0.2055 
+F-statistic: 18.16 on 3 and 196 DF,  p-value: 1.933e-10
+
+summary(lmf1)
+[1] 190
+
+Call:
+lm(formula = incidents ~ feedback + scale(empathy) + year_mean, 
+    data = cwrk[-c(137), ])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.36297 -0.11299 -0.00704  0.11578  0.53962 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.409063   0.016576  24.678  < 2e-16 ***
+feedbackFeedback  0.129996   0.023511   5.529 1.02e-07 ***
+scale(empathy)    0.062405   0.012355   5.051 1.01e-06 ***
+year_mean        -0.014532   0.004107  -3.538 0.000503 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1656 on 195 degrees of freedom
+Multiple R-squared:  0.2273,	Adjusted R-squared:  0.2154 
+F-statistic: 19.12 on 3 and 195 DF,  p-value: 6.517e-11
+
+plot(lmf1, which = 4)
+[1] 191
+abline(h = (4/(199 - 3 - 1)))
+[1] 192
+plot_model(lmf1, type = "diag")
+[1] 193
+NULL
+reslmf1 <- summary(lmf1)
+[1] 194
+pt(coef(reslmf1)[, 3], lmf1$df, lower = FALSE)
+[1] 195
+     (Intercept) feedbackFeedback   scale(empathy)        year_mean 
+    3.398379e-62     5.123078e-08     5.031863e-07     9.997484e-01 
+qqPlot(lmf)
+[1] 196
+qqPlot(lmf1)
+[1] 197
+hist(lmf$residuals, breaks = 20)
+[1] 198
+hist(lmf1$residuals, breaks = 20)
+[1] 199
+shapiro.test(lmf$residuals)
+[1] 200
+
+	Shapiro-Wilk normality test
+
+data:  lmf$residuals
+W = 0.98772, p-value = 0.08174
+
+shapiro.test(lmf1$residuals)
+[1] 201
+
+	Shapiro-Wilk normality test
+
+data:  lmf1$residuals
+W = 0.98746, p-value = 0.07617
+
+ncvTest(lmf)
+[1] 202
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.01731234, Df = 1, p = 0.89532
+ncvTest(lmf1)
+[1] 203
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.06111924, Df = 1, p = 0.80474
+crPlots(lmf)
+[1] 204
+crPlots(lmf1)
+[1] 205
+durbinWatsonTest(lmf)
+[1] 206
+ lag Autocorrelation D-W Statistic p-value
+   1       0.2738264      1.444081       0
+ Alternative hypothesis: rho != 0
+durbinWatsonTest(lmf1)
+[1] 207
+ lag Autocorrelation D-W Statistic p-value
+   1       0.2690161      1.453464       0
+ Alternative hypothesis: rho != 0
+vif(lmf)
+[1] 208
+      feedback scale(empathy)      year_mean 
+      1.005211       1.079397       1.077467 
+vif(lmf1)
+[1] 209
+      feedback scale(empathy)      year_mean 
+      1.003105       1.102428       1.100462 
+cwrk$training <- factor(cwrk$training, levels(cwrk$training)[c(2, 
+    1)])
+[1] 210
+contrasts(cwrk$training) <- contr.sum(2)
+[1] 211
+contrasts(cwrk$training)
+[1] 212
+            [,1]
+Training       1
+No Training   -1
+contrasts(cwrk$feedback)
+[1] 213
+            Feedback
+No Feedback        0
+Feedback           1
+lmff1 <- lm(incidents ~ feedback + training + scale(empathy) + 
+    year_mean, data = cwrk)
+[1] 214
+summary(lmff1)
+[1] 215
+
+Call:
+lm(formula = incidents ~ feedback + training + scale(empathy) + 
+    year_mean, data = cwrk)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.31626 -0.10096 -0.00949  0.09165  0.46650 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.408143   0.014807  27.564  < 2e-16 ***
+feedbackFeedback  0.133715   0.020968   6.377 1.28e-09 ***
+training1        -0.076912   0.010564  -7.281 7.98e-12 ***
+scale(empathy)    0.068984   0.010980   6.283 2.12e-09 ***
+year_mean        -0.015199   0.003551  -4.281 2.92e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1479 on 195 degrees of freedom
+Multiple R-squared:  0.3848,	Adjusted R-squared:  0.3721 
+F-statistic: 30.49 on 4 and 195 DF,  p-value: < 2.2e-16
+
+reslmff1 <- summary(lmff1)
+[1] 216
+pt(coef(reslmff1)[, 3], lmff1$df, lower = FALSE)
+[1] 217
+     (Intercept) feedbackFeedback        training1   scale(empathy)        year_mean 
+    1.744222e-69     6.397362e-10     1.000000e+00     1.061203e-09     9.999854e-01 
+plot(lmff1, which = 4)
+[1] 218
+abline(h = (4/(200 - 4 - 1)))
+[1] 219
+plot(lmf, ask = F)
+[1] 220
+plot_model(lmff1, type = "diag")
+[1] 221
+NULL
+qqPlot(lmff1)
+[1] 222
+hist(lmff1$residuals, breaks = 20)
+[1] 223
+shapiro.test(lmff1$residuals)
+[1] 224
+
+	Shapiro-Wilk normality test
+
+data:  lmff1$residuals
+W = 0.98734, p-value = 0.07172
+
+ncvTest(lmff1)
+[1] 225
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 3.684027, Df = 1, p = 0.054936
+crPlots(lmff1)
+[1] 226
+durbinWatsonTest(lmff1)
+[1] 227
+ lag Autocorrelation D-W Statistic p-value
+   1      0.07303546      1.841386   0.258
+ Alternative hypothesis: rho != 0
+vif(lmff1)
+[1] 228
+      feedback       training scale(empathy)      year_mean 
+      1.005320       1.020743       1.097109       1.087722 
+lmf4 <- lm(sqrt(incidents) ~ feedback + scale(empathy) + year_mean, 
+    data = cwrk[-c(137), ])
+[1] 229
+plot(lmf4, which = 4)
+[1] 230
+abline(h = (4/(199 - 3 - 1)))
+[1] 231
+cooksf4 <- cooks.distance(lmf4)
+[1] 232
+which(cooksf4 > (4/(199 - 3 - 1)))
+[1] 233
+ 16  17  30  60  73  74  88  89  94 154 156 160 176 200 
+ 16  17  30  60  73  74  88  89  94 153 155 159 175 199 
+qqPlot(lmf4)
+[1] 234
+hist(lmf4$residuals, breaks = 20)
+[1] 235
+shapiro.test(lmf4$residuals)
+[1] 236
+
+	Shapiro-Wilk normality test
+
+data:  lmf4$residuals
+W = 0.99433, p-value = 0.6531
+
+ncvTest(lmf4)
+[1] 237
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 2.336429, Df = 1, p = 0.12638
+crPlots(lmf4)
+[1] 238
+durbinWatsonTest(lmf4)
+[1] 239
+ lag Autocorrelation D-W Statistic p-value
+   1       0.2736568      1.442913       0
+ Alternative hypothesis: rho != 0
+vif(lmf4)
+[1] 240
+      feedback scale(empathy)      year_mean 
+      1.003105       1.102428       1.100462 
+summary(lmf)
+[1] 241
+
+Call:
+lm(formula = incidents ~ feedback + scale(empathy) + year_mean, 
+    data = cwrk)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35580 -0.11148 -0.01097  0.11092  0.53552 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.408934   0.016655  24.553  < 2e-16 ***
+feedbackFeedback  0.132132   0.023585   5.602 7.09e-08 ***
+scale(empathy)    0.058827   0.012251   4.802 3.11e-06 ***
+year_mean        -0.012689   0.003975  -3.192  0.00165 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1663 on 196 degrees of freedom
+Multiple R-squared:  0.2175,	Adjusted R-squared:  0.2055 
+F-statistic: 18.16 on 3 and 196 DF,  p-value: 1.933e-10
+
+summary(lmf4)
+[1] 242
+
+Call:
+lm(formula = sqrt(incidents) ~ feedback + scale(empathy) + year_mean, 
+    data = cwrk[-c(137), ])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.31048 -0.07429  0.00093  0.08426  0.35748 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.625005   0.012390  50.446  < 2e-16 ***
+feedbackFeedback  0.098131   0.017573   5.584 7.81e-08 ***
+scale(empathy)    0.048503   0.009234   5.252 3.91e-07 ***
+year_mean        -0.011387   0.003070  -3.709 0.000271 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1238 on 195 degrees of freedom
+Multiple R-squared:  0.2365,	Adjusted R-squared:  0.2247 
+F-statistic: 20.13 on 3 and 195 DF,  p-value: 2.079e-11
+
+AIC(lmf4, lmt4)
+[1] 243
+     df       AIC
+lmf4  5 -260.9002
+lmt4  5 -274.0338
+BIC(lmf4, lmt4)
+[1] 244
+     df       BIC
+lmf4  5 -244.4337
+lmt4  5 -257.5673
+contrasts(cwrk$training)
+[1] 245
+            [,1]
+Training       1
+No Training   -1
+cwrk$feedback <- factor(cwrk$feedback, levels(cwrk$feedback)[c(2, 
+    1)])
+[1] 246
+contrasts(cwrk$feedback) <- contr.sum(2)
+[1] 247
+contrasts(cwrk$feedback)
+[1] 248
+            [,1]
+Feedback       1
+No Feedback   -1
+mod_effect <- lm(incidents ~ feedback + training + scale(empathy) + 
+    year_mean, data = cwrk)
+[1] 249
+summary(mod_effect)
+[1] 250
+
+Call:
+lm(formula = incidents ~ feedback + training + scale(empathy) + 
+    year_mean, data = cwrk)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.31626 -0.10096 -0.00949  0.09165  0.46650 
+
+Coefficients:
+                Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     0.475000   0.010456  45.428  < 2e-16 ***
+feedback1       0.066857   0.010484   6.377 1.28e-09 ***
+training1      -0.076912   0.010564  -7.281 7.98e-12 ***
+scale(empathy)  0.068984   0.010980   6.283 2.12e-09 ***
+year_mean      -0.015199   0.003551  -4.281 2.92e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1479 on 195 degrees of freedom
+Multiple R-squared:  0.3848,	Adjusted R-squared:  0.3721 
+F-statistic: 30.49 on 4 and 195 DF,  p-value: < 2.2e-16
+
+plot(mod_effect, which = 4)
+[1] 251
+abline(h = (4/(199 - 3 - 1)))
+[1] 252
+qqPlot(mod_effect)
+[1] 253
+hist(mod_effect$residuals, breaks = 20)
+[1] 254
+shapiro.test(mod_effect$residuals)
+[1] 255
+
+	Shapiro-Wilk normality test
+
+data:  mod_effect$residuals
+W = 0.98734, p-value = 0.07172
+
+ncvTest(mod_effect)
+[1] 256
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 3.684027, Df = 1, p = 0.054936
+crPlots(mod_effect)
+[1] 257
+durbinWatsonTest(mod_effect)
+[1] 258
+ lag Autocorrelation D-W Statistic p-value
+   1      0.07303546      1.841386   0.238
+ Alternative hypothesis: rho != 0
+vif(mod_effect)
+[1] 259
+      feedback       training scale(empathy)      year_mean 
+      1.005320       1.020743       1.097109       1.087722 
+cwrk$training <- factor(cwrk$training, levels(cwrk$training)[c(2, 
+    1)])
+[1] 260
+contrasts(cwrk$training) <- contr.treatment(2)
+[1] 261
+contrasts(cwrk$training)
+[1] 262
+            2
+No Training 0
+Training    1
+cwrk$feedback <- factor(cwrk$feedback, levels(cwrk$feedback)[c(2, 
+    1)])
+[1] 263
+contrasts(cwrk$feedback) <- contr.treatment(2)
+[1] 264
+contrasts(cwrk$feedback)
+[1] 265
+            2
+No Feedback 0
+Feedback    1
+ie1 <- lm(incidents ~ training + feedback + training:feedback + 
+    scale(empathy) + year_mean, data = cwrk)
+[1] 266
+summary(ie1)
+[1] 267
+
+Call:
+lm(formula = incidents ~ training + feedback + training:feedback + 
+    scale(empathy) + year_mean, data = cwrk)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30367 -0.10365 -0.00795  0.08806  0.44359 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(>|t|)    
+(Intercept)          0.509636   0.020807  24.494  < 2e-16 ***
+training2           -0.203496   0.029874  -6.812 1.18e-10 ***
+feedback2            0.085558   0.029299   2.920  0.00391 ** 
+scale(empathy)       0.072800   0.010981   6.630 3.25e-10 ***
+year_mean           -0.015720   0.003518  -4.468 1.34e-05 ***
+training2:feedback2  0.097334   0.041840   2.326  0.02103 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1462 on 194 degrees of freedom
+Multiple R-squared:  0.4015,	Adjusted R-squared:  0.386 
+F-statistic: 26.02 on 5 and 194 DF,  p-value: < 2.2e-16
+
+plot(ie1, which = 4)
+[1] 268
+abline(h = (4/(200 - 5 - 1)))
+[1] 269
+plot_model(ie1, type = "diag")
+[1] 270
+NULL
+qqPlot(ie1)
+[1] 271
+hist(ie1$residuals, breaks = 25)
+[1] 272
+shapiro.test(ie1$residuals)
+[1] 273
+
+	Shapiro-Wilk normality test
+
+data:  ie1$residuals
+W = 0.98794, p-value = 0.08817
+
+ncvTest(ie1)
+[1] 274
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 4.398557, Df = 1, p = 0.035969
+durbinWatsonTest(ie1)
+[1] 275
+ lag Autocorrelation D-W Statistic p-value
+   1      0.09456969      1.801048   0.178
+ Alternative hypothesis: rho != 0
+vif(ie1)
+[1] 276
+         training          feedback    scale(empathy)         year_mean training:feedback 
+         2.086826          2.007327          1.122147          1.092150          3.070068 
+ie2 <- lm(sqrt(incidents) ~ training + feedback + training:feedback + 
+    scale(empathy) + year_mean, data = cwrk)
+[1] 277
+summary(ie2)
+[1] 278
+
+Call:
+lm(formula = sqrt(incidents) ~ training + feedback + training:feedback + 
+    scale(empathy) + year_mean, data = cwrk)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.243920 -0.073605  0.001431  0.075069  0.282519 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(>|t|)    
+(Intercept)          0.705792   0.015321  46.067  < 2e-16 ***
+training2           -0.163437   0.021997  -7.430 3.38e-12 ***
+feedback2            0.058061   0.021574   2.691  0.00774 ** 
+scale(empathy)       0.056899   0.008086   7.037 3.30e-11 ***
+year_mean           -0.012317   0.002591  -4.755 3.87e-06 ***
+training2:feedback2  0.086925   0.030809   2.821  0.00528 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1077 on 194 degrees of freedom
+Multiple R-squared:  0.4261,	Adjusted R-squared:  0.4114 
+F-statistic: 28.81 on 5 and 194 DF,  p-value: < 2.2e-16
+
+plot(ie2, which = 4)
+[1] 279
+abline(h = (4/(200 - 5 - 1)))
+[1] 280
+plot_model(ie2, type = "diag")
+[1] 281
+NULL
+plot(ie2)
+[1] 282
+qqPlot(ie2)
+[1] 283
+hist(ie2$residuals, breaks = 20)
+[1] 284
+shapiro.test(ie2$residuals)
+[1] 285
+
+	Shapiro-Wilk normality test
+
+data:  ie2$residuals
+W = 0.99518, p-value = 0.7757
+
+plot(ie2, which = 1)
+[1] 286
+ncvTest(ie2)
+[1] 287
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.139865, Df = 1, p = 0.70842
+durbinWatsonTest(ie2)
+[1] 288
+ lag Autocorrelation D-W Statistic p-value
+   1      0.09514249      1.799308   0.188
+ Alternative hypothesis: rho != 0
+vif(ie2)
+[1] 289
+         training          feedback    scale(empathy)         year_mean training:feedback 
+         2.086826          2.007327          1.122147          1.092150          3.070068 
+plot1 <- cat_plot(ie1, pred = feedback, modx = training, data = cwrk, 
+    plot.points = T, geom = "line")
+[1] 290
+plot2 <- cat_plot(ie2, pred = feedback, modx = training, data = cwrk, 
+    plot.points = T, geom = "line", interval = T)
+[1] 291
+plot1
+
+
+
+plot2
+
+
+
+cwrk$feedback <- as.numeric(cwrk$feedback)
+[1] 294
+ie3 <- lm(sqrt(incidents) ~ training + feedback + training:feedback + 
+    scale(empathy) + year_mean, data = cwrk)
+[1] 295
+ie4 <- lm(incidents ~ training + feedback + training:feedback + 
+    scale(empathy) + year_mean, data = cwrk)
+[1] 296
+interact_plot(ie3, pred = feedback, modx = training, data = cwrk, 
+    plot.points = T, interval = T)
+[1] 297
+interact_plot(ie4, pred = feedback, modx = training, data = cwrk, 
+    plot.points = T)
+[1] 298
+sim_slopes(ie3, pred = feedback, modx = training, johnson_neyman = F, 
+    data = cwrk)
+[1] 299
+SIMPLE SLOPES ANALYSIS 
+
+Slope of feedback when training = Training: 
+
+  Est.   S.E.   t val.      p
+------ ------ -------- ------
+  0.14   0.02     6.65   0.00
+
+Slope of feedback when training = No Training: 
+
+  Est.   S.E.   t val.      p
+------ ------ -------- ------
+  0.06   0.02     2.69   0.01
+
+sim_slopes(ie4, pred = feedback, modx = training, johnson_neyman = F, 
+    data = cwrk)
+[1] 300
+SIMPLE SLOPES ANALYSIS 
+
+Slope of feedback when training = Training: 
+
+  Est.   S.E.   t val.      p
+------ ------ -------- ------
+  0.18   0.03     6.18   0.00
+
+Slope of feedback when training = No Training: 
+
+  Est.   S.E.   t val.      p
+------ ------ -------- ------
+  0.09   0.03     2.92   0.00
+

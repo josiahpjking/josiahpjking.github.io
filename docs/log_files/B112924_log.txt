@@ -1,0 +1,1264 @@
+
+
+	####### B112924 R script #######
+
+setwd("C:/Users/joaop/Desktop/University/Honours Years/Year 3/RMS 2/Report")
+[1] 1
+install.packages("psych")
+[1] 2
+install.packages("car")
+[1] 3
+install.packages("interactions")
+[1] 4
+install.packages("sandwich")
+[1] 5
+install.packages("lme4")
+[1] 6
+library("psych", quietly = T)
+[1] 7
+[1] "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library("car", quietly = T)
+[1] 8
+ [1] "car"       "carData"   "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets" 
+[10] "methods"   "base"     
+library("interactions", quietly = T)
+[1] 9
+ [1] "interactions" "car"          "carData"      "psych"        "readr"        "stats"        "graphics"    
+ [8] "grDevices"    "utils"        "datasets"     "methods"      "base"        
+library("sandwich", quietly = T)
+[1] 10
+ [1] "sandwich"     "interactions" "car"          "carData"      "psych"        "readr"        "stats"       
+ [8] "graphics"     "grDevices"    "utils"        "datasets"     "methods"      "base"        
+library("lme4", quietly = T)
+[1] 11
+ [1] "lme4"         "Matrix"       "sandwich"     "interactions" "car"          "carData"      "psych"       
+ [8] "readr"        "stats"        "graphics"     "grDevices"    "utils"        "datasets"     "methods"     
+[15] "base"        
+library("ggplot2", quietly = T)
+[1] 12
+ [1] "ggplot2"      "lme4"         "Matrix"       "sandwich"     "interactions" "car"          "carData"     
+ [8] "psych"        "readr"        "stats"        "graphics"     "grDevices"    "utils"        "datasets"    
+[15] "methods"      "base"        
+raw_data = read.csv("../RMS2_report_1920.csv")
+[1] 13
+describe(data)
+[1] 14
+[1] "Error in as.double(x) : \n  cannot coerce type 'closure' to vector of type 'double'\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in as.double(x): cannot coerce type 'closure' to vector of type 'double'>
+
+
+####################################################################################################
+
+[1] "Error in as.double(x) : \n  cannot coerce type 'closure' to vector of type 'double'\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in as.double(x): cannot coerce type 'closure' to vector of type 'double'>
+####################################################################################################
+
+
+data = na.omit(raw_data)
+[1] 15
+data$training[data$training > 2] = 2
+[1] 16
+data$feedback[data$training > 2] = 2
+[1] 17
+data = subset(data, !data$incidents > 1 & !data$training > 2 & 
+    !data$feedback > 2 & !data$empathy > 20 & !data$years > 30)
+[1] 18
+class(data$training)
+[1] 19
+[1] "numeric"
+class(data$feedback)
+[1] 20
+[1] "numeric"
+data$training[data$training == 1] = 0
+[1] 21
+data$training[data$training == 2] = 1
+[1] 22
+data$feedback[data$feedback == 1] = 0
+[1] 23
+data$feedback[data$feedback == 2] = 1
+[1] 24
+tf = data$training * data$feedback
+[1] 25
+data = cbind(data, tf)
+[1] 26
+class(data$training)
+[1] 27
+[1] "numeric"
+class(data$feedback)
+[1] 28
+[1] "numeric"
+class(data$tf)
+[1] 29
+[1] "numeric"
+data$training = as.factor(data$training)
+[1] 30
+data$feedback = as.factor(data$feedback)
+[1] 31
+data$tf = as.factor(data$tf)
+[1] 32
+class(data$training)
+[1] 33
+[1] "factor"
+class(data$feedback)
+[1] 34
+[1] "factor"
+class(data$tf)
+[1] 35
+[1] "factor"
+contrasts(data$training) = contr.treatment(2, 1)
+[1] 36
+contrasts(data$feedback) = contr.treatment(2, 1)
+[1] 37
+contrasts(data$tf) = contr.treatment(2, 1)
+[1] 38
+describeBy(data, data$incidents)
+[1] 39
+
+ Descriptive statistics by group 
+group: 0.083333333
+          vars n  mean    sd median trimmed  mad   min   max range  skew kurtosis    se
+subject      1 3 71.00 35.59  89.00   71.00 7.41 30.00 94.00    64 -0.38    -2.33 20.55
+incidents    2 3  0.08  0.00   0.08    0.08 0.00  0.08  0.08     0   NaN      NaN  0.00
+training*    3 3  2.00  0.00   2.00    2.00 0.00  2.00  2.00     0   NaN      NaN  0.00
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 0.166666667
+          vars  n  mean    sd median trimmed   mad   min   max range  skew kurtosis   se
+subject      1 12 52.50 30.92  55.00   52.80 44.48 10.00 92.00    82 -0.11     -1.8 8.93
+incidents    2 12  0.17  0.00   0.17    0.17  0.00  0.17  0.17     0   NaN      NaN 0.00
+training*    3 12  2.00  0.00   2.00    2.00  0.00  2.00  2.00     0   NaN      NaN 0.00
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 0.25
+          vars  n  mean    sd median trimmed   mad  min    max range  skew kurtosis    se
+subject      1 14 89.64 54.75  81.00   88.08 53.37 6.00 192.00   186  0.34    -1.10 14.63
+incidents    2 14  0.25  0.00   0.25    0.25  0.00 0.25   0.25     0   NaN      NaN  0.00
+training*    3 14  1.71  0.47   2.00    1.75  0.00 1.00   2.00     1 -0.85    -1.36  0.13
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 0.333333333
+          vars  n  mean    sd median trimmed   mad  min    max range  skew kurtosis   se
+subject      1 31 90.26 53.32  96.00   88.64 50.41 2.00 197.00   195  0.09    -0.83 9.58
+incidents    2 31  0.33  0.00   0.33    0.33  0.00 0.33   0.33     0   NaN      NaN 0.00
+training*    3 31  1.55  0.51   2.00    1.56  0.00 1.00   2.00     1 -0.19    -2.03 0.09
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 0.416666667
+          vars  n  mean    sd median trimmed   mad  min    max range skew kurtosis   se
+subject      1 45 98.33 56.73 104.00   97.95 75.61 4.00 198.00   194 0.01    -1.36 8.46
+incidents    2 45  0.42  0.00   0.42    0.42  0.00 0.42   0.42     0  NaN      NaN 0.00
+training*    3 45  1.49  0.51   1.00    1.49  0.00 1.00   2.00     1 0.04    -2.04 0.08
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 0.5
+          vars  n  mean    sd median trimmed   mad min   max range  skew kurtosis    se
+subject      1 28 97.61 62.01   83.0   97.00 71.91 5.0 200.0   195  0.24    -1.37 11.72
+incidents    2 28  0.50  0.00    0.5    0.50  0.00 0.5   0.5     0   NaN      NaN  0.00
+training*    3 28  1.61  0.50    2.0    1.62  0.00 1.0   2.0     1 -0.42    -1.89  0.09
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 0.583333333
+          vars  n   mean    sd median trimmed   mad   min    max range  skew kurtosis    se
+subject      1 24 106.79 54.02 116.00  108.05 65.98 15.00 184.00   169 -0.21    -1.45 11.03
+incidents    2 24   0.58  0.00   0.58    0.58  0.00  0.58   0.58     0   NaN      NaN  0.00
+training*    3 24   1.38  0.49   1.00    1.35  0.00  1.00   2.00     1  0.48    -1.84  0.10
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 0.666666667
+          vars  n   mean    sd median trimmed   mad  min    max range  skew kurtosis    se
+subject      1 19 140.74 57.53 151.00  145.53 56.34 1.00 199.00   198 -0.97    -0.19 13.20
+incidents    2 19   0.67  0.00   0.67    0.67  0.00 0.67   0.67     0   NaN      NaN  0.00
+training*    3 19   1.16  0.37   1.00    1.12  0.00 1.00   2.00     1  1.73     1.06  0.09
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 0.75
+          vars  n   mean    sd median trimmed   mad   min    max range  skew kurtosis    se
+subject      1 12 100.50 56.80 106.50  100.10 54.86 11.00 194.00   183 -0.18    -1.24 16.40
+incidents    2 12   0.75  0.00   0.75    0.75  0.00  0.75   0.75     0   NaN      NaN  0.00
+training*    3 12   1.42  0.51   1.00    1.40  0.00  1.00   2.00     1  0.30    -2.06  0.15
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 0.833333333
+          vars n   mean    sd median trimmed   mad  min    max range  skew kurtosis    se
+subject      1 6 124.83 63.14 146.50  124.83 37.81 7.00 183.00   176 -0.91    -0.83 25.78
+incidents    2 6   0.83  0.00   0.83    0.83  0.00 0.83   0.83     0   NaN      NaN  0.00
+training*    3 6   1.17  0.41   1.00    1.17  0.00 1.00   2.00     1  1.36    -0.08  0.17
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 0.916666667
+          vars n   mean    sd median trimmed  mad   min    max range  skew kurtosis    se
+subject      1 6 142.33 63.97 162.50  142.33 12.6 13.00 181.00   168 -1.30    -0.18 26.11
+incidents    2 6   0.92  0.00   0.92    0.92  0.0  0.92   0.92     0   NaN      NaN  0.00
+training*    3 6   1.17  0.41   1.00    1.17  0.0  1.00   2.00     1  1.36    -0.08  0.17
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+describeBy(data, data$training)
+[1] 40
+
+ Descriptive statistics by group 
+group: 0
+          vars   n   mean    sd median trimmed   mad    min    max range skew kurtosis   se
+subject      1 100 150.50 29.01  150.5  150.50 37.06 101.00 200.00 99.00 0.00    -1.24 2.90
+incidents    2 100   0.54  0.18    0.5    0.53  0.25   0.25   0.92  0.67 0.39    -0.73 0.02
+training*    3 100   1.00  0.00    1.0    1.00  0.00   1.00   1.00  0.00  NaN      NaN 0.00
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 1
+          vars   n  mean    sd median trimmed   mad  min    max range skew kurtosis   se
+subject      1 100 50.50 29.01  50.50    50.5 37.06 1.00 100.00 99.00 0.00    -1.24 2.90
+incidents    2 100  0.41  0.17   0.42     0.4  0.12 0.08   0.92  0.83 0.38    -0.05 0.02
+training*    3 100  2.00  0.00   2.00     2.0  0.00 2.00   2.00  0.00  NaN      NaN 0.00
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+describeBy(data, data$feedback)
+[1] 41
+
+ Descriptive statistics by group 
+group: 0
+          vars   n   mean    sd median trimmed   mad  min    max  range skew kurtosis   se
+subject      1 100 101.00 58.02 101.00   101.0 74.13 2.00 200.00 198.00  0.0    -1.24 5.80
+incidents    2 100   0.41  0.17   0.42     0.4  0.12 0.08   0.92   0.83  0.6     0.36 0.02
+training*    3 100   1.50  0.50   1.50     1.5  0.74 1.00   2.00   1.00  0.0    -2.02 0.05
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 1
+          vars   n   mean    sd median trimmed   mad  min    max  range skew kurtosis   se
+subject      1 100 100.00 58.02  100.0  100.00 74.13 1.00 199.00 198.00 0.00    -1.24 5.80
+incidents    2 100   0.54  0.18    0.5    0.53  0.25 0.08   0.92   0.83 0.11    -0.44 0.02
+training*    3 100   1.50  0.50    1.5    1.50  0.74 1.00   2.00   1.00 0.00    -2.02 0.05
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+describeBy(data, data$empathy)
+[1] 42
+
+ Descriptive statistics by group 
+group: 3
+          vars n   mean    sd median trimmed   mad   min   max  range  skew kurtosis    se
+subject      1 4 122.50 61.43 114.50  122.50 59.30 61.00 200.0 139.00  0.21    -2.09 30.72
+incidents    2 4   0.35  0.14   0.38    0.35  0.12  0.17   0.5   0.33 -0.28    -1.96  0.07
+training*    3 4   1.50  0.58   1.50    1.50  0.74  1.00   2.0   1.00  0.00    -2.44  0.29
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 5
+          vars n   mean    sd median trimmed   mad   min    max  range  skew kurtosis    se
+subject      1 5 112.60 83.04 154.00  112.60 56.34 16.00 192.00 176.00 -0.24    -2.21 37.14
+incidents    2 5   0.23  0.12   0.25    0.23  0.12  0.08   0.42   0.33  0.26    -1.58  0.06
+training*    3 5   1.40  0.55   1.00    1.40  0.00  1.00   2.00   1.00  0.29    -2.25  0.24
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 6
+          vars n   mean    sd median trimmed   mad   min    max range  skew kurtosis    se
+subject      1 5 107.40 33.35 116.00  107.40 31.13 59.00 137.00  78.0 -0.38    -1.86 14.92
+incidents    2 5   0.37  0.19   0.33    0.37  0.25  0.08   0.58   0.5 -0.29    -1.68  0.09
+training*    3 5   1.40  0.55   1.00    1.40  0.00  1.00   2.00   1.0  0.29    -2.25  0.24
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 7
+          vars  n  mean    sd median trimmed   mad   min    max  range  skew kurtosis    se
+subject      1 20 97.35 49.06  81.00   94.81 57.08 40.00 185.00 145.00  0.38    -1.49 10.97
+incidents    2 20  0.43  0.15   0.42    0.43  0.12  0.17   0.75   0.58  0.18    -0.25  0.03
+training*    3 20  1.60  0.50   2.00    1.62  0.00  1.00   2.00   1.00 -0.38    -1.95  0.11
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 8
+          vars n   mean    sd median trimmed   mad   min    max  range  skew kurtosis    se
+subject      1 9 101.67 49.17  108.0  101.67 34.10 31.00 193.00 162.00  0.16    -0.85 16.39
+incidents    2 9   0.44  0.18    0.5    0.44  0.25  0.08   0.67   0.58 -0.51    -0.96  0.06
+training*    3 9   1.44  0.53    1.0    1.44  0.00  1.00   2.00   1.00  0.19    -2.17  0.18
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 9
+          vars  n   mean    sd median trimmed   mad  min    max  range  skew kurtosis    se
+subject      1 26 100.65 62.41 120.50  100.73 62.27 4.00 197.00 193.00 -0.25    -1.45 12.24
+incidents    2 26   0.46  0.20   0.42    0.45  0.12 0.17   0.92   0.75  0.94     0.31  0.04
+training*    3 26   1.46  0.51   1.00    1.45  0.00 1.00   2.00   1.00  0.15    -2.05  0.10
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 10
+          vars  n   mean    sd median trimmed   mad  min    max  range  skew kurtosis    se
+subject      1 38 114.45 65.21 128.50  116.97 71.16 2.00 198.00 196.00 -0.40    -1.37 10.58
+incidents    2 38   0.49  0.18   0.42    0.48  0.12 0.17   0.92   0.75  0.58    -0.55  0.03
+training*    3 38   1.34  0.48   1.00    1.31  0.00 1.00   2.00   1.00  0.64    -1.63  0.08
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 11
+          vars  n   mean    sd median trimmed   mad  min    max  range  skew kurtosis    se
+subject      1 31 106.32 62.42 103.00  107.92 83.03 1.00 196.00 195.00 -0.10    -1.37 11.21
+incidents    2 31   0.50  0.18   0.42    0.49  0.25 0.25   0.83   0.58  0.35    -1.06  0.03
+training*    3 31   1.45  0.51   1.00    1.44  0.00 1.00   2.00   1.00  0.19    -2.03  0.09
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 12
+          vars  n  mean    sd median trimmed   mad  min    max  range  skew kurtosis    se
+subject      1 33 88.36 57.54   83.0   85.96 77.10 5.00 199.00 194.00  0.25    -1.18 10.02
+incidents    2 33  0.51  0.21    0.5    0.50  0.25 0.17   0.92   0.75  0.11    -0.85  0.04
+training*    3 33  1.61  0.50    2.0    1.63  0.00 1.00   2.00   1.00 -0.41    -1.88  0.09
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 13
+          vars  n  mean    sd median trimmed   mad  min    max range  skew kurtosis    se
+subject      1 11 89.00 53.15 110.00   88.78 71.16 7.00 173.00 166.0 -0.04    -1.52 16.02
+incidents    2 11  0.58  0.15   0.58    0.58  0.12 0.33   0.83   0.5  0.09    -1.32  0.05
+training*    3 11  1.45  0.52   1.00    1.44  0.00 1.00   2.00   1.0  0.16    -2.15  0.16
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 14
+          vars  n  mean    sd median trimmed   mad  min    max range  skew kurtosis    se
+subject      1 10 71.30 40.74  63.00   69.62 24.46 8.00 148.00 140.0  0.47    -0.79 12.88
+incidents    2 10  0.45  0.15   0.46    0.46  0.12 0.17   0.67   0.5 -0.44    -1.02  0.05
+training*    3 10  1.80  0.42   2.00    1.88  0.00 1.00   2.00   1.0 -1.28    -0.37  0.13
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 15
+          vars n  mean    sd median trimmed  mad   min    max  range  skew kurtosis    se
+subject      1 6 94.67 40.38  76.50   94.67 6.67 70.00 175.00 105.00  1.22    -0.34 16.48
+incidents    2 6  0.47  0.22   0.46    0.47 0.25  0.17   0.75   0.58 -0.04    -1.72  0.09
+training*    3 6  1.83  0.41   2.00    1.83 0.00  1.00   2.00   1.00 -1.36    -0.08  0.17
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 16
+          vars n   mean    sd median trimmed   mad   min    max range skew kurtosis    se
+subject      1 2 105.00 52.33 105.00  105.00 54.86 68.00 142.00 74.00    0    -2.75 37.00
+incidents    2 2   0.67  0.12   0.67    0.67  0.12  0.58   0.75  0.17    0    -2.75  0.08
+training*    3 2   1.50  0.71   1.50    1.50  0.74  1.00   2.00  1.00    0    -2.75  0.50
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+describeBy(data, data$years)
+[1] 43
+
+ Descriptive statistics by group 
+group: 1
+          vars n   mean    sd median trimmed   mad   min   max  range skew kurtosis    se
+subject      1 2 144.00 79.20 144.00  144.00 83.03 88.00 200.0 112.00    0    -2.75 56.00
+incidents    2 2   0.33  0.24   0.33    0.33  0.25  0.17   0.5   0.33    0    -2.75  0.17
+training*    3 2   1.50  0.71   1.50    1.50  0.74  1.00   2.0   1.00    0    -2.75  0.50
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 2
+          vars n   mean    sd median trimmed   mad   min    max range  skew kurtosis    se
+subject      1 3 106.00 40.93 116.00  106.00 37.06 61.00 141.00 80.00 -0.23    -2.33 23.63
+incidents    2 3   0.36  0.05   0.33    0.36  0.00  0.33   0.42  0.08  0.38    -2.33  0.03
+training*    3 3   1.33  0.58   1.00    1.33  0.00  1.00   2.00  1.00  0.38    -2.33  0.33
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 3
+          vars n   mean    sd median trimmed  mad   min    max  range  skew kurtosis    se
+subject      1 3 117.33 87.81 165.00  117.33 8.90 16.00 171.00 155.00 -0.38    -2.33 50.70
+incidents    2 3   0.50  0.38   0.42    0.50 0.37  0.17   0.92   0.75  0.21    -2.33  0.22
+training*    3 3   1.33  0.58   1.00    1.33 0.00  1.00   2.00   1.00  0.38    -2.33  0.33
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 4
+          vars n  mean    sd median trimmed   mad   min    max  range skew kurtosis    se
+subject      1 9 96.89 60.33 117.00   96.89 99.33 22.00 192.00 170.00 0.13    -1.71 20.11
+incidents    2 9  0.41  0.18   0.42    0.41  0.25  0.17   0.75   0.58 0.44    -1.11  0.06
+training*    3 9  1.44  0.53   1.00    1.44  0.00  1.00   2.00   1.00 0.19    -2.17  0.18
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 5
+          vars  n  mean    sd median trimmed   mad  min    max  range  skew kurtosis    se
+subject      1 21 95.10 68.79  63.00   93.65 65.23 3.00 194.00 191.00  0.28    -1.75 15.01
+incidents    2 21  0.51  0.21   0.58    0.52  0.25 0.08   0.83   0.75 -0.37    -1.01  0.04
+training*    3 21  1.57  0.51   2.00    1.59  0.00 1.00   2.00   1.00 -0.27    -2.02  0.11
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 6
+          vars  n   mean    sd median trimmed   mad   min    max  range  skew kurtosis    se
+subject      1 24 101.67 56.99   95.5  100.90 69.68 11.00 197.00 186.00  0.14    -1.42 11.63
+incidents    2 24   0.53  0.19    0.5    0.52  0.12  0.25   0.92   0.67  0.65    -0.67  0.04
+training*    3 24   1.54  0.51    2.0    1.55  0.00  1.00   2.00   1.00 -0.16    -2.06  0.10
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 7
+          vars  n  mean    sd median trimmed   mad  min    max  range  skew kurtosis    se
+subject      1 34 81.18 60.21   74.5   77.71 74.13 2.00 198.00 196.00  0.39    -1.14 10.33
+incidents    2 34  0.50  0.16    0.5    0.49  0.12 0.25   0.92   0.67  0.77    -0.13  0.03
+training*    3 34  1.62  0.49    2.0    1.64  0.00 1.00   2.00   1.00 -0.46    -1.84  0.08
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 8
+          vars  n   mean    sd median trimmed   mad  min    max  range  skew kurtosis    se
+subject      1 21 101.24 48.35  111.0  101.76 51.89 7.00 186.00 179.00 -0.19    -0.75 10.55
+incidents    2 21   0.50  0.19    0.5    0.49  0.12 0.17   0.83   0.67  0.13    -0.93  0.04
+training*    3 21   1.48  0.51    1.0    1.47  0.00 1.00   2.00   1.00  0.09    -2.08  0.11
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 9
+          vars  n   mean    sd median trimmed   mad   min    max  range  skew kurtosis    se
+subject      1 21 108.81 53.53 120.00  108.82 59.30 10.00 196.00 186.00 -0.09    -1.22 11.68
+incidents    2 21   0.46  0.16   0.42    0.46  0.12  0.17   0.75   0.58  0.08    -0.66  0.04
+training*    3 21   1.43  0.51   1.00    1.41  0.00  1.00   2.00   1.00  0.27    -2.02  0.11
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 10
+          vars  n   mean    sd median trimmed   mad  min    max  range  skew kurtosis    se
+subject      1 23 118.96 59.31 129.00  123.11 65.23 1.00 199.00 198.00 -0.60    -0.74 12.37
+incidents    2 23   0.46  0.18   0.42    0.45  0.12 0.17   0.92   0.75  0.64     0.02  0.04
+training*    3 23   1.35  0.49   1.00    1.32  0.00 1.00   2.00   1.00  0.60    -1.71  0.10
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 11
+          vars  n  mean    sd median trimmed   mad   min    max  range  skew kurtosis    se
+subject      1 11 97.73 65.04  77.00   96.67 83.03 12.00 193.00 181.00  0.18    -1.64 19.61
+incidents    2 11  0.51  0.25   0.58    0.50  0.25  0.17   0.92   0.75 -0.08    -1.39  0.07
+training*    3 11  1.55  0.52   2.00    1.56  0.00  1.00   2.00   1.00 -0.16    -2.15  0.16
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 12
+          vars  n  mean    sd median trimmed   mad  min    max  range  skew kurtosis    se
+subject      1 11 75.91 50.40  58.00   73.67 56.34 5.00 167.00 162.00  0.42    -1.10 15.20
+incidents    2 11  0.45  0.10   0.42    0.44  0.00 0.33   0.67   0.33  0.91    -0.31  0.03
+training*    3 11  1.73  0.47   2.00    1.78  0.00 1.00   2.00   1.00 -0.88    -1.31  0.14
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 13
+          vars n  mean    sd median trimmed   mad   min    max  range  skew kurtosis    se
+subject      1 5 90.80 66.59  87.00   90.80 87.47 17.00 169.00 152.00  0.05    -2.12 29.78
+incidents    2 5  0.45  0.25   0.33    0.45  0.25  0.17   0.75   0.58  0.15    -2.08  0.11
+training*    3 5  1.60  0.55   2.00    1.60  0.00  1.00   2.00   1.00 -0.29    -2.25  0.24
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 14
+          vars n   mean    sd median trimmed   mad   min    max range skew kurtosis    se
+subject      1 6 124.17 25.33 120.00  124.17 23.72 94.00 163.00 69.00 0.28    -1.67 10.34
+incidents    2 6   0.36  0.19   0.38    0.36  0.12  0.08   0.67  0.58 0.14    -1.28  0.08
+training*    3 6   1.17  0.41   1.00    1.17  0.00  1.00   2.00  1.00 1.36    -0.08  0.17
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 15
+          vars n   mean    sd median trimmed   mad   min    max  range skew kurtosis    se
+subject      1 4 131.50 49.47 123.50  131.50 48.93 89.00 190.00 101.00 0.15    -2.26 24.73
+incidents    2 4   0.25  0.15   0.25    0.25  0.19  0.08   0.42   0.33 0.00    -2.23  0.08
+training*    3 4   1.50  0.58   1.50    1.50  0.74  1.00   2.00   1.00 0.00    -2.44  0.29
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 18
+          vars n   mean sd median trimmed mad    min    max range skew kurtosis se
+subject      1 1 137.00 NA 137.00  137.00   0 137.00 137.00     0   NA       NA NA
+incidents    2 1   0.58 NA   0.58    0.58   0   0.58   0.58     0   NA       NA NA
+training*    3 1   1.00 NA   1.00    1.00   0   1.00   1.00     0   NA       NA NA
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+--------------------------------------------------------------------------------------- 
+group: 19
+          vars n   mean sd median trimmed mad    min    max range skew kurtosis se
+subject      1 1 154.00 NA 154.00  154.00   0 154.00 154.00     0   NA       NA NA
+incidents    2 1   0.25 NA   0.25    0.25   0   0.25   0.25     0   NA       NA NA
+training*    3 1   1.00 NA   1.00    1.00   0   1.00   1.00     0   NA       NA NA
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+table(data$incidents)
+[1] 44
+
+0.083333333 0.166666667        0.25 0.333333333 0.416666667         0.5 0.583333333 0.666666667        0.75 
+          3          12          14          31          45          28          24          19          12 
+0.833333333 0.916666667 
+          6           6 
+table(data$training)
+[1] 45
+
+  0   1 
+100 100 
+table(data$feedback)
+[1] 46
+
+  0   1 
+100 100 
+table(data$empathy)
+[1] 47
+
+ 3  5  6  7  8  9 10 11 12 13 14 15 16 
+ 4  5  5 20  9 26 38 31 33 11 10  6  2 
+table(data$years)
+[1] 48
+
+ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 18 19 
+ 2  3  3  9 21 24 34 21 21 23 11 11  5  6  4  1  1 
+table(data$training, data$feedback)
+[1] 49
+   
+     0  1
+  0 50 50
+  1 50 50
+m1 = lm(incidents ~ training + feedback + empathy + years + tf, 
+    data = data)
+[1] 50
+plot(data$incidents ~ data$training)
+[1] 51
+plot(data$incidents ~ data$feedback)
+[1] 52
+plot(data$incidents ~ data$empathy)
+[1] 53
+abline(lm(data$incidents ~ data$empathy))
+[1] 54
+lines(lowess(data$incidents ~ data$empathy))
+[1] 55
+plot(data$incidents ~ data$years)
+[1] 56
+abline(lm(data$incidents ~ data$years))
+[1] 57
+lines(lowess(data$incidents ~ data$years))
+[1] 58
+plot(data$incidents ~ data$tf)
+[1] 59
+crPlots(m1, ylab = "component residuals (incidents)")
+[1] 60
+qqPlot(m1)
+[1] 61
+hist(m1$residuals)
+[1] 62
+shapiro.test(m1$residuals)
+[1] 63
+
+	Shapiro-Wilk normality test
+
+data:  m1$residuals
+W = 0.98794, p-value = 0.08817
+
+residualPlots(m1)
+[1] 64
+ncvTest(m1)
+[1] 65
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 4.398557, Df = 1, p = 0.035969
+vif(m1)
+[1] 66
+training feedback  empathy    years       tf 
+2.086826 2.007327 1.122147 1.092150 3.070068 
+durbinWatsonTest(m1)
+[1] 67
+ lag Autocorrelation D-W Statistic p-value
+   1      0.09456969      1.801048   0.158
+ Alternative hypothesis: rho != 0
+years_sqr = data$years^2
+[1] 68
+data = cbind(data, years_sqr)
+[1] 69
+plot(data$incidents ~ data$training)
+[1] 70
+plot(data$incidents ~ data$feedback)
+[1] 71
+plot(data$incidents ~ data$tf)
+[1] 72
+plot(data$incidents ~ data$empathy)
+[1] 73
+abline(lm(data$incidents ~ data$empathy))
+[1] 74
+lines(lowess(data$incidents ~ data$empathy))
+[1] 75
+plot(data$incidents ~ data$years)
+[1] 76
+abline(lm(data$incidents ~ data$years))
+[1] 77
+lines(lowess(data$incidents ~ data$years))
+[1] 78
+plot(data$incidents ~ data$years_sqr)
+[1] 79
+abline(lm(data$incidents ~ data$years_sqr))
+[1] 80
+lines(lowess(data$incidents ~ data$years_sqr))
+[1] 81
+m2 = lm(incidents ~ training + feedback + empathy + years + years_sqr + 
+    tf, data = data)
+[1] 82
+crPlots(m2, ylab = "component residuals (incidents)")
+[1] 83
+qqPlot(m2)
+[1] 84
+hist(m2$residuals)
+[1] 85
+shapiro.test(m2$residuals)
+[1] 86
+
+	Shapiro-Wilk normality test
+
+data:  m2$residuals
+W = 0.98817, p-value = 0.09559
+
+residualPlots(m2)
+[1] 87
+ncvTest(m2)
+[1] 88
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 4.414624, Df = 1, p = 0.035632
+vif(m2)
+[1] 89
+ training  feedback   empathy     years years_sqr        tf 
+ 2.106338  2.023925  1.774841 27.354456 25.683090  3.136751 
+durbinWatsonTest(m2)
+[1] 90
+ lag Autocorrelation D-W Statistic p-value
+   1      0.09475501      1.800954   0.144
+ Alternative hypothesis: rho != 0
+stdzm2 = MASS::studres(m2)
+[1] 91
+which(abs(stdzm2) > 2)
+[1] 92
+ 13  73 117 150 156 159 160 176 181 
+ 13  73 117 150 156 159 160 176 181 
+hatsm2 = hatvalues(m2)
+[1] 93
+which(hatsm2 > 2 * mean(hatsm2))
+[1] 94
+ 61  88  89 116 137 141 154 175 200 
+ 61  88  89 116 137 141 154 175 200 
+cooksm2 = cooks.distance(m2)
+[1] 95
+which(cooksm2 > 0.0207)
+[1] 96
+ 13  73 117 137 160 165 176 
+ 13  73 117 137 160 165 176 
+plot(m2, which = 4)
+[1] 97
+abline(0.0207, 0, col = "red")
+[1] 98
+data_winds = data
+[1] 99
+data_winds$incidents[data_winds$incidents > 0.91] = 0.83333333
+[1] 100
+data_winds$years[data_winds$years == 19] = 18
+[1] 101
+data_winds$years[data_winds$years == 18] = 15
+[1] 102
+m3 = lm(incidents ~ training + feedback + empathy + years + years_sqr + 
+    tf, data = data_winds)
+[1] 103
+plot(data_winds$incidents ~ data_winds$training)
+[1] 104
+plot(data_winds$incidents ~ data_winds$feedback)
+[1] 105
+plot(data_winds$incidents ~ data_winds$tf)
+[1] 106
+plot(data_winds$incidents ~ data_winds$empathy)
+[1] 107
+abline(lm(data_winds$incidents ~ data_winds$empathy))
+[1] 108
+lines(lowess(data_winds$incidents ~ data_winds$empathy))
+[1] 109
+plot(data_winds$incidents ~ data_winds$years)
+[1] 110
+abline(lm(data_winds$incidents ~ data_winds$years))
+[1] 111
+lines(lowess(data_winds$incidents ~ data_winds$years))
+[1] 112
+plot(data_winds$incidents ~ data_winds$years_sqr)
+[1] 113
+abline(lm(data_winds$incidents ~ data_winds$years_sqr))
+[1] 114
+lines(lowess(data_winds$incidents ~ data_winds$years_sqr))
+[1] 115
+crPlots(m3)
+[1] 116
+qqPlot(m3)
+[1] 117
+hist(m3$residuals)
+[1] 118
+shapiro.test(m3$residuals)
+[1] 119
+
+	Shapiro-Wilk normality test
+
+data:  m3$residuals
+W = 0.99133, p-value = 0.2773
+
+residualPlots(m3)
+[1] 120
+ncvTest(m3)
+[1] 121
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 3.445687, Df = 1, p = 0.063417
+vif(m3)
+[1] 122
+ training  feedback   empathy     years years_sqr        tf 
+ 2.093320  2.015084  1.613969 14.478983 13.341192  3.112973 
+durbinWatsonTest(m3)
+[1] 123
+ lag Autocorrelation D-W Statistic p-value
+   1      0.09662905      1.795918   0.154
+ Alternative hypothesis: rho != 0
+years_mc = data_winds$years - mean(data_winds$years)
+[1] 124
+data_winds = cbind(data_winds, years_mc)
+[1] 125
+years_mc_sqr = data_winds$years_mc^2
+[1] 126
+data_winds = cbind(data_winds, years_mc_sqr)
+[1] 127
+m4 = lm(incidents ~ training + feedback + empathy + years_mc + 
+    years_mc_sqr + tf, data = data_winds)
+[1] 128
+plot(data_winds$incidents ~ data_winds$training)
+[1] 129
+plot(data_winds$incidents ~ data_winds$feedback)
+[1] 130
+plot(data_winds$incidents ~ data_winds$tf)
+[1] 131
+plot(data_winds$incidents ~ data_winds$empathy)
+[1] 132
+abline(lm(data_winds$incidents ~ data_winds$empathy))
+[1] 133
+lines(lowess(data_winds$incidents ~ data_winds$empathy))
+[1] 134
+plot(data_winds$incidents ~ data_winds$years_mc)
+[1] 135
+abline(lm(data_winds$incidents ~ data_winds$years_mc))
+[1] 136
+lines(lowess(data_winds$incidents ~ data_winds$years_mc))
+[1] 137
+plot(data_winds$incidents ~ data_winds$years_mc_sqr)
+[1] 138
+abline(lm(data_winds$incidents ~ data_winds$years_mc_sqr))
+[1] 139
+lines(lowess(data_winds$incidents ~ data_winds$years_mc_sqr))
+[1] 140
+crPlots(m4, ylab = "component residuals (incidents)")
+[1] 141
+qqPlot(m4, xlab = "theoretical quantiles", ylab = "studentized residuals (model 2)", 
+    main = "QQ plot for Model 2")
+[1] 142
+hist(m4$residuals)
+[1] 143
+shapiro.test(m4$residuals)
+[1] 144
+
+	Shapiro-Wilk normality test
+
+data:  m4$residuals
+W = 0.99051, p-value = 0.2122
+
+residualPlots(m4, main = "Residuals plot for model 2")
+[1] 145
+ncvTest(m4)
+[1] 146
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 3.626147, Df = 1, p = 0.056878
+vif(m4)
+[1] 147
+    training     feedback      empathy     years_mc years_mc_sqr           tf 
+    2.115391     2.034124     1.771453     1.393373     1.645357     3.147811 
+durbinWatsonTest(m4)
+[1] 148
+ lag Autocorrelation D-W Statistic p-value
+   1       0.0971074      1.794049   0.128
+ Alternative hypothesis: rho != 0
+plot(data$empathy ~ data$years)
+[1] 149
+abline(lm(data$empathy ~ data$years))
+[1] 150
+lines(lowess(data$empathy ~ data$years))
+[1] 151
+crPlots(lm(data$empathy ~ data$years), xlab = "years", ylab = "component residuals (empathy)")
+[1] 152
+years_sqr = data$years^2
+[1] 153
+data = cbind(data, years_sqr)
+[1] 154
+years_mc = data$years - mean(data$years)
+[1] 155
+data = cbind(data, years_mc)
+[1] 156
+years_mc_sqr = data$years_mc^2
+[1] 157
+data = cbind(data, years_mc_sqr)
+[1] 158
+m_emp = lm(empathy ~ years + years_sqr, data = data)
+[1] 159
+crPlots(m_emp, ylab = "component residuals (empathy)")
+[1] 160
+qqPlot(m_emp)
+[1] 161
+hist(m_emp$residuals)
+[1] 162
+shapiro.test(m_emp$residuals)
+[1] 163
+
+	Shapiro-Wilk normality test
+
+data:  m_emp$residuals
+W = 0.9941, p-value = 0.6155
+
+residualPlots(m_emp)
+[1] 164
+ncvTest(m_emp)
+[1] 165
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.5107658, Df = 1, p = 0.47481
+vif(m_emp)
+[1] 166
+    years years_sqr 
+  16.0978   16.0978 
+durbinWatsonTest(m_emp)
+[1] 167
+ lag Autocorrelation D-W Statistic p-value
+   1      0.01288905      1.973855   0.892
+ Alternative hypothesis: rho != 0
+stdzm_emp = MASS::studres(m_emp)
+[1] 168
+which(abs(stdzm_emp) > 2)
+[1] 169
+ 30  68  69  70  74  76 122 142 162 175 
+ 30  68  69  70  74  76 122 142 162 175 
+hatsm_emp = hatvalues(m_emp)
+[1] 170
+which(hatsm_emp > 2 * mean(hatsm_emp))
+[1] 171
+ 16  61  88  89  92 116 137 141 154 155 165 171 190 200 
+ 16  61  88  89  92 116 137 141 154 155 165 171 190 200 
+cooksm_emp = cooks.distance(m_emp)
+[1] 172
+which(cooksm_emp > 0.0203)
+[1] 173
+ 61  89 137 141 154 163 165 175 
+ 61  89 137 141 154 163 165 175 
+plot(m_emp, which = 4)
+[1] 174
+abline(0.0203, 0, col = "red")
+[1] 175
+m_emp_winds = lm(data_winds$empathy ~ data_winds$years_mc + data_winds$years_mc_sqr)
+[1] 176
+plot(data_winds$empathy ~ data_winds$years_mc)
+[1] 177
+abline(lm(data_winds$empathy ~ data_winds$years_mc))
+[1] 178
+lines(lowess(data_winds$empathy ~ data_winds$years_mc))
+[1] 179
+plot(data_winds$empathy ~ data_winds$years_mc_sqr)
+[1] 180
+abline(lm(data_winds$empathy ~ data_winds$years_mc_sqr))
+[1] 181
+lines(lowess(data_winds$empathy ~ data_winds$years_mc_sqr))
+[1] 182
+crPlots(m_emp_winds, ylab = "component residuals (empathy)")
+[1] 183
+qqPlot(m_emp_winds, xlab = "theoretical quantiles", ylab = "studentized residuals (model 1)", 
+    main = "QQ plot for Model 1")
+[1] 184
+hist(m_emp_winds$residuals)
+[1] 185
+shapiro.test(m_emp_winds$residuals)
+[1] 186
+
+	Shapiro-Wilk normality test
+
+data:  m_emp_winds$residuals
+W = 0.99439, p-value = 0.6595
+
+residualPlots(m_emp_winds, main = "Residuals plot for model 1")
+[1] 187
+ncvTest(m_emp_winds)
+[1] 188
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.7150747, Df = 1, p = 0.39776
+vif(m_emp_winds)
+[1] 189
+    data_winds$years_mc data_winds$years_mc_sqr 
+               1.054676                1.054676 
+durbinWatsonTest(m_emp_winds)
+[1] 190
+ lag Autocorrelation D-W Statistic p-value
+   1    -0.006498814      2.012352    0.96
+ Alternative hypothesis: rho != 0
+m_emp_winds = lm(data_winds$empathy ~ data$years_mc + data_winds$years_mc_sqr)
+[1] 191
+summary(m_emp_winds)
+[1] 192
+
+Call:
+lm(formula = data_winds$empathy ~ data$years_mc + data_winds$years_mc_sqr)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.4714 -1.2308  0.0695  1.3044  5.9883 
+
+Coefficients:
+                        Estimate Std. Error t value Pr(>|t|)    
+(Intercept)             11.27637    0.17796  63.365  < 2e-16 ***
+data$years_mc            0.34162    0.04750   7.192  1.3e-11 ***
+data_winds$years_mc_sqr -0.12479    0.01231 -10.140  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.994 on 197 degrees of freedom
+Multiple R-squared:  0.3887,	Adjusted R-squared:  0.3825 
+F-statistic: 62.64 on 2 and 197 DF,  p-value: < 2.2e-16
+
+years_sqr = data$years^2
+[1] 193
+data = cbind(data, years_sqr)
+[1] 194
+years_mc = data$years - mean(data$years)
+[1] 195
+data = cbind(data, years_mc)
+[1] 196
+years_mc_sqr = data$years_mc^2
+[1] 197
+data = cbind(data, years_mc_sqr)
+[1] 198
+m_emp2 = lm(empathy ~ years_mc + years_mc_sqr, data = data)
+[1] 199
+summary(m_emp2)
+[1] 200
+
+Call:
+lm(formula = empathy ~ years_mc + years_mc_sqr, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5069 -1.4011 -0.0835  1.1707  6.0622 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  11.152696   0.167423  66.614  < 2e-16 ***
+years_mc      0.383236   0.047986   7.986 1.13e-13 ***
+years_mc_sqr -0.103645   0.009861 -10.510  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.969 on 197 degrees of freedom
+Multiple R-squared:  0.404,	Adjusted R-squared:  0.3979 
+F-statistic: 66.75 on 2 and 197 DF,  p-value: < 2.2e-16
+
+m4 = lm(incidents ~ training + feedback + empathy + years_mc + 
+    years_mc_sqr + tf, data = data_winds)
+[1] 201
+summary(m4)
+[1] 202
+
+Call:
+lm(formula = incidents ~ training + feedback + empathy + years_mc + 
+    years_mc_sqr + tf, data = data_winds)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.29829 -0.10135 -0.00422  0.09532  0.36030 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.226660   0.059887   3.785 0.000205 ***
+training2    -0.198435   0.028870  -6.873 8.44e-11 ***
+feedback2     0.085584   0.028310   3.023 0.002841 ** 
+empathy       0.027822   0.005220   5.330 2.72e-07 ***
+years_mc     -0.015731   0.003943  -3.989 9.41e-05 ***
+years_mc_sqr -0.000520   0.001074  -0.484 0.628767    
+tf2           0.095054   0.040665   2.337 0.020438 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1404 on 193 degrees of freedom
+Multiple R-squared:  0.4177,	Adjusted R-squared:  0.3996 
+F-statistic: 23.07 on 6 and 193 DF,  p-value: < 2.2e-16
+
+years_sqr = data$years^2
+[1] 203
+data = cbind(data, years_sqr)
+[1] 204
+years_mc = data$years - mean(data$years)
+[1] 205
+data = cbind(data, years_mc)
+[1] 206
+years_mc_sqr = data$years_mc^2
+[1] 207
+data = cbind(data, years_mc_sqr)
+[1] 208
+m6 = lm(incidents ~ training + feedback + empathy + years_mc + 
+    years_mc_sqr + tf, data = data)
+[1] 209
+summary(m6)
+[1] 210
+
+Call:
+lm(formula = incidents ~ training + feedback + empathy + years_mc + 
+    years_mc_sqr + tf, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30637 -0.10403 -0.00707  0.09178  0.44630 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.2019119  0.0622980   3.241   0.0014 ** 
+training2    -0.2046042  0.0300792  -6.802 1.26e-10 ***
+feedback2     0.0845363  0.0294849   2.867   0.0046 ** 
+empathy       0.0299607  0.0054552   5.492 1.24e-07 ***
+years_mc     -0.0165668  0.0041633  -3.979 9.78e-05 ***
+years_mc_sqr  0.0003548  0.0009272   0.383   0.7024    
+tf2           0.0996985  0.0423849   2.352   0.0197 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1466 on 193 degrees of freedom
+Multiple R-squared:  0.4019,	Adjusted R-squared:  0.3833 
+F-statistic: 21.62 on 6 and 193 DF,  p-value: < 2.2e-16
+
+m4 = lm(incidents ~ training + feedback + empathy + years_mc + 
+    years_mc_sqr + tf, data = data_winds)
+[1] 211
+summary(m4)
+[1] 212
+
+Call:
+lm(formula = incidents ~ training + feedback + empathy + years_mc + 
+    years_mc_sqr + tf, data = data_winds)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.29829 -0.10135 -0.00422  0.09532  0.36030 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.226660   0.059887   3.785 0.000205 ***
+training2    -0.198435   0.028870  -6.873 8.44e-11 ***
+feedback2     0.085584   0.028310   3.023 0.002841 ** 
+empathy       0.027822   0.005220   5.330 2.72e-07 ***
+years_mc     -0.015731   0.003943  -3.989 9.41e-05 ***
+years_mc_sqr -0.000520   0.001074  -0.484 0.628767    
+tf2           0.095054   0.040665   2.337 0.020438 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1404 on 193 degrees of freedom
+Multiple R-squared:  0.4177,	Adjusted R-squared:  0.3996 
+F-statistic: 23.07 on 6 and 193 DF,  p-value: < 2.2e-16
+
+years_sqr = data$years^2
+[1] 213
+data = cbind(data, years_sqr)
+[1] 214
+years_mc = data$years - mean(data$years)
+[1] 215
+data = cbind(data, years_mc)
+[1] 216
+years_mc_sqr = data$years_mc^2
+[1] 217
+data = cbind(data, years_mc_sqr)
+[1] 218
+m6 = lm(incidents ~ training + feedback + empathy + years_mc + 
+    years_mc_sqr + tf, data = data)
+[1] 219
+summary(m6)
+[1] 220
+
+Call:
+lm(formula = incidents ~ training + feedback + empathy + years_mc + 
+    years_mc_sqr + tf, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30637 -0.10403 -0.00707  0.09178  0.44630 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.2019119  0.0622980   3.241   0.0014 ** 
+training2    -0.2046042  0.0300792  -6.802 1.26e-10 ***
+feedback2     0.0845363  0.0294849   2.867   0.0046 ** 
+empathy       0.0299607  0.0054552   5.492 1.24e-07 ***
+years_mc     -0.0165668  0.0041633  -3.979 9.78e-05 ***
+years_mc_sqr  0.0003548  0.0009272   0.383   0.7024    
+tf2           0.0996985  0.0423849   2.352   0.0197 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1466 on 193 degrees of freedom
+Multiple R-squared:  0.4019,	Adjusted R-squared:  0.3833 
+F-statistic: 21.62 on 6 and 193 DF,  p-value: < 2.2e-16
+
+summary(m4)
+[1] 221
+
+Call:
+lm(formula = incidents ~ training + feedback + empathy + years_mc + 
+    years_mc_sqr + tf, data = data_winds)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.29829 -0.10135 -0.00422  0.09532  0.36030 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.226660   0.059887   3.785 0.000205 ***
+training2    -0.198435   0.028870  -6.873 8.44e-11 ***
+feedback2     0.085584   0.028310   3.023 0.002841 ** 
+empathy       0.027822   0.005220   5.330 2.72e-07 ***
+years_mc     -0.015731   0.003943  -3.989 9.41e-05 ***
+years_mc_sqr -0.000520   0.001074  -0.484 0.628767    
+tf2           0.095054   0.040665   2.337 0.020438 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1404 on 193 degrees of freedom
+Multiple R-squared:  0.4177,	Adjusted R-squared:  0.3996 
+F-statistic: 23.07 on 6 and 193 DF,  p-value: < 2.2e-16
+
+confint(m4)
+[1] 222
+                    2.5 %       97.5 %
+(Intercept)   0.108541856  0.344777603
+training2    -0.255375277 -0.141494452
+feedback2     0.029748454  0.141420372
+empathy       0.017527385  0.038117167
+years_mc     -0.023508184 -0.007952911
+years_mc_sqr -0.002638073  0.001598042
+tf2           0.014849356  0.175258457
+summary(m6)
+[1] 223
+
+Call:
+lm(formula = incidents ~ training + feedback + empathy + years_mc + 
+    years_mc_sqr + tf, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30637 -0.10403 -0.00707  0.09178  0.44630 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.2019119  0.0622980   3.241   0.0014 ** 
+training2    -0.2046042  0.0300792  -6.802 1.26e-10 ***
+feedback2     0.0845363  0.0294849   2.867   0.0046 ** 
+empathy       0.0299607  0.0054552   5.492 1.24e-07 ***
+years_mc     -0.0165668  0.0041633  -3.979 9.78e-05 ***
+years_mc_sqr  0.0003548  0.0009272   0.383   0.7024    
+tf2           0.0996985  0.0423849   2.352   0.0197 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1466 on 193 degrees of freedom
+Multiple R-squared:  0.4019,	Adjusted R-squared:  0.3833 
+F-statistic: 21.62 on 6 and 193 DF,  p-value: < 2.2e-16
+
+confint(m6)
+[1] 224
+                    2.5 %       97.5 %
+(Intercept)   0.079039614  0.324784111
+training2    -0.263930316 -0.145278119
+feedback2     0.026382378  0.142690216
+empathy       0.019201213  0.040720269
+years_mc     -0.024778155 -0.008355497
+years_mc_sqr -0.001474036  0.002183651
+tf2           0.016101413  0.183295596
+summary(m4)
+[1] 225
+
+Call:
+lm(formula = incidents ~ training + feedback + empathy + years_mc + 
+    years_mc_sqr + tf, data = data_winds)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.29829 -0.10135 -0.00422  0.09532  0.36030 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.226660   0.059887   3.785 0.000205 ***
+training2    -0.198435   0.028870  -6.873 8.44e-11 ***
+feedback2     0.085584   0.028310   3.023 0.002841 ** 
+empathy       0.027822   0.005220   5.330 2.72e-07 ***
+years_mc     -0.015731   0.003943  -3.989 9.41e-05 ***
+years_mc_sqr -0.000520   0.001074  -0.484 0.628767    
+tf2           0.095054   0.040665   2.337 0.020438 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1404 on 193 degrees of freedom
+Multiple R-squared:  0.4177,	Adjusted R-squared:  0.3996 
+F-statistic: 23.07 on 6 and 193 DF,  p-value: < 2.2e-16
+
+data_winds$training = as.numeric(data_winds$training)
+[1] 226
+data_winds$feedback = as.numeric(data_winds$feedback)
+[1] 227
+data_winds$training[data_winds$training == 1] = 0
+[1] 228
+data_winds$training[data_winds$training == 2] = 1
+[1] 229
+data_winds$feedback[data_winds$feedback == 1] = 0
+[1] 230
+data_winds$feedback[data_winds$feedback == 2] = 1
+[1] 231
+m4_2 = lm(incidents ~ training + feedback + empathy + years_mc + 
+    years_mc_sqr + training * feedback, data = data_winds)
+[1] 232
+sim_slopes(m4_2, pred = training, modx = feedback, johnson_neyman = FALSE)
+[1] 233
+SIMPLE SLOPES ANALYSIS 
+
+Slope of training when feedback = 0.00 (0): 
+
+   Est.   S.E.   t val.      p
+------- ------ -------- ------
+  -0.20   0.03    -6.87   0.00
+
+Slope of training when feedback = 1.00 (1): 
+
+   Est.   S.E.   t val.      p
+------- ------ -------- ------
+  -0.10   0.03    -3.66   0.00
+
+interact_plot(m4_2, pred = training, modx = feedback, main = "(Model 2) Interaction plot between specialized training and mandatory feedback")
+[1] 234
+summary(m6)
+[1] 235
+
+Call:
+lm(formula = incidents ~ training + feedback + empathy + years_mc + 
+    years_mc_sqr + tf, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30637 -0.10403 -0.00707  0.09178  0.44630 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.2019119  0.0622980   3.241   0.0014 ** 
+training2    -0.2046042  0.0300792  -6.802 1.26e-10 ***
+feedback2     0.0845363  0.0294849   2.867   0.0046 ** 
+empathy       0.0299607  0.0054552   5.492 1.24e-07 ***
+years_mc     -0.0165668  0.0041633  -3.979 9.78e-05 ***
+years_mc_sqr  0.0003548  0.0009272   0.383   0.7024    
+tf2           0.0996985  0.0423849   2.352   0.0197 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1466 on 193 degrees of freedom
+Multiple R-squared:  0.4019,	Adjusted R-squared:  0.3833 
+F-statistic: 21.62 on 6 and 193 DF,  p-value: < 2.2e-16
+
+data$training = as.numeric(data$training)
+[1] 236
+data$feedback = as.numeric(data$feedback)
+[1] 237
+data$training[data$training == 1] = 0
+[1] 238
+data$training[data$training == 2] = 1
+[1] 239
+data$feedback[data$feedback == 1] = 0
+[1] 240
+data$feedback[data$feedback == 2] = 1
+[1] 241
+m6_2 = lm(incidents ~ training + feedback + empathy + years_mc + 
+    years_mc_sqr + training * feedback, data = data)
+[1] 242
+sim_slopes(m6_2, pred = training, modx = feedback, johnson_neyman = FALSE)
+[1] 243
+SIMPLE SLOPES ANALYSIS 
+
+Slope of training when feedback = 0.00 (0): 
+
+   Est.   S.E.   t val.      p
+------- ------ -------- ------
+  -0.20   0.03    -6.80   0.00
+
+Slope of training when feedback = 1.00 (1): 
+
+   Est.   S.E.   t val.      p
+------- ------ -------- ------
+  -0.10   0.03    -3.55   0.00
+
+interact_plot(m6_2, pred = training, modx = feedback, main = "Sensitivity analysis Interaction plot between training and feedback")
+[1] 244
