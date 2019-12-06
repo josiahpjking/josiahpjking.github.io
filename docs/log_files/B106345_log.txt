@@ -1,0 +1,387 @@
+
+
+	####### B106345 R script #######
+
+setwd(dir = "Dropbox/University of Edinburgh/Year 3/RMS2")
+[1] 1
+library("car", quietly = T)
+[1] 2
+ [1] "car"       "carData"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"  
+[10] "base"     
+library("psych", quietly = T)
+[1] 3
+ [1] "psych"     "car"       "carData"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets" 
+[10] "methods"   "base"     
+data <- read.csv("../RMS2_report_1920.csv", header = T)
+[1] 4
+str(data)
+[1] 5
+'data.frame':	200 obs. of  6 variables:
+ $ subject  : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ incidents: num  0.667 0.333 0.333 0.417 0.5 ...
+ $ training : int  2 2 2 2 2 2 2 2 2 2 ...
+ $ feedback : int  2 1 2 1 2 1 2 1 2 1 ...
+ $ empathy  : int  11 10 10 9 12 11 13 14 12 12 ...
+ $ years    : int  10 7 5 7 12 10 8 10 7 9 ...
+NULL
+View(data)
+[1] 6
+data$training <- factor(data$training, label = c("no-training", 
+    "training"))
+[1] 7
+data$feedback <- factor(data$feedback, label = c("no-feedback", 
+    "feedback"))
+[1] 8
+table(data$feedback, data$training)
+[1] 9
+             
+              no-training training
+  no-feedback          50       50
+  feedback             50       50
+summary(data)
+[1] 10
+    subject         incidents              training          feedback      empathy          years      
+ Min.   :  1.00   Min.   :0.08333   no-training:100   no-feedback:100   Min.   : 3.00   Min.   : 1.00  
+ 1st Qu.: 50.75   1st Qu.:0.33333   training   :100   feedback   :100   1st Qu.: 9.00   1st Qu.: 6.00  
+ Median :100.50   Median :0.41667                                       Median :10.00   Median : 8.00  
+ Mean   :100.50   Mean   :0.47500                                       Mean   :10.18   Mean   : 8.13  
+ 3rd Qu.:150.25   3rd Qu.:0.58333                                       3rd Qu.:12.00   3rd Qu.:10.00  
+ Max.   :200.00   Max.   :0.91667                                       Max.   :16.00   Max.   :19.00  
+describe(data)
+[1] 11
+          vars   n   mean    sd median trimmed   mad  min    max  range skew kurtosis   se
+subject      1 200 100.50 57.88 100.50  100.50 74.13 1.00 200.00 199.00 0.00    -1.22 4.09
+incidents    2 200   0.48  0.19   0.42    0.47  0.12 0.08   0.92   0.83 0.32    -0.31 0.01
+training*    3 200   1.50  0.50   1.50    1.50  0.74 1.00   2.00   1.00 0.00    -2.01 0.04
+ [ reached 'max' / getOption("max.print") -- omitted 3 rows ]
+plot(x = data$years, y = data$empathy, main = "Experience-Empathy Relationship", 
+    xlab = "Experience (years)", ylab = "Empathy")
+[1] 12
+model1 <- lm(data$empathy ~ data$years)
+[1] 13
+summary(model1)
+[1] 14
+
+Call:
+lm(formula = data$empathy ~ data$years)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.5399 -1.5160  0.0708  1.6357  5.8533 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  8.40625    0.49085  17.126  < 2e-16 ***
+data$years   0.21756    0.05648   3.852 0.000158 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.453 on 198 degrees of freedom
+Multiple R-squared:  0.06972,	Adjusted R-squared:  0.06502 
+F-statistic: 14.84 on 1 and 198 DF,  p-value: 0.0001582
+
+hist(data$empathy, main = "Empathy (histogram)", xlab = "Empathy score")
+[1] 15
+hist(data$years, main = "Experience (histogram)", xlab = "Experience in years")
+[1] 16
+qqPlot(model1)
+[1] 17
+hist(model1$residuals, main = "Residual plot", xlab = "Residuals")
+[1] 18
+shapiro.test(model1$residuals)
+[1] 19
+
+	Shapiro-Wilk normality test
+
+data:  model1$residuals
+W = 0.98911, p-value = 0.1321
+
+residualPlots(model1)
+[1] 20
+ncvTest(model1)
+[1] 21
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.9815033, Df = 1, p = 0.32183
+crPlots(model1)
+[1] 22
+durbinWatsonTest(model1)
+[1] 23
+ lag Autocorrelation D-W Statistic p-value
+   1       0.1017162      1.769879   0.122
+ Alternative hypothesis: rho != 0
+summary(model1)
+[1] 24
+
+Call:
+lm(formula = data$empathy ~ data$years)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.5399 -1.5160  0.0708  1.6357  5.8533 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  8.40625    0.49085  17.126  < 2e-16 ***
+data$years   0.21756    0.05648   3.852 0.000158 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.453 on 198 degrees of freedom
+Multiple R-squared:  0.06972,	Adjusted R-squared:  0.06502 
+F-statistic: 14.84 on 1 and 198 DF,  p-value: 0.0001582
+
+plot(x = data$years, y = data$empathy, main = "Experience-Empathy Relationship", 
+    xlab = "Experience (years)", ylab = "Empathy")
+[1] 25
+abline(model1, col = 2)
+[1] 26
+model1a <- lm(data$empathy ~ data$years + I(data$years^2))
+[1] 27
+summary(model1a)
+[1] 28
+
+Call:
+lm(formula = data$empathy ~ data$years + I(data$years^2))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5069 -1.4011 -0.0835  1.1707  6.0622 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)      1.186356   0.791848   1.498    0.136    
+data$years       2.068508   0.181845  11.375   <2e-16 ***
+I(data$years^2) -0.103645   0.009861 -10.510   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.969 on 197 degrees of freedom
+Multiple R-squared:  0.404,	Adjusted R-squared:  0.3979 
+F-statistic: 66.75 on 2 and 197 DF,  p-value: < 2.2e-16
+
+plot(x = data$years, y = data$empathy, main = "Experience-Empathy Relationship", 
+    xlab = "Experience (years)", ylab = "Empathy", pch = 20, 
+    col = "blue")
+[1] 29
+abline(model1, col = 2)
+[1] 30
+lines(smooth.spline(data$years, predict(model1a)), col = "green", 
+    lwd = 1)
+[1] 31
+legend(0.5, 16.3, legend = c("model1: Linear", "model1b: Poly^2"), 
+    col = c("red", "green"), lty = c(1, 1))
+[1] 32
+$rect
+$rect$w
+[1] 8.77991
+
+$rect$h
+[1] 3.450691
+
+$rect$left
+[1] 0.5
+
+$rect$top
+[1] 16.3
+
+
+$text
+$text$x
+[1] 3.251484 3.251484
+
+$text$y
+[1] 15.14977 13.99954
+
+
+qqPlot(model1a)
+[1] 33
+hist(model1a$residuals, main = "Residual plot", xlab = "Residuals")
+[1] 34
+shapiro.test(model1a$residuals)
+[1] 35
+
+	Shapiro-Wilk normality test
+
+data:  model1a$residuals
+W = 0.9941, p-value = 0.6155
+
+residualPlots(model1a)
+[1] 36
+ncvTest(model1a)
+[1] 37
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.5107658, Df = 1, p = 0.47481
+residualPlot(model1a)
+[1] 38
+durbinWatsonTest(model1a)
+[1] 39
+ lag Autocorrelation D-W Statistic p-value
+   1      0.01288905      1.973855   0.858
+ Alternative hypothesis: rho != 0
+vif(model1a)
+[1] 40
+     data$years I(data$years^2) 
+        16.0978         16.0978 
+plot(model1a, which = 4)
+[1] 41
+abline(h = cooks.distance(model1a) > (4/(200 - 2 - 1)), col = "red")
+[1] 42
+model1b <- lm(data$empathy ~ data$years + I(data$years^2), subset = -(c(89, 
+    154, 175)))
+[1] 43
+summary(model1b)
+[1] 44
+
+Call:
+lm(formula = data$empathy ~ data$years + I(data$years^2), subset = -(c(89, 
+    154, 175)))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5295 -1.2903  0.1354  1.3148  4.8900 
+
+Coefficients:
+                Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.8127     0.8215   0.989    0.324    
+data$years        2.1491     0.1961  10.957   <2e-16 ***
+I(data$years^2)  -0.1077     0.0111  -9.710   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.918 on 194 degrees of freedom
+Multiple R-squared:  0.4117,	Adjusted R-squared:  0.4056 
+F-statistic: 67.87 on 2 and 194 DF,  p-value: < 2.2e-16
+
+qqPlot(model1b, main = "model1b")
+[1] 45
+hist(model1b$residuals, main = "Residual plot", xlab = "Residuals")
+[1] 46
+shapiro.test(model1b$residuals)
+[1] 47
+
+	Shapiro-Wilk normality test
+
+data:  model1b$residuals
+W = 0.99299, p-value = 0.4709
+
+residualPlots(model1b)
+[1] 48
+ncvTest(model1b)
+[1] 49
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 1.519255, Df = 1, p = 0.21773
+residualPlot(model1b)
+[1] 50
+durbinWatsonTest(model1b)
+[1] 51
+ lag Autocorrelation D-W Statistic p-value
+   1      0.03934455      1.920888   0.624
+ Alternative hypothesis: rho != 0
+vif(model1b)
+[1] 52
+     data$years I(data$years^2) 
+       17.88176        17.88176 
+cor.test(data$years, data$empathy, method = "spearman")
+[1] 53
+
+	Spearman's rank correlation rho
+
+data:  data$years and data$empathy
+S = 923838, p-value = 9.723e-06
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.3071045 
+
+model2 <- lm(incidents ~ empathy + years + training + feedback + 
+    training * feedback, data)
+[1] 54
+summary(model2)
+[1] 55
+
+Call:
+lm(formula = incidents ~ empathy + years + training + feedback + 
+    training * feedback, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30367 -0.10365 -0.00795  0.08806  0.44359 
+
+Coefficients:
+                                   Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                        0.345467   0.048515   7.121 2.04e-11 ***
+empathy                            0.028695   0.004328   6.630 3.25e-10 ***
+years                             -0.015720   0.003518  -4.468 1.34e-05 ***
+trainingtraining                  -0.203496   0.029874  -6.812 1.18e-10 ***
+feedbackfeedback                   0.085558   0.029299   2.920  0.00391 ** 
+trainingtraining:feedbackfeedback  0.097334   0.041840   2.326  0.02103 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1462 on 194 degrees of freedom
+Multiple R-squared:  0.4015,	Adjusted R-squared:  0.386 
+F-statistic: 26.02 on 5 and 194 DF,  p-value: < 2.2e-16
+
+hist(data$incidents, main = "Incidents (Histogram)", xlab = "Percentage of Incidents Reported")
+[1] 56
+hist(data$empathy, main = "Empathy (histogram)", xlab = "Empathy score")
+[1] 57
+hist(data$years, main = "Experience (histogram)", xlab = "Experience in years")
+[1] 58
+plot(data$training, main = "Training")
+[1] 59
+qqPlot(model2)
+[1] 60
+hist(model2$residuals, main = "Residual plot", xlab = "Residuals")
+[1] 61
+shapiro.test(model2$residuals)
+[1] 62
+
+	Shapiro-Wilk normality test
+
+data:  model2$residuals
+W = 0.98794, p-value = 0.08817
+
+residualPlots(model2)
+[1] 63
+durbinWatsonTest(model2)
+[1] 64
+ lag Autocorrelation D-W Statistic p-value
+   1      0.09456969      1.801048   0.178
+ Alternative hypothesis: rho != 0
+vif(model2)
+[1] 65
+          empathy             years          training          feedback training:feedback 
+         1.122147          1.092150          2.086826          2.007327          3.070068 
+summary(model2)
+[1] 66
+
+Call:
+lm(formula = incidents ~ empathy + years + training + feedback + 
+    training * feedback, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30367 -0.10365 -0.00795  0.08806  0.44359 
+
+Coefficients:
+                                   Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                        0.345467   0.048515   7.121 2.04e-11 ***
+empathy                            0.028695   0.004328   6.630 3.25e-10 ***
+years                             -0.015720   0.003518  -4.468 1.34e-05 ***
+trainingtraining                  -0.203496   0.029874  -6.812 1.18e-10 ***
+feedbackfeedback                   0.085558   0.029299   2.920  0.00391 ** 
+trainingtraining:feedbackfeedback  0.097334   0.041840   2.326  0.02103 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1462 on 194 degrees of freedom
+Multiple R-squared:  0.4015,	Adjusted R-squared:  0.386 
+F-statistic: 26.02 on 5 and 194 DF,  p-value: < 2.2e-16
+
+interaction.plot(data$training, data$feedback, data$incidents, 
+    xlab = "Training", ylab = "Mean of Incidents", main = "Training-Feedback Interaction Plot")
+[1] 67

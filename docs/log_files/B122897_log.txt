@@ -1,0 +1,716 @@
+
+
+	####### B122897 R script #######
+
+data <- read.csv("../RMS2_report_1920.csv")
+[1] 1
+data
+
+  subject incidents training feedback empathy years
+1       1 0.6666667        2        2      11    10
+2       2 0.3333333        2        1      10     7
+3       3 0.3333333        2        2      10     5
+4       4 0.4166667        2        1       9     7
+5       5 0.5000000        2        2      12    12
+6       6 0.2500000        2        1      11    10
+7       7 0.8333333        2        2      13     8
+8       8 0.4166667        2        1      14    10
+ [ reached 'max' / getOption("max.print") -- omitted 192 rows ]
+
+
+whole <- lm(incidents ~ empathy + years + training + feedback, 
+    data = data)
+[1] 3
+plot(cooks.distance(whole))
+[1] 4
+abline(h = 4/200)
+[1] 5
+which(cooks.distance(whole) > 4/200)
+[1] 6
+ 13  35  73  74 117 131 137 141 156 160 176 
+ 13  35  73  74 117 131 137 141 156 160 176 
+plot(whole, 5)
+[1] 7
+str(data)
+[1] 8
+'data.frame':	200 obs. of  6 variables:
+ $ subject  : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ incidents: num  0.667 0.333 0.333 0.417 0.5 ...
+ $ training : int  2 2 2 2 2 2 2 2 2 2 ...
+ $ feedback : int  2 1 2 1 2 1 2 1 2 1 ...
+ $ empathy  : int  11 10 10 9 12 11 13 14 12 12 ...
+ $ years    : int  10 7 5 7 12 10 8 10 7 9 ...
+NULL
+data$training <- as.factor(data$training)
+[1] 9
+str(data$training)
+[1] 10
+ Factor w/ 2 levels "1","2": 2 2 2 2 2 2 2 2 2 2 ...
+NULL
+summary(data$training)
+[1] 11
+  1   2 
+100 100 
+data$training <- factor(data$training, labels = c("no", "yes"))
+[1] 12
+str(data$training)
+[1] 13
+ Factor w/ 2 levels "no","yes": 2 2 2 2 2 2 2 2 2 2 ...
+NULL
+str(data)
+[1] 14
+'data.frame':	200 obs. of  6 variables:
+ $ subject  : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ incidents: num  0.667 0.333 0.333 0.417 0.5 ...
+ $ training : Factor w/ 2 levels "no","yes": 2 2 2 2 2 2 2 2 2 2 ...
+ $ feedback : int  2 1 2 1 2 1 2 1 2 1 ...
+ $ empathy  : int  11 10 10 9 12 11 13 14 12 12 ...
+ $ years    : int  10 7 5 7 12 10 8 10 7 9 ...
+NULL
+data$feedback <- as.factor(data$feedback)
+[1] 15
+data$feedback <- factor(data$feedback, labels = c("no", "yes"))
+[1] 16
+str(data$feedback)
+[1] 17
+ Factor w/ 2 levels "no","yes": 2 1 2 1 2 1 2 1 2 1 ...
+NULL
+install.packages("formattable")
+[1] 18
+summary <- (describe(data)[c(2, 3, 4, 5, 6), c(2:4, 8, 9, 11, 
+    12)])
+[1] 19
+
+
+####################################################################################################
+
+[1] "Error in describe(data) : could not find function \"describe\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in describe(data): could not find function "describe">
+####################################################################################################
+
+
+formattable(summary)
+[1] 20
+[1] "Error in formattable(summary) : could not find function \"formattable\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in formattable(summary): could not find function "formattable">
+
+
+####################################################################################################
+
+[1] "Error in formattable(summary) : could not find function \"formattable\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in formattable(summary): could not find function "formattable">
+####################################################################################################
+
+
+t1 <- (describe(data)[c(5, 6), c(2:4, 8, 9, 11, 12)])
+[1] 21
+
+
+####################################################################################################
+
+[1] "Error in describe(data) : could not find function \"describe\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in describe(data): could not find function "describe">
+####################################################################################################
+
+
+empathy_mean <- data$empathy - mean(data$empathy)
+[1] 22
+summary(empathy_mean)
+[1] 23
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ -7.175  -1.175  -0.175   0.000   1.825   5.825 
+plot(data$years, empathy_mean, pch = 21, main = "scatterplot", 
+    xlab = "years", ylab = "empathy")
+[1] 24
+plm <- lm(empathy_mean ~ poly(data$years, 2, raw = TRUE))
+[1] 25
+a <- summary(plm)
+[1] 26
+par(mfrow = c(1, 1))
+[1] 27
+$mfrow
+[1] 1 3
+
+qqPlot(plm$residuals, main = "QQ Plot")
+[1] 28
+
+
+####################################################################################################
+
+[1] "Error in qqPlot(plm$residuals, main = \"QQ Plot\") : \n  could not find function \"qqPlot\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in qqPlot(plm$residuals, main = "QQ Plot"): could not find function "qqPlot">
+####################################################################################################
+
+
+hist(plm$residuals, xlab = "years", ylab = "empathy")
+[1] 29
+shapiro.test(plm$residuals)
+[1] 30
+
+	Shapiro-Wilk normality test
+
+data:  plm$residuals
+W = 0.9941, p-value = 0.6155
+
+residualPlot(plm, main = "residuals")
+[1] 31
+
+
+####################################################################################################
+
+[1] "Error in residualPlot(plm, main = \"residuals\") : \n  could not find function \"residualPlot\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in residualPlot(plm, main = "residuals"): could not find function "residualPlot">
+####################################################################################################
+
+
+ncvTest(plm)
+[1] 32
+[1] "Error in ncvTest(plm) : could not find function \"ncvTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in ncvTest(plm): could not find function "ncvTest">
+
+
+####################################################################################################
+
+[1] "Error in ncvTest(plm) : could not find function \"ncvTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in ncvTest(plm): could not find function "ncvTest">
+####################################################################################################
+
+
+durbinWatsonTest(plm)
+[1] 33
+[1] "Error in durbinWatsonTest(plm) : \n  could not find function \"durbinWatsonTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in durbinWatsonTest(plm): could not find function "durbinWatsonTest">
+
+
+####################################################################################################
+
+[1] "Error in durbinWatsonTest(plm) : \n  could not find function \"durbinWatsonTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in durbinWatsonTest(plm): could not find function "durbinWatsonTest">
+####################################################################################################
+
+
+describe(data)[, c(2:4, 8, 9)]
+[1] 34
+[1] "Error in describe(data) : could not find function \"describe\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in describe(data): could not find function "describe">
+
+
+####################################################################################################
+
+[1] "Error in describe(data) : could not find function \"describe\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in describe(data): could not find function "describe">
+####################################################################################################
+
+
+t3 <- describe(data)[c(3, 5, 6), c(2:4, 8, 9, 11, 12)]
+[1] 35
+
+
+####################################################################################################
+
+[1] "Error in describe(data) : could not find function \"describe\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in describe(data): could not find function "describe">
+####################################################################################################
+
+
+formattable(t3)
+[1] 36
+[1] "Error in formattable(t3) : could not find function \"formattable\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in formattable(t3): could not find function "formattable">
+
+
+####################################################################################################
+
+[1] "Error in formattable(t3) : could not find function \"formattable\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in formattable(t3): could not find function "formattable">
+####################################################################################################
+
+
+plot(data$training, data$incidents, xlab = "training", ylab = "interventions", 
+    main = "boxplot: training vs incident intervention")
+[1] 37
+plot(data$feedback, data$incidents, xlab = "feedback", ylab = "interventions", 
+    main = "boxplot: feedback vs incident intervention")
+[1] 38
+lm2 <- lm(incidents ~ empathy_mean + years + training, data = data)
+[1] 39
+summary(lm2)
+[1] 40
+
+Call:
+lm(formula = incidents ~ empathy_mean + years + training, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35648 -0.12270 -0.01474  0.10105  0.53180 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.665721   0.036551  18.214  < 2e-16 ***
+empathy_mean  0.025396   0.004735   5.363 2.29e-07 ***
+years        -0.014085   0.003889  -3.622 0.000372 ***
+trainingyes  -0.152427   0.023166  -6.580 4.20e-10 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1621 on 196 degrees of freedom
+Multiple R-squared:  0.2565,	Adjusted R-squared:  0.2451 
+F-statistic: 22.53 on 3 and 196 DF,  p-value: 1.408e-12
+
+par(mfrow = c(1, 1))
+[1] 41
+$mfrow
+[1] 1 1
+
+qqPlot(lm2, main = "QQ Plot")
+[1] 42
+
+
+####################################################################################################
+
+[1] "Error in qqPlot(lm2, main = \"QQ Plot\") : could not find function \"qqPlot\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in qqPlot(lm2, main = "QQ Plot"): could not find function "qqPlot">
+####################################################################################################
+
+
+shapiro.test(lm2$residuals)
+[1] 43
+
+	Shapiro-Wilk normality test
+
+data:  lm2$residuals
+W = 0.97994, p-value = 0.005838
+
+plot(lm2)
+[1] 44
+crPlots(lm(incidents ~ empathy_mean + years + training, data = data))
+[1] 45
+durbinWatsonTest(lm2)
+[1] 46
+[1] "Error in durbinWatsonTest(lm2) : \n  could not find function \"durbinWatsonTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in durbinWatsonTest(lm2): could not find function "durbinWatsonTest">
+
+
+####################################################################################################
+
+[1] "Error in durbinWatsonTest(lm2) : \n  could not find function \"durbinWatsonTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in durbinWatsonTest(lm2): could not find function "durbinWatsonTest">
+####################################################################################################
+
+
+residualPlot(lm2, main = "residuals")
+[1] 47
+
+
+####################################################################################################
+
+[1] "Error in residualPlot(lm2, main = \"residuals\") : \n  could not find function \"residualPlot\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in residualPlot(lm2, main = "residuals"): could not find function "residualPlot">
+####################################################################################################
+
+
+ncvTest(lm2)
+[1] 48
+[1] "Error in ncvTest(lm2) : could not find function \"ncvTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in ncvTest(lm2): could not find function "ncvTest">
+
+
+####################################################################################################
+
+[1] "Error in ncvTest(lm2) : could not find function \"ncvTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in ncvTest(lm2): could not find function "ncvTest">
+####################################################################################################
+
+
+par(mfrow = c(2, 2))
+[1] 49
+$mfrow
+[1] 1 1
+
+plot(lm2)
+[1] 50
+vif(lm2)
+[1] 51
+[1] "Error in vif(lm2) : could not find function \"vif\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in vif(lm2): could not find function "vif">
+
+
+####################################################################################################
+
+[1] "Error in vif(lm2) : could not find function \"vif\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in vif(lm2): could not find function "vif">
+####################################################################################################
+
+
+t4 <- describe(data)[c(4, 5, 6), c(2:4, 8, 9, 11, 12)]
+[1] 52
+
+
+####################################################################################################
+
+[1] "Error in describe(data) : could not find function \"describe\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in describe(data): could not find function "describe">
+####################################################################################################
+
+
+formattable(t4)
+[1] 53
+[1] "Error in formattable(t4) : could not find function \"formattable\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in formattable(t4): could not find function "formattable">
+
+
+####################################################################################################
+
+[1] "Error in formattable(t4) : could not find function \"formattable\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in formattable(t4): could not find function "formattable">
+####################################################################################################
+
+
+plot(data$feedback, data$incidents, xlab = "feedback", ylab = "interventions")
+[1] 54
+lm3 <- lm(incidents ~ empathy_mean + years + feedback, data = data)
+[1] 55
+summary(lm3)
+[1] 56
+
+Call:
+lm(formula = incidents ~ empathy_mean + years + feedback, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35580 -0.11148 -0.01097  0.11092  0.53552 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.512093   0.035846  14.286  < 2e-16 ***
+empathy_mean  0.023187   0.004829   4.802 3.11e-06 ***
+years        -0.012689   0.003975  -3.192  0.00165 ** 
+feedbackyes   0.132132   0.023585   5.602 7.09e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1663 on 196 degrees of freedom
+Multiple R-squared:  0.2175,	Adjusted R-squared:  0.2055 
+F-statistic: 18.16 on 3 and 196 DF,  p-value: 1.933e-10
+
+t2 <- summary(lm3$coefficients)
+[1] 57
+par(mfrow = c(1, 1))
+[1] 58
+$mfrow
+[1] 2 2
+
+qqPlot(lm3, main = "QQ Plot")
+[1] 59
+
+
+####################################################################################################
+
+[1] "Error in qqPlot(lm3, main = \"QQ Plot\") : could not find function \"qqPlot\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in qqPlot(lm3, main = "QQ Plot"): could not find function "qqPlot">
+####################################################################################################
+
+
+shapiro.test(lm3$residuals)
+[1] 60
+
+	Shapiro-Wilk normality test
+
+data:  lm3$residuals
+W = 0.98772, p-value = 0.08174
+
+plot(lm3)
+[1] 61
+crPlots(lm(incidents ~ empathy_mean + years + feedback, data = data))
+[1] 62
+residualPlot(lm3, main = "Residuals")
+[1] 63
+
+
+####################################################################################################
+
+[1] "Error in residualPlot(lm3, main = \"Residuals\") : \n  could not find function \"residualPlot\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in residualPlot(lm3, main = "Residuals"): could not find function "residualPlot">
+####################################################################################################
+
+
+ncvTest(lm3)
+[1] 64
+[1] "Error in ncvTest(lm3) : could not find function \"ncvTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in ncvTest(lm3): could not find function "ncvTest">
+
+
+####################################################################################################
+
+[1] "Error in ncvTest(lm3) : could not find function \"ncvTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in ncvTest(lm3): could not find function "ncvTest">
+####################################################################################################
+
+
+durbinWatsonTest(lm3)
+[1] 65
+[1] "Error in durbinWatsonTest(lm3) : \n  could not find function \"durbinWatsonTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in durbinWatsonTest(lm3): could not find function "durbinWatsonTest">
+
+
+####################################################################################################
+
+[1] "Error in durbinWatsonTest(lm3) : \n  could not find function \"durbinWatsonTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in durbinWatsonTest(lm3): could not find function "durbinWatsonTest">
+####################################################################################################
+
+
+vif(lm3)
+[1] 66
+[1] "Error in vif(lm3) : could not find function \"vif\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in vif(lm3): could not find function "vif">
+
+
+####################################################################################################
+
+[1] "Error in vif(lm3) : could not find function \"vif\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in vif(lm3): could not find function "vif">
+####################################################################################################
+
+
+install.packages("lm.beta")
+[1] 67
+library(lm.beta, quietly = T)
+[1] 68
+[1] "lm.beta"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+summary(lm.beta(lm3))
+[1] 69
+
+Call:
+lm(formula = incidents ~ empathy_mean + years + feedback, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35580 -0.11148 -0.01097  0.11092  0.53552 
+
+Coefficients:
+              Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)   0.512093     0.000000   0.035846  14.286  < 2e-16 ***
+empathy_mean  0.023187     0.315225   0.004829   4.802 3.11e-06 ***
+years        -0.012689    -0.209350   0.003975  -3.192  0.00165 ** 
+feedbackyes   0.132132     0.354902   0.023585   5.602 7.09e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1663 on 196 degrees of freedom
+Multiple R-squared:  0.2175,	Adjusted R-squared:  0.2055 
+F-statistic: 18.16 on 3 and 196 DF,  p-value: 1.933e-10
+
+summary(lm.beta(lm3))
+[1] 70
+
+Call:
+lm(formula = incidents ~ empathy_mean + years + feedback, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35580 -0.11148 -0.01097  0.11092  0.53552 
+
+Coefficients:
+              Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)   0.512093     0.000000   0.035846  14.286  < 2e-16 ***
+empathy_mean  0.023187     0.315225   0.004829   4.802 3.11e-06 ***
+years        -0.012689    -0.209350   0.003975  -3.192  0.00165 ** 
+feedbackyes   0.132132     0.354902   0.023585   5.602 7.09e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1663 on 196 degrees of freedom
+Multiple R-squared:  0.2175,	Adjusted R-squared:  0.2055 
+F-statistic: 18.16 on 3 and 196 DF,  p-value: 1.933e-10
+
+install.packages("interactions")
+[1] 71
+library(interactions, quietly = T)
+[1] 72
+ [1] "interactions" "lm.beta"      "readr"        "stats"        "graphics"     "grDevices"    "utils"       
+ [8] "datasets"     "methods"      "base"        
+lmi <- lm(incidents ~ feedback * training, data = data)
+[1] 73
+summary(lmi)
+[1] 74
+
+Call:
+lm(formula = incidents ~ feedback * training, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.40000 -0.10500  0.00000  0.08333  0.43333 
+
+Coefficients:
+                        Estimate Std. Error t value Pr(>|t|)    
+(Intercept)              0.49333    0.02314  21.323  < 2e-16 ***
+feedbackyes              0.09667    0.03272   2.954  0.00352 ** 
+trainingyes             -0.16000    0.03272  -4.890 2.09e-06 ***
+feedbackyes:trainingyes  0.05333    0.04627   1.153  0.25047    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1636 on 196 degrees of freedom
+Multiple R-squared:  0.2431,	Adjusted R-squared:  0.2315 
+F-statistic: 20.99 on 3 and 196 DF,  p-value: 7.827e-12
+
+plot(lmi)
+[1] 75
+residualPlot(lmi, main = "residuals")
+[1] 76
+
+
+####################################################################################################
+
+[1] "Error in residualPlot(lmi, main = \"residuals\") : \n  could not find function \"residualPlot\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in residualPlot(lmi, main = "residuals"): could not find function "residualPlot">
+####################################################################################################
+
+
+ncvTest(lmi)
+[1] 77
+[1] "Error in ncvTest(lmi) : could not find function \"ncvTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in ncvTest(lmi): could not find function "ncvTest">
+
+
+####################################################################################################
+
+[1] "Error in ncvTest(lmi) : could not find function \"ncvTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in ncvTest(lmi): could not find function "ncvTest">
+####################################################################################################
+
+
+durbinWatsonTest(lmi)
+[1] 78
+[1] "Error in durbinWatsonTest(lmi) : \n  could not find function \"durbinWatsonTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in durbinWatsonTest(lmi): could not find function "durbinWatsonTest">
+
+
+####################################################################################################
+
+[1] "Error in durbinWatsonTest(lmi) : \n  could not find function \"durbinWatsonTest\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in durbinWatsonTest(lmi): could not find function "durbinWatsonTest">
+####################################################################################################
+
+
+interaction.plot(data$training, data$feedback, data$incidents, 
+    main = "interaction plot", xlab = "training", ylab = "incidents")
+[1] 79

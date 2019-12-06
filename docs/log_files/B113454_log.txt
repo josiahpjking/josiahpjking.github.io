@@ -1,0 +1,326 @@
+
+
+	####### B113454 R script #######
+
+setwd("~/University- Year 3/Semester 1/RMS 2/Assessment")
+[1] 1
+read.csv("../RMS2_report_1920.csv")
+[1] 2
+  subject incidents training feedback empathy years
+1       1 0.6666667        2        2      11    10
+2       2 0.3333333        2        1      10     7
+3       3 0.3333333        2        2      10     5
+4       4 0.4166667        2        1       9     7
+5       5 0.5000000        2        2      12    12
+6       6 0.2500000        2        1      11    10
+7       7 0.8333333        2        2      13     8
+8       8 0.4166667        2        1      14    10
+ [ reached 'max' / getOption("max.print") -- omitted 192 rows ]
+my_data <- read.csv("../RMS2_report_1920.csv")
+[1] 3
+library(psych)
+[1] 4
+[1] "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(car)
+[1] 5
+ [1] "car"       "carData"   "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets" 
+[10] "methods"   "base"     
+library(interactions)
+[1] 6
+ [1] "interactions" "car"          "carData"      "psych"        "readr"        "stats"        "graphics"    
+ [8] "grDevices"    "utils"        "datasets"     "methods"      "base"        
+library(ggplot2)
+[1] 7
+ [1] "ggplot2"      "interactions" "car"          "carData"      "psych"        "readr"        "stats"       
+ [8] "graphics"     "grDevices"    "utils"        "datasets"     "methods"      "base"        
+is.factor(my_data$training)
+[1] 8
+[1] FALSE
+is.factor(my_data$feedback)
+[1] 9
+[1] FALSE
+my_data$training <- as.factor(my_data$training)
+[1] 10
+my_data$feedback <- as.factor(my_data$feedback)
+[1] 11
+summary(my_data$incidents)
+[1] 12
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+0.08333 0.33333 0.41667 0.47500 0.58333 0.91667 
+summary(my_data$empathy)
+[1] 13
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   3.00    9.00   10.00   10.18   12.00   16.00 
+summary(my_data$years)
+[1] 14
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   1.00    6.00    8.00    8.13   10.00   19.00 
+m1 <- lm(empathy ~ years, data = my_data)
+[1] 15
+summary(m1)
+[1] 16
+
+Call:
+lm(formula = empathy ~ years, data = my_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.5399 -1.5160  0.0708  1.6357  5.8533 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  8.40625    0.49085  17.126  < 2e-16 ***
+years        0.21756    0.05648   3.852 0.000158 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.453 on 198 degrees of freedom
+Multiple R-squared:  0.06972,	Adjusted R-squared:  0.06502 
+F-statistic: 14.84 on 1 and 198 DF,  p-value: 0.0001582
+
+hist(m1$residuals)
+[1] 17
+shapiro.test(m1$residuals)
+[1] 18
+
+	Shapiro-Wilk normality test
+
+data:  m1$residuals
+W = 0.98911, p-value = 0.1321
+
+cooks1 <- cooks.distance(m1)
+[1] 19
+which(cooks1 > 0.01)
+[1] 20
+ 16  30  61  68  70  77  88  89  92  94  96 108 116 131 137 140 141 142 154 155 163 171 175 192 200 
+ 16  30  61  68  70  77  88  89  92  94  96 108 116 131 137 140 141 142 154 155 163 171 175 192 200 
+crPlots(m1)
+[1] 21
+squared_years <- my_data$years * my_data$years
+[1] 22
+new_model <- lm(my_data$empathy ~ my_data$years + squared_years)
+[1] 23
+summary(new_model)
+[1] 24
+
+Call:
+lm(formula = my_data$empathy ~ my_data$years + squared_years)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5069 -1.4011 -0.0835  1.1707  6.0622 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    1.186356   0.791848   1.498    0.136    
+my_data$years  2.068508   0.181845  11.375   <2e-16 ***
+squared_years -0.103645   0.009861 -10.510   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.969 on 197 degrees of freedom
+Multiple R-squared:  0.404,	Adjusted R-squared:  0.3979 
+F-statistic: 66.75 on 2 and 197 DF,  p-value: < 2.2e-16
+
+hist(new_model$residuals)
+[1] 25
+shapiro.test(new_model$residuals)
+[1] 26
+
+	Shapiro-Wilk normality test
+
+data:  new_model$residuals
+W = 0.9941, p-value = 0.6155
+
+cooks2 <- cooks.distance(new_model)
+[1] 27
+which(cooks1 > 0.01)
+[1] 28
+ 16  30  61  68  70  77  88  89  92  94  96 108 116 131 137 140 141 142 154 155 163 171 175 192 200 
+ 16  30  61  68  70  77  88  89  92  94  96 108 116 131 137 140 141 142 154 155 163 171 175 192 200 
+crPlots(new_model)
+[1] 29
+mr_1 <- lm(my_data$incidents ~ my_data$training + my_data$empathy + 
+    my_data$years + my_data$feedback, data = my_data)
+[1] 30
+summary(mr_1)
+[1] 31
+
+Call:
+lm(formula = my_data$incidents ~ my_data$training + my_data$empathy + 
+    my_data$years + my_data$feedback, data = my_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.31626 -0.10096 -0.00949  0.09165  0.46650 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        0.331953   0.048708   6.815 1.15e-10 ***
+my_data$training2 -0.153824   0.021128  -7.281 7.98e-12 ***
+my_data$empathy    0.027191   0.004328   6.283 2.12e-09 ***
+my_data$years     -0.015199   0.003551  -4.281 2.92e-05 ***
+my_data$feedback2  0.133715   0.020968   6.377 1.28e-09 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1479 on 195 degrees of freedom
+Multiple R-squared:  0.3848,	Adjusted R-squared:  0.3721 
+F-statistic: 30.49 on 4 and 195 DF,  p-value: < 2.2e-16
+
+hist(mr_1$residuals)
+[1] 32
+shapiro.test(mr_1$residuals)
+[1] 33
+
+	Shapiro-Wilk normality test
+
+data:  mr_1$residuals
+W = 0.98734, p-value = 0.07172
+
+residualPlots(mr_1)
+[1] 34
+crPlot(mr_1$residuals)
+[1] 35
+
+
+####################################################################################################
+
+[1] "Error in UseMethod(\"crPlot\") : \n  no applicable method for 'crPlot' applied to an object of class \"c('double', 'numeric')\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in UseMethod("crPlot"): no applicable method for 'crPlot' applied to an object of class "c('double', 'numeric')">
+####################################################################################################
+
+
+durbinWatsonTest(mr_1)
+[1] 36
+ lag Autocorrelation D-W Statistic p-value
+   1      0.07303546      1.841386   0.284
+ Alternative hypothesis: rho != 0
+vif(mr_1)
+[1] 37
+my_data$training  my_data$empathy    my_data$years my_data$feedback 
+        1.020743         1.097109         1.087722         1.005320 
+mr_2 <- lm(my_data$incidents ~ my_data$feedback + my_data$empathy + 
+    my_data$years, data = my_data)
+[1] 38
+summary(mr_2)
+[1] 39
+
+Call:
+lm(formula = my_data$incidents ~ my_data$feedback + my_data$empathy + 
+    my_data$years, data = my_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.35580 -0.11148 -0.01097  0.11092  0.53552 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        0.276161   0.054108   5.104 7.84e-07 ***
+my_data$feedback2  0.132132   0.023585   5.602 7.09e-08 ***
+my_data$empathy    0.023187   0.004829   4.802 3.11e-06 ***
+my_data$years     -0.012689   0.003975  -3.192  0.00165 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1663 on 196 degrees of freedom
+Multiple R-squared:  0.2175,	Adjusted R-squared:  0.2055 
+F-statistic: 18.16 on 3 and 196 DF,  p-value: 1.933e-10
+
+hist(mr_2$residuals)
+[1] 40
+shapiro.test(mr_2$residuals)
+[1] 41
+
+	Shapiro-Wilk normality test
+
+data:  mr_2$residuals
+W = 0.98772, p-value = 0.08174
+
+residualPlots(mr_2)
+[1] 42
+                 Test stat Pr(>|Test stat|)
+my_data$feedback                           
+my_data$empathy    -1.4120           0.1596
+my_data$years       0.1142           0.9092
+Tukey test          1.1619           0.2453
+crPlot(mr_2$residuals)
+[1] 43
+
+
+####################################################################################################
+
+[1] "Error in UseMethod(\"crPlot\") : \n  no applicable method for 'crPlot' applied to an object of class \"c('double', 'numeric')\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in UseMethod("crPlot"): no applicable method for 'crPlot' applied to an object of class "c('double', 'numeric')">
+####################################################################################################
+
+
+durbinWatsonTest(mr_2)
+[1] 44
+ lag Autocorrelation D-W Statistic p-value
+   1       0.2738264      1.444081       0
+ Alternative hypothesis: rho != 0
+vif(mr_2)
+[1] 45
+my_data$feedback  my_data$empathy    my_data$years 
+        1.005211         1.079397         1.077467 
+AIC(mr_1, mr_2)
+[1] 46
+     df       AIC
+mr_1  6 -190.0499
+mr_2  5 -143.9591
+BIC(mr_1, mr_2)
+[1] 47
+     df       BIC
+mr_1  6 -170.2600
+mr_2  5 -127.4675
+interaction_model <- lm(my_data$incidents ~ my_data$training, 
+    data = my_data)
+[1] 48
+interaction_model
+
+
+Call:
+lm(formula = my_data$incidents ~ my_data$training, data = my_data)
+
+Coefficients:
+      (Intercept)  my_data$training2  
+           0.5417            -0.1333  
+
+
+
+summary(interaction_model)
+[1] 50
+
+Call:
+lm(formula = my_data$incidents ~ my_data$training, data = my_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.32500 -0.12500  0.00833  0.12500  0.50833 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        0.54167    0.01747  31.009  < 2e-16 ***
+my_data$training2 -0.13333    0.02470  -5.397 1.92e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1747 on 198 degrees of freedom
+Multiple R-squared:  0.1283,	Adjusted R-squared:  0.1239 
+F-statistic: 29.13 on 1 and 198 DF,  p-value: 1.922e-07
+
+plot <- ggplot(my_data) + aes(x = my_data$training, color = my_data$feedback, 
+    group = my_data$feedback, y = my_data$incidents) + stat_summary(fun.y = mean, 
+    geom = "point") + stat_summary(fun.y = mean, geom = "line")
+[1] 51
+plot
+
+
+
