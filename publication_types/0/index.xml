@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>0 | Josiah King</title>
+    <link>https://josiahpjking.github.io/publication_types/0/</link>
+      <atom:link href="https://josiahpjking.github.io/publication_types/0/index.xml" rel="self" type="application/rss+xml" />
+    <description>0</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 05 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://josiahpjking.github.io/img/icon-192.png</url>
+      <title>0</title>
+      <link>https://josiahpjking.github.io/publication_types/0/</link>
+    </image>
+    
+    <item>
+      <title>What&#39;s driving Scotland&#39;s falling reconviction rate?</title>
+      <link>https://josiahpjking.github.io/publication/reconvictions-blog/</link>
+      <pubDate>Mon, 05 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/publication/reconvictions-blog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scottish Crime and Justice Survey Shiny App</title>
+      <link>https://josiahpjking.github.io/publication/scottish-crime-justice-survey-shiny/</link>
+      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/publication/scottish-crime-justice-survey-shiny/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
