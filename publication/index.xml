@@ -58,6 +58,14 @@ I set up the word counting using crontab to execute a bash script every day whic
     </item>
     
     <item>
+      <title>DasGuptR - R package for implementation of Prithwis Das Gupta&#39;s 1993 standardisation and decomposition of rates</title>
+      <link>/publication/dasguptr/</link>
+      <pubDate>Thu, 01 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/publication/dasguptr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Contextual effects on online pragmatic inferences of deception</title>
       <link>/publication/contextual-effects-on-online-pragmatic-inferences-to-deception/</link>
       <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
