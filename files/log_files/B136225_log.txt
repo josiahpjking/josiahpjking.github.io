@@ -1,0 +1,610 @@
+
+
+	####### B136225 R script #######
+
+library(ggplot2, quietly = T)
+[1] 1
+[1] "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(car, quietly = T)
+[1] 2
+ [1] "car"       "carData"   "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"  
+[11] "base"     
+library(psych, quietly = T)
+[1] 3
+ [1] "psych"     "car"       "carData"   "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets" 
+[11] "methods"   "base"     
+load(url("https://edin.ac/2QCZNVu"))
+[1] 4
+[1] "drinkdriving" "officer_inc" 
+outlier <- function(obs, x = 2.5) {
+    return(abs(obs - mean(obs, na.rm = T)) > (sd(obs, na.rm = T) * 
+        x))
+}
+[1] 5
+summary(drinkdriving)
+[1] 6
+      age          nighttime         prior_offence          speed             bac           outcome          incident_id       
+ Min.   : 14.00   Length:250         Length:250         Min.   :  0.00   Min.   : 3.987   Length:250         Length:250        
+ 1st Qu.: 30.00   Class :character   Class :character   1st Qu.: 30.92   1st Qu.:19.264   Class :character   Class :character  
+ Median : 40.50   Mode  :character   Mode  :character   Median : 40.64   Median :23.609   Mode  :character   Mode  :character  
+ Mean   : 46.00                                         Mean   : 40.49   Mean   :23.605                                        
+ 3rd Qu.: 55.25                                         3rd Qu.: 48.84   3rd Qu.:27.898                                        
+ Max.   :297.00                                         Max.   :120.34   Max.   :65.764                                        
+ NA's   :22                                                              NA's   :5                                             
+describe(drinkdriving)
+[1] 7
+               vars   n mean    sd median trimmed   mad min  max range skew kurtosis   se
+age               1 228   46 33.35   40.5   42.34 18.53  14  297   283  5.5    38.49 2.21
+nighttime*        2 250  NaN    NA     NA     NaN    NA Inf -Inf  -Inf   NA       NA   NA
+prior_offence*    3 250  NaN    NA     NA     NaN    NA Inf -Inf  -Inf   NA       NA   NA
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+sum(is.na(drinkdriving))
+[1] 8
+[1] 27
+drinkdriving[, c(2, 3, 6, 7)] <- lapply(drinkdriving[, c(2, 3, 
+    6, 7)], factor)
+[1] 9
+summary(drinkdriving)
+[1] 10
+      age         nighttime   prior_offence     speed             bac            outcome     incident_id 
+ Min.   : 14.00   18:25:  1   N      :185   Min.   :  0.00   Min.   : 3.987   fine   :191   inc_1  :  1  
+ 1st Qu.: 30.00   2:05 :  2   DR50   : 43   1st Qu.: 30.92   1st Qu.:19.264   Fine   :  2   inc_10 :  1  
+ Median : 40.50   day  : 78   DD20   :  4   Median : 40.64   Median :23.609   FINE   :  9   inc_100:  1  
+ Mean   : 46.00   night:169   DR80   :  4   Mean   : 40.49   Mean   :23.605   warning: 43   inc_101:  1  
+ 3rd Qu.: 55.25               TS70   :  3   3rd Qu.: 48.84   3rd Qu.:27.898   Warning:  2   inc_102:  1  
+ Max.   :297.00               CD10   :  2   Max.   :120.34   Max.   :65.764   WARNING:  3   inc_103:  1  
+ NA's   :22                   (Other):  9                    NA's   :5                      (Other):244  
+drinkdriving$age[which(outlier(drinkdriving$age))]
+[1] 11
+[1] 293 297 297
+drinkdriving$age[which(outlier(drinkdriving$age))] <- NA
+[1] 12
+summary(drinkdriving$age)
+[1] 13
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  14.00   30.00   40.00   42.68   55.00   90.00      25 
+drinkdriving$nighttime[drinkdriving$nighttime == "18:25"] <- "night"
+[1] 14
+drinkdriving$nighttime[drinkdriving$nighttime == "2:05"] <- "night"
+[1] 15
+levels(drinkdriving$nighttime) <- c(NA, NA, "day", "night")
+[1] 16
+summary(drinkdriving$nighttime)
+[1] 17
+  day night 
+   78   172 
+levels(drinkdriving$prior_offence)
+[1] 18
+ [1] "CD10"           "CD60"           "CD60,CD10,DR80" "CD60,CD60"      "DD20"           "DR50"           "DR80"          
+ [8] "N"              "PL10"           "SP50"           "SP60"           "TS70"           "TS70,DR50"     
+drinkdriving$prior_offence[drinkdriving$prior_offence == "DD20"] <- NA
+[1] 19
+sum(is.na(drinkdriving$prior_offence))
+[1] 20
+[1] 4
+drinkdriving$speed[which(outlier(drinkdriving$speed))]
+[1] 21
+[1]   1.945818   1.012149   2.533468 120.336960  81.028140   0.000000
+drinkdriving$bac[which(outlier(drinkdriving$bac))]
+[1] 22
+[1]  3.986785 57.330000 65.764000
+drinkdriving$bac[drinkdriving$bac > 50] <- NA
+[1] 23
+levels(drinkdriving$outcome)
+[1] 24
+[1] "fine"    "Fine"    "FINE"    "warning" "Warning" "WARNING"
+drinkdriving$outcome <- as.factor(tolower(drinkdriving$outcome))
+[1] 25
+summary(drinkdriving$outcome)
+[1] 26
+   fine warning 
+    202      48 
+summary(officer_inc)
+[1] 27
+ officer     incident_id 
+ AS  :116   inc_1  :  1  
+ IT  : 66   inc_10 :  1  
+ NP  : 67   inc_100:  1  
+ NA's:  1   inc_101:  1  
+            inc_102:  1  
+            inc_103:  1  
+            (Other):244  
+sum(is.na(drinkdriving))
+[1] 28
+[1] 36
+drinkdriving <- na.omit(drinkdriving)
+[1] 29
+summary(drinkdriving)
+[1] 30
+      age        nighttime   prior_offence     speed            bac            outcome     incident_id 
+ Min.   :14.00   day  : 68   N      :161   Min.   : 0.00   Min.   : 5.453   fine   :173   inc_1  :  1  
+ 1st Qu.:30.25   night:146   DR50   : 38   1st Qu.:30.11   1st Qu.:18.918   warning: 41   inc_10 :  1  
+ Median :40.00               DR80   :  4   Median :39.18   Median :23.061                 inc_100:  1  
+ Mean   :42.89               CD10   :  2   Mean   :38.48   Mean   :22.851                 inc_101:  1  
+ 3rd Qu.:55.00               PL10   :  2   3rd Qu.:46.89   3rd Qu.:27.032                 inc_102:  1  
+ Max.   :90.00               SP50   :  2   Max.   :74.39   Max.   :36.138                 inc_103:  1  
+                             (Other):  5                                                  (Other):208  
+m1 <- lm(bac ~ age, data = drinkdriving)
+[1] 31
+summary(m1)
+[1] 32
+
+Call:
+lm(formula = bac ~ age, data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-15.3934  -4.2401  -0.4055   4.0874  14.9339 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 28.80316    1.09042  26.415  < 2e-16 ***
+age         -0.13878    0.02367  -5.864 1.72e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.826 on 212 degrees of freedom
+Multiple R-squared:  0.1395,	Adjusted R-squared:  0.1355 
+F-statistic: 34.38 on 1 and 212 DF,  p-value: 1.719e-08
+
+par(mfrow = c(2, 2))
+[1] 33
+$mfrow
+[1] 1 2
+
+plot(m1, which = c(1:4))
+[1] 34
+predict(m1, newdata = data.frame(age = 50))
+[1] 35
+       1 
+21.86416 
+par(mfrow = c(1, 1))
+[1] 36
+$mfrow
+[1] 2 2
+
+qqPlot(m1)
+[1] 37
+shapiro.test(m1$residuals)
+[1] 38
+
+	Shapiro-Wilk normality test
+
+data:  m1$residuals
+W = 0.9935, p-value = 0.4734
+
+m2 <- lm(bac ~ age + nighttime, data = drinkdriving)
+[1] 39
+anova(m2)
+[1] 40
+Analysis of Variance Table
+
+Response: bac
+           Df Sum Sq Mean Sq F value    Pr(>F)    
+age         1 1167.2 1167.17  38.005 3.537e-09 ***
+nighttime   1  716.9  716.92  23.344 2.603e-06 ***
+Residuals 211 6480.0   30.71                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+summary(m2)
+[1] 41
+
+Call:
+lm(formula = bac ~ age + nighttime, data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-16.5454  -4.8327   0.3736   3.7250  14.3227 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    25.76609    1.21275  21.246  < 2e-16 ***
+age            -0.13067    0.02257  -5.789 2.54e-08 ***
+nighttimenight  3.94199    0.81588   4.832 2.60e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.542 on 211 degrees of freedom
+Multiple R-squared:  0.2253,	Adjusted R-squared:  0.2179 
+F-statistic: 30.67 on 2 and 211 DF,  p-value: 2.023e-12
+
+vif(m2)
+[1] 42
+      age nighttime 
+ 1.005555  1.005555 
+m3 <- lm(bac ~ age + speed, data = drinkdriving)
+[1] 43
+anova(m3)
+[1] 44
+Analysis of Variance Table
+
+Response: bac
+           Df Sum Sq Mean Sq F value    Pr(>F)    
+age         1 1167.2 1167.17 34.3778 1.732e-08 ***
+speed       1   33.1   33.14  0.9761    0.3243    
+Residuals 211 7163.8   33.95                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+summary(m3)
+[1] 45
+
+Call:
+lm(formula = bac ~ age + speed, data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-15.4706  -3.9606  -0.5408   4.2128  14.4209 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 26.26887    2.78724   9.425  < 2e-16 ***
+age         -0.11730    0.03214  -3.650 0.000331 ***
+speed        0.04192    0.04243   0.988 0.324284    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.827 on 211 degrees of freedom
+Multiple R-squared:  0.1435,	Adjusted R-squared:  0.1354 
+F-statistic: 17.68 on 2 and 211 DF,  p-value: 7.985e-08
+
+vif(m3)
+[1] 46
+     age    speed 
+1.843757 1.843757 
+par(mfrow = c(2, 2))
+[1] 47
+$mfrow
+[1] 1 1
+
+plot(m2, which = c(1:4))
+[1] 48
+plot(m3, which = c(1:4))
+[1] 49
+m4 <- lm(bac ~ age + speed + nighttime, data = drinkdriving)
+[1] 50
+anova(m4)
+[1] 51
+Analysis of Variance Table
+
+Response: bac
+           Df Sum Sq Mean Sq F value    Pr(>F)    
+age         1 1167.2 1167.17 38.0088 3.556e-09 ***
+speed       1   33.1   33.14  1.0792    0.3001    
+nighttime   1  715.1  715.07 23.2861 2.683e-06 ***
+Residuals 210 6448.7   30.71                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+par(mfrow = c(2, 2))
+[1] 52
+$mfrow
+[1] 2 2
+
+plot(m4, which = c(1:4))
+[1] 53
+summary(m4)
+[1] 54
+
+Call:
+lm(formula = bac ~ age + speed + nighttime, data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-15.8450  -4.7329   0.5634   3.6771  14.2019 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    23.30743    2.72088   8.566 2.30e-15 ***
+age            -0.10981    0.03061  -3.588 0.000415 ***
+speed           0.04074    0.04035   1.009 0.313928    
+nighttimenight  3.93697    0.81585   4.826 2.68e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.541 on 210 degrees of freedom
+Multiple R-squared:  0.229,	Adjusted R-squared:  0.218 
+F-statistic: 20.79 on 3 and 210 DF,  p-value: 7.796e-12
+
+vif(m4)
+[1] 55
+      age     speed nighttime 
+ 1.848509  1.843826  1.005592 
+speed_model <- lm(speed ~ nighttime, data = drinkdriving)
+[1] 56
+plot(speed_model, which = c(1:4))
+[1] 57
+summary(speed_model)
+[1] 58
+
+Call:
+lm(formula = speed ~ nighttime, data = drinkdriving)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-38.953  -8.727   0.678   8.297  35.442 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)      37.454      1.551  24.153   <2e-16 ***
+nighttimenight    1.499      1.877   0.798    0.425    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 12.79 on 212 degrees of freedom
+Multiple R-squared:  0.002998,	Adjusted R-squared:  -0.001704 
+F-statistic: 0.6376 on 1 and 212 DF,  p-value: 0.4255
+
+speed_plot <- ggplot(data = drinkdriving, aes(x = nighttime, 
+    y = speed))
+[1] 59
+speed_plot + geom_point(position = "jitter", alpha = 0.5) + geom_boxplot(fill = NA, 
+    outlier.colour = NA, colour = "blue") + labs(title = "Speed over time", 
+    x = "Driving time", y = "Driving Speed(mph)")
+[1] 60
+drinkdriving$prior_offence <- factor(drinkdriving$prior_offence, 
+    levels = c("CD10", "CD60", "CD60,CD10,DR80", "CD60,CD60", 
+        "DD20", "DR50", "DR80", "N", "PL10", "SP50", "SP60", 
+        "TS70", "TS70,DR50"), labels = c("non-drink-offence", 
+        "non-drink-offence", "non-drink-offence", "non-drink-offence", 
+        "non-drink-offence", "drink-offence", "non-drink-offence", 
+        "None", "non-drink-offence", "non-drink-offence", "non-drink-offence", 
+        "non-drink-offence", "drink-offence"))
+[1] 61
+logit1 <- glm(relevel(outcome, "warning") ~ speed + bac + age + 
+    nighttime + prior_offence, data = drinkdriving, family = binomial)
+[1] 62
+anova(logit1, test = "Chisq")
+[1] 63
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: relevel(outcome, "warning")
+
+Terms added sequentially (first to last)
+
+
+              Df Deviance Resid. Df Resid. Dev  Pr(>Chi)    
+NULL                            213    209.086              
+speed          1   86.088       212    122.998 < 2.2e-16 ***
+bac            1   28.999       211     93.998  7.24e-08 ***
+age            1    9.968       210     84.030  0.001593 ** 
+nighttime      1    0.026       209     84.004  0.871533    
+prior_offence  2    4.562       207     79.442  0.102164    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+summary(logit1)
+[1] 64
+
+Call:
+glm(formula = relevel(outcome, "warning") ~ speed + bac + age + 
+    nighttime + prior_offence, family = binomial, data = drinkdriving)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-3.8166   0.0126   0.0823   0.2850   2.8705  
+
+Coefficients:
+                           Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                -5.83419    2.90095  -2.011 0.044312 *  
+speed                       0.16398    0.04039   4.060  4.9e-05 ***
+bac                         0.24565    0.06469   3.797 0.000146 ***
+age                        -0.06922    0.02455  -2.820 0.004808 ** 
+nighttimenight             -0.15068    0.66226  -0.228 0.820015    
+prior_offencedrink-offence  2.26180    1.52358   1.485 0.137668    
+prior_offenceNone           0.38941    1.20711   0.323 0.746999    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 209.086  on 213  degrees of freedom
+Residual deviance:  79.442  on 207  degrees of freedom
+AIC: 93.442
+
+Number of Fisher Scoring iterations: 7
+
+exp(coef(logit1))
+[1] 65
+               (Intercept)                      speed                        bac                        age             nighttimenight 
+                 0.0029258                  1.1781900                  1.2784459                  0.9331194                  0.8601210 
+prior_offencedrink-offence          prior_offenceNone 
+                 9.6003490                  1.4761158 
+fine_None <- sum(drinkdriving$outcome == "fine" & drinkdriving$prior_offence == 
+    "None")/nrow(drinkdriving)
+[1] 66
+warning_None <- sum(drinkdriving$outcome == "warning" & drinkdriving$prior_offence == 
+    "None")/nrow(drinkdriving)
+[1] 67
+fine_drink <- sum(drinkdriving$outcome == "fine" & drinkdriving$prior_offence == 
+    "drink-offence")/nrow(drinkdriving)
+[1] 68
+warning_drink <- sum(drinkdriving$outcome == "warning" & drinkdriving$prior_offence == 
+    "drink-offence")/nrow(drinkdriving)
+[1] 69
+fine_non_drink <- sum(drinkdriving$outcome == "fine" & drinkdriving$prior_offence == 
+    "non-drink-offence")/nrow(drinkdriving)
+[1] 70
+warning_non_drink <- sum(drinkdriving$outcome == "warning" & 
+    drinkdriving$prior_offence == "non-drink-offence")/nrow(drinkdriving)
+[1] 71
+Probs <- cbind(fine_None, warning_None, fine_drink, warning_drink, 
+    fine_non_drink, warning_non_drink)
+[1] 72
+Probs
+
+     fine_None warning_None fine_drink warning_drink fine_non_drink warning_non_drink
+[1,] 0.5981308    0.1542056  0.1635514    0.01869159     0.04672897        0.01869159
+
+
+pre_table <- data.frame(age = c(17:70), nighttime = "day", speed = 30, 
+    bac = 0, prior_offence = "N")
+[1] 74
+model_prediction <- predict(logit_m1, newdata = pre_table, type = "response")
+[1] 75
+
+
+####################################################################################################
+
+[1] "Error in predict(logit_m1, newdata = pre_table, type = \"response\") : \n  object 'logit_m1' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in predict(logit_m1, newdata = pre_table, type = "response"): object 'logit_m1' not found>
+####################################################################################################
+
+
+pre_table <- cbind(pre_table, model_prediction)
+[1] 76
+
+
+####################################################################################################
+
+[1] "Error in cbind(pre_table, model_prediction) : \n  object 'model_prediction' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in cbind(pre_table, model_prediction): object 'model_prediction' not found>
+####################################################################################################
+
+
+pre_table
+
+   age nighttime speed bac prior_offence
+1   17       day    30   0             N
+2   18       day    30   0             N
+3   19       day    30   0             N
+4   20       day    30   0             N
+5   21       day    30   0             N
+6   22       day    30   0             N
+7   23       day    30   0             N
+8   24       day    30   0             N
+9   25       day    30   0             N
+10  26       day    30   0             N
+ [ reached 'max' / getOption("max.print") -- omitted 44 rows ]
+
+
+par(mfrow = bdc(1, 1))
+[1] 78
+[1] "Error in bdc(1, 1) : could not find function \"bdc\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in bdc(1, 1): could not find function "bdc">
+
+
+####################################################################################################
+
+[1] "Error in bdc(1, 1) : could not find function \"bdc\"\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in bdc(1, 1): could not find function "bdc">
+####################################################################################################
+
+
+plot(x = pre_table$age, y = pre$table$model_prediction, main = "Probabilities of receiving a fine for 17-70 ages of drivers", 
+    xlab = "Age", ylab = "Predicted probabilities", pch = 20)
+[1] 79
+
+
+####################################################################################################
+
+[1] "Error in xy.coords(x, y, xlabel, ylabel, log) : object 'pre' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in xy.coords(x, y, xlabel, ylabel, log): object 'pre' not found>
+####################################################################################################
+
+
+lines(x = pre_table$age, model_prediction, col = "red", lwd = 2, 
+    lty = 2)
+[1] 80
+
+
+####################################################################################################
+
+[1] "Error in xy.coords(x, y) : object 'model_prediction' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in xy.coords(x, y): object 'model_prediction' not found>
+####################################################################################################
+
+
+summary(model_prediction)
+[1] 81
+[1] "Error in summary(model_prediction) : object 'model_prediction' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(model_prediction): object 'model_prediction' not found>
+
+
+####################################################################################################
+
+[1] "Error in summary(model_prediction) : object 'model_prediction' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(model_prediction): object 'model_prediction' not found>
+####################################################################################################
+
+
+complete <- merge(drinkdriving, officer_inc, by = "incident_id")
+[1] 82
+summary(complete)
+[1] 83
+  incident_id       age        nighttime             prior_offence     speed            bac            outcome    officer 
+ inc_1  :  1   Min.   :14.00   day  : 68   non-drink-offence: 14   Min.   : 0.00   Min.   : 5.453   fine   :173   AS:104  
+ inc_10 :  1   1st Qu.:30.25   night:146   drink-offence    : 39   1st Qu.:30.11   1st Qu.:18.918   warning: 41   IT: 53  
+ inc_100:  1   Median :40.00               None             :161   Median :39.18   Median :23.061                 NP: 57  
+ inc_101:  1   Mean   :42.89                                       Mean   :38.48   Mean   :22.851                         
+ inc_102:  1   3rd Qu.:55.00                                       3rd Qu.:46.89   3rd Qu.:27.032                         
+ inc_103:  1   Max.   :90.00                                       Max.   :74.39   Max.   :36.138                         
+ [ reached getOption("max.print") -- omitted 1 row ]
+bias <- cbind(complete$outcome, complete$age)
+[1] 84
+aggregate(bias, by = list(complete$officer), FUN = mean)
+[1] 85
+  Group.1       V1       V2
+1      AS 1.201923 40.66346
+2      IT 1.207547 45.73585
+3      NP 1.157895 44.29825
+fit <- manova(bias ~ complete$officer)
+[1] 86
+summary(fit, intercept = TRUE)
+[1] 87
+                  Df  Pillai approx F num Df den Df Pr(>F)    
+(Intercept)        1 0.91066  1070.28      2    210 <2e-16 ***
+complete$officer   2 0.03313     1.78      4    422 0.1325    
+Residuals        211                                          
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+summary.aov(fit)
+[1] 88
+ Response 1 :
+                  Df Sum Sq  Mean Sq F value Pr(>F)
+complete$officer   2  0.089 0.044658  0.2851 0.7523
+Residuals        211 33.056 0.156661               
+
+ Response 2 :
+                  Df Sum Sq Mean Sq F value Pr(>F)
+complete$officer   2   1058  528.93  1.8743  0.156
+Residuals        211  59543  282.20               
+
+par(mfrow = c(1, 1))
+[1] 89
+$mfrow
+[1] 2 2
+
+interaction.plot(complete$outcome, complete$officer, complete$age, 
+    type = "b", col = 1:3, pch = 10:12, ylab = "mean of age", 
+    xlab = "outcome", main = "Interaction plot")
+[1] 90
+bias_plot <- ggplot(data = complete, aes(x = officer, y = age, 
+    fill = outcome))
+[1] 91
+bias_plot + geom_violin() + theme_minimal() + labs(x = "Officer", 
+    y = "Age")
+[1] 92

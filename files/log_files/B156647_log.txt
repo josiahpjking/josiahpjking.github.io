@@ -1,0 +1,446 @@
+
+
+	####### B156647 R script #######
+
+library(psych, quietly = T)
+[1] 1
+[1] "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+load(url("https://edin.ac/2QCZNVu"))
+[1] 2
+[1] "drinkdriving" "officer_inc" 
+dd <- drinkdriving
+[1] 3
+oi <- officer_inc
+[1] 4
+rm(drinkdriving, officer_inc)
+[1] 5
+dd$age[dd$age > 99] <- NA
+[1] 6
+dd$nighttime[dd$nighttime == "night"] <- TRUE
+[1] 7
+dd$nighttime[dd$nighttime == "day"] <- FALSE
+[1] 8
+dd$nighttime <- factor(dd$nighttime, c(TRUE, FALSE), c("Yes", 
+    "No"))
+[1] 9
+dd$prior_offence[dd$prior_offence == "DD20"] <- NA
+[1] 10
+dd$prior_offence <- factor(dd$prior_offence)
+[1] 11
+dd$speed <- round(dd$speed, digits = 1)
+[1] 12
+dd$bac <- round(dd$bac, digits = 1)
+[1] 13
+dd$outcome[dd$outcome == "fine"] <- "Fine"
+[1] 14
+dd$outcome[dd$outcome == "FINE"] <- "Fine"
+[1] 15
+dd$outcome[dd$outcome == "warning"] <- "Warning"
+[1] 16
+dd$outcome[dd$outcome == "WARNING"] <- "Warning"
+[1] 17
+dd$outcome <- factor(dd$outcome, c("Fine", "Warning"), c("Fine", 
+    "Warning"))
+[1] 18
+dd$incident_id <- factor(dd$incident_id)
+[1] 19
+describe(dd)
+[1] 20
+               vars   n  mean    sd median trimmed   mad min max range  skew kurtosis   se
+age               1 225 42.68 16.77     40   41.93 17.79  14  90    76  0.40    -0.52 1.12
+nighttime*        2 247  1.32  0.47      1    1.27  0.00   1   2     1  0.79    -1.38 0.03
+prior_offence*    3 246  6.64  1.21      7    6.74  0.00   1  12    11 -0.55     6.75 0.08
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+m1 <- lm(bac ~ age, data = dd)
+[1] 21
+plot(m1)
+[1] 22
+bac_prediction <- predict(m1, age = 50)
+[1] 23
+summary(bac_prediction)
+[1] 24
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  16.39   21.41   23.56   23.18   24.99   27.28 
+m1_resid <- resid(m1)
+[1] 25
+plot(m1_resid, main = "Distribution of the m1 model's residuals", 
+    xlab = "Residuals population", ylab = "Residuals values", 
+    ylim = c(-50, 50))
+[1] 26
+abline(h = 0, col = "red")
+[1] 27
+dd$day <- ifelse(dd$nighttime == "No", 1, 0)
+[1] 28
+dd$night <- ifelse(dd$nighttime == "Yes", 1, 0)
+[1] 29
+m2 <- lm(bac ~ age + night, data = dd)
+[1] 30
+m3 <- lm(bac ~ age + day, data = dd)
+[1] 31
+m4 <- lm(bac ~ age + speed, data = dd)
+[1] 32
+anova(m2)
+[1] 33
+Analysis of Variance Table
+
+Response: bac
+           Df Sum Sq Mean Sq F value    Pr(>F)    
+age         1 1414.0 1413.97  32.965 3.172e-08 ***
+night       1  621.2  621.18  14.482 0.0001845 ***
+Residuals 215 9222.1   42.89                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+anova(m3)
+[1] 34
+Analysis of Variance Table
+
+Response: bac
+           Df Sum Sq Mean Sq F value    Pr(>F)    
+age         1 1414.0 1413.97  32.965 3.172e-08 ***
+day         1  621.2  621.18  14.482 0.0001845 ***
+Residuals 215 9222.1   42.89                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+anova(m4)
+[1] 35
+Analysis of Variance Table
+
+Response: bac
+           Df Sum Sq Mean Sq F value    Pr(>F)    
+age         1 1271.4 1271.42  30.106 1.135e-07 ***
+speed       1  975.9  975.86  23.108 2.860e-06 ***
+Residuals 217 9164.1   42.23                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+summary(m2)
+[1] 36
+
+Call:
+lm(formula = bac ~ age + night, data = dd)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-16.456  -4.683   0.076   3.565  41.681 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 26.83336    1.42240  18.865  < 2e-16 ***
+age         -0.14415    0.02665  -5.410 1.68e-07 ***
+night        3.62763    0.95326   3.805 0.000185 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.549 on 215 degrees of freedom
+  (32 observations deleted due to missingness)
+Multiple R-squared:  0.1808,	Adjusted R-squared:  0.1732 
+F-statistic: 23.72 on 2 and 215 DF,  p-value: 4.9e-10
+
+summary(m3)
+[1] 37
+
+Call:
+lm(formula = bac ~ age + day, data = dd)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-16.456  -4.683   0.076   3.565  41.681 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 30.46099    1.23311  24.703  < 2e-16 ***
+age         -0.14415    0.02665  -5.410 1.68e-07 ***
+day         -3.62763    0.95326  -3.805 0.000185 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.549 on 215 degrees of freedom
+  (32 observations deleted due to missingness)
+Multiple R-squared:  0.1808,	Adjusted R-squared:  0.1732 
+F-statistic: 23.72 on 2 and 215 DF,  p-value: 4.9e-10
+
+summary(m4)
+[1] 38
+
+Call:
+lm(formula = bac ~ age + speed, data = dd)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.933  -4.459  -0.706   4.270  34.618 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 17.50038    2.72882   6.413 8.79e-10 ***
+age         -0.04290    0.03345  -1.283    0.201    
+speed        0.19221    0.03999   4.807 2.86e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.499 on 217 degrees of freedom
+  (30 observations deleted due to missingness)
+Multiple R-squared:  0.1969,	Adjusted R-squared:  0.1895 
+F-statistic: 26.61 on 2 and 217 DF,  p-value: 4.63e-11
+
+plot(m2)
+[1] 39
+plot(m3)
+[1] 40
+plot(m4)
+[1] 41
+m2_scaled <- lm(scale(bac) ~ scale(age) + scale(night), data = dd)
+[1] 42
+m3_scaled <- lm(scale(bac) ~ scale(age) + scale(day), data = dd)
+[1] 43
+m4_scaled <- lm(scale(bac) ~ scale(age) + scale(speed), data = dd)
+[1] 44
+summary(m2_scaled)
+[1] 45
+
+Call:
+lm(formula = scale(bac) ~ scale(age) + scale(night), data = dd)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.1988 -0.6257  0.0101  0.4763  5.5691 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  -0.05930    0.05927  -1.001 0.318193    
+scale(age)   -0.32297    0.05970  -5.410 1.68e-07 ***
+scale(night)  0.22576    0.05932   3.805 0.000185 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.8751 on 215 degrees of freedom
+  (32 observations deleted due to missingness)
+Multiple R-squared:  0.1808,	Adjusted R-squared:  0.1732 
+F-statistic: 23.72 on 2 and 215 DF,  p-value: 4.9e-10
+
+summary(m3_scaled)
+[1] 46
+
+Call:
+lm(formula = scale(bac) ~ scale(age) + scale(day), data = dd)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.1988 -0.6257  0.0101  0.4763  5.5691 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -0.05930    0.05927  -1.001 0.318193    
+scale(age)  -0.32297    0.05970  -5.410 1.68e-07 ***
+scale(day)  -0.22576    0.05932  -3.805 0.000185 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.8751 on 215 degrees of freedom
+  (32 observations deleted due to missingness)
+Multiple R-squared:  0.1808,	Adjusted R-squared:  0.1732 
+F-statistic: 23.72 on 2 and 215 DF,  p-value: 4.9e-10
+
+summary(m4_scaled)
+[1] 47
+
+Call:
+lm(formula = scale(bac) ~ scale(age) + scale(speed), data = dd)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.1288 -0.5958 -0.0943  0.5705  4.6254 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  -0.02094    0.05905  -0.355    0.723    
+scale(age)   -0.09612    0.07495  -1.283    0.201    
+scale(speed)  0.38304    0.07968   4.807 2.86e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.8683 on 217 degrees of freedom
+  (30 observations deleted due to missingness)
+Multiple R-squared:  0.1969,	Adjusted R-squared:  0.1895 
+F-statistic: 26.61 on 2 and 217 DF,  p-value: 4.63e-11
+
+m5 <- lm(scale(speed) ~ scale(day) + scale(night), data = dd)
+[1] 48
+summary(m5)
+[1] 49
+
+Call:
+lm(formula = scale(speed) ~ scale(day) + scale(night), data = dd)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.7388 -0.6235  0.0101  0.5532  5.4305 
+
+Coefficients: (1 not defined because of singularities)
+              Estimate Std. Error t value Pr(>|t|)
+(Intercept)  -0.008211   0.063723  -0.129    0.898
+scale(day)   -0.048217   0.063852  -0.755    0.451
+scale(night)        NA         NA      NA       NA
+
+Residual standard error: 1.001 on 245 degrees of freedom
+  (3 observations deleted due to missingness)
+Multiple R-squared:  0.002322,	Adjusted R-squared:  -0.00175 
+F-statistic: 0.5702 on 1 and 245 DF,  p-value: 0.4509
+
+dd$fine <- ifelse(dd$outcome == "Fine", 1, 0)
+[1] 50
+dd$prior_all <- ifelse(dd$prior_offence != "N", 1, 0)
+[1] 51
+m6 <- lm(scale(fine) ~ scale(speed) + scale(bac) + scale(prior_all), 
+    data = dd)
+[1] 52
+plot(m6)
+[1] 53
+summary(m6)
+[1] 54
+
+Call:
+lm(formula = scale(fine) ~ scale(speed) + scale(bac) + scale(prior_all), 
+    data = dd)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.0803 -0.2241  0.2489  0.5875  1.2368 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.01218    0.05300   0.230 0.818414    
+scale(speed)      0.41874    0.06136   6.824 7.33e-11 ***
+scale(bac)        0.20624    0.06147   3.355 0.000924 ***
+scale(prior_all)  0.02556    0.05355   0.477 0.633554    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.8228 on 237 degrees of freedom
+  (9 observations deleted due to missingness)
+Multiple R-squared:  0.3171,	Adjusted R-squared:  0.3085 
+F-statistic: 36.69 on 3 and 237 DF,  p-value: < 2.2e-16
+
+dd$prior_drink <- ifelse(dd$prior_offence == "DR50", 1, 0)
+[1] 55
+dd$prior_other <- dd$prior_all - dd$prior_drink
+[1] 56
+m7 <- lm(fine ~ prior_drink + prior_other, data = dd)
+[1] 57
+summary(m7)
+[1] 58
+
+Call:
+lm(formula = fine ~ prior_drink + prior_other, data = dd)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.93023  0.06977  0.20000  0.20000  0.33333 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.80000    0.02845  28.118   <2e-16 ***
+prior_drink  0.13023    0.06551   1.988    0.048 *  
+prior_other -0.13333    0.09555  -1.395    0.164    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.387 on 243 degrees of freedom
+  (4 observations deleted due to missingness)
+Multiple R-squared:  0.02694,	Adjusted R-squared:  0.01894 
+F-statistic: 3.364 on 2 and 243 DF,  p-value: 0.0362
+
+m8 <- lm(fine ~ prior_all, data = dd)
+[1] 59
+summary(m8)
+[1] 60
+
+Call:
+lm(formula = fine ~ prior_all, data = dd)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.8525  0.1475  0.2000  0.2000  0.2000 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.80000    0.02874  27.841   <2e-16 ***
+prior_all    0.05246    0.05771   0.909    0.364    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.3908 on 244 degrees of freedom
+  (4 observations deleted due to missingness)
+Multiple R-squared:  0.003376,	Adjusted R-squared:  -0.0007089 
+F-statistic: 0.8264 on 1 and 244 DF,  p-value: 0.3642
+
+set_age <- 14:99
+[1] 61
+m9 <- lm(fine ~ age + prior_all + day + speed + bac, data = dd)
+[1] 62
+plot(m9)
+[1] 63
+fine_prob <- predict(m9, prior_all = 0, day = 1, speed = 30, 
+    bac = 0)
+[1] 64
+fine_prob <- fine_prob[0:86]
+[1] 65
+plot(set_age, fine_prob, xlab = "Driver's age", ylab = "Probability of getting fined", 
+    main = "Probability of getting fined by age")
+[1] 66
+abline(m9)
+[1] 67
+cc <- merge(dd, oi)
+[1] 68
+cc$nighttime <- NULL
+[1] 69
+cc$prior_offence <- NULL
+[1] 70
+cc$speed <- NULL
+[1] 71
+cc$bac <- NULL
+[1] 72
+cc$day <- NULL
+[1] 73
+cc$night <- NULL
+[1] 74
+cc$prior_all <- NULL
+[1] 75
+cc$prior_drink <- NULL
+[1] 76
+cc$prior_other <- NULL
+[1] 77
+cc$warning <- ifelse(cc$fine == 0, 1, 0)
+[1] 78
+as <- subset.data.frame(cc, cc$officer == "AS")
+[1] 79
+mASfine <- lm(fine ~ age, data = as)
+[1] 80
+with(as, plot(age, fine, main = "Fines given by officer AS"))
+[1] 81
+abline(v = 50, col = "red")
+[1] 82
+mASwarning <- lm(warning ~ age, data = as)
+[1] 83
+with(as, plot(age, warning, main = "Warnings given by officer AS"))
+[1] 84
+abline(v = 50, col = "red")
+[1] 85
+it <- subset.data.frame(cc, cc$officer == "IT")
+[1] 86
+mITfine <- lm(fine ~ age, data = it)
+[1] 87
+with(it, plot(age, fine))
+[1] 88
+mITwarning <- lm(warning ~ age, data = it)
+[1] 89
+with(it, plot(age, warning))
+[1] 90
+np <- subset.data.frame(cc, cc$officer == "NP")
+[1] 91
+mNPfine <- lm(fine ~ age, data = np)
+[1] 92
+with(np, plot(age, fine))
+[1] 93
+mNPwarning <- lm(warning ~ age, data = np)
+[1] 94
+with(np, plot(age, warning))
+[1] 95

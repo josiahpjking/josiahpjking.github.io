@@ -1,0 +1,714 @@
+
+
+	####### B159309 R script #######
+
+library(ggplot2, quietly = T)
+[1] 1
+[1] "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(psych, quietly = T)
+[1] 2
+ [1] "psych"     "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(dplyr, quietly = T)
+[1] 3
+ [1] "dplyr"     "psych"     "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"  
+[11] "base"     
+library(car, quietly = T)
+[1] 4
+ [1] "car"       "carData"   "dplyr"     "psych"     "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"    
+[11] "datasets"  "methods"   "base"     
+library(stargazer, quietly = T)
+[1] 5
+ [1] "stargazer" "car"       "carData"   "dplyr"     "psych"     "ggplot2"   "readr"     "stats"     "graphics"  "grDevices"
+[11] "utils"     "datasets"  "methods"   "base"     
+library(tidyverse, quietly = T)
+[1] 6
+ [1] "forcats"   "stringr"   "purrr"     "tidyr"     "tibble"    "tidyverse" "stargazer" "car"       "carData"   "dplyr"    
+[11] "psych"     "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+load(url("https://edin.ac/2QCZNVu"))
+[1] 7
+[1] "drinkdriving" "officer_inc" 
+describe(drinkdriving)
+[1] 8
+               vars   n mean    sd median trimmed   mad min  max range skew kurtosis   se
+age               1 228   46 33.35   40.5   42.34 18.53  14  297   283  5.5    38.49 2.21
+nighttime*        2 250  NaN    NA     NA     NaN    NA Inf -Inf  -Inf   NA       NA   NA
+prior_offence*    3 250  NaN    NA     NA     NaN    NA Inf -Inf  -Inf   NA       NA   NA
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+drinkdriving <- merge(drinkdriving, officer_inc, by.y = "incident_id")
+[1] 9
+hist(drinkdriving$age)
+[1] 10
+with(drinkdriving, which(drinkdriving$age >= 100))
+[1] 11
+[1]  18 140 198
+drinkdriving$age[drinkdriving$age >= 100] <- NA
+[1] 12
+drinkdriving$age[drinkdriving$age < 17] <- NA
+[1] 13
+summary(drinkdriving$age)
+[1] 14
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  17.00   32.00   41.00   43.69   55.00   90.00      33 
+hist(drinkdriving$speed)
+[1] 15
+summary(drinkdriving$speed)
+[1] 16
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00   30.92   40.64   40.49   48.84  120.34 
+hist(drinkdriving$bac)
+[1] 17
+drinkdriving$bac <- drinkdriving$bac/100
+[1] 18
+with(drinkdriving, which(drinkdriving$bac > 0.5))
+[1] 19
+[1] 14 62
+outliers <- function(obs, x = 3) {
+    return(abs(obs - mean(obs, na.rm = T)) > (sd(obs, na.rm = T) * 
+        x))
+}
+[1] 20
+drinkdriving$bac[which(outliers(drinkdriving$bac))] <- NA
+[1] 21
+hist(drinkdriving$bac)
+[1] 22
+drinkdriving$nighttime
+[1] 23
+ [1] "night" "night" "night" "day"   "day"   "night" "night" "night" "night" "night" "night" "day"   "night" "day"   "night" "night"
+[17] "night" "day"   "day"   "day"   "day"   "night" "night" "night" "day"   "day"   "night" "day"   "night" "night" "night" "night"
+[33] "night" "night" "day"   "day"   "night" "day"   "night" "night" "night" "day"   "night" "night" "day"   "night" "night" "night"
+[49] "night" "night"
+ [ reached getOption("max.print") -- omitted 200 entries ]
+drinkdriving$nighttime[drinkdriving$nighttime == "2:05"] <- NA
+[1] 24
+drinkdriving$nighttime[drinkdriving$nighttime == "18:25"] <- NA
+[1] 25
+drinkdriving$nighttime <- as.factor(drinkdriving$nighttime)
+[1] 26
+levels(drinkdriving$nighttime)
+[1] 27
+[1] "day"   "night"
+drinkdriving$prior_offence <- as.factor(drinkdriving$prior_offence)
+[1] 28
+table(drinkdriving$prior_offence)
+[1] 29
+
+          CD10           CD60 CD60,CD10,DR80      CD60,CD60           DD20           DR50           DR80              N           PL10 
+             2              1              1              1              4             43              4            185              2 
+          SP50           SP60           TS70      TS70,DR50 
+             2              1              3              1 
+drinkdriving$outcome
+[1] 30
+ [1] "fine"    "warning" "warning" "fine"    "fine"    "fine"    "fine"    "fine"    "fine"    "fine"    "fine"    "fine"    "WARNING"
+[14] "FINE"    "fine"    "fine"    "fine"    "warning" "warning" "warning" "warning" "fine"    "fine"    "FINE"    "Warning" "fine"   
+[27] "fine"    "WARNING" "fine"    "fine"    "fine"    "fine"    "fine"    "fine"    "fine"    "fine"    "fine"    "fine"    "fine"   
+[40] "fine"    "fine"    "warning" "warning" "fine"    "fine"    "fine"    "fine"    "FINE"    "fine"    "fine"   
+ [ reached getOption("max.print") -- omitted 200 entries ]
+drinkdriving$outcome[drinkdriving$outcome == "Fine"] <- "fine"
+[1] 31
+drinkdriving$outcome[drinkdriving$outcome == "Warning"] <- "warning"
+[1] 32
+drinkdriving$outcome[drinkdriving$outcome == "FINE"] <- "fine"
+[1] 33
+drinkdriving$outcome[drinkdriving$outcome == "WARNING"] <- "warning"
+[1] 34
+drinkdriving$outcome <- as.factor(drinkdriving$outcome)
+[1] 35
+levels(drinkdriving$outcome)
+[1] 36
+[1] "fine"    "warning"
+drinkdriving$incident_id <- as.factor(drinkdriving$incident_id)
+[1] 37
+drinkdriving$officer <- as.factor(drinkdriving$officer)
+[1] 38
+levels(drinkdriving$officer)
+[1] 39
+[1] "AS" "IT" "NP"
+m1 <- lm(bac ~ age, data = drinkdriving, na.action = na.omit)
+[1] 40
+summary(m1)
+[1] 41
+
+Call:
+lm(formula = bac ~ age, data = drinkdriving, na.action = na.omit)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.151959 -0.041261 -0.008169  0.040809  0.147662 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.2811832  0.0115626  24.318  < 2e-16 ***
+age         -0.0012660  0.0002479  -5.107 7.37e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.05834 on 208 degrees of freedom
+  (40 observations deleted due to missingness)
+Multiple R-squared:  0.1114,	Adjusted R-squared:  0.1072 
+F-statistic: 26.09 on 1 and 208 DF,  p-value: 7.366e-07
+
+par(mfrow = c(2, 2))
+[1] 42
+$mfrow
+[1] 2 2
+
+plot(m1, 1:4)
+[1] 43
+dev.copy(png, "diagnostics1.1.png")
+[1] 44
+dev.off()
+[1] 45
+par(mfrow = c(1, 1))
+[1] 46
+$mfrow
+[1] 2 2
+
+ggplot(data = drinkdriving, aes(age, bac)) + geom_point(aes(y = bac), 
+    col = "slateblue") + geom_smooth(method = "lm") + theme_minimal() + 
+    labs(x = "Age", y = "BAC (%)", title = "Relationship between Age and Blood Alcohol Content (BAC)")
+[1] 47
+ggsave("model1.png")
+[1] 48
+at50 <- data.frame(age = 50)
+[1] 49
+round(predict(m1, newdata = at50, interval = "confidence"), digits = 2)
+[1] 50
+   fit  lwr  upr
+1 0.22 0.21 0.23
+plot(m1, 2, main = "Q-Q Plot of Residuals")
+[1] 51
+dev.copy(png, "diagnostics1.2.png")
+[1] 52
+dev.off()
+[1] 53
+hist(residuals(m1))
+[1] 54
+dev.copy(png, "diagnostics1.3.png")
+[1] 55
+dev.off()
+[1] 56
+m2 <- lm(bac ~ age + speed, data = drinkdriving, na.action = na.omit)
+[1] 57
+anova(m2)
+[1] 58
+Analysis of Variance Table
+
+Response: bac
+           Df  Sum Sq  Mean Sq F value    Pr(>F)    
+age         1 0.08878 0.088777 26.0514 7.512e-07 ***
+speed       1 0.00246 0.002464  0.7232    0.3961    
+Residuals 207 0.70541 0.003408                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+summary(m2)
+[1] 59
+
+Call:
+lm(formula = bac ~ age + speed, data = drinkdriving, na.action = na.omit)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.152141 -0.039350 -0.006521  0.041645  0.143229 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.2591438  0.0283820   9.131  < 2e-16 ***
+age         -0.0010824  0.0003289  -3.291  0.00117 ** 
+speed        0.0003698  0.0004349   0.850  0.39608    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.05838 on 207 degrees of freedom
+  (40 observations deleted due to missingness)
+Multiple R-squared:  0.1145,	Adjusted R-squared:  0.106 
+F-statistic: 13.39 on 2 and 207 DF,  p-value: 3.407e-06
+
+m3 <- lm(bac ~ age + nighttime, data = drinkdriving, na.action = na.omit)
+[1] 60
+anova(m3)
+[1] 61
+Analysis of Variance Table
+
+Response: bac
+           Df  Sum Sq Mean Sq F value    Pr(>F)    
+age         1 0.10119 0.10118  33.836 2.278e-08 ***
+nighttime   1 0.06632 0.06632  22.177 4.576e-06 ***
+Residuals 205 0.61304 0.00299                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+summary(m3)
+[1] 62
+
+Call:
+lm(formula = bac ~ age + nighttime, data = drinkdriving, na.action = na.omit)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.163916 -0.047154  0.002886  0.036969  0.143952 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     0.2550352  0.0126617  20.142  < 2e-16 ***
+age            -0.0012702  0.0002354  -5.395 1.88e-07 ***
+nighttimenight  0.0383516  0.0081438   4.709 4.58e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.05468 on 205 degrees of freedom
+  (42 observations deleted due to missingness)
+Multiple R-squared:  0.2146,	Adjusted R-squared:  0.2069 
+F-statistic: 28.01 on 2 and 205 DF,  p-value: 1.765e-11
+
+round(vif(m3), digits = 2)
+[1] 63
+      age nighttime 
+     1.01      1.01 
+par(mfrow = c(2, 2))
+[1] 64
+$mfrow
+[1] 1 1
+
+plot(m2, 1:4)
+[1] 65
+dev.copy(png, "diagnosticsmodel2.png")
+[1] 66
+dev.off()
+[1] 67
+plot(m3, 1:4)
+[1] 68
+dev.copy(png, "diagnosticsmodel3.png")
+[1] 69
+dev.off()
+[1] 70
+par(mfrow = c(1, 1))
+[1] 71
+$mfrow
+[1] 2 2
+
+modelrefit <- lm(scale(bac) ~ scale(age) + scale(speed) + nighttime, 
+    data = drinkdriving, na.action = na.omit)
+[1] 72
+summary(modelrefit)
+[1] 73
+
+Call:
+lm(formula = scale(bac) ~ scale(age) + scale(speed) + nighttime, 
+    data = drinkdriving, na.action = na.omit)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.37279 -0.69527  0.05857  0.54883  2.14623 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    -0.48782    0.10189  -4.788 3.24e-06 ***
+scale(age)     -0.26701    0.07596  -3.515 0.000542 ***
+scale(speed)    0.07749    0.09206   0.842 0.400888    
+nighttimenight  0.57675    0.12237   4.713 4.51e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.8217 on 204 degrees of freedom
+  (42 observations deleted due to missingness)
+Multiple R-squared:  0.2173,	Adjusted R-squared:  0.2058 
+F-statistic: 18.88 on 3 and 204 DF,  p-value: 7.585e-11
+
+round(vif(modelrefit), digits = 2)
+[1] 74
+  scale(age) scale(speed)    nighttime 
+        1.77         1.76         1.01 
+modelrefitnightime <- lm(scale(bac) ~ nighttime, data = drinkdriving, 
+    na.action = na.omit)
+[1] 75
+summary(modelrefitnightime)
+[1] 76
+
+Call:
+lm(formula = scale(bac) ~ nighttime, data = drinkdriving, na.action = na.omit)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-3.12199 -0.62876  0.05851  0.66477  1.99596 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     -0.4942     0.1082  -4.568 7.91e-06 ***
+nighttimenight   0.7174     0.1309   5.482 1.07e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.9432 on 238 degrees of freedom
+  (10 observations deleted due to missingness)
+Multiple R-squared:  0.1121,	Adjusted R-squared:  0.1084 
+F-statistic: 30.05 on 1 and 238 DF,  p-value: 1.073e-07
+
+modelspeed <- lm(speed ~ nighttime, data = drinkdriving, na.action = na.omit)
+[1] 77
+summary(modelspeed)
+[1] 78
+
+Call:
+lm(formula = speed ~ nighttime, data = drinkdriving, na.action = na.omit)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-40.853  -9.305   0.157   8.213  81.032 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)      39.305      1.691  23.240   <2e-16 ***
+nighttimenight    1.548      2.045   0.757     0.45    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 14.94 on 245 degrees of freedom
+  (3 observations deleted due to missingness)
+Multiple R-squared:  0.002333,	Adjusted R-squared:  -0.001739 
+F-statistic: 0.573 on 1 and 245 DF,  p-value: 0.4498
+
+drinkdrivingnew <- as.data.frame(drinkdriving)
+[1] 79
+drinkdrivingnew$outcome <- as.character(drinkdrivingnew$outcome)
+[1] 80
+drinkdrivingnew$outcome <- ifelse(drinkdrivingnew$outcome == 
+    "fine", 1, 0)
+[1] 81
+drinkdrivingnew$outcome <- as.numeric(drinkdrivingnew$outcome)
+[1] 82
+modeloutcome <- glm(outcome ~ scale(bac) + scale(speed), data = drinkdrivingnew, 
+    na.action = na.omit, family = "binomial")
+[1] 83
+summary(modeloutcome)
+[1] 84
+
+Call:
+glm(formula = outcome ~ scale(bac) + scale(speed), family = "binomial", 
+    data = drinkdrivingnew, na.action = na.omit)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-4.0812   0.0489   0.1875   0.4458   1.9536  
+
+Coefficients:
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept)    2.8061     0.3647   7.694 1.43e-14 ***
+scale(bac)     1.1486     0.2737   4.197 2.71e-05 ***
+scale(speed)   2.1932     0.3850   5.697 1.22e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 238.69  on 242  degrees of freedom
+Residual deviance: 130.13  on 240  degrees of freedom
+  (7 observations deleted due to missingness)
+AIC: 136.13
+
+Number of Fisher Scoring iterations: 6
+
+anova(modeloutcome, test = "Chisq")
+[1] 85
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: outcome
+
+Terms added sequentially (first to last)
+
+
+             Df Deviance Resid. Df Resid. Dev  Pr(>Chi)    
+NULL                           242     238.69              
+scale(bac)    1   51.656       241     187.04 6.613e-13 ***
+scale(speed)  1   56.910       240     130.13 4.563e-14 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+round(exp(coefficients(modeloutcome)), digits = 2)
+[1] 86
+ (Intercept)   scale(bac) scale(speed) 
+       16.55         3.15         8.96 
+table(drinkdrivingnew$prior_offence)
+[1] 87
+
+          CD10           CD60 CD60,CD10,DR80      CD60,CD60           DD20           DR50           DR80              N           PL10 
+             2              1              1              1              4             43              4            185              2 
+          SP50           SP60           TS70      TS70,DR50 
+             2              1              3              1 
+drinkdrivingnew$prior_offence[drinkdrivingnew$prior_offence == 
+    "CD60,CD60"] <- "CD60"
+[1] 88
+drinkdrivingnew$prior_offence[drinkdrivingnew$prior_offence == 
+    "CD60,CD10,DR80"] <- NA
+[1] 89
+drinkdrivingnew$prior_offence[drinkdrivingnew$prior_offence == 
+    "TS70,DR50"] <- NA
+[1] 90
+drinkdrivingnew$prior_offence <- as.character(drinkdrivingnew$prior_offence)
+[1] 91
+drinkdrivingnew$prior_offence[drinkdrivingnew$prior_offence == 
+    "DR50"] <- "DR"
+[1] 92
+drinkdrivingnew$prior_offence[drinkdrivingnew$prior_offence == 
+    "DR80"] <- "DR"
+[1] 93
+drinkdrivingnew$prior_offence[drinkdrivingnew$prior_offence == 
+    "TS70"] <- "NON"
+[1] 94
+drinkdrivingnew$prior_offence[drinkdrivingnew$prior_offence == 
+    "CD60"] <- "NON"
+[1] 95
+drinkdrivingnew$prior_offence[drinkdrivingnew$prior_offence == 
+    "CD10"] <- "NON"
+[1] 96
+drinkdrivingnew$prior_offence[drinkdrivingnew$prior_offence == 
+    "PL10"] <- "NON"
+[1] 97
+drinkdrivingnew$prior_offence[drinkdrivingnew$prior_offence == 
+    "SP60"] <- "NON"
+[1] 98
+drinkdrivingnew$prior_offence[drinkdrivingnew$prior_offence == 
+    "DD20"] <- "NON"
+[1] 99
+drinkdrivingnew$prior_offence[drinkdrivingnew$prior_offence == 
+    "SP50"] <- "NON"
+[1] 100
+drinkdrivingnew$prior_offence <- as.factor(drinkdrivingnew$prior_offence)
+[1] 101
+table(drinkdrivingnew$prior_offence)
+[1] 102
+
+ DR   N NON 
+ 47 185  16 
+contrasts(drinkdrivingnew$prior_offence)
+[1] 103
+    N NON
+DR  0   0
+N   1   0
+NON 0   1
+contrasts(drinkdrivingnew$prior_offence) <- cbind(DRvNON = c(1/2, 
+    0, -1/2), DRNONvN = c(-1/3, 2/3, -1/3))
+[1] 104
+contrasts(drinkdrivingnew$prior_offence)
+[1] 105
+    DRvNON    DRNONvN
+DR     0.5 -0.3333333
+N      0.0  0.6666667
+NON   -0.5 -0.3333333
+offencemodel <- glm(outcome ~ prior_offence, data = drinkdrivingnew, 
+    na.action = na.omit, family = "binomial")
+[1] 106
+summary(offencemodel)
+[1] 107
+
+Call:
+glm(formula = outcome ~ prior_offence, family = "binomial", data = drinkdrivingnew, 
+    na.action = na.omit)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.2198   0.4218   0.6681   0.6681   0.9695  
+
+Coefficients:
+                     Estimate Std. Error z value Pr(>|z|)    
+(Intercept)           1.42401    0.25248   5.640  1.7e-08 ***
+prior_offenceDRvNON   1.86408    0.73479   2.537   0.0112 *  
+prior_offenceDRNONvN -0.05657    0.41081  -0.138   0.8905    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 240.82  on 247  degrees of freedom
+Residual deviance: 233.68  on 245  degrees of freedom
+  (2 observations deleted due to missingness)
+AIC: 239.68
+
+Number of Fisher Scoring iterations: 5
+
+stargazer(offencemodel, type = "html", out = "offencemodel.doc", 
+    intercept.bottom = F, intercept.top = T, p.auto = T, covariate.labels = c("(Intercept)", 
+        "Drunk Driving Vs Non-Drunk Driving", "Prior offence vs No offence"), 
+    digits = 2, title = "Table 1: Binomial Regression with Orthogonal Contrasts for prior offences")
+[1] 108
+
+<table style="text-align:center"><caption><strong>Table 1: Binomial Regression with Orthogonal Contrasts for prior offences</strong></caption>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td><em>Dependent variable:</em></td></tr>
+<tr><td></td><td colspan="1" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align:left"></td><td>outcome</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">(Intercept)</td><td>1.42<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.25)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">Drunk Driving Vs Non-Drunk Driving</td><td>1.86<sup>**</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.73)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">Prior offence vs No offence</td><td>-0.06</td></tr>
+<tr><td style="text-align:left"></td><td>(0.41)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>248</td></tr>
+<tr><td style="text-align:left">Log Likelihood</td><td>-116.84</td></tr>
+<tr><td style="text-align:left">Akaike Inf. Crit.</td><td>239.68</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
+</table>
+ [1] ""                                                                                                                                                                                                                                   
+ [2] "<table style=\"text-align:center\"><caption><strong>Table 1: Binomial Regression with Orthogonal Contrasts for prior offences</strong></caption>"                                                                                   
+ [3] "<tr><td colspan=\"2\" style=\"border-bottom: 1px solid black\"></td></tr><tr><td style=\"text-align:left\"></td><td><em>Dependent variable:</em></td></tr>"                                                                         
+ [4] "<tr><td></td><td colspan=\"1\" style=\"border-bottom: 1px solid black\"></td></tr>"                                                                                                                                                 
+ [5] "<tr><td style=\"text-align:left\"></td><td>outcome</td></tr>"                                                                                                                                                                       
+ [6] "<tr><td colspan=\"2\" style=\"border-bottom: 1px solid black\"></td></tr><tr><td style=\"text-align:left\">(Intercept)</td><td>1.42<sup>***</sup></td></tr>"                                                                        
+ [7] "<tr><td style=\"text-align:left\"></td><td>(0.25)</td></tr>"                                                                                                                                                                        
+ [8] "<tr><td style=\"text-align:left\"></td><td></td></tr>"                                                                                                                                                                              
+ [9] "<tr><td style=\"text-align:left\">Drunk Driving Vs Non-Drunk Driving</td><td>1.86<sup>**</sup></td></tr>"                                                                                                                           
+[10] "<tr><td style=\"text-align:left\"></td><td>(0.73)</td></tr>"                                                                                                                                                                        
+[11] "<tr><td style=\"text-align:left\"></td><td></td></tr>"                                                                                                                                                                              
+[12] "<tr><td style=\"text-align:left\">Prior offence vs No offence</td><td>-0.06</td></tr>"                                                                                                                                              
+[13] "<tr><td style=\"text-align:left\"></td><td>(0.41)</td></tr>"                                                                                                                                                                        
+[14] "<tr><td style=\"text-align:left\"></td><td></td></tr>"                                                                                                                                                                              
+[15] "<tr><td colspan=\"2\" style=\"border-bottom: 1px solid black\"></td></tr><tr><td style=\"text-align:left\">Observations</td><td>248</td></tr>"                                                                                      
+[16] "<tr><td style=\"text-align:left\">Log Likelihood</td><td>-116.84</td></tr>"                                                                                                                                                         
+[17] "<tr><td style=\"text-align:left\">Akaike Inf. Crit.</td><td>239.68</td></tr>"                                                                                                                                                       
+[18] "<tr><td colspan=\"2\" style=\"border-bottom: 1px solid black\"></td></tr><tr><td style=\"text-align:left\"><em>Note:</em></td><td style=\"text-align:right\"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>"
+[19] "</table>"                                                                                                                                                                                                                           
+modelgraph <- glm(outcome ~ age + nighttime + prior_offence + 
+    speed + bac, family = binomial, data = drinkdrivingnew, na.action = na.omit)
+[1] 109
+age <- sort(unique(drinkdrivingnew$age))
+[1] 110
+agedata <- data.frame(age, nighttime = c("day"), prior_offence = c("N"), 
+    speed = c(30), bac = c(0), outcome = c("fine"))
+[1] 111
+agedata$nighttime <- as.factor(agedata$nighttime)
+[1] 112
+agedata$model_prediction <- predict(modelgraph, newdata = agedata, 
+    type = "response")
+[1] 113
+ggplot(data = agedata, aes(age, model_prediction)) + geom_smooth() + 
+    theme_minimal() + labs(x = "Age", y = "Model Prediction", 
+    title = "Predicted Probabilities of recieving a fine across Age", 
+    subtitle = "With daytime driving at 30mph and 0% BAC")
+[1] 114
+ggsave("model4.png")
+[1] 115
+drinkdrivingnew %>% filter(!is.na(officer)) %>% ggplot(aes(x = age, 
+    y = outcome, color = officer, fill = officer)) + geom_smooth(method = "glm", 
+    formula = y ~ x) + theme_bw() + labs(title = "Outcome across Age for different Officers", 
+    x = "Age", y = "Outcome")
+[1] 116
+ggsave("model5.png")
+[1] 117
+modelofficer <- glm(outcome ~ age * relevel(officer, "IT"), data = drinkdrivingnew, 
+    family = "binomial", na.action = na.omit)
+[1] 118
+summary(modelofficer)
+[1] 119
+
+Call:
+glm(formula = outcome ~ age * relevel(officer, "IT"), family = "binomial", 
+    data = drinkdrivingnew, na.action = na.omit)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.7179   0.0757   0.3183   0.5638   2.4075  
+
+Coefficients:
+                              Estimate Std. Error z value Pr(>|z|)   
+(Intercept)                   4.408694   1.357619   3.247  0.00116 **
+age                          -0.063096   0.025175  -2.506  0.01220 * 
+relevel(officer, "IT")AS      5.148426   2.417613   2.130  0.03321 * 
+relevel(officer, "IT")NP      0.475849   2.013808   0.236  0.81321   
+age:relevel(officer, "IT")AS -0.097924   0.042901  -2.283  0.02246 * 
+age:relevel(officer, "IT")NP -0.004475   0.037058  -0.121  0.90388   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 218.83  on 216  degrees of freedom
+Residual deviance: 146.22  on 211  degrees of freedom
+  (33 observations deleted due to missingness)
+AIC: 158.22
+
+Number of Fisher Scoring iterations: 6
+
+anova(modelofficer, test = "Chisq")
+[1] 120
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: outcome
+
+Terms added sequentially (first to last)
+
+
+                           Df Deviance Resid. Df Resid. Dev Pr(>Chi)    
+NULL                                         216     218.83             
+age                         1   64.297       215     154.53 1.07e-15 ***
+relevel(officer, "IT")      2    0.874       213     153.66   0.6461    
+age:relevel(officer, "IT")  2    7.434       211     146.22   0.0243 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+stargazer(modelofficer, type = "html", out = "modelofficer.doc", 
+    intercept.bottom = F, intercept.top = T, p.auto = T, covariate.labels = c("(Intercept)", 
+        "Age", "Officer AS", "Officer NP", "Age:Officer AS", 
+        "Age:Officer NP"), digits = 2, title = "Table 2: Binomial Regression with Interaction between Age and Officer", 
+    notes = "Officer IT is accounted for in the intercept.", 
+    notes.align = "r")
+[1] 121
+
+<table style="text-align:center"><caption><strong>Table 2: Binomial Regression with Interaction between Age and Officer</strong></caption>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td><em>Dependent variable:</em></td></tr>
+<tr><td></td><td colspan="1" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align:left"></td><td>outcome</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">(Intercept)</td><td>4.41<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(1.36)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">Age</td><td>-0.06<sup>**</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.03)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">Officer AS</td><td>5.15<sup>**</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(2.42)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">Officer NP</td><td>0.48</td></tr>
+<tr><td style="text-align:left"></td><td>(2.01)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">Age:Officer AS</td><td>-0.10<sup>**</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.04)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">Age:Officer NP</td><td>-0.004</td></tr>
+<tr><td style="text-align:left"></td><td>(0.04)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>217</td></tr>
+<tr><td style="text-align:left">Log Likelihood</td><td>-73.11</td></tr>
+<tr><td style="text-align:left">Akaike Inf. Crit.</td><td>158.22</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
+<tr><td style="text-align:left"></td><td style="text-align:right">Officer IT is accounted for in the intercept.</td></tr>
+</table>
+ [1] ""                                                                                                                                                                                                                                   
+ [2] "<table style=\"text-align:center\"><caption><strong>Table 2: Binomial Regression with Interaction between Age and Officer</strong></caption>"                                                                                       
+ [3] "<tr><td colspan=\"2\" style=\"border-bottom: 1px solid black\"></td></tr><tr><td style=\"text-align:left\"></td><td><em>Dependent variable:</em></td></tr>"                                                                         
+ [4] "<tr><td></td><td colspan=\"1\" style=\"border-bottom: 1px solid black\"></td></tr>"                                                                                                                                                 
+ [5] "<tr><td style=\"text-align:left\"></td><td>outcome</td></tr>"                                                                                                                                                                       
+ [6] "<tr><td colspan=\"2\" style=\"border-bottom: 1px solid black\"></td></tr><tr><td style=\"text-align:left\">(Intercept)</td><td>4.41<sup>***</sup></td></tr>"                                                                        
+ [7] "<tr><td style=\"text-align:left\"></td><td>(1.36)</td></tr>"                                                                                                                                                                        
+ [8] "<tr><td style=\"text-align:left\"></td><td></td></tr>"                                                                                                                                                                              
+ [9] "<tr><td style=\"text-align:left\">Age</td><td>-0.06<sup>**</sup></td></tr>"                                                                                                                                                         
+[10] "<tr><td style=\"text-align:left\"></td><td>(0.03)</td></tr>"                                                                                                                                                                        
+[11] "<tr><td style=\"text-align:left\"></td><td></td></tr>"                                                                                                                                                                              
+[12] "<tr><td style=\"text-align:left\">Officer AS</td><td>5.15<sup>**</sup></td></tr>"                                                                                                                                                   
+[13] "<tr><td style=\"text-align:left\"></td><td>(2.42)</td></tr>"                                                                                                                                                                        
+[14] "<tr><td style=\"text-align:left\"></td><td></td></tr>"                                                                                                                                                                              
+[15] "<tr><td style=\"text-align:left\">Officer NP</td><td>0.48</td></tr>"                                                                                                                                                                
+[16] "<tr><td style=\"text-align:left\"></td><td>(2.01)</td></tr>"                                                                                                                                                                        
+[17] "<tr><td style=\"text-align:left\"></td><td></td></tr>"                                                                                                                                                                              
+[18] "<tr><td style=\"text-align:left\">Age:Officer AS</td><td>-0.10<sup>**</sup></td></tr>"                                                                                                                                              
+[19] "<tr><td style=\"text-align:left\"></td><td>(0.04)</td></tr>"                                                                                                                                                                        
+[20] "<tr><td style=\"text-align:left\"></td><td></td></tr>"                                                                                                                                                                              
+[21] "<tr><td style=\"text-align:left\">Age:Officer NP</td><td>-0.004</td></tr>"                                                                                                                                                          
+[22] "<tr><td style=\"text-align:left\"></td><td>(0.04)</td></tr>"                                                                                                                                                                        
+[23] "<tr><td style=\"text-align:left\"></td><td></td></tr>"                                                                                                                                                                              
+[24] "<tr><td colspan=\"2\" style=\"border-bottom: 1px solid black\"></td></tr><tr><td style=\"text-align:left\">Observations</td><td>217</td></tr>"                                                                                      
+[25] "<tr><td style=\"text-align:left\">Log Likelihood</td><td>-73.11</td></tr>"                                                                                                                                                          
+[26] "<tr><td style=\"text-align:left\">Akaike Inf. Crit.</td><td>158.22</td></tr>"                                                                                                                                                       
+[27] "<tr><td colspan=\"2\" style=\"border-bottom: 1px solid black\"></td></tr><tr><td style=\"text-align:left\"><em>Note:</em></td><td style=\"text-align:right\"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>"
+[28] "<tr><td style=\"text-align:left\"></td><td style=\"text-align:right\">Officer IT is accounted for in the intercept.</td></tr>"                                                                                                      
+[29] "</table>"                                                                                                                                                                                                                           

@@ -1,0 +1,943 @@
+
+
+	####### B111599 R script #######
+
+library(ggplot2, quietly = T)
+[1] 1
+[1] "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(psych, quietly = T)
+[1] 2
+ [1] "psych"     "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(lsr, quietly = T)
+[1] 3
+ [1] "lsr"       "psych"     "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"  
+[11] "base"     
+library(car, quietly = T)
+[1] 4
+ [1] "car"       "carData"   "lsr"       "psych"     "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"    
+[11] "datasets"  "methods"   "base"     
+library(ggiraph, quietly = T)
+[1] 5
+ [1] "ggiraph"   "car"       "carData"   "lsr"       "psych"     "ggplot2"   "readr"     "stats"     "graphics"  "grDevices"
+[11] "utils"     "datasets"  "methods"   "base"     
+library(ggiraphExtra, quietly = T)
+[1] 6
+ [1] "ggiraphExtra" "ggiraph"      "car"          "carData"      "lsr"          "psych"        "ggplot2"      "readr"       
+ [9] "stats"        "graphics"     "grDevices"    "utils"        "datasets"     "methods"      "base"        
+library(plyr, quietly = T)
+[1] 7
+ [1] "plyr"         "ggiraphExtra" "ggiraph"      "car"          "carData"      "lsr"          "psych"        "ggplot2"     
+ [9] "readr"        "stats"        "graphics"     "grDevices"    "utils"        "datasets"     "methods"      "base"        
+library(plotly, quietly = T)
+[1] 8
+ [1] "plotly"       "plyr"         "ggiraphExtra" "ggiraph"      "car"          "carData"      "lsr"          "psych"       
+ [9] "ggplot2"      "readr"        "stats"        "graphics"     "grDevices"    "utils"        "datasets"     "methods"     
+[17] "base"        
+load(url("https://edin.ac/2QCZNVu"))
+[1] 9
+[1] "drinkdriving" "officer_inc" 
+summary(drinkdriving)
+[1] 10
+      age          nighttime         prior_offence          speed             bac           outcome          incident_id       
+ Min.   : 14.00   Length:250         Length:250         Min.   :  0.00   Min.   : 3.987   Length:250         Length:250        
+ 1st Qu.: 30.00   Class :character   Class :character   1st Qu.: 30.92   1st Qu.:19.264   Class :character   Class :character  
+ Median : 40.50   Mode  :character   Mode  :character   Median : 40.64   Median :23.609   Mode  :character   Mode  :character  
+ Mean   : 46.00                                         Mean   : 40.49   Mean   :23.605                                        
+ 3rd Qu.: 55.25                                         3rd Qu.: 48.84   3rd Qu.:27.898                                        
+ Max.   :297.00                                         Max.   :120.34   Max.   :65.764                                        
+ NA's   :22                                                              NA's   :5                                             
+summary(officer_inc)
+[1] 11
+ officer     incident_id 
+ AS  :116   inc_1  :  1  
+ IT  : 66   inc_10 :  1  
+ NP  : 67   inc_100:  1  
+ NA's:  1   inc_101:  1  
+            inc_102:  1  
+            inc_103:  1  
+            (Other):244  
+data <- merge(drinkdriving, officer_inc, all = T)
+[1] 12
+summary(data)
+[1] 13
+ incident_id             age          nighttime         prior_offence          speed             bac           outcome         
+ Length:250         Min.   : 14.00   Length:250         Length:250         Min.   :  0.00   Min.   : 3.987   Length:250        
+ Class :character   1st Qu.: 30.00   Class :character   Class :character   1st Qu.: 30.92   1st Qu.:19.264   Class :character  
+ Mode  :character   Median : 40.50   Mode  :character   Mode  :character   Median : 40.64   Median :23.609   Mode  :character  
+                    Mean   : 46.00                                         Mean   : 40.49   Mean   :23.605                     
+                    3rd Qu.: 55.25                                         3rd Qu.: 48.84   3rd Qu.:27.898                     
+                    Max.   :297.00                                         Max.   :120.34   Max.   :65.764                     
+ officer   
+ AS  :116  
+ IT  : 66  
+ NP  : 67  
+ NA's:  1  
+           
+           
+ [ reached getOption("max.print") -- omitted 1 row ]
+outliers <- function(obs, x = 2.5) {
+    return(abs(obs - mean(obs, na.rm = T)) > (sd(obs, na.rm = T) * 
+        x))
+}
+[1] 14
+data$incident_id <- as.factor(data$incident_id)
+[1] 15
+with(data, age[which(outliers(age))])
+[1] 16
+[1] 297 297 293
+data$age[which(outliers(data$age))] <- NA
+[1] 17
+as.factor(data$nighttime)
+[1] 18
+ [1] night night night day   day   night night night night night night day   night day   night night night day   day   day   day  
+[22] night night night day   day   night day   night night night night night night day   day   night day   night night night day  
+[43] night night day   night night night night night
+ [ reached getOption("max.print") -- omitted 200 entries ]
+Levels: 18:25 2:05 day night
+data$nighttime[data$nighttime == "18:25"] <- "day"
+[1] 19
+data$nighttime[data$nighttime == "2:05"] <- "night"
+[1] 20
+data$nighttime <- as.factor(data$nighttime)
+[1] 21
+as.factor(data$prior_offence)
+[1] 22
+ [1] N         N         N         N         N         N         DR50      N         N         TS70      DR50      N         DR80     
+[14] CD60,CD60 N         N         N         N         PL10      N         N         DD20      N         N         SP60      N        
+[27] N         N         N         N         DR50      DR50      N         N         N         N         DR80      N         N        
+[40] N         N         N         CD60      N         N         N         DR50      N         DR50      N        
+ [ reached getOption("max.print") -- omitted 200 entries ]
+Levels: CD10 CD60 CD60,CD10,DR80 CD60,CD60 DD20 DR50 DR80 N PL10 SP50 SP60 TS70 TS70,DR50
+data$prior_offence[data$prior_offence == "TS70"] <- "TS"
+[1] 23
+data$prior_offence[data$prior_offence == "SP50"] <- "SP"
+[1] 24
+data$prior_offence[data$prior_offence == "SP60"] <- "SP"
+[1] 25
+data$prior_offence[data$prior_offence == "PL10"] <- "PL"
+[1] 26
+data$prior_offence[data$prior_offence == "CD10"] <- "CD"
+[1] 27
+data$prior_offence[data$prior_offence == "CD60"] <- "CD"
+[1] 28
+data$prior_offence[data$prior_offence == "CD60,CD10,DR80"] <- "CD+CD+DR80"
+[1] 29
+data$prior_offence[data$prior_offence == "CD60,CD60"] <- "CD+CD"
+[1] 30
+data$prior_offence[data$prior_offence == "TS70,DR50"] <- "TS+DR50"
+[1] 31
+data$prior_offence[data$prior_offence == "DD20"] <- NA
+[1] 32
+data$prior_offence <- as.factor(data$prior_offence)
+[1] 33
+which(outliers(data$speed))
+[1] 34
+[1]   2  14  62  70 196 218
+data$speed[which(outliers(data$speed))]
+[1] 35
+[1]   2.533468 120.336960  81.028140   0.000000   1.945818   1.012149
+which(outliers(data$bac))
+[1] 36
+[1]  14  62 198
+data$bac[data$bac > 40]
+[1] 37
+[1] 57.330     NA     NA 65.764     NA     NA     NA
+data$bac[data$bac > 40] <- NA
+[1] 38
+as.factor(data$outcome)
+[1] 39
+ [1] fine    warning warning fine    fine    fine    fine    fine    fine    fine    fine    fine    WARNING FINE    fine    fine   
+[17] fine    warning warning warning warning fine    fine    FINE    Warning fine    fine    WARNING fine    fine    fine    fine   
+[33] fine    fine    fine    fine    fine    fine    fine    fine    fine    warning warning fine    fine    fine    fine    FINE   
+[49] fine    fine   
+ [ reached getOption("max.print") -- omitted 200 entries ]
+Levels: fine Fine FINE warning Warning WARNING
+data$outcome[data$outcome == "Fine"] <- "fine"
+[1] 40
+data$outcome[data$outcome == "FINE"] <- "fine"
+[1] 41
+data$outcome[data$outcome == "Warning"] <- "warning"
+[1] 42
+data$outcome[data$outcome == "WARNING"] <- "warning"
+[1] 43
+data$outcome <- as.factor(data$outcome)
+[1] 44
+summary(data)
+[1] 45
+  incident_id       age        nighttime   prior_offence     speed             bac            outcome    officer   
+ inc_1  :  1   Min.   :14.00   day  : 79   N      :185   Min.   :  0.00   Min.   : 3.987   fine   :202   AS  :116  
+ inc_10 :  1   1st Qu.:30.00   night:171   DR50   : 43   1st Qu.: 30.92   1st Qu.:19.215   warning: 48   IT  : 66  
+ inc_100:  1   Median :40.00               DR80   :  4   Median : 40.64   Median :23.504                 NP  : 67  
+ inc_101:  1   Mean   :42.68               CD     :  3   Mean   : 40.49   Mean   :23.292                 NA's:  1  
+ inc_102:  1   3rd Qu.:55.00               SP     :  3   3rd Qu.: 48.84   3rd Qu.:27.789                           
+ inc_103:  1   Max.   :90.00               (Other):  8   Max.   :120.34   Max.   :36.138                           
+ [ reached getOption("max.print") -- omitted 1 row ]
+data$age[which(data$age < 17)]
+[1] 46
+[1] 15 15 15 14 15 16 15 16
+data$age[data$age < 17] <- NA
+[1] 47
+model1 <- lm(bac ~ age, data = data)
+[1] 48
+summary(model1)
+[1] 49
+
+Call:
+lm(formula = bac ~ age, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-15.1959  -4.1261  -0.8169   4.0809  14.7662 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 28.11832    1.15626  24.318  < 2e-16 ***
+age         -0.12660    0.02479  -5.107 7.37e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.834 on 208 degrees of freedom
+  (40 observations deleted due to missingness)
+Multiple R-squared:  0.1114,	Adjusted R-squared:  0.1072 
+F-statistic: 26.09 on 1 and 208 DF,  p-value: 7.366e-07
+
+standardCoefs(model1)
+[1] 50
+             b       beta
+age -0.1266009 -0.3338234
+ggplot(data, aes(x = age, y = bac, col = age)) + geom_point() + 
+    geom_smooth(method = "lm") + theme_minimal() + labs(x = "Ages of Drivers (years)", 
+    y = "Blood Alcohol Content") + ggtitle("Relationship Between Bac and Age") + 
+    theme(plot.title = element_text(hjust = 0.5), text = element_text(family = "Palatino"))
+[1] 51
+par(mfrow = c(2, 2))
+[1] 52
+$mfrow
+[1] 1 2
+
+plot(model1, which = c(1:4))
+[1] 53
+pred.age <- data.frame(age = 50)
+[1] 54
+predict(model1, newdata = pred.age)
+[1] 55
+       1 
+21.78828 
+plot(model1, which = 2)
+[1] 56
+hist(x = residuals(model1), xlab = "Value of Residual", main = "", 
+    breaks = 20)
+[1] 57
+shapiro.test(residuals(model1))
+[1] 58
+
+	Shapiro-Wilk normality test
+
+data:  residuals(model1)
+W = 0.99315, p-value = 0.4415
+
+ggplot(model1, aes(x = residuals(model1))) + geom_histogram(colour = "slateblue", 
+    fill = "slateblue", binwidth = 2, alpha = 0.4) + labs(x = "Value of Residual", 
+    y = "Frequency") + ggtitle("Histogram of the Residuals") + 
+    theme(plot.title = element_text(hjust = 0.5), text = element_text(family = "Palatino"))
+[1] 59
+ggplot(model1, aes(x = qqnorm(.stdresid)[[1]], .stdresid)) + 
+    geom_point(colour = "slateblue", na.rm = T) + labs(x = "Theoretical Quantiles", 
+    y = "Standardized Residuals") + ggtitle("Normal Q-Q") + theme(plot.title = element_text(hjust = 0.5), 
+    text = element_text(family = "Palatino"))
+[1] 60
+data$time <- ifelse(data$nighttime == "day", 1, 0)
+[1] 61
+model2a <- lm(bac ~ age + time, data = data)
+[1] 62
+summary(model2a)
+[1] 63
+
+Call:
+lm(formula = bac ~ age + time, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-16.5793  -4.7183   0.3282   3.7481  14.3344 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 28.95751    1.11562  25.956  < 2e-16 ***
+age         -0.11738    0.02369  -4.954 1.50e-06 ***
+time        -3.89448    0.82547  -4.718 4.38e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.557 on 207 degrees of freedom
+  (40 observations deleted due to missingness)
+Multiple R-squared:  0.1977,	Adjusted R-squared:   0.19 
+F-statistic: 25.51 on 2 and 207 DF,  p-value: 1.254e-10
+
+standardCoefs(model2a)
+[1] 64
+              b       beta
+age  -0.1173771 -0.3095020
+time -3.8944792 -0.2947212
+ggPredict(model2a, se = T, interactive = T)
+[1] 65
+par(mfrow = c(2, 2))
+[1] 66
+$mfrow
+[1] 2 2
+
+plot(model2a, which = c(1:4))
+[1] 67
+shapiro.test(residuals(model2a))
+[1] 68
+
+	Shapiro-Wilk normality test
+
+data:  residuals(model2a)
+W = 0.99157, p-value = 0.2651
+
+model2b <- lm(bac ~ age + speed, data = data)
+[1] 69
+summary(model2b)
+[1] 70
+
+Call:
+lm(formula = bac ~ age + speed, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-15.2141  -3.9350  -0.6521   4.1645  14.3229 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 25.91438    2.83820   9.131  < 2e-16 ***
+age         -0.10824    0.03289  -3.291  0.00117 ** 
+speed        0.03698    0.04349   0.850  0.39608    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.838 on 207 degrees of freedom
+  (40 observations deleted due to missingness)
+Multiple R-squared:  0.1145,	Adjusted R-squared:  0.106 
+F-statistic: 13.39 on 2 and 207 DF,  p-value: 3.407e-06
+
+standardCoefs(model2b)
+[1] 71
+                b        beta
+age   -0.10823598 -0.28539851
+speed  0.03698113  0.07374606
+ggPredict(model2b, se = T, interactive = T)
+[1] 72
+par(mfrow = c(2, 2))
+[1] 73
+$mfrow
+[1] 2 2
+
+plot(model2b, which = c(1:4))
+[1] 74
+shapiro.test(residuals(model2b))
+[1] 75
+
+	Shapiro-Wilk normality test
+
+data:  residuals(model2b)
+W = 0.99253, p-value = 0.364
+
+model2c <- lm(bac ~ scale(age) * scale(speed) + scale(time), 
+    data = data)
+[1] 76
+summary(model2c)
+[1] 77
+
+Call:
+lm(formula = bac ~ scale(age) * scale(speed) + scale(time), data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-15.7100  -4.6611   0.3695   3.7850  14.0275 
+
+Coefficients:
+                        Estimate Std. Error t value Pr(>|t|)    
+(Intercept)              22.8493     0.4733  48.273  < 2e-16 ***
+scale(age)               -1.4953     0.5398  -2.770  0.00612 ** 
+scale(speed)              0.5374     0.6190   0.868  0.38630    
+scale(time)              -1.7989     0.3861  -4.659 5.71e-06 ***
+scale(age):scale(speed)   0.2911     0.4777   0.609  0.54289    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.568 on 205 degrees of freedom
+  (40 observations deleted due to missingness)
+Multiple R-squared:  0.2022,	Adjusted R-squared:  0.1867 
+F-statistic: 12.99 on 4 and 205 DF,  p-value: 1.901e-09
+
+anova(model2c, test = "Chisq")
+[1] 78
+Analysis of Variance Table
+
+Response: bac
+                         Df Sum Sq Mean Sq F value    Pr(>F)    
+scale(age)                1  887.8  887.77 28.6361 2.327e-07 ***
+scale(speed)              1   24.6   24.64  0.7949    0.3737    
+scale(time)               1  687.2  687.19 22.1663 4.600e-06 ***
+scale(age):scale(speed)   1   11.5   11.52  0.3714    0.5429    
+Residuals               205 6355.4   31.00                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+standardCoefs(model2c)
+[1] 79
+                                 b        beta
+scale(age)              -1.4952551 -0.24337043
+scale(speed)             0.5374286  0.07185668
+scale(time)             -1.7989435 -0.29223862
+scale(age):scale(speed)  0.2911395  0.04266360
+par(mfrow = c(2, 2))
+[1] 80
+$mfrow
+[1] 2 2
+
+plot(model2c, which = c(1:4))
+[1] 81
+shapiro.test(residuals(model2c))
+[1] 82
+
+	Shapiro-Wilk normality test
+
+data:  residuals(model2c)
+W = 0.9908, p-value = 0.204
+
+vif(model2c)
+[1] 83
+             scale(age)            scale(speed)             scale(time) scale(age):scale(speed) 
+               1.983408                1.760239                1.011071                1.259202 
+with(data, hist(speed))
+[1] 84
+with(data, shapiro.test(speed))
+[1] 85
+
+	Shapiro-Wilk normality test
+
+data:  speed
+W = 0.97176, p-value = 7.225e-05
+
+which(outliers(data$speed))
+[1] 86
+[1]   2  14  62  70 196 218
+data$speed[which(outliers(data$speed))] <- NA
+[1] 87
+with(data, hist(speed))
+[1] 88
+with(data, shapiro.test(speed))
+[1] 89
+
+	Shapiro-Wilk normality test
+
+data:  speed
+W = 0.9945, p-value = 0.522
+
+with(data, leveneTest(speed ~ nighttime))
+[1] 90
+Levene's Test for Homogeneity of Variance (center = median)
+       Df F value  Pr(>F)  
+group   1   3.988 0.04695 *
+      242                  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+ggplot(data) + geom_boxplot(aes(x = nighttime, y = speed, colour = nighttime)) + 
+    labs(x = "Time of Day", y = "Speeds of Driving (mph)") + 
+    ggtitle("Comparing speeds of driving between daytime and night") + 
+    theme(legend.position = "none", plot.title = element_text(hjust = 0.5), 
+        text = element_text(family = "Palatino"))
+[1] 91
+with(data, t.test(speed ~ nighttime, alternative = "greater"))
+[1] 92
+
+	Welch Two Sample t-test
+
+data:  speed by nighttime
+t = -1.9173, df = 181.44, p-value = 0.9716
+alternative hypothesis: true difference in means is greater than 0
+95 percent confidence interval:
+ -5.915164       Inf
+sample estimates:
+  mean in group day mean in group night 
+           38.47328            41.64953 
+
+levels(data$prior_offence)
+[1] 93
+ [1] "CD"         "CD+CD"      "CD+CD+DR80" "DR50"       "DR80"       "N"          "PL"         "SP"         "TS"         "TS+DR50"   
+contrasts(data$prior_offence) <- contr.treatment(10, base = 6)
+[1] 94
+contrasts(data$prior_offence)
+[1] 95
+           1 2 3 4 5 7 8 9 10
+CD         1 0 0 0 0 0 0 0  0
+CD+CD      0 1 0 0 0 0 0 0  0
+CD+CD+DR80 0 0 1 0 0 0 0 0  0
+DR50       0 0 0 1 0 0 0 0  0
+DR80       0 0 0 0 1 0 0 0  0
+ [ reached getOption("max.print") -- omitted 5 rows ]
+data$result <- relevel(data$outcome, "warning")
+[1] 96
+model3.1 <- glm(result ~ scale(age) + time + scale(speed) + scale(bac) + 
+    prior_offence, data = data, family = binomial, na.action = na.exclude)
+[1] 97
+summary(model3.1)
+[1] 98
+
+Call:
+glm(formula = result ~ scale(age) + time + scale(speed) + scale(bac) + 
+    prior_offence, family = binomial, data = data, na.action = na.exclude)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-4.2751   0.0054   0.0466   0.2266   1.8122  
+
+Coefficients:
+                   Estimate Std. Error z value Pr(>|z|)    
+(Intercept)          8.0574     2.3130   3.483 0.000495 ***
+scale(age)          -2.2945     0.6184  -3.710 0.000207 ***
+time                 0.3978     0.7477   0.532 0.594686    
+scale(speed)         1.7609     0.6575   2.678 0.007403 ** 
+scale(bac)           1.9440     0.5112   3.803 0.000143 ***
+prior_offenceDR50   -1.2573     2.1820  -0.576 0.564471    
+prior_offenceDR80   -8.2601     2.9588  -2.792 0.005242 ** 
+prior_offenceN      -3.6696     1.9232  -1.908 0.056380 .  
+prior_offencePL     -1.6729    43.6332  -0.038 0.969417    
+prior_offenceSP     -8.8303     2.9000  -3.045 0.002327 ** 
+ [ reached getOption("max.print") -- omitted 1 row ]
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 192.370  on 201  degrees of freedom
+Residual deviance:  63.269  on 191  degrees of freedom
+  (48 observations deleted due to missingness)
+AIC: 85.269
+
+Number of Fisher Scoring iterations: 15
+
+anova(model3.1, test = "Chisq")
+[1] 99
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: result
+
+Terms added sequentially (first to last)
+
+
+              Df Deviance Resid. Df Resid. Dev  Pr(>Chi)    
+NULL                            201    192.370              
+scale(age)     1   68.751       200    123.619 < 2.2e-16 ***
+time           1    2.631       199    120.988  0.104763    
+scale(speed)   1   18.623       198    102.365 1.593e-05 ***
+scale(bac)     1   18.929       197     83.436 1.357e-05 ***
+prior_offence  6   20.167       191     63.269  0.002586 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+exp(model3.1$coefficients)
+[1] 100
+      (Intercept)        scale(age)              time      scale(speed)        scale(bac) prior_offenceDR50 prior_offenceDR80 
+     3.156925e+03      1.008068e-01      1.488585e+00      5.817837e+00      6.986526e+00      2.844183e-01      2.586332e-04 
+   prior_offenceN   prior_offencePL   prior_offenceSP   prior_offenceTS 
+     2.548724e-02      1.877022e-01      1.462274e-04      1.406497e+06 
+exp(confint(model3.1))
+[1] 101
+                         2.5 %       97.5 %
+(Intercept)       3.991776e+01 4.706020e+05
+scale(age)        2.564419e-02 3.016453e-01
+time              3.518891e-01 6.904693e+00
+scale(speed)      1.802313e+00 2.461699e+01
+scale(bac)        2.831440e+00 2.153560e+01
+prior_offenceDR50 3.524670e-03 2.572570e+01
+prior_offenceDR80 5.126799e-07 7.358519e-02
+prior_offenceN    4.280341e-04 1.185132e+00
+prior_offencePL   9.605469e-06 2.474282e+03
+prior_offenceSP   2.750126e-07 3.432050e-02
+prior_offenceTS   3.129604e-53           NA
+levels(data$prior_offence)
+[1] 102
+ [1] "CD"         "CD+CD"      "CD+CD+DR80" "DR50"       "DR80"       "N"          "PL"         "SP"         "TS"         "TS+DR50"   
+data$drink.offence <- ifelse(data$prior_offence == "DR50", 1, 
+    0)
+[1] 103
+model3.2 <- glm(result ~ drink.offence, data = data, family = binomial)
+[1] 104
+summary(model3.2)
+[1] 105
+
+Call:
+glm(formula = result ~ drink.offence, family = binomial, data = data)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.3076   0.3803   0.6900   0.6900   0.6900  
+
+Coefficients:
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept)     1.3140     0.1718   7.649 2.02e-14 ***
+drink.offence   1.2763     0.6228   2.049   0.0404 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 237.06  on 245  degrees of freedom
+Residual deviance: 231.40  on 244  degrees of freedom
+  (4 observations deleted due to missingness)
+AIC: 235.4
+
+Number of Fisher Scoring iterations: 5
+
+anova(model3.2, test = "Chisq")
+[1] 106
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: result
+
+Terms added sequentially (first to last)
+
+
+              Df Deviance Resid. Df Resid. Dev Pr(>Chi)  
+NULL                            245     237.06           
+drink.offence  1   5.6572       244     231.40  0.01738 *
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+exp(model3.2$coefficients)
+[1] 107
+  (Intercept) drink.offence 
+     3.720930      3.583333 
+exp(confint(model3.2))
+[1] 108
+                 2.5 %    97.5 %
+(Intercept)   2.684110  5.272232
+drink.offence 1.222943 15.302642
+data$offence <- ifelse(data$prior_offence == "N", 0, 1)
+[1] 109
+model3.3 <- glm(result ~ offence, data = data, family = binomial)
+[1] 110
+summary(model3.3)
+[1] 111
+
+Call:
+glm(formula = result ~ offence, family = binomial, data = data)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.9564   0.5650   0.6681   0.6681   0.6681  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)   1.3863     0.1838   7.542 4.62e-14 ***
+offence       0.3677     0.4051   0.908    0.364    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 237.06  on 245  degrees of freedom
+Residual deviance: 236.20  on 244  degrees of freedom
+  (4 observations deleted due to missingness)
+AIC: 240.2
+
+Number of Fisher Scoring iterations: 4
+
+anova(model3.3, test = "Chisq")
+[1] 112
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: result
+
+Terms added sequentially (first to last)
+
+
+        Df Deviance Resid. Df Resid. Dev Pr(>Chi)
+NULL                      245     237.06         
+offence  1  0.86504       244     236.20   0.3523
+model4 <- glm(outcome ~ scale(age) + time + scale(speed) + scale(bac) + 
+    prior_offence, data = data, family = binomial, na.action = na.exclude)
+[1] 113
+summary(model4)
+[1] 114
+
+Call:
+glm(formula = outcome ~ scale(age) + time + scale(speed) + scale(bac) + 
+    prior_offence, family = binomial, data = data, na.action = na.exclude)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.8122  -0.2266  -0.0466  -0.0054   4.2751  
+
+Coefficients:
+                   Estimate Std. Error z value Pr(>|z|)    
+(Intercept)         -8.0574     2.3130  -3.483 0.000495 ***
+scale(age)           2.2945     0.6184   3.710 0.000207 ***
+time                -0.3978     0.7477  -0.532 0.594686    
+scale(speed)        -1.7609     0.6575  -2.678 0.007403 ** 
+scale(bac)          -1.9440     0.5112  -3.803 0.000143 ***
+prior_offenceDR50    1.2573     2.1820   0.576 0.564471    
+prior_offenceDR80    8.2601     2.9588   2.792 0.005242 ** 
+prior_offenceN       3.6696     1.9232   1.908 0.056380 .  
+prior_offencePL      1.6729    43.6332   0.038 0.969417    
+prior_offenceSP      8.8303     2.9000   3.045 0.002327 ** 
+ [ reached getOption("max.print") -- omitted 1 row ]
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 192.370  on 201  degrees of freedom
+Residual deviance:  63.269  on 191  degrees of freedom
+  (48 observations deleted due to missingness)
+AIC: 85.269
+
+Number of Fisher Scoring iterations: 15
+
+anova(model4, test = "Chisq")
+[1] 115
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: outcome
+
+Terms added sequentially (first to last)
+
+
+              Df Deviance Resid. Df Resid. Dev  Pr(>Chi)    
+NULL                            201    192.370              
+scale(age)     1   68.751       200    123.619 < 2.2e-16 ***
+time           1    2.631       199    120.988  0.104763    
+scale(speed)   1   18.623       198    102.365 1.593e-05 ***
+scale(bac)     1   18.929       197     83.436 1.357e-05 ***
+prior_offence  6   20.167       191     63.269  0.002586 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+age <- sort(unique(data$age))
+[1] 116
+df <- data.frame(age, time = c(1), speed = c(30), bac = c(0), 
+    prior_offence = c("N"))
+[1] 117
+df$prediction <- predict(model4, newdata = df, type = "response", 
+    na.action = na.exclude)
+[1] 118
+plot(df$prediction ~ age, xlab = "Ages of Drivers", ylab = "Probability of Outcome", 
+    type = "l", col = "purple", lwd = 2)
+[1] 119
+plot.data <- data.frame(age = age, prob = df$prediction)
+[1] 120
+ggplot(plot.data, aes(x = age, y = prob)) + geom_line(colour = "slateblue", 
+    lwd = 1.5) + labs(x = "Age of Driver (years)", y = "Probability of Outcome") + 
+    ggtitle("Predicted Probabilities of receiving a fine for different ages") + 
+    theme(plot.title = element_text(hjust = 0.5), text = element_text(family = "Palatino"))
+[1] 121
+levels(data$officer)
+[1] 122
+[1] "AS" "IT" "NP"
+contrasts(data$officer) <- contr.treatment(3, base = 2)
+[1] 123
+contrasts(data$officer)
+[1] 124
+   1 3
+AS 1 0
+IT 0 0
+NP 0 1
+model5 <- glm(result ~ scale(age) * officer, data = data, family = binomial)
+[1] 125
+summary(model5)
+[1] 126
+
+Call:
+glm(formula = result ~ scale(age) * officer, family = binomial, 
+    data = data)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.7179   0.0757   0.3183   0.5638   2.4075  
+
+Coefficients:
+                    Estimate Std. Error z value Pr(>|z|)    
+(Intercept)           1.6520     0.4122   4.008 6.13e-05 ***
+scale(age)           -1.0222     0.4078  -2.506   0.0122 *  
+officer1              0.8700     0.7085   1.228   0.2195    
+officer3              0.2803     0.6102   0.459   0.6459    
+scale(age):officer1  -1.5864     0.6950  -2.283   0.0225 *  
+scale(age):officer3  -0.0725     0.6004  -0.121   0.9039    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 218.83  on 216  degrees of freedom
+Residual deviance: 146.22  on 211  degrees of freedom
+  (33 observations deleted due to missingness)
+AIC: 158.22
+
+Number of Fisher Scoring iterations: 6
+
+anova(model5, test = "Chisq")
+[1] 127
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: result
+
+Terms added sequentially (first to last)
+
+
+                   Df Deviance Resid. Df Resid. Dev Pr(>Chi)    
+NULL                                 216     218.83             
+scale(age)          1   64.297       215     154.53 1.07e-15 ***
+officer             2    0.874       213     153.66   0.6461    
+scale(age):officer  2    7.434       211     146.22   0.0243 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+exp(model5$coefficients)
+[1] 128
+        (Intercept)          scale(age)            officer1            officer3 scale(age):officer1 scale(age):officer3 
+          5.2171915           0.3598091           2.3869459           1.3235649           0.2046588           0.9300678 
+data.AS <- data[data$officer == "AS", ]
+[1] 129
+model.AS <- glm(result ~ age, data = data.AS, family = binomial)
+[1] 130
+summary(model.AS)
+[1] 131
+
+Call:
+glm(formula = result ~ age, family = binomial, data = data.AS)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-2.12621   0.06196   0.12257   0.29450   2.40753  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  9.55712    2.00043   4.778 1.77e-06 ***
+age         -0.16102    0.03474  -4.635 3.57e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 106.848  on 102  degrees of freedom
+Residual deviance:  50.039  on 101  degrees of freedom
+  (14 observations deleted due to missingness)
+AIC: 54.039
+
+Number of Fisher Scoring iterations: 6
+
+anova(model.AS, test = "Chisq")
+[1] 132
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: result
+
+Terms added sequentially (first to last)
+
+
+     Df Deviance Resid. Df Resid. Dev  Pr(>Chi)    
+NULL                   102    106.848              
+age   1   56.809       101     50.039 4.803e-14 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+data.IT <- data[data$officer == "IT", ]
+[1] 133
+model.IT <- glm(result ~ age, data = data.IT, family = binomial)
+[1] 134
+summary(model.IT)
+[1] 135
+
+Call:
+glm(formula = result ~ age, family = binomial, data = data.IT)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.4283   0.3232   0.5012   0.6701   1.6286  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)   
+(Intercept)  4.40869    1.35749   3.248  0.00116 **
+age         -0.06310    0.02517  -2.506  0.01219 * 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 57.706  on 54  degrees of freedom
+Residual deviance: 49.961  on 53  degrees of freedom
+  (12 observations deleted due to missingness)
+AIC: 53.961
+
+Number of Fisher Scoring iterations: 4
+
+anova(model.IT, test = "Chisq")
+[1] 136
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: result
+
+Terms added sequentially (first to last)
+
+
+     Df Deviance Resid. Df Resid. Dev Pr(>Chi)   
+NULL                    54     57.706            
+age   1   7.7446        53     49.961 0.005387 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+data.NP <- data[data$officer == "NP", ]
+[1] 137
+model.NP <- glm(result ~ age, data = data.NP, family = binomial)
+[1] 138
+summary(model.NP)
+[1] 139
+
+Call:
+glm(formula = result ~ age, family = binomial, data = data.NP)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.7179   0.2653   0.4065   0.6138   1.1125  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)   
+(Intercept)  4.88454    1.48737   3.284  0.00102 **
+age         -0.06757    0.02719  -2.485  0.01296 * 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 53.699  on 58  degrees of freedom
+Residual deviance: 46.224  on 57  degrees of freedom
+  (9 observations deleted due to missingness)
+AIC: 50.224
+
+Number of Fisher Scoring iterations: 5
+
+anova(model.NP, test = "Chisq")
+[1] 140
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: result
+
+Terms added sequentially (first to last)
+
+
+     Df Deviance Resid. Df Resid. Dev Pr(>Chi)   
+NULL                    58     53.699            
+age   1   7.4755        57     46.224 0.006254 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

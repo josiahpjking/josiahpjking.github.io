@@ -1,0 +1,595 @@
+
+
+	####### B152019 R script #######
+
+library(ggplot2, quietly = T)
+[1] 1
+[1] "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(psych, quietly = T)
+[1] 2
+ [1] "psych"     "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(lsr, quietly = T)
+[1] 3
+ [1] "lsr"       "psych"     "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"  
+[11] "base"     
+library(car, quietly = T)
+[1] 4
+ [1] "car"       "carData"   "lsr"       "psych"     "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"    
+[11] "datasets"  "methods"   "base"     
+library(sm, quietly = T)
+[1] 5
+ [1] "sm"        "car"       "carData"   "lsr"       "psych"     "ggplot2"   "readr"     "stats"     "graphics"  "grDevices"
+[11] "utils"     "datasets"  "methods"   "base"     
+load(url("https://edin.ac/2QCZNVu"))
+[1] 6
+[1] "drinkdriving" "officer_inc" 
+drinkdriving$age[drinkdriving$age > 100] <- NA
+[1] 7
+drinkdriving$nighttime <- as.factor(drinkdriving$nighttime)
+[1] 8
+drinkdriving$nighttime[drinkdriving$nighttime == "18:25"] <- "day"
+[1] 9
+drinkdriving$nighttime[drinkdriving$nighttime == "2:05"] <- "night"
+[1] 10
+drinkdriving$nighttime <- droplevels(drinkdriving$nighttime)
+[1] 11
+drinkdriving$prior_offence <- as.factor(drinkdriving$prior_offence)
+[1] 12
+levels(drinkdriving$prior_offence)
+[1] 13
+ [1] "CD10"           "CD60"           "CD60,CD10,DR80" "CD60,CD60"      "DD20"           "DR50"           "DR80"          
+ [8] "N"              "PL10"           "SP50"           "SP60"           "TS70"           "TS70,DR50"     
+drinkdriving$speed[drinkdriving$speed == 0] <- NA
+[1] 14
+recalibrated_bac <- drinkdriving$bac/100
+[1] 15
+drinkdriving$bac <- recalibrated_bac
+[1] 16
+drinkdriving$bac[drinkdriving$bac > 0.4] <- NA
+[1] 17
+drinkdriving$outcome <- as.factor(drinkdriving$outcome)
+[1] 18
+drinkdriving$outcome[drinkdriving$outcome == "Fine"] <- "fine"
+[1] 19
+drinkdriving$outcome[drinkdriving$outcome == "FINE"] <- "fine"
+[1] 20
+drinkdriving$outcome[drinkdriving$outcome == "Warning"] <- "warning"
+[1] 21
+drinkdriving$outcome[drinkdriving$outcome == "WARNING"] <- "warning"
+[1] 22
+drinkdriving$outcome <- droplevels(drinkdriving$outcome)
+[1] 23
+drinkdriving$incident_id <- as.factor(drinkdriving$incident_id)
+[1] 24
+drinkdriving1 <- merge(drinkdriving, officer_inc, all.x = T)
+[1] 25
+m1 <- lm(bac ~ age, data = drinkdriving1)
+[1] 26
+summary(m1)
+[1] 27
+
+Call:
+lm(formula = bac ~ age, data = drinkdriving1)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.153270 -0.041824 -0.005698  0.039975  0.149487 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.2868503  0.0106949   26.82  < 2e-16 ***
+age         -0.0013730  0.0002331   -5.89 1.47e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.05791 on 216 degrees of freedom
+  (32 observations deleted due to missingness)
+Multiple R-squared:  0.1384,	Adjusted R-squared:  0.1344 
+F-statistic: 34.69 on 1 and 216 DF,  p-value: 1.469e-08
+
+plot(drinkdriving1$age, drinkdriving1$bac, xlab = "Age (Years) ", 
+    ylab = "Blood Alcohol Content (%)", main = "The Relationship Between Blood Alcohol Content and Age \n in Drivers Stopped by the Police")
+[1] 28
+abline(m1, col = "red")
+[1] 29
+par(mfrow = c(2, 2))
+[1] 30
+$mfrow
+[1] 1 1
+
+plot(m1)
+[1] 31
+par(mfrow = c(1, 1))
+[1] 32
+$mfrow
+[1] 2 2
+
+newbacdata <- data.frame(age = 50)
+[1] 33
+bac_pred_age50 <- predict(m1, newbacdata, interval = "predict")
+[1] 34
+bac_pred_age50
+
+        fit      lwr       upr
+1 0.2181983 0.103751 0.3326457
+
+
+plot(m1, which = 2)
+[1] 36
+hist(resid(m1), breaks = 16, main = "Histogram of Model Residuals")
+[1] 37
+m2 <- lm(bac ~ age + speed + nighttime, data = drinkdriving1, 
+    na.action = na.omit)
+[1] 38
+summary(m2)
+[1] 39
+
+Call:
+lm(formula = bac ~ age + speed + nighttime, data = drinkdriving1, 
+    na.action = na.omit)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.156830 -0.045752  0.004907  0.037418  0.142102 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     0.2276085  0.0274169   8.302 1.18e-14 ***
+age            -0.0010434  0.0003037  -3.435 0.000712 ***
+speed           0.0004765  0.0004118   1.157 0.248546    
+nighttimenight  0.0390848  0.0080722   4.842 2.47e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.05516 on 213 degrees of freedom
+  (33 observations deleted due to missingness)
+Multiple R-squared:  0.2291,	Adjusted R-squared:  0.2182 
+F-statistic:  21.1 on 3 and 213 DF,  p-value: 5.255e-12
+
+vif(m2)
+[1] 40
+      age     speed nighttime 
+ 1.867101  1.861283  1.007930 
+m2scaled <- lm(bac ~ scale(age) + scale(speed) + nighttime, data = drinkdriving1, 
+    na.action = na.omit)
+[1] 41
+summary(m2scaled)
+[1] 42
+
+Call:
+lm(formula = bac ~ scale(age) + scale(speed) + nighttime, data = drinkdriving1, 
+    na.action = na.omit)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.156830 -0.045752  0.004907  0.037418  0.142102 
+
+Coefficients:
+                Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     0.202450   0.006715  30.147  < 2e-16 ***
+scale(age)     -0.017497   0.005094  -3.435 0.000712 ***
+scale(speed)    0.007015   0.006063   1.157 0.248546    
+nighttimenight  0.039085   0.008072   4.842 2.47e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.05516 on 213 degrees of freedom
+  (33 observations deleted due to missingness)
+Multiple R-squared:  0.2291,	Adjusted R-squared:  0.2182 
+F-statistic:  21.1 on 3 and 213 DF,  p-value: 5.255e-12
+
+hist(resid(m2), breaks = 20)
+[1] 43
+par(mfrow = c(2, 2))
+[1] 44
+$mfrow
+[1] 1 1
+
+plot(m2)
+[1] 45
+par(mfrow = c(1, 1))
+[1] 46
+$mfrow
+[1] 2 2
+
+standardCoefs(m2)
+[1] 47
+                           b        beta
+age            -0.0010434151 -0.28238902
+speed           0.0004765215  0.09496729
+nighttimenight  0.0390847715  0.29244460
+bac_var <- anova(m2)
+[1] 48
+bac_var_sumsq <- bac_var$"Sum Sq"
+[1] 49
+print(cbind(bac_var, proportion_var_explained = bac_var_sumsq/sum(bac_var_sumsq) * 
+    100))
+[1] 50
+           Df      Sum Sq     Mean Sq   F value       Pr(>F) proportion_var_explained
+age         1 0.116769988 0.116769988 38.381701 2.962563e-09               13.8915982
+speed       1 0.004468575 0.004468575  1.468798 2.268781e-01                0.5316062
+nighttime   1 0.071324042 0.071324042 23.443849 2.470254e-06                8.4850992
+Residuals 213 0.648017339 0.003042335        NA           NA               77.0916964
+           Df      Sum Sq     Mean Sq   F value       Pr(>F) proportion_var_explained
+age         1 0.116769988 0.116769988 38.381701 2.962563e-09               13.8915982
+speed       1 0.004468575 0.004468575  1.468798 2.268781e-01                0.5316062
+nighttime   1 0.071324042 0.071324042 23.443849 2.470254e-06                8.4850992
+Residuals 213 0.648017339 0.003042335        NA           NA               77.0916964
+nightspeeds <- drinkdriving1$speed[drinkdriving$nighttime == 
+    "night"]
+[1] 51
+nightspeeds1 <- nightspeeds
+[1] 52
+nightspeeds1[nightspeeds1 > 100] <- NA
+[1] 53
+dayspeeds <- drinkdriving1$speed[drinkdriving$nighttime == "day"]
+[1] 54
+t.test(nightspeeds, dayspeeds, alternative = "two.sided", var.equal = F)
+[1] 55
+
+	Welch Two Sample t-test
+
+data:  nightspeeds and dayspeeds
+t = 0.98137, df = 143.89, p-value = 0.3281
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -2.041238  6.066899
+sample estimates:
+mean of x mean of y 
+ 41.28758  39.27475 
+
+t.test(nightspeeds1, dayspeeds, alternative = "two.sided", var.equal = F)
+[1] 56
+
+	Welch Two Sample t-test
+
+data:  nightspeeds1 and dayspeeds
+t = 0.77255, df = 133.02, p-value = 0.4412
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -2.410810  5.500976
+sample estimates:
+mean of x mean of y 
+ 40.81983  39.27475 
+
+boxplot(nightspeeds, dayspeeds, names = c("Nighttime Drivers", 
+    "Daytime Drivers"), na.rm = T, ylab = "Driving Speed", main = "Relationship Between Driving Speed and Time of Day")
+[1] 57
+drinkdriving1$clean_record <- NA
+[1] 58
+drinkdriving1$clean_record[drinkdriving1$prior_offence == "N"] <- "No prior offence"
+[1] 59
+drinkdriving1$clean_record[drinkdriving1$prior_offence != "N"] <- "Prior conviction"
+[1] 60
+m3 <- glm(outcome ~ age + nighttime + clean_record + speed + 
+    bac, data = drinkdriving1, family = "binomial")
+[1] 61
+summary(m3)
+[1] 62
+
+Call:
+glm(formula = outcome ~ age + nighttime + clean_record + speed + 
+    bac, family = "binomial", data = drinkdriving1)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.1915  -0.3899  -0.1484  -0.0360   3.6066  
+
+Coefficients:
+                              Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                    4.71798    2.23472   2.111 0.034754 *  
+age                            0.04733    0.02067   2.290 0.022015 *  
+nighttimenight                 0.14145    0.56289   0.251 0.801591    
+clean_recordPrior conviction  -0.40809    0.61427  -0.664 0.506468    
+speed                         -0.13328    0.03446  -3.868 0.000110 ***
+bac                          -19.68473    5.20751  -3.780 0.000157 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 213.24  on 216  degrees of freedom
+Residual deviance: 105.71  on 211  degrees of freedom
+  (33 observations deleted due to missingness)
+AIC: 117.71
+
+Number of Fisher Scoring iterations: 7
+
+plot(m3, which = 2)
+[1] 63
+exp(coef(m3))
+[1] 64
+                 (Intercept)                          age               nighttimenight clean_recordPrior conviction 
+                1.119418e+02                 1.048469e+00                 1.151939e+00                 6.649180e-01 
+                       speed                          bac 
+                8.752241e-01                 2.825072e-09 
+m4 <- glm(outcome ~ age + nighttime + prior_offence + speed + 
+    bac, data = drinkdriving1, family = "binomial")
+[1] 65
+summary(m4)
+[1] 66
+
+Call:
+glm(formula = outcome ~ age + nighttime + prior_offence + speed + 
+    bac, family = "binomial", data = drinkdriving1)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-3.01312  -0.19088  -0.03642  -0.00227   3.15116  
+
+Coefficients:
+                    Estimate Std. Error z value Pr(>|z|)    
+(Intercept)        -20.72464 4336.88445  -0.005 0.996187    
+age                  0.13784    0.03775   3.651 0.000261 ***
+nighttimenight       0.69721    0.77703   0.897 0.369569    
+prior_offenceCD60   46.81010 7832.83961   0.006 0.995232    
+prior_offenceDD20   28.74973 4336.88423   0.007 0.994711    
+prior_offenceDR50   20.28793 4336.88365   0.005 0.996268    
+prior_offenceDR80   27.38131 4336.88422   0.006 0.994963    
+prior_offenceN      22.88758 4336.88355   0.005 0.995789    
+prior_offencePL10   20.82835 4337.14601   0.005 0.996168    
+prior_offenceSP50   11.17934 6050.28219   0.002 0.998526    
+ [ reached getOption("max.print") -- omitted 4 rows ]
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 213.236  on 216  degrees of freedom
+Residual deviance:  62.076  on 203  degrees of freedom
+  (33 observations deleted due to missingness)
+AIC: 90.076
+
+Number of Fisher Scoring iterations: 17
+
+m5 <- glm(outcome ~ scale(speed) + scale(bac), data = drinkdriving1, 
+    family = "binomial")
+[1] 67
+summary(m5)
+[1] 68
+
+Call:
+glm(formula = outcome ~ scale(speed) + scale(bac), family = "binomial", 
+    data = drinkdriving1)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.9505  -0.4478  -0.1902  -0.0515   4.0751  
+
+Coefficients:
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept)   -2.8241     0.3676  -7.682 1.56e-14 ***
+scale(speed)  -2.1517     0.3832  -5.614 1.97e-08 ***
+scale(bac)    -1.1490     0.2734  -4.203 2.64e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 235.39  on 241  degrees of freedom
+Residual deviance: 130.04  on 239  degrees of freedom
+  (8 observations deleted due to missingness)
+AIC: 136.04
+
+Number of Fisher Scoring iterations: 6
+
+coef(m5)
+[1] 69
+ (Intercept) scale(speed)   scale(bac) 
+   -2.824060    -2.151668    -1.148996 
+drinkdriving1$soberness <- NA
+[1] 70
+drinkdriving1$soberness[drinkdriving1$prior_offence != "DR50"] <- "No drink-driving offence"
+[1] 71
+drinkdriving1$soberness[drinkdriving1$prior_offence == "DR50"] <- "Drink-driving"
+[1] 72
+drinkdriving1$soberness[drinkdriving1$prior_offence == "TS70,DR50"] <- "Drink-driving"
+[1] 73
+outcomes_soberness <- table(drinkdriving1$outcome, drinkdriving1$soberness)
+[1] 74
+outcomes_soberness
+
+         
+          Drink-driving No drink-driving offence
+  fine               40                      162
+  warning             4                       44
+
+
+plot(outcomes_soberness, main = "Outcomes and Previous Drink Driving")
+[1] 76
+chisq <- chisq.test(outcomes_soberness)
+[1] 77
+chisq
+
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  outcomes_soberness
+X-squared = 2.7712, df = 1, p-value = 0.09598
+
+
+
+chisq$observed
+[1] 79
+         
+          Drink-driving No drink-driving offence
+  fine               40                      162
+  warning             4                       44
+round(chisq$expected, 2)
+[1] 80
+         
+          Drink-driving No drink-driving offence
+  fine            35.55                   166.45
+  warning          8.45                    39.55
+outcome_clean_record <- table(drinkdriving1$outcome, drinkdriving1$clean_record)
+[1] 81
+outcome_clean_record
+
+         
+          No prior offence Prior conviction
+  fine                 148               54
+  warning               37               11
+
+
+plot(outcome_clean_record, main = "Outcomes and Prior Convictions")
+[1] 83
+chisq1 <- chisq.test(outcome_clean_record)
+[1] 84
+chisq1
+
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  outcome_clean_record
+X-squared = 0.1287, df = 1, p-value = 0.7198
+
+
+
+chisq1$observed
+[1] 86
+         
+          No prior offence Prior conviction
+  fine                 148               54
+  warning               37               11
+chisq1$expected
+[1] 87
+         
+          No prior offence Prior conviction
+  fine              149.48            52.52
+  warning            35.52            12.48
+m6 <- glm(outcome ~ age + clean_record + nighttime + speed + 
+    bac, data = drinkdriving1, family = "binomial")
+[1] 88
+summary(m6)
+[1] 89
+
+Call:
+glm(formula = outcome ~ age + clean_record + nighttime + speed + 
+    bac, family = "binomial", data = drinkdriving1)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.1915  -0.3899  -0.1484  -0.0360   3.6066  
+
+Coefficients:
+                              Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                    4.71798    2.23472   2.111 0.034754 *  
+age                            0.04733    0.02067   2.290 0.022015 *  
+clean_recordPrior conviction  -0.40809    0.61427  -0.664 0.506468    
+nighttimenight                 0.14145    0.56289   0.251 0.801591    
+speed                         -0.13328    0.03446  -3.868 0.000110 ***
+bac                          -19.68473    5.20751  -3.780 0.000157 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 213.24  on 216  degrees of freedom
+Residual deviance: 105.71  on 211  degrees of freedom
+  (33 observations deleted due to missingness)
+AIC: 117.71
+
+Number of Fisher Scoring iterations: 7
+
+newdata <- data.frame(age = c(14:90), clean_record = "No prior offence", 
+    nighttime = as.factor("day"), speed = 30, bac = 0)
+[1] 90
+newdata$model_prediction <- predict(m6, newdata, se.fit = T, 
+    type = "response")$fit
+[1] 91
+newdata
+
+  age     clean_record nighttime speed bac model_prediction
+1  14 No prior offence       day    30   0        0.7993678
+2  15 No prior offence       day    30   0        0.8068512
+3  16 No prior offence       day    30   0        0.8141204
+4  17 No prior offence       day    30   0        0.8211766
+5  18 No prior offence       day    30   0        0.8280216
+6  19 No prior offence       day    30   0        0.8346573
+7  20 No prior offence       day    30   0        0.8410861
+8  21 No prior offence       day    30   0        0.8473106
+ [ reached 'max' / getOption("max.print") -- omitted 69 rows ]
+
+
+with(newdata, plot(model_prediction ~ age, type = "l", lwd = 2, 
+    xlab = "Age (Years)", ylab = "Predicted Probabilities", main = "Predicted Probabilities of Receiving a Fine \n for Different Ages of Drivers"))
+[1] 93
+corrupt_cops.logit <- glm(formula = outcome ~ officer * age, 
+    family = "binomial", data = drinkdriving1)
+[1] 94
+summary(corrupt_cops.logit)
+[1] 95
+
+Call:
+glm(formula = outcome ~ officer * age, family = "binomial", data = drinkdriving1)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.4089  -0.5454  -0.2741  -0.0642   2.7179  
+
+Coefficients:
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept)   -9.56920    1.99554  -4.795 1.62e-06 ***
+officerIT      5.04535    2.39610   2.106   0.0352 *  
+officerNP      4.68465    2.48887   1.882   0.0598 .  
+age            0.16122    0.03466   4.652 3.29e-06 ***
+officerIT:age -0.09612    0.04254  -2.260   0.0238 *  
+officerNP:age -0.09365    0.04405  -2.126   0.0335 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 222.38  on 224  degrees of freedom
+Residual deviance: 146.41  on 219  degrees of freedom
+  (25 observations deleted due to missingness)
+AIC: 158.41
+
+Number of Fisher Scoring iterations: 7
+
+anova(corrupt_cops.logit)
+[1] 96
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: outcome
+
+Terms added sequentially (first to last)
+
+
+            Df Deviance Resid. Df Resid. Dev
+NULL                          224     222.38
+officer      2    0.356       222     222.03
+age          1   68.233       221     153.79
+officer:age  2    7.383       219     146.41
+exp(coef(corrupt_cops.logit))
+[1] 97
+  (Intercept)     officerIT     officerNP           age officerIT:age officerNP:age 
+ 6.984753e-05  1.552992e+02  1.082727e+02  1.174947e+00  9.083530e-01  9.105991e-01 
+drinkdriving2 <- na.omit(drinkdriving1)
+[1] 98
+drinkdriving2$age <- as.factor(drinkdriving2$age)
+[1] 99
+ggplot(data = drinkdriving2, mapping = aes(x = age, y = outcome, 
+    col = officer)) + geom_point() + stat_smooth(method = "glm", 
+    aes(fill = officer), alpha = 0.2) + scale_x_discrete(name = "Age", 
+    breaks = seq(10, 90, 5)) + scale_y_discrete(name = "Outcome") + 
+    theme_minimal()
+[1] 100
+AS_data <- data.frame(age = c(14:90), officer = "AS")
+[1] 101
+IT_data <- data.frame(age = c(14:90), officer = "IT")
+[1] 102
+NP_data <- data.frame(age = c(14:90), officer = "NP")
+[1] 103
+total <- rbind(AS_data, IT_data, NP_data)
+[1] 104
+total$model_prediction <- predict(corrupt_cops.logit, total, 
+    se.fit = T, type = "response")$fit
+[1] 105
+ggplot(data = total, mapping = aes(x = age, y = model_prediction, 
+    col = officer)) + geom_point() + scale_x_continuous(name = "Age") + 
+    scale_y_continuous(name = "Predicted Probabilities of \nReceiving a Warning vs. a Fine") + 
+    theme_minimal()
+[1] 106

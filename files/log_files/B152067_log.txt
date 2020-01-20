@@ -1,0 +1,318 @@
+
+
+	####### B152067 R script #######
+
+load(url("https://edin.ac/2QCZNVu"))
+[1] 1
+[1] "drinkdriving" "officer_inc" 
+drinkdriving_fix <- drinkdriving[drinkdriving$age < 95, ]
+[1] 2
+drinkdriving_fix <- drinkdriving_fix[drinkdriving_fix$nighttime != 
+    "2:05", ]
+[1] 3
+drinkdriving_fix$outcome <- tolower(drinkdriving_fix$outcome)
+[1] 4
+drinkdriving_fix <- na.omit(drinkdriving_fix)
+[1] 5
+m1 <- lm(bac ~ age, data = drinkdriving_fix)
+[1] 6
+par(mfrow = c(2, 2))
+[1] 7
+$mfrow
+[1] 1 1
+
+plot(m1, which = 1:4)
+[1] 8
+par(mfrow = c(1, 1))
+[1] 9
+$mfrow
+[1] 2 2
+
+plot(drinkdriving_fix$age, drinkdriving_fix$bac)
+[1] 10
+drinkdriving_1 <- drinkdriving_fix[!row.names(drinkdriving_fix) %in% 
+    c("154", "110", "101", "115"), ]
+[1] 11
+plot(drinkdriving_1$age, drinkdriving_1$bac)
+[1] 12
+m1 <- lm(bac ~ age, data = drinkdriving_1)
+[1] 13
+predict(m1, newdata = data.frame(age = 50))
+[1] 14
+       1 
+22.04322 
+hist(resid(m1))
+[1] 15
+par(mfrow = c(2, 2))
+[1] 16
+$mfrow
+[1] 1 1
+
+plot(m1, which = c(1:4))
+[1] 17
+model <- lm(bac ~ age + nighttime + speed, data = drinkdriving_1)
+[1] 18
+anova(model)
+[1] 19
+Analysis of Variance Table
+
+Response: bac
+           Df Sum Sq Mean Sq F value    Pr(>F)    
+age         1 1425.6 1425.64  36.755 6.136e-09 ***
+nighttime   1  563.3  563.34  14.524 0.0001818 ***
+speed       1 1022.2 1022.19  26.353 6.467e-07 ***
+Residuals 210 8145.4   38.79                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+summary(model)
+[1] 20
+
+Call:
+lm(formula = bac ~ age + nighttime + speed, data = drinkdriving_1)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-13.444  -4.587   0.080   3.834  33.149 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    14.65439    2.76153   5.307 2.83e-07 ***
+age            -0.04110    0.03260  -1.261    0.209    
+nighttimenight  3.72958    0.92254   4.043 7.42e-05 ***
+speed           0.19795    0.03856   5.134 6.47e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.228 on 210 degrees of freedom
+Multiple R-squared:  0.2699,	Adjusted R-squared:  0.2595 
+F-statistic: 25.88 on 3 and 210 DF,  p-value: 2.759e-14
+
+m2 <- lm(bac ~ nighttime, data = drinkdriving_1)
+[1] 21
+m3 <- lm(bac ~ speed, data = drinkdriving_1)
+[1] 22
+summary(m3)
+[1] 23
+
+Call:
+lm(formula = bac ~ speed, data = drinkdriving_1)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.872  -4.313  -0.546   4.194  32.882 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 14.19513    1.30152  10.907   <2e-16 ***
+speed        0.23062    0.03134   7.359    4e-12 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.474 on 212 degrees of freedom
+Multiple R-squared:  0.2035,	Adjusted R-squared:  0.1997 
+F-statistic: 54.16 on 1 and 212 DF,  p-value: 4.004e-12
+
+par(mfrow = c(1, 1))
+[1] 24
+$mfrow
+[1] 2 2
+
+plot(drinkdriving_1$speed, drinkdriving_1$bac)
+[1] 25
+boxplot(bac ~ nighttime, data = drinkdriving_1)
+[1] 26
+summary(m2)
+[1] 27
+
+Call:
+lm(formula = bac ~ nighttime, data = drinkdriving_1)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-18.994  -4.136   0.127   3.702  41.317 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     20.4740     0.8569  23.892  < 2e-16 ***
+nighttimenight   3.9725     1.0339   3.842 0.000161 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 7.014 on 212 degrees of freedom
+Multiple R-squared:  0.0651,	Adjusted R-squared:  0.06069 
+F-statistic: 14.76 on 1 and 212 DF,  p-value: 0.0001611
+
+plot(m2)
+[1] 28
+plot(m3)
+[1] 29
+boxplot(speed ~ nighttime, data = drinkdriving_1)
+[1] 30
+t.test(speed ~ nighttime, data = drinkdriving_1, var.equal = T, 
+    alternative = "greater")
+[1] 31
+
+	Two Sample t-test
+
+data:  speed by nighttime
+t = -0.27258, df = 212, p-value = 0.6073
+alternative hypothesis: true difference in means is greater than 0
+95 percent confidence interval:
+ -4.02501      Inf
+sample estimates:
+  mean in group day mean in group night 
+           38.66755            39.23759 
+
+isfine <- drinkdriving_1$outcome == "fine"
+[1] 32
+isfine <- as.numeric(isfine)
+[1] 33
+drinkdriving_2 <- drinkdriving_1
+[1] 34
+drinkdriving_2$outcome <- isfine
+[1] 35
+mymodel <- glm(outcome ~ age + nighttime + speed + bac, data = drinkdriving_2, 
+    family = binomial)
+[1] 36
+summary(mymodel)
+[1] 37
+
+Call:
+glm(formula = outcome ~ age + nighttime + speed + bac, family = binomial, 
+    data = drinkdriving_2)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-3.5050   0.0330   0.1459   0.3752   2.2715  
+
+Coefficients:
+               Estimate Std. Error z value Pr(>|z|)    
+(Intercept)    -4.39243    2.19155  -2.004 0.045043 *  
+age            -0.04799    0.02027  -2.368 0.017871 *  
+nighttimenight -0.16664    0.56728  -0.294 0.768949    
+speed           0.13561    0.03350   4.048 5.17e-05 ***
+bac             0.18448    0.05161   3.574 0.000351 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 211.94  on 213  degrees of freedom
+Residual deviance: 103.69  on 209  degrees of freedom
+AIC: 113.69
+
+Number of Fisher Scoring iterations: 7
+
+coef(mymodel)
+[1] 38
+   (Intercept)            age nighttimenight          speed            bac 
+   -4.39242525    -0.04799421    -0.16663919     0.13561398     0.18447664 
+isdd <- sapply(drinkdriving_1$prior_offence, grepl, "DR50")
+[1] 39
+isdd <- as.numeric(isdd)
+[1] 40
+drinkdriving_3 <- drinkdriving_1
+[1] 41
+drinkdriving_3$prior_offence <- isdd
+[1] 42
+mytable <- table(drinkdriving_3$prior_offence, drinkdriving_3$outcome)
+[1] 43
+chisq.test(mytable)
+[1] 44
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  mytable
+X-squared = 2.9312, df = 1, p-value = 0.08688
+
+isdd <- sapply(drinkdriving_1$prior_offence, grepl, "N")
+[1] 45
+isdd <- as.numeric(isdd)
+[1] 46
+drinkdriving_3 <- drinkdriving_1
+[1] 47
+drinkdriving_3$prior_offence <- isdd
+[1] 48
+mytable <- table(drinkdriving_3$prior_offence, drinkdriving_3$outcome)
+[1] 49
+chisq.test(mytable)
+[1] 50
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  mytable
+X-squared = 0.11695, df = 1, p-value = 0.7324
+
+drinkdriving_4 <- data.frame(age = 15:85, nighttime = factor(rep("day", 
+    each = 71)), speed = rep(30, each = 71), bac = rep(0, each = 71), 
+    prior_offence = factor(rep("NONE", each = 71)))
+[1] 51
+model_prediction <- predict(mymodel, newdata = drinkdriving_4)
+[1] 52
+model_prediction_probs <- exp(model_prediction)/(1 + exp(model_prediction))
+[1] 53
+par(mfrow = c(1, 1))
+[1] 54
+$mfrow
+[1] 1 1
+
+plot(15:85, model_prediction_probs, xlab = "Each Age Value", 
+    ylab = "Predicted Probabilities")
+[1] 55
+drinkdriving_officers <- merge(drinkdriving_1, officer_inc)
+[1] 56
+isfine <- drinkdriving_officers$outcome == "fine"
+[1] 57
+isfine <- as.numeric(isfine)
+[1] 58
+drinkdriving_officers$outcome <- isfine
+[1] 59
+table(drinkdriving_officers$officer, drinkdriving_officers$outcome)
+[1] 60
+    
+      0  1
+  AS 21 82
+  IT 11 43
+  NP 10 47
+drinkdriving_officers1 <- subset(drinkdriving_officers, officer == 
+    "AS")
+[1] 61
+drinkdriving_officers2 <- subset(drinkdriving_officers, officer == 
+    "IT")
+[1] 62
+drinkdriving_officers3 <- subset(drinkdriving_officers, officer == 
+    "NP")
+[1] 63
+drinkdriving_officers1 <- na.omit(drinkdriving_officers1)
+[1] 64
+drinkdriving_officers2 <- na.omit(drinkdriving_officers2)
+[1] 65
+drinkdriving_officers3 <- na.omit(drinkdriving_officers3)
+[1] 66
+chisq.test(drinkdriving_officers1$age, drinkdriving_officers1$outcome, 
+    simulate.p.value = TRUE)
+[1] 67
+
+	Pearson's Chi-squared test with simulated p-value (based on 2000 replicates)
+
+data:  drinkdriving_officers1$age and drinkdriving_officers1$outcome
+X-squared = 85.544, df = NA, p-value = 0.0004998
+
+chisq.test(drinkdriving_officers2$age, drinkdriving_officers2$outcome, 
+    simulate.p.value = TRUE)
+[1] 68
+
+	Pearson's Chi-squared test with simulated p-value (based on 2000 replicates)
+
+data:  drinkdriving_officers2$age and drinkdriving_officers2$outcome
+X-squared = 47.835, df = NA, p-value = 0.01349
+
+chisq.test(drinkdriving_officers3$age, drinkdriving_officers3$outcome, 
+    simulate.p.value = TRUE)
+[1] 69
+
+	Pearson's Chi-squared test with simulated p-value (based on 2000 replicates)
+
+data:  drinkdriving_officers3$age and drinkdriving_officers3$outcome
+X-squared = 53.544, df = NA, p-value = 0.003498
+

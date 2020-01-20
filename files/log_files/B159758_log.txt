@@ -1,0 +1,146 @@
+
+
+	####### B159758 R script #######
+
+install.packages("tidyverse")
+[1] 1
+library(ggplot2, quietly = T)
+[1] 2
+[1] "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(plyr, quietly = T)
+[1] 3
+ [1] "plyr"      "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(dplyr, quietly = T)
+[1] 4
+ [1] "dplyr"     "plyr"      "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"  
+[11] "base"     
+library(tidyr, quietly = T)
+[1] 5
+ [1] "tidyr"     "dplyr"     "plyr"      "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets" 
+[11] "methods"   "base"     
+load(url("https://edin.ac/2QCZNVu"))
+[1] 6
+[1] "drinkdriving" "officer_inc" 
+plot(drinkdriving$age)
+[1] 7
+summary(drinkdriving)
+[1] 8
+      age          nighttime         prior_offence          speed             bac           outcome          incident_id       
+ Min.   : 14.00   Length:250         Length:250         Min.   :  0.00   Min.   : 3.987   Length:250         Length:250        
+ 1st Qu.: 30.00   Class :character   Class :character   1st Qu.: 30.92   1st Qu.:19.264   Class :character   Class :character  
+ Median : 40.50   Mode  :character   Mode  :character   Median : 40.64   Median :23.609   Mode  :character   Mode  :character  
+ Mean   : 46.00                                         Mean   : 40.49   Mean   :23.605                                        
+ 3rd Qu.: 55.25                                         3rd Qu.: 48.84   3rd Qu.:27.898                                        
+ Max.   :297.00                                         Max.   :120.34   Max.   :65.764                                        
+ NA's   :22                                                              NA's   :5                                             
+head(drinkdriving)
+[1] 9
+# A tibble: 6 x 7
+    age nighttime prior_offence speed   bac outcome incident_id
+  <dbl> <chr>     <chr>         <dbl> <dbl> <chr>   <chr>      
+1    39 night     N             48.0   17.7 fine    inc_1      
+2    28 day       N             43.8   22.1 fine    inc_2      
+3    38 night     DR50          47.3   32.8 fine    inc_3      
+4    51 night     N             17.2   20.5 warning inc_4      
+5    56 night     N              1.95  29.4 warning inc_5      
+6    36 day       N             41.4   19.1 fine    inc_6      
+drinkdriving$incident_id
+[1] 10
+ [1] "inc_1"  "inc_2"  "inc_3"  "inc_4"  "inc_5"  "inc_6"  "inc_7"  "inc_8"  "inc_9"  "inc_10" "inc_11" "inc_12" "inc_13" "inc_14"
+[15] "inc_15" "inc_16" "inc_17" "inc_18" "inc_19" "inc_20" "inc_21" "inc_22" "inc_23" "inc_24" "inc_25" "inc_26" "inc_27" "inc_28"
+[29] "inc_29" "inc_30" "inc_31" "inc_32" "inc_33" "inc_34" "inc_35" "inc_36" "inc_37" "inc_38" "inc_39" "inc_40" "inc_41" "inc_42"
+[43] "inc_43" "inc_44" "inc_45" "inc_46" "inc_47" "inc_48" "inc_49" "inc_50"
+ [ reached getOption("max.print") -- omitted 200 entries ]
+drinkdriving$age
+[1] 11
+ [1] 39 28 38 51 56 36 81 49 32 60 28 41 23 35 39 47 NA 43 34 48 33 NA 65 21 46 16 53 52 50 66 59 69 41 53 34 66 28 70 47 55 52 54 39
+[44] 57 31 39 23 28 55 15
+ [ reached getOption("max.print") -- omitted 200 entries ]
+analyse <- drinkdriving %>% filter(age < 100 | is.na(age)) %>% 
+    mutate(age = replace_na(age, mean(age, na.rm = TRUE))) %>% 
+    mutate(bac = replace_na(bac, mean(bac, na.rm = TRUE))) %>% 
+    mutate(nighttime = replace(nighttime, nighttime == "18:25", 
+        "night")) %>% mutate(nighttime = replace(nighttime, nighttime == 
+    "2:05", "day")) %>% mutate(outcome = replace(outcome, outcome == 
+    "WARNING", "warning")) %>% mutate(outcome = replace(outcome, 
+    outcome == "FINE", "fine")) %>% mutate(outcome = replace(outcome, 
+    outcome == "Fine", "fine")) %>% mutate(outcome = replace(outcome, 
+    outcome == "Warning", "warning"))
+[1] 12
+analyse$outcomes <- ifelse(analyse$outcome == "warning", 1, 0)
+[1] 13
+analyse$prior_drunk <- ifelse(analyse$prior_offence == "DR50", 
+    1, 0)
+[1] 14
+analyse$priors <- ifelse(analyse$prior_offence != "N", 1, 0)
+[1] 15
+m1 <- lm(bac ~ age, data = analyse)
+[1] 16
+plot(m1)
+[1] 17
+speed1 <- lm(bac ~ age + speed, data = analyse)
+[1] 18
+time <- lm(bac ~ age + nighttime, data = analyse)
+[1] 19
+summary(time)
+[1] 20
+
+Call:
+lm(formula = bac ~ age + nighttime, data = analyse)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-17.396  -4.655   0.043   3.646  40.915 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     26.8831     1.3929  19.300  < 2e-16 ***
+age             -0.1334     0.0265  -5.033 9.39e-07 ***
+nighttimenight   3.8342     0.9104   4.212 3.57e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.636 on 244 degrees of freedom
+Multiple R-squared:  0.159,	Adjusted R-squared:  0.1521 
+F-statistic: 23.07 on 2 and 244 DF,  p-value: 6.676e-10
+
+m2 <- lm(bac ~ age + speed + nighttime + speed * nighttime, data = analyse)
+[1] 21
+m3 <- glm(as.factor(outcome) ~ bac + speed + age + nighttime, 
+    data = analyse, family = binomial)
+[1] 22
+plot(m3)
+[1] 23
+drink <- glm(as.factor(outcome) ~ prior_drunk, data = analyse, 
+    family = binomial)
+[1] 24
+driving <- glm(as.factor(outcome) ~ priors, data = analyse, family = binomial)
+[1] 25
+aged <- data.frame(age = 1:100, nighttime = "day", bac = 0, prior_offence = "N")
+[1] 26
+prediction <- exp(coef(m3)[1] + 30 * coef(m3)[3] + aged$Age * 
+    coef(m3)[4])
+[1] 27
+aged$predictions <- 1 - (prediction/(1 + prediction))
+[1] 28
+
+
+####################################################################################################
+
+[1] "Error in `$<-.data.frame`(`*tmp*`, predictions, value = numeric(0)) : \n  replacement has 0 rows, data has 100\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in `$<-.data.frame`(`*tmp*`, predictions, value = numeric(0)): replacement has 0 rows, data has 100>
+####################################################################################################
+
+
+ggplot(aged, aes(Age, predictions)) + geom_line(col = "#000099", 
+    size = 1.5) + labs(title = "Probability of recieving a Fine predicted by Age", 
+    y = "Predicted Probabilty") + theme_gray()
+[1] 29
+Q5 <- analyse %>% merge(officer_inc, by = "incident_id") %>% 
+    filter(officer != "<NA>")
+[1] 30
+m5 <- glm(as.factor(outcome) ~ officer * age, data = Q5, family = binomial)
+[1] 31

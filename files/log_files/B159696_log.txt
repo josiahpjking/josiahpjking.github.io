@@ -1,0 +1,283 @@
+
+
+	####### B159696 R script #######
+
+library(ggplot2, quietly = T)
+[1] 1
+[1] "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(car, quietly = T)
+[1] 2
+ [1] "car"       "carData"   "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"  
+[11] "base"     
+library(plyr, quietly = T)
+[1] 3
+ [1] "plyr"      "car"       "carData"   "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets" 
+[11] "methods"   "base"     
+library(plotly, quietly = T)
+[1] 4
+ [1] "plotly"    "plyr"      "car"       "carData"   "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"    
+[11] "datasets"  "methods"   "base"     
+is_orthogonal <- function(factors) {
+    if (sum(apply(contrasts(factors), 1, prod)) == 0) 
+        return(TRUE)
+    else return(FALSE)
+}
+[1] 5
+load(url("https://edin.ac/2QCZNVu"))
+[1] 6
+[1] "drinkdriving" "officer_inc" 
+drinkdriving[sapply(drinkdriving, is.character)] <- lapply(drinkdriving[sapply(drinkdriving, 
+    is.character)], as.factor)
+[1] 7
+drinkdriving <- within(drinkdriving, {
+    age[age > 100] <- NA
+    nighttime[nighttime != "day" & nighttime != "night"] <- NA
+    prior_offence[prior_offence == "DD20"] <- NA
+    speed[speed == 0] <- NA
+    bac[bac > 40] <- NA
+    levels(outcome) <- tolower(levels(outcome))
+})
+[1] 8
+drinkdriving <- droplevels(drinkdriving)
+[1] 9
+drinkdriving$speed[drinkdriving$speed > 120] <- NA
+[1] 10
+paste(c(sum(is.na(drinkdriving)), "data points were deleted"), 
+    collapse = " ")
+[1] 11
+[1] "41 data points were deleted"
+m1 <- lm(bac ~ age, data = drinkdriving)
+[1] 12
+plot(m1, which = c(1:4))
+[1] 13
+drinkdriving_Q1 <- drinkdriving[, c(1, 5)] %>% filter(!is.na(age) & 
+    !is.na(bac)) %>% mutate(scaled_age = I(age - mean(age, na.rm = T)))
+[1] 14
+mean_age <- mean(drinkdriving_Q1$age)
+[1] 15
+m1.s <- lm(bac ~ scaled_age, data = drinkdriving_Q1)
+[1] 16
+lm_equation <- paste0("bac ~ ", round(coef(m1.s)[1], 2), round(coef(m1.s)[2], 
+    2), "x")
+[1] 17
+bac_by_age <- drinkdriving_Q1 %>% plot_ly(x = ~scaled_age, hoverinfo = "text", 
+    text = ~paste("age:", age, "bac:", round(bac, 2))) %>% layout(xaxis = list(rangemode = "tozero", 
+    title = "age (years)", tickvals = c(-20, 0, 20), ticktext = lapply(c(mean_age - 
+        20, mean_age, mean_age + 20), round)), yaxis = list(rangemode = "tozero", 
+    title = "blood alcohol content (%)")) %>% add_markers(y = ~bac, 
+    showlegend = F) %>% add_trace(x = ~scaled_age, y = fitted(m1.s), 
+    mode = "lines", type = "scatter") %>% add_annotations(x = 30, 
+    y = 19, text = lm_equation, showarrow = TRUE, arrowhead = 4, 
+    arrowsize = 0.5, ax = 30, ay = -30)
+[1] 18
+from_age <- data.frame(scaled_age = 50 - mean_age)
+[1] 19
+paste(c("Predicted blood alcohol content for a", from_age + mean_age, 
+    "year old driver:", round(as.numeric(predict(m1.s, newdata = from_age)), 
+        2), "%"), collapse = " ")
+[1] 20
+[1] "Predicted blood alcohol content for a 50 year old driver: 21.82 %"
+hist_residuals <- plot_ly(x = ~rstandard(m1.s), type = "histogram", 
+    xbins = list(start = -3, size = 0.25, end = 3)) %>% layout(xaxis = list(title = "standardised residuals"), 
+    yaxis = list(title = "frequency"), bargap = 0.03)
+[1] 21
+m2_speed <- lm(bac ~ age + speed, data = drinkdriving)
+[1] 22
+sqrt(vif(mod = m2_speed))
+[1] 23
+     age    speed 
+1.364201 1.364201 
+anova(m2_speed)
+[1] 24
+Analysis of Variance Table
+
+Response: bac
+           Df Sum Sq Mean Sq F value    Pr(>F)    
+age         1 1167.7 1167.70 34.7384 1.452e-08 ***
+speed       1   44.7   44.69  1.3294    0.2502    
+Residuals 214 7193.4   33.61                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+paste(c(round(summary(m2_speed)$adj.r.squared - summary(m1)$adj.r.squared, 
+    4), "increase in adjusted r squared"), collapse = " ")
+[1] 25
+[1] "0.0019 increase in adjusted r squared"
+bac_by_age_speed <- plot_ly(x = drinkdriving$age, y = drinkdriving$speed, 
+    z = drinkdriving$bac, hoverinfo = "text", text = ~paste("age:", 
+        drinkdriving$age, "<br>speed:", round(drinkdriving$speed, 
+            2), "<br>bac:", round(drinkdriving$bac, 2)), type = "scatter3d", 
+    mode = "markers", color = drinkdriving$age) %>% layout(title = "Blood alcohol content by age and speed", 
+    scene = list(xaxis = list(title = "age (years)"), yaxis = list(title = "speed (mph)"), 
+        zaxis = list(title = "bac (%)")))
+[1] 26
+m2_day <- lm(bac ~ age + nighttime, data = drinkdriving)
+[1] 27
+names(m2_day$coefficients)[3] <- c("night")
+[1] 28
+vif(mod = m2_day)
+[1] 29
+      age nighttime 
+ 1.007883  1.007883 
+anova(m2_day)
+[1] 30
+Analysis of Variance Table
+
+Response: bac
+           Df Sum Sq Mean Sq F value    Pr(>F)    
+age         1 1300.0 1299.99  44.298 2.349e-10 ***
+nighttime   1  697.3  697.27  23.760 2.131e-06 ***
+Residuals 213 6250.8   29.35                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+paste(c(round(summary(m2_day)$adj.r.squared - summary(m1)$adj.r.squared, 
+    4), "increase in adjusted r squared"), collapse = " ")
+[1] 31
+[1] "0.1007 increase in adjusted r squared"
+paste("Variance accounted for by age and speed:", round(summary(m2_speed)$r.squared * 
+    100, 2), "%", collapse = " ")
+[1] 32
+[1] "Variance accounted for by age and speed: 14.42 %"
+paste("Variance accounted for by age and time of day:", round(summary(m2_day)$r.squared * 
+    100, 2), "%", collapse = " ")
+[1] 33
+[1] "Variance accounted for by age and time of day: 24.22 %"
+with(drinkdriving, leveneTest(speed, nighttime))
+[1] 34
+Levene's Test for Homogeneity of Variance (center = median)
+       Df F value  Pr(>F)  
+group   1   6.202 0.01343 *
+      243                  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+with(drinkdriving, shapiro.test(speed))
+[1] 35
+
+	Shapiro-Wilk normality test
+
+data:  speed
+W = 0.99666, p-value = 0.8816
+
+c_tendency_by_nighttime <- ddply(drinkdriving, "nighttime", summarise, 
+    N = sum(!is.na(speed)), group_mean = mean(speed, na.rm = T), 
+    group_sd = sd(speed, na.rm = T), group_median = median(speed, 
+        na.rm = T))
+[1] 36
+t.test(speed ~ nighttime, data = drinkdriving, var.equal = F)
+[1] 37
+
+	Welch Two Sample t-test
+
+data:  speed by nighttime
+t = -1.6636, df = 192.84, p-value = 0.09782
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -6.2142330  0.5276782
+sample estimates:
+  mean in group day mean in group night 
+           38.25278            41.09606 
+
+speed_by_nighttime <- plot_ly(y = drinkdriving$speed, type = "box", 
+    color = drinkdriving$nighttime, colors = c(rgb(1, 0.7, 0.28), 
+        rgb(0.4, 0.57, 0.77))) %>% layout(title = "Speed by time of day", 
+    yaxis = list(title = "speed (mph)"), legend = list(x = 100, 
+        y = 0.5))
+[1] 38
+drinkdriving_Q3 <- within(drinkdriving, {
+    fine <- ifelse(drinkdriving$outcome == "fine", 1, 0)
+    offence <- ifelse(drinkdriving$prior_offence == "N", 0, 1)
+    dui <- ifelse(drinkdriving$prior_offence == "N", NA, ifelse(grepl("DR50", 
+        drinkdriving$prior_offence, fixed = TRUE), 1, 0))
+})
+[1] 39
+m3 <- glm(fine ~ scale(speed) + scale(bac) + offence + nighttime + 
+    scale(age), data = drinkdriving_Q3, family = binomial)
+[1] 40
+anova(m3, test = "Chisq")
+[1] 41
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: fine
+
+Terms added sequentially (first to last)
+
+
+             Df Deviance Resid. Df Resid. Dev  Pr(>Chi)    
+NULL                           210    204.925              
+scale(speed)  1   82.147       209    122.778 < 2.2e-16 ***
+scale(bac)    1   28.811       208     93.967 7.981e-08 ***
+offence       1    2.556       207     91.412  0.109908    
+nighttime     1    0.441       206     90.970  0.506423    
+scale(age)    1    9.518       205     81.452  0.002034 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+exp(coef(m3))
+[1] 42
+   (Intercept)   scale(speed)     scale(bac)        offence nighttimenight     scale(age) 
+    45.4050532      8.4486417      4.6969892      3.1684192      0.9318705      0.2854208 
+m3_dui <- glm(fine ~ scale(speed) + scale(bac) + dui + nighttime, 
+    data = drinkdriving_Q3, family = binomial)
+[1] 43
+summary(m3_dui)$coefficients[4, ]
+[1] 44
+  Estimate Std. Error    z value   Pr(>|z|) 
+2.35875613 1.02225349 2.30740823 0.02103207 
+summary(m3)$coefficients[4, ]
+[1] 45
+  Estimate Std. Error    z value   Pr(>|z|) 
+ 1.1532328  0.7769610  1.4842866  0.1377329 
+m4 <- glm(fine ~ speed + bac + offence + age + nighttime, data = drinkdriving_Q3, 
+    family = binomial)
+[1] 46
+min = 14
+[1] 47
+max = 90
+[1] 48
+constants <- data.frame(age = rep(min:max), nighttime = rep("day", 
+    length(min:max)), speed = rep(30, length(min:max)), bac = rep(0, 
+    length(min:max)), offence = rep(0, length(min:max)))
+[1] 49
+constants$pred <- predict(m4, newdata = constants, type = "response")
+[1] 50
+fine_by_age <- plot_ly(data = constants, x = ~age, y = ~pred, 
+    mode = "markers", type = "scatter", marker = list(color = ~pred, 
+        colorscale = "YlOrRd", reversescale = T, colorbar = list(title = "probability", 
+            len = 0.5)), hoverinfo = "text", text = ~paste("age:", 
+        constants$age, "<br>P(fine):", round(constants$pred, 
+            3))) %>% layout(xaxis = list(title = "age"), yaxis = list(title = "P(fine)"))
+[1] 51
+drinkdriving_Q5 <- merge(drinkdriving_Q3, officer_inc, all = T) %>% 
+    subset(select = c(-8, -9))
+[1] 52
+contrasts(drinkdriving_Q5$officer) <- cbind(AS_NPvIT = c(-1/3, 
+    2/3, -1/3), ASvNP = c(1/2, 0, -1/2))
+[1] 53
+is_orthogonal(drinkdriving_Q5$officer)
+[1] 54
+[1] TRUE
+m5 <- glm(fine ~ age * officer, data = drinkdriving_Q5, family = binomial)
+[1] 55
+exp(coef(m5))
+[1] 56
+        (Intercept)                 age     officerAS_NPvIT        officerASvNP age:officerAS_NPvIT    age:officerASvNP 
+       558.83832460          0.90668049          0.06700239        108.27274025          1.05053118          0.91059908 
+drinkdriving_Q5$binned_speed <- cut(drinkdriving_Q5$speed, breaks = 3)
+[1] 57
+speed_by_officer <- xtabs(~officer + binned_speed, drinkdriving_Q5)
+[1] 58
+chisq.test(speed_by_officer)
+[1] 59
+
+	Pearson's Chi-squared test
+
+data:  speed_by_officer
+X-squared = 4.7208, df = 4, p-value = 0.3172
+
+fine_by_age_officer <- plot_ly(x = drinkdriving_Q5$age, y = drinkdriving_Q5$officer, 
+    z = drinkdriving_Q5$fine, hoverinfo = "text", text = ~paste("age:", 
+        drinkdriving_Q5$age, "<br>speed:", drinkdriving_Q5$officer), 
+    type = "scatter3d", mode = "markers", color = drinkdriving_Q5$officer) %>% 
+    layout(title = "Fine by officer", scene = list(xaxis = list(title = "age"), 
+        yaxis = list(title = "officer"), zaxis = list(title = "P(fine)")))
+[1] 60

@@ -1,0 +1,714 @@
+
+
+	####### B149849 R script #######
+
+install.packages("lsr")
+[1] 1
+install.packages("psych")
+[1] 2
+library(lsr, quietly = T)
+[1] 3
+[1] "lsr"       "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(psych, quietly = T)
+[1] 4
+ [1] "psych"     "lsr"       "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+load(url("https://edin.ac/2QCZNVu"))
+[1] 5
+[1] "drinkdriving" "officer_inc" 
+describe(drinkdriving)
+[1] 6
+               vars   n mean    sd median trimmed   mad min  max range skew kurtosis   se
+age               1 228   46 33.35   40.5   42.34 18.53  14  297   283  5.5    38.49 2.21
+nighttime*        2 250  NaN    NA     NA     NaN    NA Inf -Inf  -Inf   NA       NA   NA
+prior_offence*    3 250  NaN    NA     NA     NaN    NA Inf -Inf  -Inf   NA       NA   NA
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+summary(drinkdriving)
+[1] 7
+      age          nighttime         prior_offence          speed             bac           outcome          incident_id       
+ Min.   : 14.00   Length:250         Length:250         Min.   :  0.00   Min.   : 3.987   Length:250         Length:250        
+ 1st Qu.: 30.00   Class :character   Class :character   1st Qu.: 30.92   1st Qu.:19.264   Class :character   Class :character  
+ Median : 40.50   Mode  :character   Mode  :character   Median : 40.64   Median :23.609   Mode  :character   Mode  :character  
+ Mean   : 46.00                                         Mean   : 40.49   Mean   :23.605                                        
+ 3rd Qu.: 55.25                                         3rd Qu.: 48.84   3rd Qu.:27.898                                        
+ Max.   :297.00                                         Max.   :120.34   Max.   :65.764                                        
+ NA's   :22                                                              NA's   :5                                             
+drinkdriving$bac <- drinkdriving$bac/100
+[1] 8
+drinkdriving$speed_kmh <- drinkdriving$speed/1.609344
+[1] 9
+colnames(drinkdriving)[4] <- "speed_mph"
+[1] 10
+drinkdriving$age[drinkdriving$age > 122] <- NA
+[1] 11
+drinkdriving$nighttime <- as.factor(drinkdriving$nighttime)
+[1] 12
+levels(drinkdriving$nighttime) <- c("day", "night", "day", "night")
+[1] 13
+drinkdriving$prior_offence <- as.factor(drinkdriving$prior_offence)
+[1] 14
+summary(drinkdriving$prior_offence)
+[1] 15
+          CD10           CD60 CD60,CD10,DR80      CD60,CD60           DD20           DR50           DR80              N           PL10 
+             2              1              1              1              4             43              4            185              2 
+          SP50           SP60           TS70      TS70,DR50 
+             2              1              3              1 
+levels(drinkdriving$prior_offence) <- c("CD", "CD", "MULTIPLE", 
+    "CD", NA, "DR50", "DR80", "N", "PL", "SP", "SP", "TS", "MULTIPLE")
+[1] 16
+summary(drinkdriving$prior_offence)
+[1] 17
+      CD MULTIPLE     DR50     DR80        N       PL       SP       TS     NA's 
+       4        2       43        4      185        2        3        3        4 
+drinkdriving$outcome <- as.factor(drinkdriving$outcome)
+[1] 18
+levels(drinkdriving$outcome)[1:3] <- "fine"
+[1] 19
+levels(drinkdriving$outcome)[2:4] <- "warning"
+[1] 20
+drinkdriving <- merge(drinkdriving, officer_inc, by = "incident_id")
+[1] 21
+drinkdriving$officer <- as.factor(drinkdriving$officer)
+[1] 22
+summary(drinkdriving$officer)
+[1] 23
+  AS   IT   NP NA's 
+ 116   66   67    1 
+describe(drinkdriving)
+[1] 24
+             vars   n  mean    sd median trimmed   mad min  max range  skew kurtosis   se
+incident_id*    1 250   NaN    NA     NA     NaN    NA Inf -Inf  -Inf    NA       NA   NA
+age             2 225 42.68 16.77     40   41.93 17.79  14   90    76  0.40    -0.52 1.12
+nighttime*      3 250  1.68  0.47      2    1.73  0.00   1    2     1 -0.79    -1.39 0.03
+ [ reached 'max' / getOption("max.print") -- omitted 6 rows ]
+summary(drinkdriving)
+[1] 25
+ incident_id             age        nighttime   prior_offence   speed_mph           bac             outcome      speed_kmh    
+ Length:250         Min.   :14.00   day  : 79   N      :185   Min.   :  0.00   Min.   :0.03987   fine   :202   Min.   : 0.00  
+ Class :character   1st Qu.:30.00   night:171   DR50   : 43   1st Qu.: 30.92   1st Qu.:0.19264   warning: 48   1st Qu.:19.21  
+ Mode  :character   Median :40.00               CD     :  4   Median : 40.64   Median :0.23609                 Median :25.25  
+                    Mean   :42.68               DR80   :  4   Mean   : 40.49   Mean   :0.23605                 Mean   :25.16  
+                    3rd Qu.:55.00               SP     :  3   3rd Qu.: 48.84   3rd Qu.:0.27898                 3rd Qu.:30.35  
+ officer   
+ AS  :116  
+ IT  : 66  
+ NP  : 67  
+ NA's:  1  
+           
+ [ reached getOption("max.print") -- omitted 2 rows ]
+par(mfrow = c(3, 2))
+[1] 26
+$mfrow
+[1] 1 3
+
+hist(drinkdriving$age)
+[1] 27
+hist(drinkdriving$speed_kmh)
+[1] 28
+hist(drinkdriving$bac)
+[1] 29
+plot(drinkdriving$nighttime)
+[1] 30
+plot(drinkdriving$outcome)
+[1] 31
+plot(drinkdriving$officer)
+[1] 32
+m1 <- lm(bac ~ age, data = drinkdriving)
+[1] 33
+summary(m1)
+[1] 34
+
+Call:
+lm(formula = bac ~ age, data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.15719 -0.04516 -0.00861  0.03849  0.42785 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.2929455  0.0125564  23.330  < 2e-16 ***
+age         -0.0014353  0.0002741  -5.236 3.86e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.0682 on 218 degrees of freedom
+  (30 observations deleted due to missingness)
+Multiple R-squared:  0.1117,	Adjusted R-squared:  0.1076 
+F-statistic: 27.41 on 1 and 218 DF,  p-value: 3.863e-07
+
+par(mfrow = c(2, 2))
+[1] 35
+$mfrow
+[1] 3 2
+
+plot(m1)
+[1] 36
+par(mfrow = c(1, 1))
+[1] 37
+$mfrow
+[1] 2 2
+
+plot(drinkdriving$age, drinkdriving$bac, main = "BAC predicted by age", 
+    xlab = "age in years", ylab = "BAC in %")
+[1] 38
+abline(m1, col = "red")
+[1] 39
+coef(m1)[1] + 50 * coef(m1)[2]
+[1] 40
+(Intercept) 
+  0.2211824 
+par(mfrow = c(2, 2))
+[1] 41
+$mfrow
+[1] 1 1
+
+plot(m1)
+[1] 42
+m2 <- lm(bac ~ age + speed_kmh, data = drinkdriving)
+[1] 43
+m3 <- lm(bac ~ age + nighttime, data = drinkdriving)
+[1] 44
+m4 <- lm(bac ~ age * speed_kmh, data = drinkdriving)
+[1] 45
+m5 <- lm(bac ~ age * nighttime, data = drinkdriving)
+[1] 46
+m6 <- lm(bac ~ age + nighttime + speed_kmh, data = drinkdriving)
+[1] 47
+m7 <- lm(bac ~ age * nighttime * speed_kmh, data = drinkdriving)
+[1] 48
+summary(m1)
+[1] 49
+
+Call:
+lm(formula = bac ~ age, data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.15719 -0.04516 -0.00861  0.03849  0.42785 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.2929455  0.0125564  23.330  < 2e-16 ***
+age         -0.0014353  0.0002741  -5.236 3.86e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.0682 on 218 degrees of freedom
+  (30 observations deleted due to missingness)
+Multiple R-squared:  0.1117,	Adjusted R-squared:  0.1076 
+F-statistic: 27.41 on 1 and 218 DF,  p-value: 3.863e-07
+
+summary(m2)
+[1] 50
+
+Call:
+lm(formula = bac ~ age + speed_kmh, data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.15970 -0.04446 -0.00690  0.04282  0.34575 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.1749660  0.0272820   6.413 8.78e-10 ***
+age         -0.0004303  0.0003344  -1.287      0.2    
+speed_kmh    0.0030956  0.0006433   4.812 2.80e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.06497 on 217 degrees of freedom
+  (30 observations deleted due to missingness)
+Multiple R-squared:  0.1973,	Adjusted R-squared:  0.1899 
+F-statistic: 26.68 on 2 and 217 DF,  p-value: 4.384e-11
+
+summary(m3)
+[1] 51
+
+Call:
+lm(formula = bac ~ age + nighttime, data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.16676 -0.04765  0.00061  0.03480  0.41603 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     0.2644185  0.0142796  18.517  < 2e-16 ***
+age            -0.0013542  0.0002668  -5.076 8.27e-07 ***
+nighttimenight  0.0367726  0.0096063   3.828 0.000169 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.06616 on 217 degrees of freedom
+  (30 observations deleted due to missingness)
+Multiple R-squared:  0.1679,	Adjusted R-squared:  0.1602 
+F-statistic: 21.89 on 2 and 217 DF,  p-value: 2.187e-09
+
+summary(m4)
+[1] 52
+
+Call:
+lm(formula = bac ~ age * speed_kmh, data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.15917 -0.04396 -0.00612  0.04338  0.34778 
+
+Coefficients:
+                Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    1.654e-01  4.022e-02   4.113 5.55e-05 ***
+age           -2.126e-04  7.508e-04  -0.283   0.7773    
+speed_kmh      3.503e-03  1.412e-03   2.481   0.0139 *  
+age:speed_kmh -1.018e-05  3.142e-05  -0.324   0.7462    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.06511 on 216 degrees of freedom
+  (30 observations deleted due to missingness)
+Multiple R-squared:  0.1977,	Adjusted R-squared:  0.1866 
+F-statistic: 17.74 on 3 and 216 DF,  p-value: 2.474e-10
+
+summary(m5)
+[1] 53
+
+Call:
+lm(formula = bac ~ age * nighttime, data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.17333 -0.04684 -0.00026  0.03103  0.41517 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(>|t|)    
+(Intercept)         0.2933010  0.0209750  13.983  < 2e-16 ***
+age                -0.0020022  0.0004363  -4.589 7.54e-06 ***
+nighttimenight     -0.0079602  0.0257489  -0.309   0.7575    
+age:nighttimenight  0.0010280  0.0005495   1.871   0.0627 .  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.06578 on 216 degrees of freedom
+  (30 observations deleted due to missingness)
+Multiple R-squared:  0.1812,	Adjusted R-squared:  0.1698 
+F-statistic: 15.93 on 3 and 216 DF,  p-value: 2.159e-09
+
+summary(m6)
+[1] 54
+
+Call:
+lm(formula = bac ~ age + nighttime + speed_kmh, data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.13291 -0.04650  0.00136  0.03971  0.33088 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     0.1415205  0.0274426   5.157 5.67e-07 ***
+age            -0.0003148  0.0003233  -0.974    0.331    
+nighttimenight  0.0384615  0.0090937   4.229 3.46e-05 ***
+speed_kmh       0.0031903  0.0006201   5.145 6.00e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.06258 on 216 degrees of freedom
+  (30 observations deleted due to missingness)
+Multiple R-squared:  0.2587,	Adjusted R-squared:  0.2484 
+F-statistic: 25.13 on 3 and 216 DF,  p-value: 5.5e-14
+
+summary(m7)
+[1] 55
+
+Call:
+lm(formula = bac ~ age * nighttime * speed_kmh, data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.15152 -0.04215  0.00263  0.03654  0.36045 
+
+Coefficients:
+                               Estimate Std. Error t value Pr(>|t|)   
+(Intercept)                   2.559e-02  6.201e-02   0.413  0.68023   
+age                           8.086e-05  1.180e-03   0.069  0.94545   
+nighttimenight                1.774e-01  7.868e-02   2.254  0.02519 * 
+speed_kmh                     6.402e-03  2.201e-03   2.908  0.00402 **
+age:nighttimenight           -3.037e-04  1.491e-03  -0.204  0.83879   
+age:speed_kmh                 2.217e-05  6.170e-05   0.359  0.71975   
+nighttimenight:speed_kmh     -4.139e-03  2.777e-03  -1.491  0.13755   
+age:nighttimenight:speed_kmh -2.664e-05  7.142e-05  -0.373  0.70948   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.06108 on 212 degrees of freedom
+  (30 observations deleted due to missingness)
+Multiple R-squared:  0.3071,	Adjusted R-squared:  0.2842 
+F-statistic: 13.42 on 7 and 212 DF,  p-value: 2.583e-14
+
+plot(m2)
+[1] 56
+plot(m3)
+[1] 57
+plot(m4)
+[1] 58
+plot(m5)
+[1] 59
+plot(m6)
+[1] 60
+plot(m7)
+[1] 61
+drinkdriving$bac[drinkdriving$bac > 0.5] <- NA
+[1] 62
+m2.2 <- lm(bac ~ age + speed_kmh, data = drinkdriving)
+[1] 63
+m3.2 <- lm(bac ~ age + nighttime, data = drinkdriving)
+[1] 64
+m4.2 <- lm(bac ~ age * speed_kmh, data = drinkdriving)
+[1] 65
+m5.2 <- lm(bac ~ age * nighttime, data = drinkdriving)
+[1] 66
+m6.2 <- lm(bac ~ age + nighttime + speed_kmh, data = drinkdriving)
+[1] 67
+m7.2 <- lm(bac ~ age * nighttime * speed_kmh, data = drinkdriving)
+[1] 68
+plot(m2.2)
+[1] 69
+plot(m3.2)
+[1] 70
+plot(m4.2)
+[1] 71
+plot(m5.2)
+[1] 72
+plot(m6.2)
+[1] 73
+plot(m7.2)
+[1] 74
+summary(m6.2)
+[1] 75
+
+Call:
+lm(formula = bac ~ age + nighttime + speed_kmh, data = drinkdriving)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.157811 -0.046224  0.005195  0.037225  0.142190 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     0.2299435  0.0268293   8.571 2.06e-15 ***
+age            -0.0010600  0.0003007  -3.525 0.000518 ***
+nighttimenight  0.0392649  0.0080461   4.880 2.07e-06 ***
+speed_kmh       0.0006985  0.0006424   1.087 0.278151    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.05505 on 214 degrees of freedom
+  (32 observations deleted due to missingness)
+Multiple R-squared:  0.2284,	Adjusted R-squared:  0.2176 
+F-statistic: 21.12 on 3 and 214 DF,  p-value: 5.044e-12
+
+summary(m7.2)
+[1] 76
+
+Call:
+lm(formula = bac ~ age * nighttime * speed_kmh, data = drinkdriving)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.165353 -0.042102  0.003733  0.035448  0.148915 
+
+Coefficients:
+                               Estimate Std. Error t value Pr(>|t|)  
+(Intercept)                   3.830e-01  2.188e-01   1.751   0.0814 .
+age                          -2.890e-03  2.055e-03  -1.406   0.1611  
+nighttimenight               -1.478e-01  2.231e-01  -0.662   0.5086  
+speed_kmh                    -3.124e-03  5.976e-03  -0.523   0.6016  
+age:nighttimenight            2.572e-03  2.214e-03   1.162   0.2467  
+age:speed_kmh                 1.900e-05  5.571e-05   0.341   0.7334  
+nighttimenight:speed_kmh      4.696e-03  6.169e-03   0.761   0.4474  
+age:nighttimenight:speed_kmh -3.854e-05  6.450e-05  -0.597   0.5509  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.05511 on 210 degrees of freedom
+  (32 observations deleted due to missingness)
+Multiple R-squared:  0.2413,	Adjusted R-squared:  0.216 
+F-statistic: 9.541 on 7 and 210 DF,  p-value: 2.792e-10
+
+independentSamplesTTest(formula = speed_kmh ~ nighttime, data = drinkdriving)
+[1] 77
+
+   Welch's independent samples t-test 
+
+Outcome variable:   speed_kmh 
+Grouping variable:  nighttime 
+
+Descriptive statistics: 
+               day  night
+   mean     24.550 25.437
+   std dev.  8.982  9.409
+
+Hypotheses: 
+   null:        population means equal for both groups
+   alternative: different population means in each group
+
+Test results: 
+   t-statistic:  -0.715 
+   degrees of freedom:  158.458 
+   p-value:  0.475 
+
+Other information: 
+   two-sided 95% confidence interval:  [-3.337, 1.563] 
+   estimated effect size (Cohen's d):  0.096 
+
+m8 <- glm(outcome ~ bac + speed_kmh + age + prior_offence + officer + 
+    nighttime, data = drinkdriving, family = binomial())
+[1] 78
+summary(m8)
+[1] 79
+
+Call:
+glm(formula = outcome ~ bac + speed_kmh + age + prior_offence + 
+    officer + nighttime, family = binomial(), data = drinkdriving)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.8200  -0.1921  -0.0411  -0.0036   4.1972  
+
+Coefficients:
+                        Estimate Std. Error z value Pr(>|z|)    
+(Intercept)           -2.161e+00  3.761e+00  -0.575 0.565588    
+bac                   -2.810e+01  7.727e+00  -3.637 0.000276 ***
+speed_kmh             -2.397e-01  7.282e-02  -3.291 0.000998 ***
+age                    1.383e-01  3.894e-02   3.552 0.000382 ***
+prior_offenceMULTIPLE  1.856e+01  3.956e+03   0.005 0.996257    
+prior_offenceDR50      1.457e+00  2.282e+00   0.638 0.523273    
+prior_offenceDR80      8.479e+00  3.204e+00   2.646 0.008142 ** 
+prior_offenceN         3.792e+00  2.053e+00   1.847 0.064791 .  
+prior_offencePL        1.912e+00  4.379e+01   0.044 0.965173    
+prior_offenceSP        8.998e+00  3.144e+00   2.862 0.004214 ** 
+ [ reached getOption("max.print") -- omitted 4 rows ]
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 209.086  on 213  degrees of freedom
+Residual deviance:  63.541  on 200  degrees of freedom
+  (36 observations deleted due to missingness)
+AIC: 91.541
+
+Number of Fisher Scoring iterations: 16
+
+m9 <- glm(outcome ~ scale(bac) + scale(speed_kmh) + age, data = drinkdriving, 
+    family = binomial())
+[1] 80
+summary(m9)
+[1] 81
+
+Call:
+glm(formula = outcome ~ scale(bac) + scale(speed_kmh) + age, 
+    family = binomial(), data = drinkdriving)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.3380  -0.3674  -0.1570  -0.0329   3.5396  
+
+Coefficients:
+                 Estimate Std. Error z value Pr(>|z|)    
+(Intercept)      -5.21600    1.04119  -5.010 5.45e-07 ***
+scale(bac)       -1.28079    0.32501  -3.941 8.12e-05 ***
+scale(speed_kmh) -2.06673    0.49855  -4.146 3.39e-05 ***
+age               0.04566    0.01996   2.287   0.0222 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 216.50  on 217  degrees of freedom
+Residual deviance: 106.31  on 214  degrees of freedom
+  (32 observations deleted due to missingness)
+AIC: 114.31
+
+Number of Fisher Scoring iterations: 7
+
+levels(drinkdriving$prior_offence)
+[1] 82
+[1] "CD"       "MULTIPLE" "DR50"     "DR80"     "N"        "PL"       "SP"       "TS"      
+levels(drinkdriving$prior_offence)[c(1, 2, 4, 6, 7, 8)] <- "COMMITTED_OFFENCE"
+[1] 83
+levels(drinkdriving$prior_offence)[2] <- "DRINKING_RELATED_OFFENCE"
+[1] 84
+drinkdriving$drinking_offence[drinkdriving$prior_offence == "COMMITTED_OFFENCE"] <- 0
+[1] 85
+drinkdriving$drinking_offence[drinkdriving$prior_offence == "DRINKING_RELATED_OFFENCE"] <- 1
+[1] 86
+drinkdriving$drinking_offence <- as.factor(drinkdriving$drinking_offence)
+[1] 87
+m10 <- glm(outcome ~ drinkdriving$drinking_offence, data = drinkdriving, 
+    family = binomial())
+[1] 88
+summary(m10)
+[1] 89
+
+Call:
+glm(formula = outcome ~ drinkdriving$drinking_offence, family = binomial(), 
+    data = drinkdriving)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-0.9005  -0.3803  -0.3803  -0.3803   2.3076  
+
+Coefficients:
+                               Estimate Std. Error z value Pr(>|z|)  
+(Intercept)                     -0.6931     0.5000  -1.386    0.166  
+drinkdriving$drinking_offence1  -1.8971     0.7800  -2.432    0.015 *
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 51.047  on 60  degrees of freedom
+Residual deviance: 44.676  on 59  degrees of freedom
+  (189 observations deleted due to missingness)
+AIC: 48.676
+
+Number of Fisher Scoring iterations: 5
+
+drinkdriving$any_offence[is.na(drinkdriving$drinking_offence)] <- 0
+[1] 90
+drinkdriving$any_offence[drinkdriving$drinking_offence == 1] <- 1
+[1] 91
+drinkdriving$any_offence[drinkdriving$drinking_offence == 0] <- 1
+[1] 92
+drinkdriving$any_offence <- as.factor(drinkdriving$any_offence)
+[1] 93
+m11 <- glm(outcome ~ drinkdriving$any_offence, data = drinkdriving, 
+    family = binomial())
+[1] 94
+summary(m11)
+[1] 95
+
+Call:
+glm(formula = outcome ~ drinkdriving$any_offence, family = binomial(), 
+    data = drinkdriving)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-0.6799  -0.6799  -0.6799  -0.5650   1.9564  
+
+Coefficients:
+                          Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                -1.3471     0.1797  -7.494 6.66e-14 ***
+drinkdriving$any_offence1  -0.4069     0.4033  -1.009    0.313    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 244.56  on 249  degrees of freedom
+Residual deviance: 243.48  on 248  degrees of freedom
+AIC: 247.48
+
+Number of Fisher Scoring iterations: 4
+
+new_data <- data.frame(age = c(14:100), nighttime = "day", speed_mph = 30, 
+    bac = 0, prior_offence = "N")
+[1] 96
+m12 <- glm(outcome ~ age + nighttime + speed_mph + bac + prior_offence, 
+    data = drinkdriving, family = binomial())
+[1] 97
+summary(m12)
+[1] 98
+
+Call:
+glm(formula = outcome ~ age + nighttime + speed_mph + bac + prior_offence, 
+    family = binomial(), data = drinkdriving)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.8724  -0.2792  -0.0797  -0.0133   3.7827  
+
+Coefficients:
+                                       Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                             5.55353    2.91725   1.904 0.056951 .  
+age                                     0.07081    0.02488   2.846 0.004421 ** 
+nighttimenight                          0.16589    0.66131   0.251 0.801929    
+speed_mph                              -0.15707    0.04200  -3.740 0.000184 ***
+bac                                   -24.55069    6.44489  -3.809 0.000139 ***
+prior_offenceDRINKING_RELATED_OFFENCE  -2.45991    1.58334  -1.554 0.120275    
+prior_offenceN                         -0.41275    1.19140  -0.346 0.729011    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 209.086  on 213  degrees of freedom
+Residual deviance:  79.085  on 207  degrees of freedom
+  (36 observations deleted due to missingness)
+AIC: 93.085
+
+Number of Fisher Scoring iterations: 7
+
+new_data$model_prediction <- 1 - predict(m12, new_data, type = "response")
+[1] 99
+par(mfrow = c(1, 1))
+[1] 100
+$mfrow
+[1] 2 2
+
+plot(new_data$model_prediction, main = "Predicted probabilities of receiving a fine per age with BAC = 0, \nspeed = 30mph, during the day and with no prior offence(s)", 
+    xlab = "Age", ylab = "Predicted probability of a fine", col = "blue", 
+    type = "h")
+[1] 101
+m13 <- glm(outcome ~ age * officer, data = drinkdriving, family = binomial())
+[1] 102
+summary(m13)
+[1] 103
+
+Call:
+glm(formula = outcome ~ age * officer, family = binomial(), data = drinkdriving)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.4089  -0.5454  -0.2741  -0.0642   2.7179  
+
+Coefficients:
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept)   -9.56920    1.99554  -4.795 1.62e-06 ***
+age            0.16122    0.03466   4.652 3.29e-06 ***
+officerIT      5.04535    2.39610   2.106   0.0352 *  
+officerNP      4.68465    2.48887   1.882   0.0598 .  
+age:officerIT -0.09612    0.04254  -2.260   0.0238 *  
+age:officerNP -0.09365    0.04405  -2.126   0.0335 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 222.38  on 224  degrees of freedom
+Residual deviance: 146.41  on 219  degrees of freedom
+  (25 observations deleted due to missingness)
+AIC: 158.41
+
+Number of Fisher Scoring iterations: 7
+
+coef(m13)[2] + coef(m13)[5]
+[1] 104
+       age 
+0.06510121 
+coef(m13)[2] + coef(m13)[6]
+[1] 105
+       age 
+0.06757085 
+exp(coef(m13)[2])/(1 + coef(m13)[2])
+[1] 106
+     age 
+1.011819 
+exp(coef(m13)[2] + coef(m13)[5])/(1 + coef(m13)[2] + coef(m13)[5])
+[1] 107
+     age 
+1.002033 
+exp(coef(m13)[2] + coef(m13)[6])/(1 + coef(m13)[2] + coef(m13)[6])
+[1] 108
+     age 
+1.002187 

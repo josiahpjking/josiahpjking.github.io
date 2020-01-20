@@ -1,0 +1,1367 @@
+
+
+	####### B069251 R script #######
+
+load("C:/Users/User/OneDrive - University of Edinburgh/univariate/usmr_1920_assignment.RData")
+[1] 1
+[1] "Error in readChar(con, 5L, useBytes = TRUE) : cannot open the connection\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in readChar(con, 5L, useBytes = TRUE): cannot open the connection>
+
+
+####################################################################################################
+
+[1] "Error in readChar(con, 5L, useBytes = TRUE) : cannot open the connection\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in readChar(con, 5L, useBytes = TRUE): cannot open the connection>
+####################################################################################################
+
+
+install.packages("psych")
+[1] 2
+library(psych, quietly = T)
+[1] 3
+[1] "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+install.packages("car")
+[1] 4
+library(car, quietly = T)
+[1] 5
+ [1] "car"       "carData"   "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"  
+[11] "base"     
+install.packages("ggplot2")
+[1] 6
+library(ggplot2, quietly = T)
+[1] 7
+ [1] "ggplot2"   "car"       "carData"   "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets" 
+[11] "methods"   "base"     
+class(drinkdriving$age)
+[1] 8
+[1] "Error in eval(script[[ll]]) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in eval(script[[ll]]) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'drinkdriving' not found>
+####################################################################################################
+
+
+describe(drinkdriving$age)
+[1] 9
+[1] "Error in describe(drinkdriving$age) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in describe(drinkdriving$age): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in describe(drinkdriving$age) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in describe(drinkdriving$age): object 'drinkdriving' not found>
+####################################################################################################
+
+
+plot(drinkdriving$age)
+[1] 10
+
+
+####################################################################################################
+
+[1] "Error in plot(drinkdriving$age) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in plot(drinkdriving$age): object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$age[drinkdriving$age > 150] <- NA
+[1] 11
+
+
+####################################################################################################
+
+[1] "Error in drinkdriving$age[drinkdriving$age > 150] <- NA : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in drinkdriving$age[drinkdriving$age > 150] <- NA: object 'drinkdriving' not found>
+####################################################################################################
+
+
+plot(drinkdriving$age)
+[1] 12
+
+
+####################################################################################################
+
+[1] "Error in plot(drinkdriving$age) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in plot(drinkdriving$age): object 'drinkdriving' not found>
+####################################################################################################
+
+
+class(drinkdriving$nighttime)
+[1] 13
+[1] "Error in eval(script[[ll]]) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in eval(script[[ll]]) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$nighttime <- as.factor(drinkdriving$nighttime)
+[1] 14
+
+
+####################################################################################################
+
+[1] "Error in is.factor(x) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in is.factor(x): object 'drinkdriving' not found>
+####################################################################################################
+
+
+levels(drinkdriving$nighttime)
+[1] 15
+[1] "Error in levels(drinkdriving$nighttime) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in levels(drinkdriving$nighttime): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in levels(drinkdriving$nighttime) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in levels(drinkdriving$nighttime): object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$nighttime[drinkdriving$nighttime == "18:25"] <- NA
+[1] 16
+
+
+####################################################################################################
+
+[1] "Error in drinkdriving$nighttime[drinkdriving$nighttime == \"18:25\"] <- NA : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in drinkdriving$nighttime[drinkdriving$nighttime == "18:25"] <- NA: object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$nighttime[drinkdriving$nighttime == "2:05"] <- NA
+[1] 17
+
+
+####################################################################################################
+
+[1] "Error in drinkdriving$nighttime[drinkdriving$nighttime == \"2:05\"] <- NA : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in drinkdriving$nighttime[drinkdriving$nighttime == "2:05"] <- NA: object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$nighttime <- droplevels(drinkdriving$nighttime)
+[1] 18
+
+
+####################################################################################################
+
+[1] "Error in droplevels(drinkdriving$nighttime) : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in droplevels(drinkdriving$nighttime): object 'drinkdriving' not found>
+####################################################################################################
+
+
+class(drinkdriving$prior_offence)
+[1] 19
+[1] "Error in eval(script[[ll]]) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in eval(script[[ll]]) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$prior_offence <- as.factor(drinkdriving$prior_offence)
+[1] 20
+
+
+####################################################################################################
+
+[1] "Error in is.factor(x) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in is.factor(x): object 'drinkdriving' not found>
+####################################################################################################
+
+
+levels(drinkdriving$prior_offence)
+[1] 21
+[1] "Error in levels(drinkdriving$prior_offence) : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in levels(drinkdriving$prior_offence): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in levels(drinkdriving$prior_offence) : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in levels(drinkdriving$prior_offence): object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$prior_offence[drinkdriving$prior_offence == "DD20"] <- NA
+[1] 22
+
+
+####################################################################################################
+
+[1] "Error in drinkdriving$prior_offence[drinkdriving$prior_offence == \"DD20\"] <- NA : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in drinkdriving$prior_offence[drinkdriving$prior_offence == "DD20"] <- NA: object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$prior_offence <- droplevels(drinkdriving$prior_offence)
+[1] 23
+
+
+####################################################################################################
+
+[1] "Error in droplevels(drinkdriving$prior_offence) : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in droplevels(drinkdriving$prior_offence): object 'drinkdriving' not found>
+####################################################################################################
+
+
+class(drinkdriving$speed)
+[1] 24
+[1] "Error in eval(script[[ll]]) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in eval(script[[ll]]) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'drinkdriving' not found>
+####################################################################################################
+
+
+describe(drinkdriving$speed)
+[1] 25
+[1] "Error in describe(drinkdriving$speed) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in describe(drinkdriving$speed): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in describe(drinkdriving$speed) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in describe(drinkdriving$speed): object 'drinkdriving' not found>
+####################################################################################################
+
+
+describe(drinkdriving$bac)
+[1] 26
+[1] "Error in describe(drinkdriving$bac) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in describe(drinkdriving$bac): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in describe(drinkdriving$bac) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in describe(drinkdriving$bac): object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$bac[drinkdriving$bac > 45] <- NA
+[1] 27
+
+
+####################################################################################################
+
+[1] "Error in drinkdriving$bac[drinkdriving$bac > 45] <- NA : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in drinkdriving$bac[drinkdriving$bac > 45] <- NA: object 'drinkdriving' not found>
+####################################################################################################
+
+
+class(drinkdriving$outcome)
+[1] 28
+[1] "Error in eval(script[[ll]]) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in eval(script[[ll]]) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$outcome <- as.factor(drinkdriving$outcome)
+[1] 29
+
+
+####################################################################################################
+
+[1] "Error in is.factor(x) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in is.factor(x): object 'drinkdriving' not found>
+####################################################################################################
+
+
+levels(drinkdriving$outcome)
+[1] 30
+[1] "Error in levels(drinkdriving$outcome) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in levels(drinkdriving$outcome): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in levels(drinkdriving$outcome) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in levels(drinkdriving$outcome): object 'drinkdriving' not found>
+####################################################################################################
+
+
+levels(drinkdriving$outcome) <- c("fine", "fine", "fine", "warning", 
+    "warning", "warning")
+[1] 31
+
+
+####################################################################################################
+
+[1] "Error in levels(drinkdriving$outcome) <- c(\"fine\", \"fine\", \"fine\", \"warning\",  : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in levels(drinkdriving$outcome) <- c("fine", "fine", "fine", "warning",     "warning", "warning"): object 'drinkdriving' not found>
+####################################################################################################
+
+
+levels(drinkdriving$outcome)
+[1] 32
+[1] "Error in levels(drinkdriving$outcome) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in levels(drinkdriving$outcome): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in levels(drinkdriving$outcome) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in levels(drinkdriving$outcome): object 'drinkdriving' not found>
+####################################################################################################
+
+
+class(drinkdriving$outcome)
+[1] 33
+[1] "Error in eval(script[[ll]]) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in eval(script[[ll]]) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'drinkdriving' not found>
+####################################################################################################
+
+
+class(officer_inc$officer)
+[1] 34
+[1] "Error in eval(script[[ll]]) : object 'officer_inc' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'officer_inc' not found>
+
+
+####################################################################################################
+
+[1] "Error in eval(script[[ll]]) : object 'officer_inc' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'officer_inc' not found>
+####################################################################################################
+
+
+levels(officer_inc$officer)
+[1] 35
+[1] "Error in levels(officer_inc$officer) : object 'officer_inc' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in levels(officer_inc$officer): object 'officer_inc' not found>
+
+
+####################################################################################################
+
+[1] "Error in levels(officer_inc$officer) : object 'officer_inc' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in levels(officer_inc$officer): object 'officer_inc' not found>
+####################################################################################################
+
+
+m1 <- lm(bac ~ age, data = drinkdriving)
+[1] 36
+
+
+####################################################################################################
+
+[1] "Error in is.data.frame(data) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in is.data.frame(data): object 'drinkdriving' not found>
+####################################################################################################
+
+
+plot(m1, which = c(1:4))
+[1] 37
+summary(m1)
+[1] 38
+[1] "Error in summary(m1) : object 'm1' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m1): object 'm1' not found>
+
+
+####################################################################################################
+
+[1] "Error in summary(m1) : object 'm1' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m1): object 'm1' not found>
+####################################################################################################
+
+
+with(drinkdriving, plot(bac, age, xlab = "Age", ylab = "Blood alcohol content (BAC)", 
+    main = "Prediction of BAC by age", col = c("orange"), pch = 20))
+[1] 39
+
+
+####################################################################################################
+
+[1] "Error in with(drinkdriving, plot(bac, age, xlab = \"Age\", ylab = \"Blood alcohol content (BAC)\",  : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in with(drinkdriving, plot(bac, age, xlab = "Age", ylab = "Blood alcohol content (BAC)",     main = "Prediction of BAC by age", col = c("orange"), pch = 20)): object 'drinkdriving' not found>
+####################################################################################################
+
+
+abline(m1)
+[1] 40
+
+
+####################################################################################################
+
+[1] "Error in abline(m1) : object 'm1' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in abline(m1): object 'm1' not found>
+####################################################################################################
+
+
+ageprediction <- data.frame(age = 50)
+[1] 41
+predict(m1, newdata = ageprediction)
+[1] 42
+[1] "Error in predict(m1, newdata = ageprediction) : object 'm1' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in predict(m1, newdata = ageprediction): object 'm1' not found>
+
+
+####################################################################################################
+
+[1] "Error in predict(m1, newdata = ageprediction) : object 'm1' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in predict(m1, newdata = ageprediction): object 'm1' not found>
+####################################################################################################
+
+
+plot(m1, which = c(2), col = "orange", pch = 20)
+[1] 43
+hist(residuals(m1), main = "residuals of model 1", breaks = 20)
+[1] 44
+plot(density(residuals(m1)), main = "density plot of residuals")
+[1] 45
+
+
+####################################################################################################
+
+[1] "Error in residuals(m1) : object 'm1' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in residuals(m1): object 'm1' not found>
+####################################################################################################
+
+
+m2 <- lm(bac ~ age + nighttime, data = drinkdriving)
+[1] 46
+
+
+####################################################################################################
+
+[1] "Error in is.data.frame(data) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in is.data.frame(data): object 'drinkdriving' not found>
+####################################################################################################
+
+
+anova(m2)
+[1] 47
+[1] "Error in anova(m2) : object 'm2' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in anova(m2): object 'm2' not found>
+
+
+####################################################################################################
+
+[1] "Error in anova(m2) : object 'm2' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in anova(m2): object 'm2' not found>
+####################################################################################################
+
+
+summary(m2)
+[1] 48
+[1] "Error in summary(m2) : object 'm2' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m2): object 'm2' not found>
+
+
+####################################################################################################
+
+[1] "Error in summary(m2) : object 'm2' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m2): object 'm2' not found>
+####################################################################################################
+
+
+plot(m2)
+[1] 49
+m3 <- lm(bac ~ age + speed, data = drinkdriving)
+[1] 50
+
+
+####################################################################################################
+
+[1] "Error in is.data.frame(data) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in is.data.frame(data): object 'drinkdriving' not found>
+####################################################################################################
+
+
+anova(m3)
+[1] 51
+[1] "Error in anova(m3) : object 'm3' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in anova(m3): object 'm3' not found>
+
+
+####################################################################################################
+
+[1] "Error in anova(m3) : object 'm3' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in anova(m3): object 'm3' not found>
+####################################################################################################
+
+
+summary(m3)
+[1] 52
+[1] "Error in summary(m3) : object 'm3' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m3): object 'm3' not found>
+
+
+####################################################################################################
+
+[1] "Error in summary(m3) : object 'm3' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m3): object 'm3' not found>
+####################################################################################################
+
+
+plot(m3)
+[1] 53
+plot(m2, which = c(1:4))
+[1] 54
+vif(m2)
+[1] 55
+[1] "Error in vif(m2) : object 'm2' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in vif(m2): object 'm2' not found>
+
+
+####################################################################################################
+
+[1] "Error in vif(m2) : object 'm2' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in vif(m2): object 'm2' not found>
+####################################################################################################
+
+
+plot(m3, which = c(1:4))
+[1] 56
+vif(m3)
+[1] 57
+[1] "Error in vif(m3) : object 'm3' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in vif(m3): object 'm3' not found>
+
+
+####################################################################################################
+
+[1] "Error in vif(m3) : object 'm3' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in vif(m3): object 'm3' not found>
+####################################################################################################
+
+
+m3scaled <- lm(scale(bac) ~ scale(age) + scale(speed), data = drinkdriving)
+[1] 58
+
+
+####################################################################################################
+
+[1] "Error in is.data.frame(data) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in is.data.frame(data): object 'drinkdriving' not found>
+####################################################################################################
+
+
+summary(m3)$r.squared
+[1] 59
+[1] "Error in summary(m3) : object 'm3' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m3): object 'm3' not found>
+
+
+####################################################################################################
+
+[1] "Error in summary(m3) : object 'm3' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m3): object 'm3' not found>
+####################################################################################################
+
+
+summary(m3scaled)$r.squared
+[1] 60
+[1] "Error in summary(m3scaled) : object 'm3scaled' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m3scaled): object 'm3scaled' not found>
+
+
+####################################################################################################
+
+[1] "Error in summary(m3scaled) : object 'm3scaled' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m3scaled): object 'm3scaled' not found>
+####################################################################################################
+
+
+m4 <- lm(bac ~ age + speed + nighttime, data = drinkdriving)
+[1] 61
+
+
+####################################################################################################
+
+[1] "Error in is.data.frame(data) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in is.data.frame(data): object 'drinkdriving' not found>
+####################################################################################################
+
+
+summary(m4)
+[1] 62
+[1] "Error in summary(m4) : object 'm4' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m4): object 'm4' not found>
+
+
+####################################################################################################
+
+[1] "Error in summary(m4) : object 'm4' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m4): object 'm4' not found>
+####################################################################################################
+
+
+summary(m4)$r.squared
+[1] 63
+[1] "Error in summary(m4) : object 'm4' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m4): object 'm4' not found>
+
+
+####################################################################################################
+
+[1] "Error in summary(m4) : object 'm4' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m4): object 'm4' not found>
+####################################################################################################
+
+
+boxplot(speed ~ nighttime, data = drinkdriving)
+[1] 64
+speedtest <- t.test(speed ~ nighttime, data = drinkdriving)
+[1] 65
+
+
+####################################################################################################
+
+[1] "Error in eval(m$data, parent.frame()) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(m$data, parent.frame()): object 'drinkdriving' not found>
+####################################################################################################
+
+
+speedtest
+
+
+
+####################################################################################################
+
+[1] "Error in eval(script[[ll]]) : object 'speedtest' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'speedtest' not found>
+####################################################################################################
+
+
+
+
+drinkdriving$anyoffences[drinkdriving$prior_offence != "N"] <- 1
+[1] 67
+
+
+####################################################################################################
+
+[1] "Error in drinkdriving$anyoffences[drinkdriving$prior_offence != \"N\"] <- 1 : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in drinkdriving$anyoffences[drinkdriving$prior_offence != "N"] <- 1: object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$anyoffences[drinkdriving$prior_offence == "N"] <- 0
+[1] 68
+
+
+####################################################################################################
+
+[1] "Error in drinkdriving$anyoffences[drinkdriving$prior_offence == \"N\"] <- 0 : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in drinkdriving$anyoffences[drinkdriving$prior_offence == "N"] <- 0: object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$fineoutcome[drinkdriving$outcome == "warning"] <- 0
+[1] 69
+
+
+####################################################################################################
+
+[1] "Error in drinkdriving$fineoutcome[drinkdriving$outcome == \"warning\"] <- 0 : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in drinkdriving$fineoutcome[drinkdriving$outcome == "warning"] <- 0: object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$fineoutcome[drinkdriving$outcome == "fine"] <- 1
+[1] 70
+
+
+####################################################################################################
+
+[1] "Error in drinkdriving$fineoutcome[drinkdriving$outcome == \"fine\"] <- 1 : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in drinkdriving$fineoutcome[drinkdriving$outcome == "fine"] <- 1: object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$drinkvsnodrink[drinkdriving$prior_offence != "N"] <- 0
+[1] 71
+
+
+####################################################################################################
+
+[1] "Error in drinkdriving$drinkvsnodrink[drinkdriving$prior_offence != \"N\"] <- 0 : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in drinkdriving$drinkvsnodrink[drinkdriving$prior_offence != "N"] <- 0: object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$drinkvsnodrink[drinkdriving$prior_offence == "DR50"] <- 1
+[1] 72
+
+
+####################################################################################################
+
+[1] "Error in drinkdriving$drinkvsnodrink[drinkdriving$prior_offence == \"DR50\"] <- 1 : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in drinkdriving$drinkvsnodrink[drinkdriving$prior_offence == "DR50"] <- 1: object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkdriving$drinkvsnodrink[drinkdriving$prior_offence == "TS70,DR50"] <- 1
+[1] 73
+
+
+####################################################################################################
+
+[1] "Error in drinkdriving$drinkvsnodrink[drinkdriving$prior_offence == \"TS70,DR50\"] <- 1 : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in drinkdriving$drinkvsnodrink[drinkdriving$prior_offence == "TS70,DR50"] <- 1: object 'drinkdriving' not found>
+####################################################################################################
+
+
+m5 <- glm(fineoutcome ~ age + nighttime + speed + bac + anyoffences, 
+    family = "binomial", data = drinkdriving)
+[1] 74
+
+
+####################################################################################################
+
+[1] "Error in is.data.frame(data) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in is.data.frame(data): object 'drinkdriving' not found>
+####################################################################################################
+
+
+summary(m5)
+[1] 75
+[1] "Error in summary(m5) : object 'm5' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m5): object 'm5' not found>
+
+
+####################################################################################################
+
+[1] "Error in summary(m5) : object 'm5' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m5): object 'm5' not found>
+####################################################################################################
+
+
+Anova(m5, type = 3)
+[1] 76
+[1] "Error in Anova(m5, type = 3) : object 'm5' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in Anova(m5, type = 3): object 'm5' not found>
+
+
+####################################################################################################
+
+[1] "Error in Anova(m5, type = 3) : object 'm5' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in Anova(m5, type = 3): object 'm5' not found>
+####################################################################################################
+
+
+m5scaled <- glm(fineoutcome ~ scale(speed) + scale(bac), family = "binomial", 
+    data = drinkdriving)
+[1] 77
+
+
+####################################################################################################
+
+[1] "Error in is.data.frame(data) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in is.data.frame(data): object 'drinkdriving' not found>
+####################################################################################################
+
+
+summary(m5scaled)
+[1] 78
+[1] "Error in summary(m5scaled) : object 'm5scaled' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m5scaled): object 'm5scaled' not found>
+
+
+####################################################################################################
+
+[1] "Error in summary(m5scaled) : object 'm5scaled' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m5scaled): object 'm5scaled' not found>
+####################################################################################################
+
+
+Anova(m5scaled, type = 3)
+[1] 79
+[1] "Error in Anova(m5scaled, type = 3) : object 'm5scaled' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in Anova(m5scaled, type = 3): object 'm5scaled' not found>
+
+
+####################################################################################################
+
+[1] "Error in Anova(m5scaled, type = 3) : object 'm5scaled' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in Anova(m5scaled, type = 3): object 'm5scaled' not found>
+####################################################################################################
+
+
+plot(m5scaled)
+[1] 80
+chisq1 <- chisq.test(drinkdriving$drinkvsnodrink, drinkdriving$fineoutcome)
+[1] 81
+
+
+####################################################################################################
+
+[1] "Error in is.data.frame(x) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in is.data.frame(x): object 'drinkdriving' not found>
+####################################################################################################
+
+
+chisq1
+
+
+
+####################################################################################################
+
+[1] "Error in eval(script[[ll]]) : object 'chisq1' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'chisq1' not found>
+####################################################################################################
+
+
+
+
+table(drinkdriving$drinkvsnodrink, drinkdriving$fineoutcome)
+[1] 83
+[1] "Error in table(drinkdriving$drinkvsnodrink, drinkdriving$fineoutcome) : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in table(drinkdriving$drinkvsnodrink, drinkdriving$fineoutcome): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in table(drinkdriving$drinkvsnodrink, drinkdriving$fineoutcome) : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in table(drinkdriving$drinkvsnodrink, drinkdriving$fineoutcome): object 'drinkdriving' not found>
+####################################################################################################
+
+
+chisq2 <- chisq.test(drinkdriving$anyoffences, drinkdriving$fineoutcome)
+[1] 84
+
+
+####################################################################################################
+
+[1] "Error in is.data.frame(x) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in is.data.frame(x): object 'drinkdriving' not found>
+####################################################################################################
+
+
+chisq2
+
+
+
+####################################################################################################
+
+[1] "Error in eval(script[[ll]]) : object 'chisq2' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(script[[ll]]): object 'chisq2' not found>
+####################################################################################################
+
+
+
+
+table(drinkdriving$anyoffences, drinkdriving$fineoutcome)
+[1] 86
+[1] "Error in table(drinkdriving$anyoffences, drinkdriving$fineoutcome) : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in table(drinkdriving$anyoffences, drinkdriving$fineoutcome): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in table(drinkdriving$anyoffences, drinkdriving$fineoutcome) : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in table(drinkdriving$anyoffences, drinkdriving$fineoutcome): object 'drinkdriving' not found>
+####################################################################################################
+
+
+drinkplotdata <- data.frame(age = 14:90, anyoffences = 0, nighttime = "day", 
+    speed = 30, bac = 0)
+[1] 87
+drinkplotdata$prediction <- predict(m5, newdata = drinkplotdata, 
+    type = "response")
+[1] 88
+
+
+####################################################################################################
+
+[1] "Error in predict(m5, newdata = drinkplotdata, type = \"response\") : \n  object 'm5' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in predict(m5, newdata = drinkplotdata, type = "response"): object 'm5' not found>
+####################################################################################################
+
+
+plot(drinkplotdata$age, drinkplotdata$prediction, ylab = "probability of receiving a fine", 
+    xlab = "age", main = "plot of probability of receiving a fine by age", 
+    col = "orange", pch = 20)
+[1] 89
+drinkdriving <- merge(drinkdriving, officer_inc, by = "incident_id")
+[1] 90
+
+
+####################################################################################################
+
+[1] "Error in merge(drinkdriving, officer_inc, by = \"incident_id\") : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in merge(drinkdriving, officer_inc, by = "incident_id"): object 'drinkdriving' not found>
+####################################################################################################
+
+
+officers <- glm(outcome ~ officer, data = drinkdriving, family = "binomial")
+[1] 91
+
+
+####################################################################################################
+
+[1] "Error in is.data.frame(data) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in is.data.frame(data): object 'drinkdriving' not found>
+####################################################################################################
+
+
+summary(officers)
+[1] 92
+[1] "Error in summary(officers) : object 'officers' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(officers): object 'officers' not found>
+
+
+####################################################################################################
+
+[1] "Error in summary(officers) : object 'officers' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(officers): object 'officers' not found>
+####################################################################################################
+
+
+qplot(data = drinkdriving[!is.na(drinkdriving$officer), ], officer, 
+    fill = outcome, col = outcome)
+[1] 93
+
+
+####################################################################################################
+
+[1] "Error in eval_tidy(mapping$x, data, caller_env) : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval_tidy(mapping$x, data, caller_env): object 'drinkdriving' not found>
+####################################################################################################
+
+
+qplot(data = drinkdriving[!is.na(drinkdriving$officer), ], officer, 
+    age, fill = outcome, col = outcome)
+[1] 94
+
+
+####################################################################################################
+
+[1] "Error in ggplot(data, mapping, environment = caller_env) : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in ggplot(data, mapping, environment = caller_env): object 'drinkdriving' not found>
+####################################################################################################
+
+
+contrasts(drinkdriving$officer)
+[1] 95
+[1] "Error in contrasts(drinkdriving$officer) : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in contrasts(drinkdriving$officer): object 'drinkdriving' not found>
+
+
+####################################################################################################
+
+[1] "Error in contrasts(drinkdriving$officer) : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in contrasts(drinkdriving$officer): object 'drinkdriving' not found>
+####################################################################################################
+
+
+contrasts(drinkdriving$officer) <- cbind(ASvITNP = c(2/3, -1/3, 
+    -1/3), ITvNP = c(0, -1/2, 1/2))
+[1] 96
+
+
+####################################################################################################
+
+[1] "Error in contrasts(drinkdriving$officer) <- cbind(ASvITNP = c(2/3, -1/3,  : \n  object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in contrasts(drinkdriving$officer) <- cbind(ASvITNP = c(2/3, -1/3,     -1/3), ITvNP = c(0, -1/2, 1/2)): object 'drinkdriving' not found>
+####################################################################################################
+
+
+m6 <- glm(outcome ~ officer * age, family = "binomial", data = drinkdriving)
+[1] 97
+
+
+####################################################################################################
+
+[1] "Error in is.data.frame(data) : object 'drinkdriving' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in is.data.frame(data): object 'drinkdriving' not found>
+####################################################################################################
+
+
+summary(m6)
+[1] 98
+[1] "Error in summary(m6) : object 'm6' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m6): object 'm6' not found>
+
+
+####################################################################################################
+
+[1] "Error in summary(m6) : object 'm6' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m6): object 'm6' not found>
+####################################################################################################
+
+

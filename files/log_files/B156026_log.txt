@@ -1,0 +1,473 @@
+
+
+	####### B156026 R script #######
+
+library(psych, quietly = T)
+[1] 1
+[1] "psych"     "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+load(url("https://edin.ac/2QCZNVu"))
+[1] 2
+[1] "drinkdriving" "officer_inc" 
+drinkdriving$age[drinkdriving$age > 99] <- NA
+[1] 3
+drinkdriving$age[drinkdriving$age < 17] <- NA
+[1] 4
+drinkdriving$nighttime <- as.factor(drinkdriving$nighttime)
+[1] 5
+levels(drinkdriving$nighttime) <- c(NA, NA, "day", "night")
+[1] 6
+drinkdriving$prior_offence <- as.factor(drinkdriving$prior_offence)
+[1] 7
+levels(drinkdriving$prior_offence)[levels(drinkdriving$prior_offence) == 
+    "DD20"] <- NA
+[1] 8
+drinkdriving$speed[drinkdriving$speed < 10] <- NA
+[1] 9
+drinkdriving$outcome <- as.factor(drinkdriving$outcome)
+[1] 10
+levels(drinkdriving$outcome)[levels(drinkdriving$outcome) == 
+    "WARNING"] <- "warning"
+[1] 11
+levels(drinkdriving$outcome)[levels(drinkdriving$outcome) == 
+    "Warning"] <- "warning"
+[1] 12
+levels(drinkdriving$outcome)[levels(drinkdriving$outcome) == 
+    "FINE"] <- "fine"
+[1] 13
+levels(drinkdriving$outcome)[levels(drinkdriving$outcome) == 
+    "Fine"] <- "fine"
+[1] 14
+m1 <- lm(bac ~ age, data = drinkdriving)
+[1] 15
+summary(m1)
+[1] 16
+
+Call:
+lm(formula = bac ~ age, data = drinkdriving)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.567  -4.490  -0.993   3.833  42.860 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 28.84428    1.36250  21.170  < 2e-16 ***
+age         -0.13501    0.02926  -4.614 6.86e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.899 on 210 degrees of freedom
+  (38 observations deleted due to missingness)
+Multiple R-squared:  0.09205,	Adjusted R-squared:  0.08773 
+F-statistic: 21.29 on 1 and 210 DF,  p-value: 6.86e-06
+
+predict(m1, newdata = data.frame(age = 50))
+[1] 17
+       1 
+22.09395 
+plot(m1)
+[1] 18
+m2 <- lm(bac ~ age + nighttime, data = drinkdriving)
+[1] 19
+summary(m2)
+[1] 20
+
+Call:
+lm(formula = bac ~ age + nighttime, data = drinkdriving)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-16.528  -5.013  -0.006   3.522  41.730 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     26.4710     1.5250  17.358  < 2e-16 ***
+age             -0.1368     0.0285  -4.800 3.04e-06 ***
+nighttimenight   3.5825     0.9819   3.649 0.000334 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.638 on 207 degrees of freedom
+  (40 observations deleted due to missingness)
+Multiple R-squared:  0.1596,	Adjusted R-squared:  0.1515 
+F-statistic: 19.66 on 2 and 207 DF,  p-value: 1.52e-08
+
+anova(m2)
+[1] 21
+Analysis of Variance Table
+
+Response: bac
+           Df Sum Sq Mean Sq F value    Pr(>F)    
+age         1 1146.1 1146.13  26.013 7.646e-07 ***
+nighttime   1  586.5  586.54  13.312 0.0003337 ***
+Residuals 207 9120.4   44.06                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+m3 <- lm(bac ~ age + speed, data = drinkdriving)
+[1] 22
+summary(m3)
+[1] 23
+
+Call:
+lm(formula = bac ~ age + speed, data = drinkdriving)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.822  -4.501  -0.565   3.980  32.610 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 14.30958    2.90278   4.930 1.70e-06 ***
+age         -0.02300    0.03483  -0.660     0.51    
+speed        0.24506    0.04334   5.654 5.22e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.463 on 205 degrees of freedom
+  (42 observations deleted due to missingness)
+Multiple R-squared:  0.2189,	Adjusted R-squared:  0.2113 
+F-statistic: 28.73 on 2 and 205 DF,  p-value: 9.998e-12
+
+anova(m3)
+[1] 24
+Analysis of Variance Table
+
+Response: bac
+           Df Sum Sq Mean Sq F value    Pr(>F)    
+age         1 1065.1 1065.12  25.499 9.758e-07 ***
+speed       1 1335.3 1335.30  31.967 5.216e-08 ***
+Residuals 205 8563.2   41.77                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+plot(m2)
+[1] 25
+plot(m3)
+[1] 26
+vm <- lm(bac ~ age + speed + nighttime, data = drinkdriving)
+[1] 27
+summary(vm)
+[1] 28
+
+Call:
+lm(formula = bac ~ age + speed + nighttime, data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-13.4705  -4.8241   0.0866   3.8937  31.4220 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    11.91355    2.89034   4.122 5.48e-05 ***
+age            -0.02281    0.03375  -0.676 0.499954    
+speed           0.24590    0.04171   5.896 1.54e-08 ***
+nighttimenight  3.50683    0.92062   3.809 0.000185 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.185 on 202 degrees of freedom
+  (44 observations deleted due to missingness)
+Multiple R-squared:  0.285,	Adjusted R-squared:  0.2744 
+F-statistic: 26.84 on 3 and 202 DF,  p-value: 1.184e-14
+
+m4 <- lm(speed ~ nighttime, data = drinkdriving)
+[1] 29
+summary(m4)
+[1] 30
+
+Call:
+lm(formula = speed ~ nighttime, data = drinkdriving)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-30.584  -9.183  -0.201   7.435  81.032 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)      39.305      1.603  24.527   <2e-16 ***
+nighttimenight    2.505      1.945   1.288    0.199    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 14.15 on 241 degrees of freedom
+  (7 observations deleted due to missingness)
+Multiple R-squared:  0.006837,	Adjusted R-squared:  0.002716 
+F-statistic: 1.659 on 1 and 241 DF,  p-value: 0.199
+
+anova(m4)
+[1] 31
+Analysis of Variance Table
+
+Response: speed
+           Df Sum Sq Mean Sq F value Pr(>F)
+nighttime   1    332  332.30   1.659  0.199
+Residuals 241  48274  200.31               
+drinkdriving$fine <- ifelse(drinkdriving$outcome == "fine", "1", 
+    "0")
+[1] 32
+drinkdriving$p.offence <- ifelse(drinkdriving$prior_offence == 
+    "N", "No", "Yes")
+[1] 33
+m5 <- lm(fine ~ scale(age) + nighttime + p.offence + scale(speed) + 
+    scale(bac), data = drinkdriving)
+[1] 34
+summary(m5)
+[1] 35
+
+Call:
+lm(formula = fine ~ scale(age) + nighttime + p.offence + scale(speed) + 
+    scale(bac), data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.12093 -0.11596  0.06391  0.20726  0.64777 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     0.78558    0.04062  19.341  < 2e-16 ***
+scale(age)     -0.16366    0.02736  -5.982 1.03e-08 ***
+nighttimenight  0.05169    0.04732   1.092  0.27606    
+p.offenceYes    0.03870    0.04957   0.781  0.43589    
+scale(speed)    0.05467    0.03165   1.728  0.08565 .  
+scale(bac)      0.07964    0.02607   3.055  0.00257 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.305 on 196 degrees of freedom
+  (48 observations deleted due to missingness)
+Multiple R-squared:  0.3968,	Adjusted R-squared:  0.3814 
+F-statistic: 25.78 on 5 and 196 DF,  p-value: < 2.2e-16
+
+m5.1 <- lm(fine ~ scale(age) + scale(bac), data = drinkdriving)
+[1] 36
+summary(m5.1)
+[1] 37
+
+Call:
+lm(formula = fine ~ scale(age) + scale(bac), data = drinkdriving)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.0879 -0.1289  0.0719  0.2237  0.6769 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.80572    0.02278  35.371  < 2e-16 ***
+scale(age)  -0.18372    0.02380  -7.718 4.79e-13 ***
+scale(bac)   0.10171    0.02472   4.115 5.57e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.3301 on 209 degrees of freedom
+  (38 observations deleted due to missingness)
+Multiple R-squared:  0.3354,	Adjusted R-squared:  0.3291 
+F-statistic: 52.74 on 2 and 209 DF,  p-value: < 2.2e-16
+
+drinkdriving$d.offence <- ifelse(drinkdriving$prior_offence == 
+    "DR50", "Yes", "No")
+[1] 38
+m6 <- lm(fine ~ p.offence + d.offence, data = drinkdriving)
+[1] 39
+summary(m6)
+[1] 40
+
+Call:
+lm(formula = fine ~ p.offence + d.offence, data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.93023  0.06977  0.20000  0.20000  0.33333 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.80000    0.02845  28.118   <2e-16 ***
+p.offenceYes -0.13333    0.09555  -1.395    0.164    
+d.offenceYes  0.26357    0.10864   2.426    0.016 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.387 on 243 degrees of freedom
+  (4 observations deleted due to missingness)
+Multiple R-squared:  0.02694,	Adjusted R-squared:  0.01894 
+F-statistic: 3.364 on 2 and 243 DF,  p-value: 0.0362
+
+anova(m6)
+[1] 41
+Analysis of Variance Table
+
+Response: fine
+           Df Sum Sq Mean Sq F value  Pr(>F)  
+p.offence   1  0.126 0.12624  0.8430 0.35945  
+d.offence   1  0.881 0.88143  5.8858 0.01599 *
+Residuals 243 36.391 0.14976                  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+m7 <- lm(fine ~ p.offence, data = drinkdriving)
+[1] 42
+summary(m7)
+[1] 43
+
+Call:
+lm(formula = fine ~ p.offence, data = drinkdriving)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.8525  0.1475  0.2000  0.2000  0.2000 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.80000    0.02874  27.841   <2e-16 ***
+p.offenceYes  0.05246    0.05771   0.909    0.364    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.3908 on 244 degrees of freedom
+  (4 observations deleted due to missingness)
+Multiple R-squared:  0.003376,	Adjusted R-squared:  -0.0007089 
+F-statistic: 0.8264 on 1 and 244 DF,  p-value: 0.3642
+
+m8 <- lm(fine ~ age + nighttime + speed + p.offence + bac, data = drinkdriving)
+[1] 44
+predicted_probabilities <- predict(m8, newdata = data.frame(age = 17:90, 
+    nighttime = "day", speed = 30, p.offence = "No", bac = 0))
+[1] 45
+p.ages <- 17:90
+[1] 46
+plot(p.ages, predicted_probabilities, type = "l", main = "Predicted probability of receiving fine", 
+    xlab = "Age", ylab = "Predicted Probability")
+[1] 47
+Q5 <- merge(drinkdriving, officer_inc)
+[1] 48
+m9 <- lm(fine ~ officer * scale(age), data = Q5)
+[1] 49
+anova(m9)
+[1] 50
+Analysis of Variance Table
+
+Response: fine
+                    Df  Sum Sq Mean Sq F value  Pr(>F)    
+officer              2  0.0905  0.0452  0.3915 0.67652    
+scale(age)           1  9.8561  9.8561 85.3097 < 2e-16 ***
+officer:scale(age)   2  0.7544  0.3772  3.2647 0.04015 *  
+Residuals          211 24.3774  0.1155                    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Q5$AS <- ifelse(Q5$officer == "AS", "Yes", "No")
+[1] 51
+Q5$NP <- ifelse(Q5$officer == "NP", "Yes", "No")
+[1] 52
+Q5$IT <- ifelse(Q5$officer == "IT", "Yes", "No")
+[1] 53
+m9.1 <- lm(fine ~ AS * scale(age), data = Q5)
+[1] 54
+m9.2 <- lm(fine ~ NP * scale(age), data = Q5)
+[1] 55
+m9.3 <- lm(fine ~ IT * scale(age), data = Q5)
+[1] 56
+summary(m9.1)
+[1] 57
+
+Call:
+lm(formula = fine ~ AS * scale(age), data = Q5)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.06285 -0.10613  0.07905  0.21036  0.79337 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.81981    0.03183  25.752  < 2e-16 ***
+ASYes            -0.05834    0.04621  -1.263   0.2081    
+scale(age)       -0.15326    0.03374  -4.543  9.3e-06 ***
+ASYes:scale(age) -0.11660    0.04634  -2.516   0.0126 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.3386 on 213 degrees of freedom
+  (33 observations deleted due to missingness)
+Multiple R-squared:  0.304,	Adjusted R-squared:  0.2942 
+F-statistic: 31.01 on 3 and 213 DF,  p-value: < 2.2e-16
+
+anova(m9.1)
+[1] 58
+Analysis of Variance Table
+
+Response: fine
+               Df  Sum Sq Mean Sq F value  Pr(>F)    
+AS              1  0.0230  0.0230  0.2005 0.65476    
+scale(age)      1  9.9137  9.9137 86.4859 < 2e-16 ***
+AS:scale(age)   1  0.7259  0.7259  6.3323 0.01259 *  
+Residuals     213 24.4158  0.1146                    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+summary(m9.2)
+[1] 59
+
+Call:
+lm(formula = fine ~ NP * scale(age), data = Q5)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.07012 -0.09924  0.07548  0.20653  0.83263 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.78341    0.02717  28.829  < 2e-16 ***
+NPYes             0.04932    0.05212   0.946   0.3450    
+scale(age)       -0.23589    0.02667  -8.844 3.55e-16 ***
+NPYes:scale(age)  0.09631    0.05437   1.771   0.0779 .  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.3416 on 213 degrees of freedom
+  (33 observations deleted due to missingness)
+Multiple R-squared:  0.2916,	Adjusted R-squared:  0.2816 
+F-statistic: 29.22 on 3 and 213 DF,  p-value: 7.255e-16
+
+anova(m9.2)
+[1] 60
+Analysis of Variance Table
+
+Response: fine
+               Df  Sum Sq Mean Sq F value  Pr(>F)    
+NP              1  0.0897  0.0897  0.7690 0.38153    
+scale(age)      1  9.7725  9.7725 83.7640 < 2e-16 ***
+NP:scale(age)   1  0.3660  0.3660  3.1374 0.07795 .  
+Residuals     213 24.8501  0.1167                    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+summary(m9.3)
+[1] 61
+
+Call:
+lm(formula = fine ~ IT * scale(age), data = Q5)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.1509 -0.1088  0.0736  0.2057  0.6769 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       0.79043    0.02704  29.232  < 2e-16 ***
+ITYes             0.01724    0.05421   0.318    0.751    
+scale(age)       -0.22729    0.02667  -8.521  2.9e-15 ***
+ITYes:scale(age)  0.06153    0.05624   1.094    0.275    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.3437 on 213 degrees of freedom
+  (33 observations deleted due to missingness)
+Multiple R-squared:  0.2827,	Adjusted R-squared:  0.2726 
+F-statistic: 27.99 on 3 and 213 DF,  p-value: 2.679e-15
+
+anova(m9.3)
+[1] 62
+Analysis of Variance Table
+
+Response: fine
+               Df  Sum Sq Mean Sq F value Pr(>F)    
+IT              1  0.0175  0.0175  0.1482 0.7006    
+scale(age)      1  9.7592  9.7592 82.6184 <2e-16 ***
+IT:scale(age)   1  0.1414  0.1414  1.1969 0.2752    
+Residuals     213 25.1603  0.1181                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

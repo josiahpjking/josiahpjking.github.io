@@ -1,0 +1,555 @@
+
+
+	####### B165739 R script #######
+
+library(ggplot2, quietly = T)
+[1] 1
+[1] "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(psych, quietly = T)
+[1] 2
+ [1] "psych"     "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+library(sm, quietly = T)
+[1] 3
+ [1] "sm"        "psych"     "ggplot2"   "readr"     "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"  
+[11] "base"     
+data <- load(url("https://edin.ac/2QCZNVu"))
+[1] 4
+describe(drinkdriving)
+[1] 5
+               vars   n mean    sd median trimmed   mad min  max range skew kurtosis   se
+age               1 228   46 33.35   40.5   42.34 18.53  14  297   283  5.5    38.49 2.21
+nighttime*        2 250  NaN    NA     NA     NaN    NA Inf -Inf  -Inf   NA       NA   NA
+prior_offence*    3 250  NaN    NA     NA     NaN    NA Inf -Inf  -Inf   NA       NA   NA
+ [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+outliers <- function(obs, x = 2.5) {
+    return(abs(obs - mean(obs, na.rm = T)) > (sd(obs, na.rm = T) * 
+        x))
+}
+[1] 6
+logit.to.p <- function(logits) {
+    exp(logits)/(exp(logits) + 1)
+}
+[1] 7
+drinkdriving$age[drinkdriving$age > 120] <- NA
+[1] 8
+table(drinkdriving$nighttime)
+[1] 9
+
+18:25  2:05   day night 
+    1     2    78   169 
+drinkdriving$nighttime[drinkdriving$nighttime == "18:25"] <- "day"
+[1] 10
+drinkdriving$nighttime[drinkdriving$nighttime == "2:05"] <- "night"
+[1] 11
+drinkdriving$nighttime <- factor(drinkdriving$nighttime)
+[1] 12
+drinkdriving$prior_offence <- as.factor(drinkdriving$prior_offence)
+[1] 13
+drinkdriving$speed[drinkdriving$speed < 6] <- NA
+[1] 14
+drinkdriving$speed <- as.numeric(drinkdriving$speed)
+[1] 15
+drinkdriving$bac <- (drinkdriving$bac)/100
+[1] 16
+table(drinkdriving$outcome)
+[1] 17
+
+   fine    Fine    FINE warning Warning WARNING 
+    191       2       9      43       2       3 
+drinkdriving$outcome[drinkdriving$outcome == "Fine" | drinkdriving$outcome == 
+    "FINE"] <- "fine"
+[1] 18
+drinkdriving$outcome[drinkdriving$outcome == "Warning" | drinkdriving$outcome == 
+    "WARNING"] <- "warning"
+[1] 19
+drinkdriving$outcome <- as.factor(drinkdriving$outcome)
+[1] 20
+describe(officer_inc)
+[1] 21
+             vars   n  mean    sd median trimmed   mad min max range skew kurtosis   se
+officer*        1 249   1.8  0.84    2.0    1.76  1.48   1   3     2 0.38    -1.47 0.05
+incident_id*    2 250 125.5 72.31  125.5  125.50 92.66   1 250   249 0.00    -1.21 4.57
+table(officer_inc$officer)
+[1] 22
+
+ AS  IT  NP 
+116  66  67 
+sort(drinkdriving$incident_id) == sort(officer_inc$incident_id)
+[1] 23
+ [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+[27] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+ [ reached getOption("max.print") -- omitted 200 entries ]
+-----------------------------------------------------------------------------m1 <- lm(bac ~ 
+    age, data = drinkdriving)
+[1] 24
+
+
+####################################################################################################
+
+[1] "Error in -----------------------------------------------------------------------------m1 <- lm(bac ~  : \n  object 'm1' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in -----------------------------------------------------------------------------m1 <- lm(bac ~     age, data = drinkdriving): object 'm1' not found>
+####################################################################################################
+
+
+summary(m1)
+[1] 25
+[1] "Error in summary(m1) : object 'm1' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m1): object 'm1' not found>
+
+
+####################################################################################################
+
+[1] "Error in summary(m1) : object 'm1' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m1): object 'm1' not found>
+####################################################################################################
+
+
+par(mfrow = c(2, 2))
+[1] 26
+$mfrow
+[1] 2 2
+
+par(mar = c(8, 4.1, 4.1, 2.1))
+[1] 27
+$mar
+[1] 5.1 3.1 4.1 3.1
+
+plot(m1, which = c(1:4))
+[1] 28
+drinkdriving <- subset(drinkdriving[drinkdriving$incident_id != 
+    "inc_154", ])
+[1] 29
+drinkdriving <- subset(drinkdriving[drinkdriving$incident_id != 
+    "inc_110", ])
+[1] 30
+drinkdriving <- subset(drinkdriving[drinkdriving$incident_id != 
+    "inc_101", ])
+[1] 31
+pred_bac <- data.frame(age = 50)
+[1] 32
+predict(m1, newdata = pred_bac)
+[1] 33
+[1] "Error in predict(m1, newdata = pred_bac) : object 'm1' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in predict(m1, newdata = pred_bac): object 'm1' not found>
+
+
+####################################################################################################
+
+[1] "Error in predict(m1, newdata = pred_bac) : object 'm1' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in predict(m1, newdata = pred_bac): object 'm1' not found>
+####################################################################################################
+
+
+hist(residuals(m1), main = "")
+[1] 34
+speed_model <- lm(bac ~ age + speed, data = drinkdriving)
+[1] 35
+summary(speed_model)
+[1] 36
+
+Call:
+lm(formula = bac ~ age + speed, data = drinkdriving)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.134149 -0.036983 -0.007254  0.038322  0.142545 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.2389833  0.0287406   8.315 1.14e-14 ***
+age         -0.0010436  0.0003160  -3.302  0.00113 ** 
+speed        0.0008623  0.0004511   1.912  0.05728 .  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.05682 on 210 degrees of freedom
+  (34 observations deleted due to missingness)
+Multiple R-squared:  0.1684,	Adjusted R-squared:  0.1605 
+F-statistic: 21.27 on 2 and 210 DF,  p-value: 3.889e-09
+
+anova(speed_model, test = "Chisq")
+[1] 37
+Analysis of Variance Table
+
+Response: bac
+           Df  Sum Sq  Mean Sq F value    Pr(>F)    
+age         1 0.12554 0.125538 38.8775 2.441e-09 ***
+speed       1 0.01180 0.011801  3.6545   0.05728 .  
+Residuals 210 0.67810 0.003229                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+time_model <- lm(bac ~ age + nighttime, data = drinkdriving)
+[1] 38
+summary(time_model)
+[1] 39
+
+Call:
+lm(formula = bac ~ age + nighttime, data = drinkdriving)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.164901 -0.045452  0.002444  0.036992  0.141745 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     0.2588180  0.0119119  21.728  < 2e-16 ***
+age            -0.0013005  0.0002205  -5.898 1.42e-08 ***
+nighttimenight  0.0373408  0.0080108   4.661 5.52e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.05452 on 214 degrees of freedom
+  (30 observations deleted due to missingness)
+Multiple R-squared:  0.2244,	Adjusted R-squared:  0.2172 
+F-statistic: 30.96 on 2 and 214 DF,  p-value: 1.55e-12
+
+anova(time_model)
+[1] 40
+Analysis of Variance Table
+
+Response: bac
+           Df  Sum Sq  Mean Sq F value    Pr(>F)    
+age         1 0.11947 0.119472  40.193 1.344e-09 ***
+nighttime   1 0.06458 0.064585  21.728 5.525e-06 ***
+Residuals 214 0.63610 0.002972                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+plot(speed_model, which = c(1:4))
+[1] 41
+plot(time_model, which = c(1:4))
+[1] 42
+m2 <- lm(bac ~ age + speed + nighttime, data = drinkdriving)
+[1] 43
+summary(m2)
+[1] 44
+
+Call:
+lm(formula = bac ~ age + speed + nighttime, data = drinkdriving)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.14894 -0.04237  0.00392  0.03515  0.13999 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     0.2156710  0.0280535   7.688 5.76e-13 ***
+age            -0.0009810  0.0003033  -3.234  0.00142 ** 
+speed           0.0007710  0.0004329   1.781  0.07636 .  
+nighttimenight  0.0356024  0.0080618   4.416 1.61e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.05448 on 209 degrees of freedom
+  (34 observations deleted due to missingness)
+Multiple R-squared:  0.2394,	Adjusted R-squared:  0.2285 
+F-statistic: 21.93 on 3 and 209 DF,  p-value: 2.19e-12
+
+t.test(speed ~ nighttime, data = drinkdriving)
+[1] 45
+
+	Welch Two Sample t-test
+
+data:  speed by nighttime
+t = -1.9505, df = 177.7, p-value = 0.05269
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -6.54350814  0.03817558
+sample estimates:
+  mean in group day mean in group night 
+           38.39686            41.64953 
+
+drinkdriving$fines <- ifelse(drinkdriving$outcome == "fine", 
+    1, 0)
+[1] 46
+m3 <- glm(fines ~ speed + bac + offence + age, data = drinkdriving, 
+    family = binomial)
+[1] 47
+
+
+####################################################################################################
+
+[1] "Error in eval(predvars, data, env) : object 'offence' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(predvars, data, env): object 'offence' not found>
+####################################################################################################
+
+
+summary(m3)
+[1] 48
+[1] "Error in summary(m3) : object 'm3' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m3): object 'm3' not found>
+
+
+####################################################################################################
+
+[1] "Error in summary(m3) : object 'm3' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in summary(m3): object 'm3' not found>
+####################################################################################################
+
+
+anova(m3, test = "Chisq")
+[1] 49
+[1] "Error in anova(m3, test = \"Chisq\") : object 'm3' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in anova(m3, test = "Chisq"): object 'm3' not found>
+
+
+####################################################################################################
+
+[1] "Error in anova(m3, test = \"Chisq\") : object 'm3' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in anova(m3, test = "Chisq"): object 'm3' not found>
+####################################################################################################
+
+
+m3_scaled <- lm(scale(fines) ~ scale(speed) + scale(bac), data = drinkdriving)
+[1] 50
+summary(m3_scaled)
+[1] 51
+
+Call:
+lm(formula = scale(fines) ~ scale(speed) + scale(bac), data = drinkdriving)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.2469 -0.3005  0.2365  0.5839  1.4832 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.03536    0.05195   0.681    0.497    
+scale(speed)  0.33768    0.05938   5.687 3.83e-08 ***
+scale(bac)    0.31061    0.05860   5.300 2.66e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.8014 on 235 degrees of freedom
+  (9 observations deleted due to missingness)
+Multiple R-squared:  0.3266,	Adjusted R-squared:  0.3208 
+F-statistic: 56.98 on 2 and 235 DF,  p-value: < 2.2e-16
+
+myvars <- c("prior_offence", "outcome")
+[1] 52
+offences_subset <- drinkdriving[myvars]
+[1] 53
+offences_subset <- offences_subset[!(offences_subset$prior_offence == 
+    "N"), ]
+[1] 54
+offences_subset$drink_offence <- "non-drinking"
+[1] 55
+offences_subset$drink_offence[offences_subset$prior_offence == 
+    "DR50"] <- "drinking"
+[1] 56
+cont <- xtabs(~outcome + drink_offence, data = offences_subset)
+[1] 57
+addmargins(cont)
+[1] 58
+         drink_offence
+outcome   drinking non-drinking Sum
+  fine          40           12  52
+  warning        3            8  11
+  Sum           43           20  63
+chisq.test(xtabs(~outcome + drink_offence, data = offences_subset))
+[1] 59
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  xtabs(~outcome + drink_offence, data = offences_subset)
+X-squared = 8.1652, df = 1, p-value = 0.00427
+
+drinkdriving$offence <- "PO"
+[1] 60
+drinkdriving$offence[drinkdriving$prior_offence == "N"] <- "NO"
+[1] 61
+cont1 <- xtabs(~outcome + offence, data = drinkdriving)
+[1] 62
+addmargins(cont1)
+[1] 63
+         offence
+outcome    NO  PO Sum
+  fine    147  52 199
+  warning  37  11  48
+  Sum     184  63 247
+chisq.test(xtabs(~outcome + offence, data = drinkdriving))
+[1] 64
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  xtabs(~outcome + offence, data = drinkdriving)
+X-squared = 0.075113, df = 1, p-value = 0.784
+
+m4 <- glm(fines ~ age + nighttime + speed + prior_offence + bac, 
+    data = drinkdriving, family = binomial)
+[1] 65
+min(na.rm = TRUE, drinkdriving$age)
+[1] 66
+[1] 14
+max(na.rm = TRUE, drinkdriving$age)
+[1] 67
+[1] 90
+age_dep <- data.frame(age = c(14:90), nighttime = "day", speed = 30, 
+    prior_offence = "N", bac = 0)
+[1] 68
+m5 <- predict(m4, newdata = age_dep)
+[1] 69
+age <- as.numeric(c(14:90))
+[1] 70
+model_predictions <- logit.to.p(m5)
+[1] 71
+fine_age <- data.frame(age, model_predictions)
+[1] 72
+plot(fine_age)
+[1] 73
+officer_inc <- subset(officer_inc[officer_inc$incident_id != 
+    "inc_154", ])
+[1] 74
+officer_inc <- subset(officer_inc[officer_inc$incident_id != 
+    "inc_110", ])
+[1] 75
+officer_inc <- subset(officer_inc[officer_inc$incident_id != 
+    "inc_101", ])
+[1] 76
+officer_inc <- officer_inc[order(officer_inc$incident_id), ]
+[1] 77
+bias <- data.frame(officer = officer_inc$officer, incident_id = officer_inc$incident_id, 
+    age = drinkdriving$age, outcome = drinkdriving$outcome)
+[1] 78
+bias_subsetAS <- subset(bias, bias_subset$officer == "AS")
+[1] 79
+
+
+####################################################################################################
+
+[1] "Error in eval(e, x, parent.frame()) : object 'bias_subset' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(e, x, parent.frame()): object 'bias_subset' not found>
+####################################################################################################
+
+
+bias_subsetIT <- subset(bias, bias_subset$officer == "IT")
+[1] 80
+
+
+####################################################################################################
+
+[1] "Error in eval(e, x, parent.frame()) : object 'bias_subset' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(e, x, parent.frame()): object 'bias_subset' not found>
+####################################################################################################
+
+
+bias_subsetNP <- subset(bias, bias_subset$officer == "NP")
+[1] 81
+
+
+####################################################################################################
+
+[1] "Error in eval(e, x, parent.frame()) : object 'bias_subset' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(e, x, parent.frame()): object 'bias_subset' not found>
+####################################################################################################
+
+
+t.test(age ~ outcome, bias_subsetAS)
+[1] 82
+[1] "Error in eval(m$data, parent.frame()) : object 'bias_subsetAS' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(m$data, parent.frame()): object 'bias_subsetAS' not found>
+
+
+####################################################################################################
+
+[1] "Error in eval(m$data, parent.frame()) : object 'bias_subsetAS' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(m$data, parent.frame()): object 'bias_subsetAS' not found>
+####################################################################################################
+
+
+t.test(age ~ outcome, bias_subsetIT)
+[1] 83
+[1] "Error in eval(m$data, parent.frame()) : object 'bias_subsetIT' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(m$data, parent.frame()): object 'bias_subsetIT' not found>
+
+
+####################################################################################################
+
+[1] "Error in eval(m$data, parent.frame()) : object 'bias_subsetIT' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(m$data, parent.frame()): object 'bias_subsetIT' not found>
+####################################################################################################
+
+
+t.test(age ~ outcome, bias_subsetNP)
+[1] 84
+[1] "Error in eval(m$data, parent.frame()) : object 'bias_subsetNP' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(m$data, parent.frame()): object 'bias_subsetNP' not found>
+
+
+####################################################################################################
+
+[1] "Error in eval(m$data, parent.frame()) : object 'bias_subsetNP' not found\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in eval(m$data, parent.frame()): object 'bias_subsetNP' not found>
+####################################################################################################
+
+
+par(mfrow = c(2, 3))
+[1] 85
+$mfrow
+[1] 2 2
+
+boxplot(bias_subsetAS$age ~ bias_subsetAS$outcome, xlab = "", 
+    ylab = "age", main = "Officer AS")
+[1] 86
+boxplot(bias_subsetIT$age ~ bias_subsetIT$outcome, xlab = "", 
+    ylab = "age", main = "Officer IT")
+[1] 87
+boxplot(bias_subsetNP$age ~ bias_subsetNP$outcome, xlab = "", 
+    ylab = "age", main = "Officer NP")
+[1] 88
