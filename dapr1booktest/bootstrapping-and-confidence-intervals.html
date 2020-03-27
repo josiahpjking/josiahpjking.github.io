@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 12 Bootstrapping and Confidence Intervals | Data Analysis for Psychology in R (dapR1) - Labs</title>
   <meta name="description" content="This is the page that contains the course labs materials" />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 12 Bootstrapping and Confidence Intervals | Data Analysis for Psychology in R (dapR1) - Labs" />
   <meta property="og:type" content="book" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="chap-sampling-distributions.html"/>
-
+<link rel="next" href="chap-hyp-test.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -347,18 +347,152 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html"><i class="fa fa-check"></i><b>12</b> Bootstrapping and Confidence Intervals</a><ul>
 <li class="chapter" data-level="12.1" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#recap-1"><i class="fa fa-check"></i><b>12.1</b> Recap</a></li>
 <li class="chapter" data-level="12.2" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#from-sampling-to-resampling"><i class="fa fa-check"></i><b>12.2</b> From Sampling to Resampling</a></li>
-<li class="chapter" data-level="12.3" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#more-generally"><i class="fa fa-check"></i><b>12.3</b> More generally…</a></li>
-<li class="chapter" data-level="12.4" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#confidence-intervals"><i class="fa fa-check"></i><b>12.4</b> Confidence Intervals</a><ul>
-<li class="chapter" data-level="12.4.1" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#calculating-confidence-intervals-using-a-bootstrap-standard-error"><i class="fa fa-check"></i><b>12.4.1</b> Calculating confidence intervals using a bootstrap standard error</a></li>
+<li class="chapter" data-level="12.3" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#getting-to-the-bootstrap-distribution"><i class="fa fa-check"></i><b>12.3</b> Getting to the bootstrap distribution</a></li>
+<li class="chapter" data-level="12.4" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#more-generally"><i class="fa fa-check"></i><b>12.4</b> More generally…</a></li>
+<li class="chapter" data-level="12.5" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#confidence-intervals"><i class="fa fa-check"></i><b>12.5</b> Confidence Intervals</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#calculating-confidence-intervals-using-a-bootstrap-standard-error"><i class="fa fa-check"></i><b>12.5.1</b> Calculating confidence intervals using a bootstrap standard error</a></li>
 </ul></li>
-<li class="chapter" data-level="12.5" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#summary-1"><i class="fa fa-check"></i><b>12.5</b> Summary</a></li>
-<li class="chapter" data-level="12.6" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#take-home-message-1"><i class="fa fa-check"></i><b>12.6</b> Take-home message</a></li>
-<li class="chapter" data-level="12.7" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#lab"><i class="fa fa-check"></i><b>12.7</b> Lab</a><ul>
+<li class="chapter" data-level="12.6" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#summary-1"><i class="fa fa-check"></i><b>12.6</b> Summary</a></li>
+<li class="chapter" data-level="12.7" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#take-home-message-1"><i class="fa fa-check"></i><b>12.7</b> Take-home message</a></li>
+<li class="chapter" data-level="12.8" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#lab"><i class="fa fa-check"></i><b>12.8</b> Lab</a><ul>
 <li class="chapter" data-level="" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#exercise-1-hollywood-movies"><i class="fa fa-check"></i>Exercise 1: Hollywood Movies</a></li>
 <li class="chapter" data-level="" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#exercise-2-nfl-players"><i class="fa fa-check"></i>Exercise 2: NFL Players</a></li>
 </ul></li>
-<li class="chapter" data-level="12.8" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#glossary-1"><i class="fa fa-check"></i><b>12.8</b> Glossary</a></li>
-<li class="chapter" data-level="12.9" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#references-1"><i class="fa fa-check"></i><b>12.9</b> References</a></li>
+<li class="chapter" data-level="12.9" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#glossary-1"><i class="fa fa-check"></i><b>12.9</b> Glossary</a></li>
+<li class="chapter" data-level="12.10" data-path="bootstrapping-and-confidence-intervals.html"><a href="bootstrapping-and-confidence-intervals.html#references-1"><i class="fa fa-check"></i><b>12.10</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html"><i class="fa fa-check"></i><b>13</b> Testing hypotheses</a><ul>
+<li class="chapter" data-level="13.1" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#recap-2"><i class="fa fa-check"></i><b>13.1</b> Recap</a></li>
+<li class="chapter" data-level="13.2" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#walkthrough"><i class="fa fa-check"></i><b>13.2</b> Walkthrough</a><ul>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#extrasensory-perception-esp"><i class="fa fa-check"></i>Extrasensory perception (ESP)</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#example-esp-results"><i class="fa fa-check"></i>Example 1: ESP experimental results</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#example-in-class"><i class="fa fa-check"></i>Example 2: In-class activity</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#the-random-chance-model"><i class="fa fa-check"></i>The random chance model</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#the-alternative-explanation"><i class="fa fa-check"></i>The alternative explanation</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#statistical-test"><i class="fa fa-check"></i>Statistical test</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#understanding-statistical-evidence"><i class="fa fa-check"></i>Understanding statistical evidence</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#statistical-hypotheses"><i class="fa fa-check"></i>Statistical hypotheses</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#statistical-significance"><i class="fa fa-check"></i>Statistical significance</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#null-distribution"><i class="fa fa-check"></i>Null distribution</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#p-value"><i class="fa fa-check"></i>P-value</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#making-a-formal-decision"><i class="fa fa-check"></i>Making a formal decision</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#summary-2"><i class="fa fa-check"></i><b>13.3</b> Summary</a></li>
+<li class="chapter" data-level="13.4" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#lab-1"><i class="fa fa-check"></i><b>13.4</b> Lab</a><ul>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#required-packages"><i class="fa fa-check"></i>Required packages</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#importing-the-data"><i class="fa fa-check"></i>Importing the data</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#data-inspection"><i class="fa fa-check"></i>Data inspection</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#sample-average-and-standard-deviation"><i class="fa fa-check"></i>Sample average and standard deviation</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#null-and-alternative-hypothesis"><i class="fa fa-check"></i>Null and alternative hypothesis</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#bootstrap-distribution-and-null-distribution"><i class="fa fa-check"></i>Bootstrap distribution and null distribution</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#visualise-the-observed-statistic-on-the-null-distribution"><i class="fa fa-check"></i>Visualise the observed statistic on the null distribution</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#p-value-2"><i class="fa fa-check"></i>P-value</a></li>
+<li class="chapter" data-level="" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#interpreting-the-p-value"><i class="fa fa-check"></i>Interpreting the p-value</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#glossary-2"><i class="fa fa-check"></i><b>13.5</b> Glossary</a></li>
+<li class="chapter" data-level="13.6" data-path="chap-hyp-test.html"><a href="chap-hyp-test.html#references-2"><i class="fa fa-check"></i><b>13.6</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="chap-typeerror.html"><a href="chap-typeerror.html"><i class="fa fa-check"></i><b>14</b> Type I, Type II errors and Power</a><ul>
+<li class="chapter" data-level="14.1" data-path="chap-typeerror.html"><a href="chap-typeerror.html#overview-of-last-week"><i class="fa fa-check"></i><b>14.1</b> Overview of last week</a></li>
+<li class="chapter" data-level="14.2" data-path="chap-typeerror.html"><a href="chap-typeerror.html#walkthrough-1"><i class="fa fa-check"></i><b>14.2</b> Walkthrough</a><ul>
+<li class="chapter" data-level="" data-path="chap-typeerror.html"><a href="chap-typeerror.html#example-1-coin-flip"><i class="fa fa-check"></i>Example 1: Coin flip</a></li>
+<li class="chapter" data-level="" data-path="chap-typeerror.html"><a href="chap-typeerror.html#an-analogy-in-law"><i class="fa fa-check"></i>An analogy in law</a></li>
+<li class="chapter" data-level="" data-path="chap-typeerror.html"><a href="chap-typeerror.html#two-different-types-of-errors"><i class="fa fa-check"></i>Two different types of errors</a></li>
+<li class="chapter" data-level="" data-path="chap-typeerror.html"><a href="chap-typeerror.html#type-i-errors"><i class="fa fa-check"></i>Type I errors</a></li>
+<li class="chapter" data-level="" data-path="chap-typeerror.html"><a href="chap-typeerror.html#type-ii-errors-and-power"><i class="fa fa-check"></i>Type II Errors and Power</a></li>
+<li class="chapter" data-level="" data-path="chap-typeerror.html"><a href="chap-typeerror.html#example-2-a-biased-coin"><i class="fa fa-check"></i>Example 2: A biased coin</a></li>
+<li class="chapter" data-level="" data-path="chap-typeerror.html"><a href="chap-typeerror.html#overlapping-distributions"><i class="fa fa-check"></i>Overlapping distributions</a></li>
+<li class="chapter" data-level="" data-path="chap-typeerror.html"><a href="chap-typeerror.html#generalising-it"><i class="fa fa-check"></i>Generalising it</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="chap-typeerror.html"><a href="chap-typeerror.html#summary-3"><i class="fa fa-check"></i><b>14.3</b> Summary</a></li>
+<li class="chapter" data-level="14.4" data-path="chap-typeerror.html"><a href="chap-typeerror.html#lab-2"><i class="fa fa-check"></i><b>14.4</b> Lab</a><ul>
+<li class="chapter" data-level="14.4.1" data-path="chap-typeerror.html"><a href="chap-typeerror.html#exercise-1-rock-paper-scissors"><i class="fa fa-check"></i><b>14.4.1</b> Exercise 1: Rock Paper Scissors!</a></li>
+<li class="chapter" data-level="14.4.2" data-path="chap-typeerror.html"><a href="chap-typeerror.html#exercise-2-calculating-power-for-a-different-coin."><i class="fa fa-check"></i><b>14.4.2</b> Exercise 2: Calculating power for a different coin.</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="chap-typeerror.html"><a href="chap-typeerror.html#extra-exercises"><i class="fa fa-check"></i><b>14.5</b> Extra Exercises</a><ul>
+<li class="chapter" data-level="14.5.1" data-path="chap-typeerror.html"><a href="chap-typeerror.html#exercise-3-sample-size-number-of-flips-and-power"><i class="fa fa-check"></i><b>14.5.1</b> Exercise 3: Sample size (number of flips) and power</a></li>
+</ul></li>
+<li class="chapter" data-level="14.6" data-path="chap-typeerror.html"><a href="chap-typeerror.html#glossary-3"><i class="fa fa-check"></i><b>14.6</b> Glossary</a></li>
+<li class="chapter" data-level="14.7" data-path="chap-typeerror.html"><a href="chap-typeerror.html#references-3"><i class="fa fa-check"></i><b>14.7</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="chap-normal.html"><a href="chap-normal.html"><i class="fa fa-check"></i><b>15</b> Normal distribution &amp; probability</a><ul>
+<li class="chapter" data-level="15.1" data-path="chap-normal.html"><a href="chap-normal.html#recap-3"><i class="fa fa-check"></i><b>15.1</b> Recap</a></li>
+<li class="chapter" data-level="15.2" data-path="chap-normal.html"><a href="chap-normal.html#walkthrough-2"><i class="fa fa-check"></i><b>15.2</b> Walkthrough</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="chap-normal.html"><a href="chap-normal.html#from-histograms-to-normal-curves"><i class="fa fa-check"></i><b>15.2.1</b> From histograms to normal curves</a></li>
+<li class="chapter" data-level="15.2.2" data-path="chap-normal.html"><a href="chap-normal.html#sec-area-and-prob"><i class="fa fa-check"></i><b>15.2.2</b> The relation between area and probability</a></li>
+<li class="chapter" data-level="15.2.3" data-path="chap-normal.html"><a href="chap-normal.html#probabilities-for-normally-distributed-random-variables"><i class="fa fa-check"></i><b>15.2.3</b> Probabilities for normally distributed random variables</a></li>
+<li class="chapter" data-level="15.2.4" data-path="chap-normal.html"><a href="chap-normal.html#z-scores"><i class="fa fa-check"></i><b>15.2.4</b> Z-scores</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="chap-normal.html"><a href="chap-normal.html#summary-4"><i class="fa fa-check"></i><b>15.3</b> Summary</a></li>
+<li class="chapter" data-level="15.4" data-path="chap-normal.html"><a href="chap-normal.html#lab-3"><i class="fa fa-check"></i><b>15.4</b> Lab</a></li>
+<li class="chapter" data-level="15.5" data-path="chap-normal.html"><a href="chap-normal.html#glossary-4"><i class="fa fa-check"></i><b>15.5</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html"><i class="fa fa-check"></i><b>16</b> One Sample Mean Test</a><ul>
+<li class="chapter" data-level="16.1" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#recap-4"><i class="fa fa-check"></i><b>16.1</b> Recap</a></li>
+<li class="chapter" data-level="16.2" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#where-we-are-now"><i class="fa fa-check"></i><b>16.2</b> Where we are now</a></li>
+<li class="chapter" data-level="16.3" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#where-we-are-going"><i class="fa fa-check"></i><b>16.3</b> Where we are going</a></li>
+<li class="chapter" data-level="16.4" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#one-sample-mean-test"><i class="fa fa-check"></i><b>16.4</b> One sample mean test</a><ul>
+<li class="chapter" data-level="" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#example-questions"><i class="fa fa-check"></i>Example questions</a></li>
+<li class="chapter" data-level="" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#hypotheses"><i class="fa fa-check"></i>Hypotheses</a></li>
+<li class="chapter" data-level="" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#formula"><i class="fa fa-check"></i>Formula</a></li>
+<li><a href="chap-one-mean-test.html#t-distributions"><span class="math inline">\(t\)</span>-distributions</a></li>
+<li class="chapter" data-level="" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#critical-values-significance"><i class="fa fa-check"></i>Critical values &amp; significance</a></li>
+</ul></li>
+<li class="chapter" data-level="16.5" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#walkthrough---tempo-of-rock-music-on-spotify"><i class="fa fa-check"></i><b>16.5</b> Walkthrough - Tempo of rock music on Spotify</a></li>
+<li class="chapter" data-level="" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#all-in-one-line-of-code"><i class="fa fa-check"></i>ALL IN ONE LINE OF CODE!</a></li>
+<li class="chapter" data-level="" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#assumptions"><i class="fa fa-check"></i>Assumptions</a></li>
+<li class="chapter" data-level="16.6" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#summary-5"><i class="fa fa-check"></i><b>16.6</b> Summary</a></li>
+<li class="chapter" data-level="16.7" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#lab-4"><i class="fa fa-check"></i><b>16.7</b> Lab</a><ul>
+<li class="chapter" data-level="16.7.1" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#pets-weights"><i class="fa fa-check"></i><b>16.7.1</b> Pets’ weights</a></li>
+<li class="chapter" data-level="16.7.2" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#procrastination-scores"><i class="fa fa-check"></i><b>16.7.2</b> Procrastination scores</a></li>
+<li class="chapter" data-level="16.7.3" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#cat-weights"><i class="fa fa-check"></i><b>16.7.3</b> Cat weights!</a></li>
+<li class="chapter" data-level="16.7.4" data-path="chap-one-mean-test.html"><a href="chap-one-mean-test.html#glossary-5"><i class="fa fa-check"></i><b>16.7.4</b> Glossary</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="two-indep-samples.html"><a href="two-indep-samples.html"><i class="fa fa-check"></i><b>17</b> Comparing two means (independent samples)</a><ul>
+<li class="chapter" data-level="17.1" data-path="two-indep-samples.html"><a href="two-indep-samples.html#recap-5"><i class="fa fa-check"></i><b>17.1</b> Recap</a></li>
+<li class="chapter" data-level="17.2" data-path="two-indep-samples.html"><a href="two-indep-samples.html#key-terminology"><i class="fa fa-check"></i><b>17.2</b> Key terminology</a></li>
+<li class="chapter" data-level="17.3" data-path="two-indep-samples.html"><a href="two-indep-samples.html#walkthrough-got-a-friend"><i class="fa fa-check"></i><b>17.3</b> Walkthrough: Got a friend?</a></li>
+<li class="chapter" data-level="17.4" data-path="two-indep-samples.html"><a href="two-indep-samples.html#lab-does-name-increase-tips"><i class="fa fa-check"></i><b>17.4</b> Lab: Does name increase tips?</a></li>
+<li class="chapter" data-level="17.5" data-path="two-indep-samples.html"><a href="two-indep-samples.html#glossary-6"><i class="fa fa-check"></i><b>17.5</b> Glossary</a></li>
+<li class="chapter" data-level="17.6" data-path="two-indep-samples.html"><a href="two-indep-samples.html#w17-references"><i class="fa fa-check"></i><b>17.6</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="chap-paired-t-test.html"><a href="chap-paired-t-test.html"><i class="fa fa-check"></i><b>18</b> Paired T-Test</a><ul>
+<li class="chapter" data-level="" data-path="chap-paired-t-test.html"><a href="chap-paired-t-test.html#recap-6"><i class="fa fa-check"></i>Recap</a></li>
+<li><a href="chap-paired-t-test.html#paired-t-test">Paired <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="18.1" data-path="chap-paired-t-test.html"><a href="chap-paired-t-test.html#walkthrough-3"><i class="fa fa-check"></i><b>18.1</b> Walkthrough</a><ul>
+<li class="chapter" data-level="" data-path="chap-paired-t-test.html"><a href="chap-paired-t-test.html#change-in-score-on-the-ace-iii"><i class="fa fa-check"></i>Change in score on the ACE-III</a></li>
+<li class="chapter" data-level="" data-path="chap-paired-t-test.html"><a href="chap-paired-t-test.html#data-organisation---reshaping"><i class="fa fa-check"></i>Data organisation - reshaping</a></li>
+<li class="chapter" data-level="" data-path="chap-paired-t-test.html"><a href="chap-paired-t-test.html#effect-sizes"><i class="fa fa-check"></i>Effect sizes</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="chap-paired-t-test.html"><a href="chap-paired-t-test.html#summary-6"><i class="fa fa-check"></i><b>18.2</b> Summary</a></li>
+<li class="chapter" data-level="18.3" data-path="chap-paired-t-test.html"><a href="chap-paired-t-test.html#lab-5"><i class="fa fa-check"></i><b>18.3</b> Lab</a><ul>
+<li class="chapter" data-level="" data-path="chap-paired-t-test.html"><a href="chap-paired-t-test.html#age-differences-in-heterosexual-marriages"><i class="fa fa-check"></i>Age differences in heterosexual marriages</a></li>
+<li class="chapter" data-level="" data-path="chap-paired-t-test.html"><a href="chap-paired-t-test.html#smoking-interventions"><i class="fa fa-check"></i>Smoking interventions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="chap-chi-square.html"><a href="chap-chi-square.html"><i class="fa fa-check"></i><b>19</b> Chi-square tests</a><ul>
+<li class="chapter" data-level="" data-path="chap-chi-square.html"><a href="chap-chi-square.html#recap-7"><i class="fa fa-check"></i>Recap</a></li>
+<li><a href="chap-chi-square.html#walkthrough-birthdays-of-the-week-the-chi-square-goodness-of-fit-test">Walkthrough: Birthdays of the week <br>The chi-square goodness-of-fit test</a></li>
+<li><a href="chap-chi-square.html#lab-joking-for-a-tip-the-chi-square-test-of-independence">Lab: Joking for a tip <br>The chi-square test of independence</a></li>
+<li class="chapter" data-level="" data-path="chap-chi-square.html"><a href="chap-chi-square.html#summary-7"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="chap-chi-square.html"><a href="chap-chi-square.html#glossary-7"><i class="fa fa-check"></i>Glossary</a></li>
+<li class="chapter" data-level="" data-path="chap-chi-square.html"><a href="chap-chi-square.html#references-4"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="chap-covcor.html"><a href="chap-covcor.html"><i class="fa fa-check"></i><b>20</b> Covariance and correlation</a><ul>
+<li class="chapter" data-level="" data-path="chap-covcor.html"><a href="chap-covcor.html#recap-8"><i class="fa fa-check"></i>Recap</a></li>
+<li class="chapter" data-level="" data-path="chap-covcor.html"><a href="chap-covcor.html#walkthrough-4"><i class="fa fa-check"></i>Walkthrough</a><ul>
+<li class="chapter" data-level="" data-path="chap-covcor.html"><a href="chap-covcor.html#visualisation"><i class="fa fa-check"></i>Visualisation</a></li>
+<li class="chapter" data-level="" data-path="chap-covcor.html"><a href="chap-covcor.html#covariance"><i class="fa fa-check"></i>Covariance</a></li>
+<li><a href="chap-covcor.html#correlation-r">Correlation (<span class="math inline">\(r\)</span>)</a></li>
+<li><a href="chap-covcor.html#game-guess-the-r"><b>Game:</b> Guess the <span class="math inline">\(r\)</span></a></li>
+<li class="chapter" data-level="" data-path="chap-covcor.html"><a href="chap-covcor.html#testing-significance-of-the-correlation-coefficient"><i class="fa fa-check"></i>Testing significance of the correlation coefficient</a></li>
+<li class="chapter" data-level="" data-path="chap-covcor.html"><a href="chap-covcor.html#extras-correlation-matrix"><i class="fa fa-check"></i>Extras: Correlation matrix</a></li>
+<li class="chapter" data-level="" data-path="chap-covcor.html"><a href="chap-covcor.html#cautions"><i class="fa fa-check"></i>Cautions!</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="chap-covcor.html"><a href="chap-covcor.html#lab-6"><i class="fa fa-check"></i>Lab</a><ul>
+<li class="chapter" data-level="" data-path="chap-covcor.html"><a href="chap-covcor.html#sleep-levels-and-daytime-functioning"><i class="fa fa-check"></i>Sleep levels and daytime functioning</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -390,21 +524,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <h4 id="learning-outcomes-1" class="unnumbered">Learning outcomes</h4>
 <p><strong>LO1.</strong> Understand how bootstrap resampling with replacement can be used to approximate a sampling distribution.</p>
-<p><strong>LO2.</strong> Understand how the bootstrap distribution can be used to derive a range of highly plausible values (a <em>confidence interval</em>).</p>
+<p><strong>LO2.</strong> Understand how the bootstrap distribution can be used to derive a range of highly plausible values (a <strong>confidence interval</strong>).</p>
 <h4 id="reading-1" class="unnumbered">Reading</h4>
 <p>This week’s reading is <a href="https://moderndive.com/8-confidence-intervals.html">Chapter 8</a> of the book by Chester Ismay and Albert Y. Kim. <em>Statistical Inference via Data Science: A ModernDive into R and the Tidyverse</em>. Chapman and Hall/CRC, 2019. Freely available online at: <a href="https://moderndive.com/" class="uri">https://moderndive.com/</a></p>
 </div>
 <div id="recap-1" class="section level2">
 <h2><span class="header-section-number">12.1</span> Recap</h2>
-<p>Last week, we learnt about how we can take a <em>statistic</em> from a sample to draw conclusions about a <em>parameter</em> of the population from which the sample is drawn.
-We then focused on how these sample statistics will vary from sample to sample. We saw that by taking lots of samples we could create a <em>sampling distribution</em> for a statistic, allowing us to quantify the variation in the sample statistics due to sampling. Specifically, we learnt that the standard deviation of the sampling distribution is known as the <em>standard error</em>.
+<p>Last week, we learnt about how we can take a <strong>statistic</strong> from a sample to draw conclusions about a <strong>parameter</strong> of the population from which the sample is drawn.
+We then focused on how these sample statistics will vary from sample to sample. We saw that by taking lots of samples we could create a <strong>sampling distribution</strong> for a statistic, allowing us to quantify the variation in the sample statistics due to sampling. Specifically, we learnt that the standard deviation of the sampling distribution is known as the <strong>standard error</strong>.
 Finally, we saw how the size of our samples influences the sampling variation, with bigger samples leading to narrower sampling distributions, and more precise estimates.</p>
 <p>This week, we are going to continue to think about how we can quantify sampling variation, but specifically when we have only a single sample (which is often the case in real life). We will also see how, just as we can take a sample in order to calculate a single point estimate of a population parameter, we can use sampling variation to construct a <em>range of plausible values</em> which, in the case of uncertain estimates, might be more meaningful than a single value.</p>
 </div>
 <div id="from-sampling-to-resampling" class="section level2">
 <h2><span class="header-section-number">12.2</span> From Sampling to Resampling</h2>
-<p>We mentioned last week that we often have neither the time nor the resources to collect data from the entire population (a <em>census</em>). It is also often infeasible to get <em>many samples</em> of size <span class="math inline">\(n\)</span> in order to get an idea of how accurate our estimate of the population parameter is.</p>
-<p><strong>How can we study the variability of our sample statistic with only one sample?</strong></p>
+<p>We mentioned last week that we often have neither the time nor the resources to collect data from the entire population (a <strong>census</strong>). It is also often infeasible to get <em>many samples</em> of size <span class="math inline">\(n\)</span> in order to get an idea of how accurate our estimate of the population parameter is.</p>
+<p><em>How can we study the variability of our sample statistic with only one sample?</em></p>
 <p>It turns out that we can mimick the act of sampling <span class="math inline">\(n\)</span> units from the population, by <em>resampling with replacement</em> <span class="math inline">\(n\)</span> units from our original sample of <span class="math inline">\(n\)</span> units. This is broadly known as <strong>bootstrapping</strong>.</p>
 <div class="def">
 <h4 id="bootstrapping" class="unnumbered">Bootstrapping</h4>
@@ -415,29 +549,29 @@ Finally, we saw how the size of our samples influences the sampling variation, w
 ► The NFL Example
 </p>
 <div class="question-body">
-<p>Think back to last week. We saw a dataset of <strong>all</strong> the National Football League players at the beginning of 2015, along with their yearly salaries.</p>
+<p>Think back to last week. We saw a dataset of <em>all</em> the National Football League players at the beginning of 2015, along with their yearly salaries.</p>
 <p>This was our <strong>population</strong> (in real life we often don’t have data on the entire population).</p>
-<p>We took multiple samples of 50 players in order to study how the mean salaries of those samples varied (this allowed us to determine the accuracy of using a mean from a sample of 50 players (<span class="math inline">\(\bar{x}\)</span>) as an estimate of the population parameter <span class="math inline">\(\mu\)</span>).
+<p>We took multiple samples of 50 players in order to study how the mean salaries of those samples varied (this allowed us to determine the accuracy of using a mean from a sample of 50 players, <span class="math inline">\(\bar{x}\)</span>, as an estimate of the population parameter, <span class="math inline">\(\mu\)</span>).
 In fact, we took 2000 samples of 50 players, which is not at all feasible in practice.</p>
 <p>Now let’s imagine we only collect one sample of 50 players.
-We can approximate the sampling distribution of <span class="math inline">\(\bar{x}\)</span> (the mean salary of our sample) by <em>bootstrapping</em>.
+We can approximate the sampling distribution of <span class="math inline">\(\bar{x}\)</span> (the mean salary of our sample) by <strong>bootstrapping</strong>.
 To do this, we:</p>
 <ol style="list-style-type: decimal">
-<li>Collect a sample of 50 players.</li>
-<li>Compute the mean salary of the sample.</li>
-<li>Take a random sample <em>with replacement</em> of 50 players <em>from our original sample</em> (this is known as a <strong>resample</strong>), and compute the mean of the resample.</li>
-<li>Re-do point 3 many times.</li>
+<li>collect a sample of 50 players;</li>
+<li>compute the mean salary of the sample;</li>
+<li>take a random sample <em>with replacement</em> of 50 players <em>from our original sample</em> (this is known as a <strong>resample</strong>), and compute the mean of the resample;</li>
+<li>re-do step three many times.</li>
 </ol>
 <div class="red">
 <h4 id="think" class="unnumbered">Think</h4>
-<p>What do we mean by <strong>with replacement</strong>, and why is it necessary?</p>
+<p>What do we mean by <em>“with replacement”</em>, and why is it necessary?</p>
 <div class="solution">
 <p class="solution-begin">
-► Answer<span id="sol-start-135" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-135&#39;, &#39;sol-start-135&#39;)"></span>
+► Answer<span id="sol-start-14" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-14&#39;, &#39;sol-start-14&#39;)"></span>
 </p>
-<div id="sol-body-135" class="solution-body" style="display: none;">
-<p><strong>With replacement</strong> simply means that as we take our sample, we replace the first item before we choose the second.. and so on.<br />
-If we resampled our 50 player sample <em>without</em> replacement, we would simply end up with the same 50 players, and therefore the same mean!</p>
+<div id="sol-body-14" class="solution-body" style="display: none;">
+<p><em>“With replacement”</em> simply means that as we take our sample, we replace the first item before we choose the second.. and so on.<br />
+<strong>If we resampled our 50 player sample <em>without</em> replacement, we would simply end up with the same 50 players, and therefore the same mean!</strong></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -457,12 +591,12 @@ If we resampled our 50 player sample <em>without</em> replacement, we would simp
 <ol style="list-style-type: decimal">
 <li>Take a sample. We have a sample of 50 players and their salaries, which we can read in to R as follows:</li>
 </ol>
-<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb538-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb538-2" data-line-number="2"><span class="kw">library</span>(moderndive)</a>
-<a class="sourceLine" id="cb538-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb538-4" data-line-number="4">nfl_sample &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/nfl_sample.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb538-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb538-6" data-line-number="6">nfl_sample</a></code></pre></div>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb548-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb548-2" data-line-number="2"><span class="kw">library</span>(moderndive)</a>
+<a class="sourceLine" id="cb548-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb548-4" data-line-number="4">nfl_sample &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://edin.ac/2NATDCQ&quot;</span>)</a>
+<a class="sourceLine" id="cb548-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb548-6" data-line-number="6">nfl_sample</a></code></pre></div>
 <pre><code>## # A tibble: 50 x 5
 ##    Player          Position Team     TotalMoney YearlySalary
 ##    &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt;        &lt;dbl&gt;
@@ -480,8 +614,8 @@ If we resampled our 50 player sample <em>without</em> replacement, we would simp
 <ol start="2" style="list-style-type: decimal">
 <li>Compute the mean salary of our sample:</li>
 </ol>
-<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb540-1" data-line-number="1">nfl_sample <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb540-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_salary =</span> <span class="kw">mean</span>(YearlySalary))</a></code></pre></div>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb550-1" data-line-number="1">nfl_sample <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb550-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_salary =</span> <span class="kw">mean</span>(YearlySalary))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   avg_salary
 ##        &lt;dbl&gt;
@@ -489,10 +623,10 @@ If we resampled our 50 player sample <em>without</em> replacement, we would simp
 <ol start="3" style="list-style-type: decimal">
 <li>Sample our original sample, with replacement, and compute the mean:</li>
 </ol>
-<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb542-1" data-line-number="1">nfl_resample1 &lt;-<span class="st"> </span>nfl_sample <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb542-2" data-line-number="2"><span class="st">  </span><span class="kw">rep_sample_n</span>(<span class="dt">size =</span> <span class="dv">50</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb542-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb542-4" data-line-number="4">nfl_resample1</a></code></pre></div>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb552-1" data-line-number="1">nfl_resample1 &lt;-<span class="st"> </span>nfl_sample <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb552-2" data-line-number="2"><span class="st">  </span><span class="kw">rep_sample_n</span>(<span class="dt">size =</span> <span class="dv">50</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb552-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb552-4" data-line-number="4">nfl_resample1</a></code></pre></div>
 <pre><code>## # A tibble: 50 x 6
 ## # Groups:   replicate [1]
 ##    replicate Player          Position Team       TotalMoney YearlySalary
@@ -508,8 +642,8 @@ If we resampled our 50 player sample <em>without</em> replacement, we would simp
 ##  9         1 Trevor Robinson C        Chargers         1.7         0.85 
 ## 10         1 Josh Mitchell   CB       Colts            1.58        0.526
 ## # … with 40 more rows</code></pre>
-<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb544-1" data-line-number="1">nfl_resample1 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb544-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_salary =</span> <span class="kw">mean</span>(YearlySalary))</a></code></pre></div>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb554-1" data-line-number="1">nfl_resample1 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb554-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_salary =</span> <span class="kw">mean</span>(YearlySalary))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##   replicate avg_salary
 ##       &lt;int&gt;      &lt;dbl&gt;
@@ -517,10 +651,10 @@ If we resampled our 50 player sample <em>without</em> replacement, we would simp
 <ol start="4" style="list-style-type: decimal">
 <li>and again..</li>
 </ol>
-<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb546-1" data-line-number="1">nfl_resample2 &lt;-<span class="st"> </span>nfl_sample <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb546-2" data-line-number="2"><span class="st">  </span><span class="kw">rep_sample_n</span>(<span class="dt">size =</span> <span class="dv">50</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb546-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb546-4" data-line-number="4">nfl_resample2</a></code></pre></div>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb556-1" data-line-number="1">nfl_resample2 &lt;-<span class="st"> </span>nfl_sample <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb556-2" data-line-number="2"><span class="st">  </span><span class="kw">rep_sample_n</span>(<span class="dt">size =</span> <span class="dv">50</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb556-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb556-4" data-line-number="4">nfl_resample2</a></code></pre></div>
 <pre><code>## # A tibble: 50 x 6
 ## # Groups:   replicate [1]
 ##    replicate Player          Position Team     TotalMoney YearlySalary
@@ -536,27 +670,52 @@ If we resampled our 50 player sample <em>without</em> replacement, we would simp
 ##  9         1 DJ Williams     ILB      Bears          1.5         1.5  
 ## 10         1 Khalif Barnes   RT       Raiders        1.5         1.5  
 ## # … with 40 more rows</code></pre>
-<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb548-1" data-line-number="1">nfl_resample2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb548-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_salary =</span> <span class="kw">mean</span>(YearlySalary))</a></code></pre></div>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb558-1" data-line-number="1">nfl_resample2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb558-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_salary =</span> <span class="kw">mean</span>(YearlySalary))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##   replicate avg_salary
 ##       &lt;int&gt;      &lt;dbl&gt;
 ## 1         1       1.71</code></pre>
 <p>and so on…</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">sample</th>
+<th align="right">statistic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Original Sample</td>
+<td align="right">2.11496</td>
+</tr>
+<tr class="even">
+<td align="left">Resample 1</td>
+<td align="right">2.34474</td>
+</tr>
+<tr class="odd">
+<td align="left">Resample 2</td>
+<td align="right">1.71444</td>
+</tr>
+</tbody>
+</table>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
+</div>
+<div id="getting-to-the-bootstrap-distribution" class="section level2">
+<h2><span class="header-section-number">12.3</span> Getting to the bootstrap distribution</h2>
 <div class="red">
 <h5 id="key-point" class="unnumbered">Key point</h5>
 <p>If we resample with replacement from our original sample enough times, then the distribution of all the means of these <em>resamples</em> begins to approximate the sampling distribution.</p>
 </div>
 <p>We can speed up this process by getting R to take many resamples for us, in the same way that last week we asked it to take many samples from a population.</p>
-<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb550-1" data-line-number="1">nfl_2000resamples &lt;-<span class="st"> </span>nfl_sample <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb550-2" data-line-number="2"><span class="st">  </span><span class="kw">rep_sample_n</span>(<span class="dt">size =</span> <span class="dv">50</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">reps =</span> <span class="dv">2000</span>)</a></code></pre></div>
-<p>The above line of code takes 2000 sample of size 50, by sampling with replacement from our original sample of size 50. <span class="math inline">\(2000 \times 50 = 100,000\)</span>, so this results in a tibble with <span class="math inline">\(100,000\)</span> rows.</p>
-<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb551-1" data-line-number="1">nfl_2000resamples</a></code></pre></div>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb560-1" data-line-number="1">nfl_2000resamples &lt;-<span class="st"> </span>nfl_sample <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb560-2" data-line-number="2"><span class="st">  </span><span class="kw">rep_sample_n</span>(<span class="dt">size =</span> <span class="dv">50</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">reps =</span> <span class="dv">2000</span>)</a></code></pre></div>
+<p>The above line of code takes 2000 samples of size 50, by sampling with replacement from our original sample of size 50. <span class="math inline">\(2000 \times 50 = 100,000\)</span>, so this results in a tibble with <span class="math inline">\(100,000\)</span> rows.</p>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb561-1" data-line-number="1">nfl_2000resamples</a></code></pre></div>
 <pre><code>## # A tibble: 100,000 x 6
 ## # Groups:   replicate [2,000]
 ##    replicate Player          Position Team     TotalMoney YearlySalary
@@ -573,20 +732,14 @@ If we resampled our 50 player sample <em>without</em> replacement, we would simp
 ## 10         1 Trai Turner     G        Panthers      2.79         0.698
 ## # … with 99,990 more rows</code></pre>
 <p>We can compute the mean of each of the 2000 <em>resamples</em> drawn from the original sample (just like last week when we computed the mean of each of 2000 samples drawn from the population).</p>
-<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb553-1" data-line-number="1">nfl_resample_means &lt;-<span class="st"> </span>nfl_2000resamples <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb553-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(replicate) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb553-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_salary =</span> <span class="kw">mean</span>(YearlySalary))</a></code></pre></div>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb563-1" data-line-number="1">nfl_resample_means &lt;-<span class="st"> </span>nfl_2000resamples <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb563-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(replicate) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb563-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_salary =</span> <span class="kw">mean</span>(YearlySalary))</a></code></pre></div>
 <p>and we can plot them:</p>
-<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb554-1" data-line-number="1"><span class="kw">ggplot</span>(nfl_resample_means, <span class="kw">aes</span>(<span class="dt">x =</span> avg_salary)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb554-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb554-3" data-line-number="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;resample mean&quot;</span>)</a></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<div class="figure"><span id="fig:unnamed-chunk-349"></span>
-<img src="bookdown-demo_files/figure-html/unnamed-chunk-349-1.png" alt="Bootstrap resampling distribution based on 2000 resamples" width="672" />
-<p class="caption">
-Figure 12.1: Bootstrap resampling distribution based on 2000 resamples
-</p>
-</div>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb564-1" data-line-number="1"><span class="kw">ggplot</span>(nfl_resample_means, <span class="kw">aes</span>(<span class="dt">x =</span> avg_salary)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb564-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb564-3" data-line-number="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;resample mean&quot;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-350-1.png" width="672" /></p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -594,9 +747,9 @@ Figure 12.1: Bootstrap resampling distribution based on 2000 resamples
 <div class="question-body">
 <p>Where do you think that this histogram is centred?</p>
 <ul>
-<li>the mean salary of the population (<span class="math inline">\(\mu\)</span>)</li>
-<li>the mean salary of the original sample (<span class="math inline">\(\bar{x}\)</span>)</li>
-<li>somewhere else</li>
+<li>The mean salary of the population (<span class="math inline">\(\mu\)</span>).</li>
+<li>The mean salary of the original sample (<span class="math inline">\(\bar{x}\)</span>).</li>
+<li>Somewhere else.</li>
 </ul>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -605,12 +758,12 @@ Figure 12.1: Bootstrap resampling distribution based on 2000 resamples
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-137" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-137&#39;, &#39;sol-start-137&#39;)"></span>
+► Solution<span id="sol-start-16" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-16&#39;, &#39;sol-start-16&#39;)"></span>
 </p>
-<div id="sol-body-137" class="solution-body" style="display: none;">
-<p>The distribution of means of resamples will be centred around the <strong>mean of our original sample, 2.11</strong></p>
-<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb556-1" data-line-number="1">nfl_resample_means <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb556-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_of_means =</span> <span class="kw">mean</span>(avg_salary))</a></code></pre></div>
+<div id="sol-body-16" class="solution-body" style="display: none;">
+<p>The distribution of means of resamples will be centred around the <em>mean of our original sample</em>, which was 2.11.</p>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb565-1" data-line-number="1">nfl_resample_means <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb565-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_of_means =</span> <span class="kw">mean</span>(avg_salary))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   mean_of_means
 ##           &lt;dbl&gt;
@@ -626,7 +779,7 @@ Figure 12.1: Bootstrap resampling distribution based on 2000 resamples
 </p>
 <div class="question-body">
 <p>Last week we looked at the <strong>standard error</strong> (the standard deviation of the sampling distribution).
-We have seen how the boostrap distribution is an approximation of the sampling distribution.</p>
+We have seen how the <strong>boostrap distribution</strong> is an approximation of the <strong>sampling distribution</strong>.</p>
 <p>TRUE or FALSE: The standard deviation of the bootstrap distribution is an approximation of the standard error of <span class="math inline">\(\bar{x}\)</span>.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -635,9 +788,9 @@ We have seen how the boostrap distribution is an approximation of the sampling d
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-138" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-138&#39;, &#39;sol-start-138&#39;)"></span>
+► Solution<span id="sol-start-17" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-17&#39;, &#39;sol-start-17&#39;)"></span>
 </p>
-<div id="sol-body-138" class="solution-body" style="display: none;">
+<div id="sol-body-17" class="solution-body" style="display: none;">
 <p>TRUE!</p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -646,37 +799,42 @@ We have seen how the boostrap distribution is an approximation of the sampling d
 </div>
 </div>
 <div id="more-generally" class="section level2">
-<h2><span class="header-section-number">12.3</span> More generally…</h2>
+<h2><span class="header-section-number">12.4</span> More generally…</h2>
 <p>Now let’s think more generally about what we did there…</p>
 <ol style="list-style-type: decimal">
 <li>We were interested in estimating some unknown parameter of a population.</li>
 <li>We had a sample of size <span class="math inline">\(n\)</span> drawn at random from the population.</li>
-<li>We took 1000 <em>resamples</em> (of size <span class="math inline">\(n\)</span>) from our original sample, and calculated a statistic for each one.</li>
+<li>We took lots of <em>resamples</em> (of size <span class="math inline">\(n\)</span>) from our original sample, and calculated a statistic for each one.</li>
 <li>We then visualised the distribution of those statistics.</li>
 </ol>
 <p>The tool below will help to conceptualise these steps:</p>
 <ul>
-<li><strong>The big blue distribution at the top</strong>: The population<br />
+<li><strong>The big blue distribution at the top</strong>: The population.<br />
 </li>
-<li><strong>The vertical blue line</strong>: population parameter <span class="math inline">\(\mu\)</span></li>
-<li><strong>The yellow sample button</strong>: Take a sample from the population (note you can change the sample <span class="math inline">\(n\)</span>)</li>
-<li><strong>The green resample button</strong>: Samples with replacement from the original sample (the yellow one), and calculates the mean (which is then dropped into the bottom panel)</li>
+<li><strong>The vertical blue line</strong>: The population parameter <span class="math inline">\(\mu\)</span>.</li>
+<li><strong>The yellow sample button</strong>: Takes a sample from the population (note you can change the sample <span class="math inline">\(n\)</span>).</li>
+<li><strong>The green resample button</strong>: Samples with replacement from the original sample (the yellow one), and calculates the mean (which is then dropped into the bottom panel).</li>
 <li><strong>The bottom panel</strong>: The distribution of resample means - the bootstrap distribution!</li>
 </ul>
-<p>Spend 10 minutes changing things such as the sample size. If you have any questions about what is happening, then ask one of the tutors.
-<iframe src="http://wise1.cgu.edu/vis/bootstrap" width="100%" height="650px"></iframe>
-<strong>source: <a href="http://wise1.cgu.edu/portfolio/bootstrap">http://wise1.cgu.edu/portfolio/bootstrap</a></strong></p>
+<p>Spend 10 minutes changing things such as the sample size. If you have any questions about what is happening, then please ask either now or during the lab.<br />
+<iframe src="https://web.archive.org/web/20160807193104/http://wise1.cgu.edu/vis/bootstrap/" width="100%" height="650px"></iframe>
+<strong>source: <a href="https://web.archive.org/web/20160807193104/http://wise1.cgu.edu/vis/bootstrap/">https://web.archive.org/web/20160807193104/http://wise1.cgu.edu/vis/bootstrap/</a></strong></p>
 </div>
 <div id="confidence-intervals" class="section level2">
-<h2><span class="header-section-number">12.4</span> Confidence Intervals</h2>
+<h2><span class="header-section-number">12.5</span> Confidence Intervals</h2>
+Take a look again at the bootstrap distribution we constructed (Figure <a href="bootstrapping-and-confidence-intervals.html#fig:bootstrap-dist">12.1</a>, below).
+<div class="figure"><span id="fig:bootstrap-dist"></span>
+<img src="bookdown-demo_files/figure-html/bootstrap-dist-2.png" alt="Bootstrap resampling distribution based on 2000 resamples" width="672" />
+<p class="caption">
+Figure 12.1: Bootstrap resampling distribution based on 2000 resamples
+</p>
+</div>
 <div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
-<p>Look at the bootstrap distribution below. Roughly, between what two values do most of the resample means lie?</p>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-351-2.png" width="672" /></p>
+<p>Roughly, between what two values do <em>most</em> of the resample means lie?</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -684,51 +842,44 @@ We have seen how the boostrap distribution is an approximation of the sampling d
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-139" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-139&#39;, &#39;sol-start-139&#39;)"></span>
+► Solution<span id="sol-start-18" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-18&#39;, &#39;sol-start-18&#39;)"></span>
 </p>
-<div id="sol-body-139" class="solution-body" style="display: none;">
+<div id="sol-body-18" class="solution-body" style="display: none;">
 <p>“Most” is very vague. Just eyeballing, most of the distribution lies between 1.5 and 2.7.</p>
-<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb559-1" data-line-number="1"><span class="kw">ggplot</span>(nfl_resample_means, <span class="kw">aes</span>(<span class="dt">x =</span> avg_salary)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb559-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb559-3" data-line-number="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;resample mean&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb559-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">c</span>(<span class="fl">1.5</span>, <span class="fl">2.7</span>))</a></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<div class="figure"><span id="fig:unnamed-chunk-352"></span>
-<img src="bookdown-demo_files/figure-html/unnamed-chunk-352-1.png" alt="Bootstrap resampling distribution based on 2000 resamples" width="672" />
-<p class="caption">
-Figure 12.2: Bootstrap resampling distribution based on 2000 resamples
-</p>
-</div>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb567-1" data-line-number="1"><span class="kw">ggplot</span>(nfl_resample_means, <span class="kw">aes</span>(<span class="dt">x =</span> avg_salary)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb567-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb567-3" data-line-number="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;resample mean&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb567-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">c</span>(<span class="fl">1.5</span>, <span class="fl">2.7</span>))</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-352-1.png" width="672" /></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
-<p>Confidence intervals simply answer more exactly where “most” sample means lie - they give us a <strong>range of plausible values</strong> for our population parameter.</p>
+<p><strong>Confidence intervals</strong> simply answer more exactly where “most” sample means lie - they give us a <em>range of plausible values</em> for our population parameter.</p>
 <p>To construct a confidence interval, we need two things:</p>
 <ol style="list-style-type: decimal">
 <li>a confidence level;<br />
 </li>
 <li>a measure of sampling variability.</li>
 </ol>
-<p>We have the latter, in the form of our bootstrap distribution.<br />
-The confidence level, instead, needs to be set by us.
+<p>We have the latter, in the form of our bootstrap distribution. The confidence level, instead, needs to be set by us.
 For instance, we might ask between which values the middle 95% (or 90%, or 80%, etc.) of our distribution falls.
 In other words, the confidence level is the “success rate”: the proportion of all samples whose intervals contain the true parameter.</p>
 <div class="def">
-<h4 id="how-exactly-do-we-interpret-a-confidence-interval"><span class="header-section-number">12.4</span> How exactly do we interpret a confidence interval?</h4>
+<h4 id="how-exactly-do-we-interpret-a-confidence-interval" class="unnumbered">How exactly do we interpret a confidence interval?</h4>
 <p>If we were to do this whole process over and over again:</p>
 <ul>
-<li>take a random sample of size <span class="math inline">\(n\)</span></li>
-<li>sample with replacement from that sample</li>
-<li>construct a 95% confidence interval</li>
+<li>take a random sample of size <span class="math inline">\(n\)</span>;</li>
+<li>sample with replacement from that sample;</li>
+<li>construct a 95% confidence interval.</li>
 </ul>
-<p>If we did this many many times, then about 95% of the confidence intervals we created would contain the population mean.</p>
-<p>So if we did this 100 times, we would expect about 5 of our 95% confidence intervals to not contain the true population mean.</p>
+<p>Then about 95% of the confidence intervals we created would contain the population mean.</p>
+<p>So if we did this 100 times, we would expect about five of our 95% confidence intervals to not contain the true population mean.</p>
 <p>And if we had been constructing 80% confidence intervals instead, we would expect roughly 80 of them to contain the population mean.</p>
 </div>
 <div id="calculating-confidence-intervals-using-a-bootstrap-standard-error" class="section level3">
-<h3><span class="header-section-number">12.4.1</span> Calculating confidence intervals using a bootstrap standard error</h3>
+<h3><span class="header-section-number">12.5.1</span> Calculating confidence intervals using a bootstrap standard error</h3>
 <p>We can construct confidence intervals using the <strong>standard error</strong>.
 However, we <em>can not</em> compute standard errors from just one sample, so we need to estimate the standard error of a statistic using bootstrap.</p>
 <p>We also use the following rules of thumb:</p>
@@ -737,7 +888,8 @@ However, we <em>can not</em> compute standard errors from just one sample, so we
 <ul>
 <li>68% of values will lie within 1 standard deviation of the mean.</li>
 <li>95% of values will lie within 1.96 standard deviations of the mean.</li>
-<li>99.7% of values will lie within 3 standard deviations of the mean.</li>
+<li>99.7% of values will lie within 3 standard deviations of the mean.
+<img src="images/normal.png" width="324" /></li>
 </ul>
 </div>
 <p>We have our sample mean, and we can calculate the standard deviation of our bootstrap distribution (to approximate the standard error of the sample mean).
@@ -747,77 +899,89 @@ We therefore have all the information we need to calculate, for instance, a 95% 
 <span class="math inline">\(\text{Statistic} \pm 1.96 \times SE\)</span>
 </center>
 <p>And in R…</p>
-<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb561-1" data-line-number="1"><span class="co">#recall that our original sample mean was 2.11496</span></a>
-<a class="sourceLine" id="cb561-2" data-line-number="2">original_sample_mean &lt;-<span class="st"> </span><span class="fl">2.11496</span></a>
-<a class="sourceLine" id="cb561-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb561-4" data-line-number="4">nfl_resample_means <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb561-5" data-line-number="5"><span class="st">  </span><span class="kw">summarise</span>(</a>
-<a class="sourceLine" id="cb561-6" data-line-number="6">    <span class="dt">sd_of_means =</span> <span class="kw">sd</span>(avg_salary), </a>
-<a class="sourceLine" id="cb561-7" data-line-number="7">    <span class="dt">ci_lower =</span> original_sample_mean <span class="op">-</span><span class="st"> </span>(<span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>sd_of_means),</a>
-<a class="sourceLine" id="cb561-8" data-line-number="8">    <span class="dt">ci_upper =</span> original_sample_mean <span class="op">+</span><span class="st"> </span>(<span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>sd_of_means)</a>
-<a class="sourceLine" id="cb561-9" data-line-number="9">  )</a></code></pre></div>
-<pre><code>## # A tibble: 1 x 3
-##   sd_of_means ci_lower ci_upper
-##         &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1       0.301     1.52     2.71</code></pre>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb568-1" data-line-number="1"><span class="co"># Recall that our original sample mean was 2.11496</span></a>
+<a class="sourceLine" id="cb568-2" data-line-number="2">original_sample_mean &lt;-<span class="st"> </span>nfl_sample <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb568-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg =</span> <span class="kw">mean</span>(YearlySalary)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb568-4" data-line-number="4"><span class="st">  </span><span class="kw">pull</span>(avg)</a>
+<a class="sourceLine" id="cb568-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb568-6" data-line-number="6">original_sample_mean</a></code></pre></div>
+<pre><code>## [1] 2.11496</code></pre>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb570-1" data-line-number="1">nfl_resample_means <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb570-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(</a>
+<a class="sourceLine" id="cb570-3" data-line-number="3">    <span class="dt">est_SE =</span> <span class="kw">sd</span>(avg_salary), </a>
+<a class="sourceLine" id="cb570-4" data-line-number="4">    <span class="dt">ci_lower =</span> original_sample_mean <span class="op">-</span><span class="st"> </span>(<span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>est_SE),</a>
+<a class="sourceLine" id="cb570-5" data-line-number="5">    <span class="dt">ci_upper =</span> original_sample_mean <span class="op">+</span><span class="st"> </span>(<span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>est_SE)</a>
+<a class="sourceLine" id="cb570-6" data-line-number="6">  ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(ci_lower, ci_upper)</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   ci_lower ci_upper
+##      &lt;dbl&gt;    &lt;dbl&gt;
+## 1     1.52     2.71</code></pre>
 </div>
 </div>
 <div id="summary-1" class="section level2">
-<h2><span class="header-section-number">12.5</span> Summary</h2>
+<h2><span class="header-section-number">12.6</span> Summary</h2>
 <p>Let’s recap what we’ve done today:</p>
 <ol style="list-style-type: decimal">
-<li>We started with a sample from a population.</li>
-<li>We calculated a statistic from our sample to estimate a parameter in our population.</li>
-<li>We used bootstrap (random sampling with replacement from our original sample) to estimate the standard error of the statistic.<br />
+<li>We started with a <strong>sample</strong> from a <strong>population</strong>.</li>
+<li>We calculated a <strong>statistic</strong> from our sample to estimate a <strong>parameter</strong> in our population.</li>
+<li>We used <strong>bootstrapping</strong> (random sampling with replacement from our original sample) to estimate the <strong>standard error</strong> of the statistic.<br />
 </li>
-<li>We constructed a range of plausible values by combining the sample statistic and the bootstrap estimate of the standard error of the statistic.</li>
+<li>We constructed a range of plausible values (a <strong>confidence interval</strong>) by combining the sample statistic and the bootstrap estimate of the standard error of the statistic.</li>
 </ol>
 <p>We constructed our bootstrap distribution using code like below:</p>
-<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb563-1" data-line-number="1">bootstrap_distribution &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb563-2" data-line-number="2"><span class="st">  </span>nfl_sample <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb563-3" data-line-number="3"><span class="st">  </span><span class="kw">rep_sample_n</span>(<span class="dv">50</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">reps =</span> <span class="dv">2000</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb563-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(replicate) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb563-5" data-line-number="5"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg =</span> <span class="kw">mean</span>(YearlySalary))</a></code></pre></div>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb572-1" data-line-number="1">bootstrap_distribution &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb572-2" data-line-number="2"><span class="st">  </span>nfl_sample <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb572-3" data-line-number="3"><span class="st">  </span><span class="kw">rep_sample_n</span>(<span class="dt">size =</span> <span class="dv">50</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">reps =</span> <span class="dv">2000</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb572-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(replicate) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb572-5" data-line-number="5"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg =</span> <span class="kw">mean</span>(YearlySalary))</a></code></pre></div>
 <p>and we used the standard deviation of our bootstrap resample means…</p>
-<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb564-1" data-line-number="1">bootstrap_distribution <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb564-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">sd_of_means =</span> <span class="kw">sd</span>(avg))</a></code></pre></div>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb573-1" data-line-number="1">bootstrap_distribution <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb573-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">est_SE =</span> <span class="kw">sd</span>(avg))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
-##   sd_of_means
-##         &lt;dbl&gt;
-## 1       0.290</code></pre>
-<p>to calculate some 95% confidence intervals using the formula:<br />
-<span class="math inline">\(\bar{x} \pm 1.96 \times SE\)</span><br />
+##   est_SE
+##    &lt;dbl&gt;
+## 1  0.290</code></pre>
+to calculate some 95% confidence intervals using the formula:
+<br>
+<center>
+<span class="math inline">\(\bar{x} \pm 1.96 \times SE\)</span>
+</center>
+<br>
 which became:<br />
-<span class="math inline">\(2.11 \pm 1.96 \times 0.3\)</span><br />
-giving us a confidence interval of <span class="math inline">\([1.52, 2.70]\)</span>.</p>
+<br>
+<center>
+<span class="math inline">\(2.11 \pm 1.96 \times 0.29\)</span>
+</center>
+<p><br>
+giving us a confidence interval of <span class="math inline">\([1.54, 2.68]\)</span>.</p>
 <div class="red">
 <h5 id="stop-and-think" class="unnumbered">Stop and think</h5>
-What we did today entailed <strong>specifying</strong> what variable we were interested in, <strong>generating</strong> replicates, <strong>calculating</strong> the statistic for each replicate, and finally, we <strong>visualised</strong> the distribution. This is an important framework for understanding how to estimate sampling variation to evaluate the accuracy of our statistical inferences. The steps for this are visualised in Figure <a href="bootstrapping-and-confidence-intervals.html#fig:bootstrap-pipeline">12.3</a> below.<br />
+What we did today entailed <strong>specifying</strong> what variable we were interested in, <strong>generating</strong> replicates, <strong>calculating</strong> the statistic for each replicate, and finally, we <strong>visualised</strong> the distribution. This is an important framework for understanding how to estimate sampling variation to evaluate the accuracy of our statistical inferences. The steps for this are visualised in Figure <a href="bootstrapping-and-confidence-intervals.html#fig:bootstrap-pipeline">12.2</a> below.<br />
 
 <div class="figure" style="text-align: center"><span id="fig:bootstrap-pipeline"></span>
 <img src="images/visualize.png" alt="Pipeline of bootstrapping-based inference" width="75%" />
 <p class="caption">
-Figure 12.3: Pipeline of bootstrapping-based inference
+Figure 12.2: Pipeline of bootstrapping-based inference
 </p>
 </div>
-<p><strong>source: <a href="https://moderndive.com/8-confidence-intervals.html">https://moderndive.com/8-confidence-intervals.html</a></strong></p>
+<p><strong>Source: <a href="https://moderndive.com/8-confidence-intervals.html">https://moderndive.com/8-confidence-intervals.html</a></strong></p>
 </div>
 </div>
 <div id="take-home-message-1" class="section level2">
-<h2><span class="header-section-number">12.6</span> Take-home message</h2>
+<h2><span class="header-section-number">12.7</span> Take-home message</h2>
 <p>Using just one sample, it is possible to quantify estimation error by taking repeated resamples with replacement from our original sample.
 We can use this to construct ranges of plausible values of the parameter we are estimating.</p>
 <p><strong>This teaches us a standardised way of reporting uncertainty in our estimates.</strong></p>
 </div>
 <div id="lab" class="section level2">
-<h2><span class="header-section-number">12.7</span> Lab</h2>
+<h2><span class="header-section-number">12.8</span> Lab</h2>
 <div id="exercise-1-hollywood-movies" class="section level3 unnumbered">
 <h3>Exercise 1: Hollywood Movies</h3>
-<p>The following code chunk reads in <strong>a sample</strong> of the Hollywood movies data we saw last week.</p>
-<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb566-1" data-line-number="1">hollywood_sample &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&#39;https://edin.ac/2N9yHms&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># read the data</span></a>
-<a class="sourceLine" id="cb566-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(Movie, Genre, RottenTomatoes) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># selects relevant variables</span></a>
-<a class="sourceLine" id="cb566-3" data-line-number="3"><span class="st">  </span>na.omit <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># removes all the NAs</span></a>
-<a class="sourceLine" id="cb566-4" data-line-number="4"><span class="st">  </span><span class="kw">sample_n</span>(<span class="dt">size=</span><span class="dv">25</span>) <span class="co"># takes our sample</span></a></code></pre></div>
+<p>The following code chunk reads in a <strong>sample</strong> of the Hollywood movies data we saw last week.</p>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb575-1" data-line-number="1">hollywood_sample &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&#39;https://edin.ac/2N9yHms&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># read the data</span></a>
+<a class="sourceLine" id="cb575-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(Movie, Genre, RottenTomatoes) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># selects relevant variables</span></a>
+<a class="sourceLine" id="cb575-3" data-line-number="3"><span class="st">  </span>drop_na <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># removes all the NAs</span></a>
+<a class="sourceLine" id="cb575-4" data-line-number="4"><span class="st">  </span><span class="kw">sample_n</span>(<span class="dt">size=</span><span class="dv">25</span>) <span class="co"># takes our sample</span></a></code></pre></div>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -832,10 +996,10 @@ What is our best estimate of this with the data we just read in?</p>
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-140" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-140&#39;, &#39;sol-start-140&#39;)"></span>
+► Solution<span id="sol-start-19" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-19&#39;, &#39;sol-start-19&#39;)"></span>
 </p>
-<div id="sol-body-140" class="solution-body" style="display: none;">
-<p><span class="math inline">\(\bar{x}\)</span>: The mean Rotten Tomatoes rating for our sample.</p>
+<div id="sol-body-19" class="solution-body" style="display: none;">
+<p><span class="math inline">\(\bar{x}\)</span>, the mean Rotten Tomatoes rating for our sample.</p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -846,7 +1010,7 @@ What is our best estimate of this with the data we just read in?</p>
 ► Question
 </p>
 <div class="question-body">
-<p>Calculate the sample statistic</p>
+<p>Calculate the sample statistic.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -854,11 +1018,11 @@ What is our best estimate of this with the data we just read in?</p>
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-141" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-141&#39;, &#39;sol-start-141&#39;)"></span>
+► Solution<span id="sol-start-20" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-20&#39;, &#39;sol-start-20&#39;)"></span>
 </p>
-<div id="sol-body-141" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb567-1" data-line-number="1">hollywood_sample <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb567-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_rating =</span> <span class="kw">mean</span>(RottenTomatoes))</a></code></pre></div>
+<div id="sol-body-20" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb576-1" data-line-number="1">hollywood_sample <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb576-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_rating =</span> <span class="kw">mean</span>(RottenTomatoes))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   avg_rating
 ##        &lt;dbl&gt;
@@ -881,15 +1045,15 @@ What is our best estimate of this with the data we just read in?</p>
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-142" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-142&#39;, &#39;sol-start-142&#39;)"></span>
+► Solution<span id="sol-start-21" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-21&#39;, &#39;sol-start-21&#39;)"></span>
 </p>
-<div id="sol-body-142" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb569-1" data-line-number="1">hwood_bs_distribution &lt;-<span class="st"> </span>hollywood_sample <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb569-2" data-line-number="2"><span class="st">  </span><span class="kw">rep_sample_n</span>(<span class="dv">25</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">reps =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb569-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(replicate) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb569-4" data-line-number="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_rating =</span> <span class="kw">mean</span>(RottenTomatoes))</a>
-<a class="sourceLine" id="cb569-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb569-6" data-line-number="6">hwood_bs_distribution</a></code></pre></div>
+<div id="sol-body-21" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb578-1" data-line-number="1">hwood_bs_distribution &lt;-<span class="st"> </span>hollywood_sample <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb578-2" data-line-number="2"><span class="st">  </span><span class="kw">rep_sample_n</span>(<span class="dv">25</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">reps =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb578-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(replicate) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb578-4" data-line-number="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_rating =</span> <span class="kw">mean</span>(RottenTomatoes))</a>
+<a class="sourceLine" id="cb578-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb578-6" data-line-number="6">hwood_bs_distribution</a></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 2
 ##    replicate avg_rating
 ##        &lt;int&gt;      &lt;dbl&gt;
@@ -922,11 +1086,11 @@ What is our best estimate of this with the data we just read in?</p>
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-143" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-143&#39;, &#39;sol-start-143&#39;)"></span>
+► Solution<span id="sol-start-22" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-22&#39;, &#39;sol-start-22&#39;)"></span>
 </p>
-<div id="sol-body-143" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb571-1" data-line-number="1">hwood_bs_distribution <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb571-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">estimated_SE =</span> <span class="kw">sd</span>(avg_rating))</a></code></pre></div>
+<div id="sol-body-22" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb580-1" data-line-number="1">hwood_bs_distribution <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb580-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">estimated_SE =</span> <span class="kw">sd</span>(avg_rating))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   estimated_SE
 ##          &lt;dbl&gt;
@@ -949,26 +1113,26 @@ What is our best estimate of this with the data we just read in?</p>
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-144" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-144&#39;, &#39;sol-start-144&#39;)"></span>
+► Solution<span id="sol-start-23" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-23&#39;, &#39;sol-start-23&#39;)"></span>
 </p>
-<div id="sol-body-144" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb573-1" data-line-number="1">hwood_samplemean &lt;-<span class="st"> </span>hollywood_sample <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb573-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_rating =</span> <span class="kw">mean</span>(RottenTomatoes)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb573-3" data-line-number="3"><span class="st">  </span><span class="kw">pull</span>(avg_rating)</a>
-<a class="sourceLine" id="cb573-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb573-5" data-line-number="5">hwood_se &lt;-<span class="st"> </span>hwood_bs_distribution <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb573-6" data-line-number="6"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">estimated_SE =</span> <span class="kw">sd</span>(avg_rating)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb573-7" data-line-number="7"><span class="st">  </span><span class="kw">pull</span>(estimated_SE)</a>
-<a class="sourceLine" id="cb573-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb573-9" data-line-number="9">hwood_ci_lower &lt;-<span class="st"> </span>hwood_samplemean <span class="op">-</span><span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>hwood_se</a>
-<a class="sourceLine" id="cb573-10" data-line-number="10">hwood_ci_upper &lt;-<span class="st"> </span>hwood_samplemean <span class="op">+</span><span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>hwood_se</a>
-<a class="sourceLine" id="cb573-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb573-12" data-line-number="12"><span class="kw">ggplot</span>(hwood_bs_distribution, <span class="kw">aes</span>(<span class="dt">x=</span>avg_rating)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb573-13" data-line-number="13"><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb573-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">c</span>(hwood_ci_lower, hwood_ci_upper)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb573-15" data-line-number="15"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;bootstrap avg rating&quot;</span>)</a></code></pre></div>
+<div id="sol-body-23" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb582-1" data-line-number="1">hwood_samplemean &lt;-<span class="st"> </span>hollywood_sample <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb582-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_rating =</span> <span class="kw">mean</span>(RottenTomatoes)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb582-3" data-line-number="3"><span class="st">  </span><span class="kw">pull</span>(avg_rating)</a>
+<a class="sourceLine" id="cb582-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb582-5" data-line-number="5">hwood_se &lt;-<span class="st"> </span>hwood_bs_distribution <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb582-6" data-line-number="6"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">estimated_SE =</span> <span class="kw">sd</span>(avg_rating)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb582-7" data-line-number="7"><span class="st">  </span><span class="kw">pull</span>(estimated_SE)</a>
+<a class="sourceLine" id="cb582-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb582-9" data-line-number="9">hwood_ci_lower &lt;-<span class="st"> </span>hwood_samplemean <span class="op">-</span><span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>hwood_se</a>
+<a class="sourceLine" id="cb582-10" data-line-number="10">hwood_ci_upper &lt;-<span class="st"> </span>hwood_samplemean <span class="op">+</span><span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>hwood_se</a>
+<a class="sourceLine" id="cb582-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb582-12" data-line-number="12"><span class="kw">ggplot</span>(hwood_bs_distribution, <span class="kw">aes</span>(<span class="dt">x=</span>avg_rating)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb582-13" data-line-number="13"><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb582-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">c</span>(hwood_ci_lower, hwood_ci_upper)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb582-15" data-line-number="15"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;bootstrap avg rating&quot;</span>)</a></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-361-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-362-1.png" width="672" /></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -976,47 +1140,11 @@ What is our best estimate of this with the data we just read in?</p>
 </div>
 <div class="question">
 <p class="question-begin">
-► Question
+► Extra
 </p>
 <div class="question-body">
 <p>Go back to the top where we read in the data, and change the sample you are collecting from 25 to 50. Run the previous tasks again - how has the confidence interval changed?</p>
 <p class="question-end">
-<span class="fa fa-square-o solution-icon"></span>
-</p>
-</div>
-</div>
-<div class="solution">
-<p class="solution-begin">
-► Solution<span id="sol-start-145" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-145&#39;, &#39;sol-start-145&#39;)"></span>
-</p>
-<div id="sol-body-145" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb575-1" data-line-number="1">hollywood_sample &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&#39;https://edin.ac/2N9yHms&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb575-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(Movie, Genre, RottenTomatoes) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb575-3" data-line-number="3"><span class="st">  </span>na.omit <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb575-4" data-line-number="4"><span class="st">  </span><span class="kw">sample_n</span>(<span class="dt">size=</span><span class="dv">50</span>)</a>
-<a class="sourceLine" id="cb575-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb575-6" data-line-number="6">hwood_bs_distribution &lt;-<span class="st"> </span>hollywood_sample <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb575-7" data-line-number="7"><span class="st">  </span><span class="kw">rep_sample_n</span>(<span class="dv">50</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">reps =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb575-8" data-line-number="8"><span class="st">  </span><span class="kw">group_by</span>(replicate) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb575-9" data-line-number="9"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_rating =</span> <span class="kw">mean</span>(RottenTomatoes))</a>
-<a class="sourceLine" id="cb575-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb575-11" data-line-number="11">hwood_samplemean &lt;-<span class="st"> </span>hollywood_sample <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb575-12" data-line-number="12"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_rating =</span> <span class="kw">mean</span>(RottenTomatoes)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb575-13" data-line-number="13"><span class="st">  </span><span class="kw">pull</span>(avg_rating)</a>
-<a class="sourceLine" id="cb575-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb575-15" data-line-number="15">hwood_se &lt;-<span class="st"> </span>hwood_bs_distribution <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb575-16" data-line-number="16"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">estimated_SE =</span> <span class="kw">sd</span>(avg_rating)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb575-17" data-line-number="17"><span class="st">  </span><span class="kw">pull</span>(estimated_SE)</a>
-<a class="sourceLine" id="cb575-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb575-19" data-line-number="19">hwood_ci_lower &lt;-<span class="st"> </span>hwood_samplemean <span class="op">-</span><span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>hwood_se</a>
-<a class="sourceLine" id="cb575-20" data-line-number="20">hwood_ci_upper &lt;-<span class="st"> </span>hwood_samplemean <span class="op">+</span><span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>hwood_se</a>
-<a class="sourceLine" id="cb575-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb575-22" data-line-number="22"><span class="kw">ggplot</span>(hwood_bs_distribution, <span class="kw">aes</span>(<span class="dt">x=</span>avg_rating)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb575-23" data-line-number="23"><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb575-24" data-line-number="24"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">c</span>(hwood_ci_lower, hwood_ci_upper)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb575-25" data-line-number="25"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;bootstrap avg rating&quot;</span>)</a></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-362-1.png" width="672" /></p>
-<p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
@@ -1037,9 +1165,9 @@ What is our best estimate of this with the data we just read in?</p>
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-146" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-146&#39;, &#39;sol-start-146&#39;)"></span>
+► Solution<span id="sol-start-24" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-24&#39;, &#39;sol-start-24&#39;)"></span>
 </p>
-<div id="sol-body-146" class="solution-body" style="display: none;">
+<div id="sol-body-24" class="solution-body" style="display: none;">
 <p>2.238 (million dollers!)</p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -1053,7 +1181,7 @@ What is our best estimate of this with the data we just read in?</p>
 <div class="question-body">
 <p>A researcher lives in Boston. They want to estimate salaries of NFL players, and in 2015 they go around and ask 50 players about their yearly salaries.<br />
 The code below reads in the sample they collected.</p>
-<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb576-1" data-line-number="1">nflboston &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://edin.ac/35QVPwp&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb584-1" data-line-number="1">nflboston &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://edin.ac/35QVPwp&quot;</span>)</a></code></pre></div>
 <p>Compute the sample mean, and calculate 99% confidence intervals via bootstrap standard error</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -1062,29 +1190,29 @@ The code below reads in the sample they collected.</p>
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-147" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-147&#39;, &#39;sol-start-147&#39;)"></span>
+► Solution<span id="sol-start-25" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-25&#39;, &#39;sol-start-25&#39;)"></span>
 </p>
-<div id="sol-body-147" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb577-1" data-line-number="1">nflb_samplemean &lt;-<span class="st"> </span>nflboston <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb577-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_salary =</span> <span class="kw">mean</span>(YearlySalary)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb577-3" data-line-number="3"><span class="st">  </span><span class="kw">pull</span>(avg_salary)</a>
-<a class="sourceLine" id="cb577-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb577-5" data-line-number="5">nflb_bs_distribution &lt;-<span class="st"> </span>nflboston <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb577-6" data-line-number="6"><span class="st">  </span><span class="kw">rep_sample_n</span>(<span class="dv">50</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">reps =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb577-7" data-line-number="7"><span class="st">  </span><span class="kw">group_by</span>(replicate) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb577-8" data-line-number="8"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_salary =</span> <span class="kw">mean</span>(YearlySalary))</a>
-<a class="sourceLine" id="cb577-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb577-10" data-line-number="10">nflb_se &lt;-<span class="st"> </span>nflb_bs_distribution <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb577-11" data-line-number="11"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">estimated_SE =</span> <span class="kw">sd</span>(avg_salary)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb577-12" data-line-number="12"><span class="st">  </span><span class="kw">pull</span>(estimated_SE)</a>
-<a class="sourceLine" id="cb577-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb577-14" data-line-number="14">nflb_ci_lower &lt;-<span class="st"> </span>nflb_samplemean <span class="op">-</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>nflb_se</a>
-<a class="sourceLine" id="cb577-15" data-line-number="15">nflb_ci_upper &lt;-<span class="st"> </span>nflb_samplemean <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>nflb_se</a>
-<a class="sourceLine" id="cb577-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb577-17" data-line-number="17"><span class="kw">ggplot</span>(nflb_bs_distribution, <span class="kw">aes</span>(<span class="dt">x=</span>avg_salary)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb577-18" data-line-number="18"><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb577-19" data-line-number="19"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">c</span>(nflb_ci_lower, nflb_ci_upper)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb577-20" data-line-number="20"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;bootstrap avg salary&quot;</span>)</a></code></pre></div>
+<div id="sol-body-25" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb585-1" data-line-number="1">nflb_samplemean &lt;-<span class="st"> </span>nflboston <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb585-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_salary =</span> <span class="kw">mean</span>(YearlySalary)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb585-3" data-line-number="3"><span class="st">  </span><span class="kw">pull</span>(avg_salary)</a>
+<a class="sourceLine" id="cb585-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb585-5" data-line-number="5">nflb_bs_distribution &lt;-<span class="st"> </span>nflboston <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb585-6" data-line-number="6"><span class="st">  </span><span class="kw">rep_sample_n</span>(<span class="dv">50</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">reps =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb585-7" data-line-number="7"><span class="st">  </span><span class="kw">group_by</span>(replicate) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb585-8" data-line-number="8"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_salary =</span> <span class="kw">mean</span>(YearlySalary))</a>
+<a class="sourceLine" id="cb585-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb585-10" data-line-number="10">nflb_se &lt;-<span class="st"> </span>nflb_bs_distribution <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb585-11" data-line-number="11"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">estimated_SE =</span> <span class="kw">sd</span>(avg_salary)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb585-12" data-line-number="12"><span class="st">  </span><span class="kw">pull</span>(estimated_SE)</a>
+<a class="sourceLine" id="cb585-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb585-14" data-line-number="14">nflb_ci_lower &lt;-<span class="st"> </span>nflb_samplemean <span class="op">-</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>nflb_se</a>
+<a class="sourceLine" id="cb585-15" data-line-number="15">nflb_ci_upper &lt;-<span class="st"> </span>nflb_samplemean <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>nflb_se</a>
+<a class="sourceLine" id="cb585-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb585-17" data-line-number="17"><span class="kw">ggplot</span>(nflb_bs_distribution, <span class="kw">aes</span>(<span class="dt">x=</span>avg_salary)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb585-18" data-line-number="18"><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb585-19" data-line-number="19"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">c</span>(nflb_ci_lower, nflb_ci_upper)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb585-20" data-line-number="20"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;bootstrap avg salary&quot;</span>)</a></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-364-1.png" width="672" /></p>
 <p class="solution-end">
@@ -1098,7 +1226,7 @@ The code below reads in the sample they collected.</p>
 </p>
 <div class="question-body">
 <p>This confidence does not include the population mean. Why not?</p>
-<p><em>hint:</em> Look at your data, and think about what you know about how it was collected - why might this not be a good sample?</p>
+<p><em>Hint:</em> Look at your data, and think about what you know about how it was collected - why might this not be a good sample?</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -1106,11 +1234,11 @@ The code below reads in the sample they collected.</p>
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-148" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-148&#39;, &#39;sol-start-148&#39;)"></span>
+► Solution<span id="sol-start-26" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-26&#39;, &#39;sol-start-26&#39;)"></span>
 </p>
-<div id="sol-body-148" class="solution-body" style="display: none;">
+<div id="sol-body-26" class="solution-body" style="display: none;">
 <p>The researcher, living in Boston, seems to have sampled a lot of players from the New England Patriots (a local team).</p>
-<p>The key thing here is that the statistical inference we are making (that the sample mean is an estimate of the population mean) <strong>assumes</strong> that the sample is an unbiased representation. In this case it is not a truly random sample!</p>
+<p>The key thing here is that the statistical inference we are making (that the sample mean is an estimate of the population mean) <em>assumes</em> that the sample is an unbiased representation. In this case it is not a truly random sample!</p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -1119,7 +1247,7 @@ The code below reads in the sample they collected.</p>
 </div>
 </div>
 <div id="glossary-1" class="section level2">
-<h2><span class="header-section-number">12.8</span> Glossary</h2>
+<h2><span class="header-section-number">12.9</span> Glossary</h2>
 <ul>
 <li><em>Population.</em> The entire collection of units of interest.</li>
 <li><em>Sample.</em> A subset of the entire population.</li>
@@ -1135,29 +1263,20 @@ The code below reads in the sample they collected.</p>
 </ul>
 </div>
 <div id="references-1" class="section level2">
-<h2><span class="header-section-number">12.9</span> References</h2>
+<h2><span class="header-section-number">12.10</span> References</h2>
 <ul>
-<li>Chester Ismay and Albert Y. Kim. <em>Statistical Inference via Data Science: A ModernDive into R and the Tidyverse</em>. Chapman and Hall/CRC, 2019. Freely available online at: <a href="https://moderndive.com/" class="uri">https://moderndive.com/</a></li>
+<li>Ismay, C., &amp; Kim, A. Y. (2019). <em>Statistical Inference via Data Science: A ModernDive into R and the Tidyverse</em>. CRC Press. Freely available online at: <a href="https://moderndive.com/" class="uri">https://moderndive.com/</a></li>
 </ul>
 
 </div>
 </div>
-
-
-
-
-
-
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="chap-sampling-distributions.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="chap-sampling-distributions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chap-hyp-test.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
