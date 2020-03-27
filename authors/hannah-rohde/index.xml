@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Jia E. Loy | Josiah King</title>
-    <link>/authors/jia-e.-loy/</link>
-      <atom:link href="/authors/jia-e.-loy/index.xml" rel="self" type="application/rss+xml" />
-    <description>Jia E. Loy</description>
+    <title>Hannah Rohde | Josiah King</title>
+    <link>/authors/hannah-rohde/</link>
+      <atom:link href="/authors/hannah-rohde/index.xml" rel="self" type="application/rss+xml" />
+    <description>Hannah Rohde</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
-      <title>Jia E. Loy</title>
-      <link>/authors/jia-e.-loy/</link>
+      <title>Hannah Rohde</title>
+      <link>/authors/hannah-rohde/</link>
     </image>
     
     <item>
@@ -17,14 +17,6 @@
       <link>/publication/interpreting-nonverbal-cues-to-deception-in-real-time/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       <guid>/publication/interpreting-nonverbal-cues-to-deception-in-real-time/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Contextual effects on online pragmatic inferences of deception</title>
-      <link>/publication/contextual-effects-on-online-pragmatic-inferences-to-deception/</link>
-      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
-      <guid>/publication/contextual-effects-on-online-pragmatic-inferences-to-deception/</guid>
       <description></description>
     </item>
     

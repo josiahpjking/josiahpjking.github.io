@@ -5,7 +5,7 @@
     <link>/authors/josiah-p.-j.-king/</link>
       <atom:link href="/authors/josiah-p.-j.-king/index.xml" rel="self" type="application/rss+xml" />
     <description>Josiah P. J. King</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 01 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
       <title>Josiah P. J. King</title>
@@ -13,18 +13,10 @@
     </image>
     
     <item>
-      <title>DasGuptR - R package for implementation of Prithwis Das Gupta&#39;s 1993 standardisation and decomposition of rates</title>
-      <link>/publication/dasguptr/</link>
-      <pubDate>Thu, 01 Aug 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/dasguptr/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Contextual effects on online pragmatic inferences of deception</title>
-      <link>/publication/contextual-effects-on-online-pragmatic-inferences-to-deception/</link>
-      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
-      <guid>/publication/contextual-effects-on-online-pragmatic-inferences-to-deception/</guid>
+      <title>Interpreting nonverbal cues to deception in real time</title>
+      <link>/publication/interpreting-nonverbal-cues-to-deception-in-real-time/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/interpreting-nonverbal-cues-to-deception-in-real-time/</guid>
       <description></description>
     </item>
     
