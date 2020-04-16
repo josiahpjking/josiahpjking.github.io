@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 Collecting Data | bookdown-demo.utf8</title>
+  <meta name="description" content="This book contains the lab materials for DAPR-1 at UoE." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 Collecting Data | bookdown-demo.utf8" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This book contains the lab materials for DAPR-1 at UoE." />
+  <meta name="github-repo" content="UoE-Psychology/uoe_psystats" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 Collecting Data | bookdown-demo.utf8" />
+  
+  <meta name="twitter:description" content="This book contains the lab materials for DAPR-1 at UoE." />
+  
+
+<meta name="author" content="Department of Psychology, The University of Edinburgh" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="chap-data-types.html"/>
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+}
+</script>
+
+<style>
+
+.book .book-body .page-wrapper .page-inner section.normal{
+  font-size: 125%;
+  font-family: 'Fira Sans', Karla, 'Roboto', Lora, Lato, Roboto, sans;
+  font-style: normal;
+}
+/*  page width     */
+.book .book-body .page-wrapper .page-inner {
+  max-width: 1000px !important;
+}
+.body{
+  background-color: #fffdf8;
+}
+
+.header-section-number {
+  padding-right: .2em;
+  font-weight: 500;
+}
+.level1 .header-section-number {
+  display: inline-block;
+  border-bottom: 3px solid;
+}
+.level1 h1 {
+  border-bottom: 1px solid;
+}
+.level2 .header-section-number {
+  border-bottom: none;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
+}
+h1.title {
+  font-weight: 700;
+}
+.smallcaps {
+  font-variant: small-caps;
+}
+
+/*********************************************************************************/
+/* QUESTIONS AND SOLUTIONS                                                       */
+/*********************************************************************************/
+
+.question-begin{
+    background: #E2583E;
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid #E2583E;
+    border-left: 1px solid #E2583E;
+    border-right: 1px solid #E2583E;
+    margin-top: .85em;
+}
+.question-body{
+    padding: 10px;
+    background: #ffffff;
+    border-bottom: 1px solid #E2583E;
+    border-left: 1px solid #E2583E;
+    border-right: 1px solid #E2583E;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-bottom: .85em;
+}
+.solution-begin{
+    background: #7BC4C4;
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid #7BC4C4;
+    border-left: 1px solid #7BC4C4;
+    border-right: 1px solid #7BC4C4;
+}
+.solution-body{
+    padding: 10px;
+    background: #ffffff;
+    border-bottom: 1px solid #7BC4C4;
+    border-left: 1px solid #7BC4C4;
+    border-right: 1px solid #7BC4C4;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-bottom: .85em;
+}
+.solution-icon {
+  float: right;
+}
+
+div.blue { background-color:#e6f0ff !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px; }
+
+div.green { background-color:#b8e6a1 !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px; font-family: "Lucida Console", Courier, monospace;}
+
+div.yellow { background-color:#fcf9e1 !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px; }
+
+div.red { background-color:#EBBCBC !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px; }
+
+div.frame {border: 1px solid #333333 !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px;}
+
+</style>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">DAPR2</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course overview</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-description"><i class="fa fa-check"></i>Course description</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#team"><i class="fa fa-check"></i>Team</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#textbook"><i class="fa fa-check"></i>Textbook</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html"><i class="fa fa-check"></i><b>1</b> Collecting Data</a><ul>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#r-rstudio"><i class="fa fa-check"></i>R &amp; Rstudio</a><ul>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#installing-r-rstudio"><i class="fa fa-check"></i>Installing R &amp; Rstudio</a></li>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#intro-to-rstudio"><i class="fa fa-check"></i>Intro to Rstudio</a></li>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#r-as-a-calculator"><i class="fa fa-check"></i>R as a calculator</a></li>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#rscripts-rmarkdown"><i class="fa fa-check"></i>Rscripts, Rmarkdown</a></li>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#using-r-packages"><i class="fa fa-check"></i>Using R packages</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#data-in-r"><i class="fa fa-check"></i>Data in R</a></li>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#tasks-for-today"><i class="fa fa-check"></i>Tasks for today</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="chap-data-types.html"><a href="chap-data-types.html"><i class="fa fa-check"></i><b>2</b> Types of data</a></li>
+<li class="chapter" data-level="3" data-path="chap-visualising-distributions.html"><a href="chap-visualising-distributions.html"><i class="fa fa-check"></i><b>3</b> Visualising distributions</a></li>
+<li class="chapter" data-level="4" data-path="chap-describing-distributions.html"><a href="chap-describing-distributions.html"><i class="fa fa-check"></i><b>4</b> Describing distributions</a></li>
+<li class="chapter" data-level="5" data-path="chap-relationships.html"><a href="chap-relationships.html"><i class="fa fa-check"></i><b>5</b> Visualising and describing relationships</a></li>
+<li class="chapter" data-level="6" data-path="chap-probability-theory.html"><a href="chap-probability-theory.html"><i class="fa fa-check"></i><b>6</b> Basics of probability theory</a></li>
+<li class="chapter" data-level="7" data-path="chap-probability-rules.html"><a href="chap-probability-rules.html"><i class="fa fa-check"></i><b>7</b> Probability rules</a></li>
+<li class="chapter" data-level="8" data-path="chap-random-variables.html"><a href="chap-random-variables.html"><i class="fa fa-check"></i><b>8</b> Random variables</a></li>
+<li class="chapter" data-level="9" data-path="chap-sampling.html"><a href="chap-sampling.html"><i class="fa fa-check"></i><b>9</b> Sampling variability and sampling distributions</a></li>
+<li class="chapter" data-level="10" data-path="chap-bias-variance.html"><a href="chap-bias-variance.html"><i class="fa fa-check"></i><b>10</b> Bias-Variance Trade-off</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/UoE-Psychology/uoe_psystats" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><svg width="50" height="50">
+<rect x="0" y="0" width="50" height="50"
+  style="fill:#0F4C81;stroke:none;opacity:1" />
+</svg>
+<br>
+Data Analysis for Psychology in R 1</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chap-collecting-data" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Collecting Data</h1>
+<div class="blue">
+<h2 id="learning-objectives" class="unnumbered">Learning Objectives</h2>
+<ul>
+<li>LO1: Install R &amp; Rstudio, and get comfortable with the layout<br />
+</li>
+<li>LO2: Learn about how data is stored in R</li>
+<li>LO3: Produce your first Rmarkdown document<br />
+</li>
+</ul>
+</div>
+<div id="r-rstudio" class="section level2 unnumbered">
+<h2>R &amp; Rstudio</h2>
+<div id="installing-r-rstudio" class="section level3 unnumbered">
+<h3>Installing R &amp; Rstudio</h3>
+<p>install tidyverse, rmarkdown, knitr etc.</p>
+</div>
+<div id="intro-to-rstudio" class="section level3 unnumbered">
+<h3>Intro to Rstudio</h3>
+<p>useful settings -
+environment clearing
+soft-wrapping text</p>
+</div>
+<div id="r-as-a-calculator" class="section level3 unnumbered">
+<h3>R as a calculator</h3>
+</div>
+<div id="rscripts-rmarkdown" class="section level3 unnumbered">
+<h3>Rscripts, Rmarkdown</h3>
+</div>
+<div id="using-r-packages" class="section level3 unnumbered">
+<h3>Using R packages</h3>
+</div>
+</div>
+<div id="data-in-r" class="section level2 unnumbered">
+<h2>Data in R</h2>
+<p>assignment <code>&lt;-</code>
+vector
+matrix
+data.frame
+tibble</p>
+<p>accessors [], $</p>
+</div>
+<div id="tasks-for-today" class="section level2 unnumbered">
+<h2>Tasks for today</h2>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>Open an Rmarkdown document.</p>
+<p><strong>File &gt; New File &gt; R Markdown..</strong></p>
+<p>When the box pops-up, give a title of your choice (“Intro lab”, maybe?) and your name as the author.</p>
+<p class="question-end">
+</p>
+</div>
+<p>The file which opens will have some template stuff in it. Delete everything below the first code chunk to start with a fresh document:</p>
+<p>TODO IMAGE</p>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>Insert a new code chunk by either using the Insert button in the top right of the document, and clicking R, or typing <em>Ctrl + Alt + i</em></p>
+<p>Inside the chunk, type:<br />
+<code>print(&quot;Hello world! My name is ?&quot;)</code>.<br />
+Run the chunk and see that the output will be printed below.</p>
+<p class="question-end">
+</p>
+</div>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>We’re going to use some functions which are in the <strong>tidverse</strong> package, which we have already installed earlier on.<br />
+However, to <em>use</em> the package, we need to load it using <code>library(tidyverse)</code>.</p>
+<div class="red">
+<p><strong>Important:</strong> When writing analysis, we want it to be <em>reproducible</em>.<br />
+We want to be able to give somebody else our code and the data, and ensure that they can get the same results.
+To do this, we need to show what packages we use.<br />
+It is good practice to load any packages you use at the top of your code.</p>
+</div>
+<p>In your first code chunk, type:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">#I&#39;m going to use these packages in this document:</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<p>and run the chunk.</p>
+<div class="yellow">
+<p>Note that the <code>#</code> in R code makes that line a comment, which basically means that R will ignore the line. Comments are useful for you to remind yourself of what your code is doing.</p>
+</div>
+<p class="question-end">
+</p>
+</div>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p><strong>Below</strong> the code chunk, add a new line with the following:</p>
+<p><code># R code examples</code></p>
+<p>When the # is used in a Rmarkdown file, <strong>outside</strong> of a code-chunk, it makes that line a heading when we finally get to <em>compiling</em> the document. Below, what you see on the left will be compiled to look like those on the right:
+<img src="images/headings.png" width="1000px" style="display: block; margin: auto;" /></p>
+<p class="question-end">
+</p>
+</div>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>In your Rmarkdown document, give an explanation of what each of the following does in R.
+Write the explanation, and give an example in a code chunk.</p>
+<ul>
+<li><code>+</code></li>
+<li><code>-</code></li>
+<li><code>*</code></li>
+<li><code>/</code></li>
+<li><code>()</code></li>
+<li><code>^</code></li>
+<li><code>&lt;-</code></li>
+<li><code>=</code></li>
+<li><code>&lt;</code></li>
+<li><code>&gt;</code></li>
+<li><code>&lt;=</code></li>
+<li><code>&gt;=</code></li>
+<li><code>==</code></li>
+<li><code>!=</code></li>
+<li><code>data.frame()</code></li>
+<li><code>c()</code></li>
+<li><code>[]</code></li>
+<li><code>$</code></li>
+</ul>
+<p>You can see an example of the first few below:
+TODO IMAGE</p>
+<p class="question-end">
+</p>
+</div>
+<div class="solution-begin">
+Solution <span id="sol-start-13" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-13&#39;, &#39;sol-start-13&#39;)"></span>
+</div>
+<div id="sol-body-13" class="solution-body" style="display: none;">
+<p>Hopefully you managed to include examples for all of these, but we have provided a table below describing what each symbol does.</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Symbol</th>
+<th align="right">Description</th>
+<th align="right">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><code>+</code></td>
+<td align="right">Adds two numbers together</td>
+<td align="right"><code>2+2</code> - two plus two</td>
+</tr>
+<tr class="even">
+<td align="right"><code>-</code></td>
+<td align="right">Subtract one number from another</td>
+<td align="right"><code>3-1</code> - three minus one</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>*</code></td>
+<td align="right">Multiply two numbers together</td>
+<td align="right"><code>3*3</code> - three times three</td>
+</tr>
+<tr class="even">
+<td align="right"><code>/</code></td>
+<td align="right">Divide one number by another</td>
+<td align="right"><code>9/3</code> - nine divided by three</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>()</code></td>
+<td align="right">group operations together</td>
+<td align="right"><code>(2+2)/4</code> is different from <code>2+2/4</code></td>
+</tr>
+<tr class="even">
+<td align="right"><code>^</code></td>
+<td align="right">to the power of..</td>
+<td align="right"><code>4^2</code> - four to the power of two, or four squared</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>&lt;-</code></td>
+<td align="right">stores an object in R with the left hand side (LHS) as the name, and the RHS as the value</td>
+<td align="right"><code>x&lt;-10</code></td>
+</tr>
+<tr class="even">
+<td align="right"><code>=</code></td>
+<td align="right">stores an object in R with the left hand side (LHS) as the name, and the RHS as the value</td>
+<td align="right"><code>x = 10</code></td>
+</tr>
+<tr class="odd">
+<td align="right"><code>&lt;</code></td>
+<td align="right">is less than?</td>
+<td align="right"><code>2&lt;3</code></td>
+</tr>
+<tr class="even">
+<td align="right"><code>&gt;</code></td>
+<td align="right">is greater than?</td>
+<td align="right"><code>2&gt;3</code></td>
+</tr>
+<tr class="odd">
+<td align="right"><code>&lt;=</code></td>
+<td align="right">is less than or equal to?</td>
+<td align="right"><code>2&lt;=3</code></td>
+</tr>
+<tr class="even">
+<td align="right"><code>&gt;=</code></td>
+<td align="right">is greater than or equal to?</td>
+<td align="right"><code>2&gt;=2</code></td>
+</tr>
+<tr class="odd">
+<td align="right"><code>==</code></td>
+<td align="right">is equal to?</td>
+<td align="right"><code>(5+5) == 10</code></td>
+</tr>
+<tr class="even">
+<td align="right"><code>!=</code></td>
+<td align="right">is not equal to?</td>
+<td align="right"><code>(2+3) != 4</code></td>
+</tr>
+<tr class="odd">
+<td align="right"><code>c()</code></td>
+<td align="right">combines values into a vector (a sequence of values)</td>
+<td align="right"><code>c(1,2,3,4)</code></td>
+</tr>
+<tr class="even">
+<td align="right"><code>data.frame()</code></td>
+<td align="right">converts whatever is inside the brackets to a dataframe</td>
+<td align="right"><code>data.frame(values = c(1,2,3,4))</code></td>
+</tr>
+<tr class="odd">
+<td align="right"><code>[]</code></td>
+<td align="right">used to extract the 1st, 2nd, … <span class="math inline">\(i^{th}\)</span> elements in a set of numbers</td>
+<td align="right"><code>myvector[3]</code></td>
+</tr>
+<tr class="even">
+<td align="right"><code>$</code></td>
+<td align="right">used to extract a named column from a dataframe</td>
+<td align="right"><code>mydata$age_variable</code></td>
+</tr>
+</tbody>
+</table>
+<p class="solution-end">
+</p>
+</div>
+<div style="height:20px;">
+
+</div>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p><strong>Outside</strong> of a code chunk, add a new heading with the following:</p>
+<p><code># Vectors and dataframes</code></p>
+<p class="question-end">
+</p>
+</div>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>In a new code chunk, do the following:</p>
+<ol style="list-style-type: decimal">
+<li>store the following numbers as an object in R:<br />
+4,7,3,1,8,9,5,2,2,6,9,9,5,20<br />
+</li>
+<li>Try using the function <code>sum()</code>, with the name of your object inside the brackets.</li>
+</ol>
+<p class="question-end">
+</p>
+</div>
+<div class="solution-begin">
+Solution <span id="sol-start-14" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-14&#39;, &#39;sol-start-14&#39;)"></span>
+</div>
+<div id="sol-body-14" class="solution-body" style="display: none;">
+<p>Because this is just a set of numbers, we store it as a <strong>vector</strong>, using <code>c()</code>.<br />
+We have named it <code>myvec</code>, but you can call yours whatever you like.</p>
+<p>The <code>sum()</code> function will add all of the numbers together!</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">myvec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">sum</span>(myvec)</a></code></pre></div>
+<pre><code>[1] 90</code></pre>
+<p class="solution-end">
+</p>
+</div>
+<div style="height:20px;">
+
+</div>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>Using the square brackets - <code>[]</code> - pull out the 2nd, 4th and 6th values in the object you just created.</p>
+<p><strong>Hint:</strong> You will need to put inside the square brackets a <em>sequence of</em> numbers. How do we combine numbers in to a sequence in R? using <code>c()</code>!</p>
+<p class="question-end">
+</p>
+</div>
+<div class="solution-begin">
+Solution <span id="sol-start-15" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-15&#39;, &#39;sol-start-15&#39;)"></span>
+</div>
+<div id="sol-body-15" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">myvec[<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>)]</a></code></pre></div>
+<pre><code>[1] 7 1 9</code></pre>
+<p class="solution-end">
+</p>
+</div>
+<div style="height:20px;">
+
+</div>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>Store the names and birth-years of the Beatle in the appropriate format in R. Name it <code>beatles</code>.
+John was born in 1940
+Paul was born in 1942
+George was born in 1943
+Ringo was born in 1940</p>
+<p><strong>Hint:</strong> We’re going to have two sequences here, the names, and the birth-years. The easiest way to think of this would be to have a row for each Beatle, and a column for each of name and birth-year.</p>
+<p>Check dimensions of the object using <code>dim()</code>. How many rows and how many columns are there?</p>
+<p class="question-end">
+</p>
+</div>
+<div class="solution-begin">
+Solution <span id="sol-start-16" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-16&#39;, &#39;sol-start-16&#39;)"></span>
+</div>
+<div id="sol-body-16" class="solution-body" style="display: none;">
+<p>TODO - decide dataframe/tibble
+We want a dataframe/tibble</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">beatles &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">    <span class="dt">name =</span> <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>,<span class="st">&quot;Paul&quot;</span>,<span class="st">&quot;George&quot;</span>,<span class="st">&quot;Ringo&quot;</span>),</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">    <span class="dt">birthyear =</span> <span class="kw">c</span>(<span class="dv">1940</span>,<span class="dv">1942</span>,<span class="dv">1943</span>,<span class="dv">1940</span>)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">)</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">beatles &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">    <span class="dt">name =</span> <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>,<span class="st">&quot;Paul&quot;</span>,<span class="st">&quot;George&quot;</span>,<span class="st">&quot;Ringo&quot;</span>),</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">    <span class="dt">birthyear =</span> <span class="kw">c</span>(<span class="dv">1940</span>,<span class="dv">1942</span>,<span class="dv">1943</span>,<span class="dv">1940</span>)</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">dim</span>(beatles)</a></code></pre></div>
+<pre><code>[1] 4 2</code></pre>
+<p>Four rows, and two columns!</p>
+<p class="solution-end">
+</p>
+</div>
+<div style="height:20px;">
+
+</div>
+<hr />
+<p>So far, we’ve been manually inputting our data. However, R can read in data which has been created elsewhere (like in excel, or by some software which is used to present participants with experiments).</p>
+<p>TODO - link to data we’re going to use next couple of weeks</p>
+<p>First, click on the following link: <a href="https://uoe-psychology.github.io/uoe_psystats/multivar/data/women_computer_science.csv">link</a></p>
+<p>It should open a webpage and show you a dataset.
+There are two things to note.</p>
+<ul>
+<li>the values are separated by commas</li>
+<li>the url (in the top bar of your browser) ends with <strong>.csv</strong>.</li>
+</ul>
+<p>This stands for ‘comma separated value’.<br />
+The <strong>tidyverse</strong> package which we loaded at the top has a function to read this sort of data: <code>read_csv()</code>.</p>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>Read the data into R. You can do this by giving <code>read_csv()</code> the url.</p>
+<p><strong>Hint:</strong> If you just type:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">read_csv</span>(<span class="st">&quot;https://uoe-psychology.github.io/uoe_psystats/multivar/data/women_computer_science.csv&quot;</span>)</a></code></pre></div>
+<pre><code># A tibble: 192 x 3
+    date field            pct_women_majors
+   &lt;dbl&gt; &lt;chr&gt;                       &lt;dbl&gt;
+ 1  1966 Computer.science            0.146
+ 2  1967 Computer.science            0.108
+ 3  1968 Computer.science            0.12 
+ 4  1969 Computer.science            0.13 
+ 5  1970 Computer.science            0.129
+ 6  1971 Computer.science            0.136
+ 7  1972 Computer.science            0.136
+ 8  1973 Computer.science            0.149
+ 9  1974 Computer.science            0.164
+10  1975 Computer.science            0.19 
+# … with 182 more rows</code></pre>
+<p>It will print out the dataset, but it won’t store it in R for you to do things with. To do that, we want to assign a name to the data:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">mydata &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://uoe-psychology.github.io/uoe_psystats/multivar/data/women_computer_science.csv&quot;</span>)</a></code></pre></div>
+<p>Note that it now turns up in the <em>Environment</em> pane of Rstudio.<br />
+TODO image</p>
+<p class="question-end">
+</p>
+</div>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>Check how many rows and columns you have in the dataset.
+You can do this with the <code>dim()</code> function.</p>
+<p class="question-end">
+</p>
+</div>
+<div class="solution-begin">
+Solution <span id="sol-start-17" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-17&#39;, &#39;sol-start-17&#39;)"></span>
+</div>
+<div id="sol-body-17" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">dim</span>(mydata)</a></code></pre></div>
+<pre><code>[1] 192   3</code></pre>
+<p class="solution-end">
+</p>
+</div>
+<div style="height:20px;">
+
+</div>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>Using the square brackets, show the 167th row, with all columns.</p>
+<p><strong>Remember:</strong> When you are using <code>[]</code> with a dataframe, you specify <code>data[rows, columns]</code>. If you leave either rows or columns blank it will give all of them - for instance, <code>data[ , columns]</code> will give you all rows for some specified columns.</p>
+<p class="question-end">
+</p>
+</div>
+<div class="solution-begin">
+Solution <span id="sol-start-18" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-18&#39;, &#39;sol-start-18&#39;)"></span>
+</div>
+<div id="sol-body-18" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">mydata[<span class="dv">167</span>,]</a></code></pre></div>
+<pre><code># A tibble: 1 x 3
+   date field             pct_women_majors
+  &lt;dbl&gt; &lt;chr&gt;                        &lt;dbl&gt;
+1  1988 Physical.Sciences             0.32</code></pre>
+<p class="solution-end">
+</p>
+</div>
+<div style="height:20px;">
+
+</div>
+<hr />
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>By now, you should have an Rmardkown document ( <strong>.Rmd</strong> ) with your answers to the tasks we’ve been through today.</p>
+<p>Compile the document by clicking on the <strong>Knit</strong> button at the top. The little arrow to the right allows you to compile to either <strong>.pdf</strong> or <strong>.html</strong>.</p>
+<p class="question-end">
+</p>
+</div>
+<div class="green">
+<h2 id="glossary" class="unnumbered">Glossary</h2>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chap-data-types.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

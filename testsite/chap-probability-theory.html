@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title> Data Analysis for Psychology in R 1 | bookdown-demo.utf8</title>
+  <title>Chapter 6 Basics of probability theory | bookdown-demo.utf8</title>
   <meta name="description" content="This book contains the lab materials for DAPR-1 at UoE." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content=" Data Analysis for Psychology in R 1 | bookdown-demo.utf8" />
+  <meta property="og:title" content="Chapter 6 Basics of probability theory | bookdown-demo.utf8" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="UoE-Psychology/uoe_psystats" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content=" Data Analysis for Psychology in R 1 | bookdown-demo.utf8" />
+  <meta name="twitter:title" content="Chapter 6 Basics of probability theory | bookdown-demo.utf8" />
   
   <meta name="twitter:description" content="This book contains the lab materials for DAPR-1 at UoE." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="chap-collecting-data.html"/>
+<link rel="prev" href="chap-relationships.html"/>
+<link rel="next" href="chap-probability-rules.html"/>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
@@ -293,159 +293,25 @@ Data Analysis for Psychology in R 1</a>
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title"><svg width="50" height="50">
-<rect x="0" y="0" width="50" height="50"
-  style="fill:#0F4C81;stroke:none;opacity:1" />
-</svg>
-<br>
-Data Analysis for Psychology in R 1</h1>
-<p class="author"><em>Department of Psychology, The University of Edinburgh</em></p>
-<p class="date"><em>Academic year 2020-2021</em></p>
-</div>
-<div id="chap-overview" class="section level1 unnumbered">
-<h1>Course overview</h1>
-<div id="course-description" class="section level2 unnumbered">
-<h2>Course description</h2>
-<p>Data analysis for psychology in R 1 or, in short, <strong>DAPR1</strong>, is your first step on the exciting road of analysing data, and using data to answer interesting questions in the ways that statisticians, researchers, data scientists do.</p>
-<p>This year-long course is designed to work gently through conceptual content that form the basis of understanding and working with data to perform statistical testing. It will provide you with the foundations in working with data and probability theory, and build to learning about how we make inferences about our hypotheses in psychology. Concepts are demonstrated in R throughout, taking you from basic calculations to the foundations of data management, plotting and use of simple statistical tests.</p>
-<p>The overall aim of the course is to provide you with all the necessary skills to feel confident in the basics of statistics, R and data, before we move on to discuss a broader array of statistical methods in year 2.</p>
-</div>
-<div id="team" class="section level2 unnumbered">
-<h2>Team</h2>
+<div id="chap-probability-theory" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Basics of probability theory</h1>
+<div class="blue">
+<h2 id="learning-objectives-5" class="unnumbered">Learning Objectives</h2>
 <ul>
-<li>Dr Tom Booth, <em>Senior Lecturer</em>: <a href="mailto:Tom.Booth@ed.ac.uk" class="email">Tom.Booth@ed.ac.uk</a></li>
-<li>Dr Josiah King, <em>Senior Teaching Coordinator</em>: <a href="mailto:ug.ppls.stats@ed.ac.uk" class="email">ug.ppls.stats@ed.ac.uk</a></li>
-<li>Dr Umberto Noe, <em>Senior Teaching Coordinator</em>: <a href="mailto:ug.ppls.stats@ed.ac.uk" class="email">ug.ppls.stats@ed.ac.uk</a></li>
-<li>And not forgetting your friendly tutoring team! Ask them anything!</li>
+<li>LO1:</li>
+<li>LO2:</li>
+<li>LO3:</li>
 </ul>
 </div>
-<div id="schedule" class="section level2 unnumbered">
-<h2>Schedule</h2>
-<p><strong>SEMESTER 1</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Week</th>
-<th align="left">Topic</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">1</td>
-<td align="left">Collecting data</td>
-</tr>
-<tr class="even">
-<td align="left">2</td>
-<td align="left">Types of data</td>
-</tr>
-<tr class="odd">
-<td align="left">3</td>
-<td align="left">Visualising distributions</td>
-</tr>
-<tr class="even">
-<td align="left">4</td>
-<td align="left">Describing distributions</td>
-</tr>
-<tr class="odd">
-<td align="left">5</td>
-<td align="left">Visualising and describing relationships</td>
-</tr>
-<tr class="even">
-<td align="left">Break</td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left">6</td>
-<td align="left">Basics of probability theory</td>
-</tr>
-<tr class="even">
-<td align="left">7</td>
-<td align="left">Probability rules</td>
-</tr>
-<tr class="odd">
-<td align="left">8</td>
-<td align="left">Random variables</td>
-</tr>
-<tr class="even">
-<td align="left">9</td>
-<td align="left">Sampling variability and sampling distributions</td>
-</tr>
-<tr class="odd">
-<td align="left">10</td>
-<td align="left">Bias-variance trade-off</td>
-</tr>
-</tbody>
-</table>
-<p><strong>SEMESTER 2</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Week</th>
-<th align="left">Topic</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">11</td>
-<td align="left">Bootstrap &amp; Confidence Intervals</td>
-</tr>
-<tr class="even">
-<td align="left">12</td>
-<td align="left">Hypothesis testing with the p-value approach</td>
-</tr>
-<tr class="odd">
-<td align="left">13</td>
-<td align="left">Hypothesis testing with the critical values approach</td>
-</tr>
-<tr class="even">
-<td align="left">14</td>
-<td align="left">Hypothesis testing &amp; Confidence Intervals</td>
-</tr>
-<tr class="odd">
-<td align="left">15</td>
-<td align="left">Making decisions - Effect sizes, Power, Errors</td>
-</tr>
-<tr class="even">
-<td align="left">Break</td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left">16</td>
-<td align="left">Test for one mean</td>
-</tr>
-<tr class="even">
-<td align="left">17</td>
-<td align="left">Test for two means (paired samples)</td>
-</tr>
-<tr class="odd">
-<td align="left">18</td>
-<td align="left">Test for two means (independent samples)</td>
-</tr>
-<tr class="even">
-<td align="left">19</td>
-<td align="left">Chi-square test</td>
-</tr>
-<tr class="odd">
-<td align="left">20</td>
-<td align="left">Covariance, correlation, and looking ahead</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="textbook" class="section level2 unnumbered">
-<h2>Textbook</h2>
-<p>TBC</p>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="chap-collecting-data.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="chap-relationships.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chap-probability-rules.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
