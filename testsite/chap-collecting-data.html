@@ -153,7 +153,7 @@ h1.title {
 
 div.blue { background-color:#e6f0ff !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px; }
 
-div.green { background-color:#b8e6a1 !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px; font-family: "Lucida Console", Courier, monospace;}
+div.green { background-color:#b8e6a1 !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px;}
 
 div.yellow { background-color:#fcf9e1 !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px; }
 
@@ -251,14 +251,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="1" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html"><i class="fa fa-check"></i><b>1</b> Collecting Data</a><ul>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#r-rstudio"><i class="fa fa-check"></i>R &amp; Rstudio</a><ul>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#installing-r-rstudio"><i class="fa fa-check"></i>Installing R &amp; Rstudio</a></li>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#r-rstudio-1"><i class="fa fa-check"></i>R &amp; Rstudio</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#intro-to-rstudio"><i class="fa fa-check"></i>Intro to Rstudio</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#r-as-a-calculator"><i class="fa fa-check"></i>R as a calculator</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#rscripts-rmarkdown"><i class="fa fa-check"></i>Rscripts, Rmarkdown</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#using-r-packages"><i class="fa fa-check"></i>Using R packages</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#data-in-r"><i class="fa fa-check"></i>Data in R</a></li>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#tasks-for-today"><i class="fa fa-check"></i>Tasks for today</a></li>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#tasks-for-today"><i class="fa fa-check"></i>Tasks for today</a><ul>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#starting-a-new-.rmd-document"><i class="fa fa-check"></i>Starting a new .Rmd document</a></li>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#storing-data"><i class="fa fa-check"></i>Storing data</a></li>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#reading-in-external-data"><i class="fa fa-check"></i>Reading in external data</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="chap-data-types.html"><a href="chap-data-types.html"><i class="fa fa-check"></i><b>2</b> Types of data</a></li>
 <li class="chapter" data-level="3" data-path="chap-visualising-distributions.html"><a href="chap-visualising-distributions.html"><i class="fa fa-check"></i><b>3</b> Visualising distributions</a></li>
@@ -308,21 +312,139 @@ Data Analysis for Psychology in R 1</a>
 </div>
 <div id="r-rstudio" class="section level2 unnumbered">
 <h2>R &amp; Rstudio</h2>
-<div id="installing-r-rstudio" class="section level3 unnumbered">
-<h3>Installing R &amp; Rstudio</h3>
-<p>install tidyverse, rmarkdown, knitr etc.</p>
+<div class="frame">
+<p>You have two options for how you use R and Rstudio:</p>
+<p><strong>A:</strong> Download R and Rstudio onto your computer (recommended)<br />
+<strong>B:</strong> Use R and Rstudio online via a web browser (for people using chromebooks).</p>
+<p><strong>Checklist for today</strong></p>
+<ol style="list-style-type: decimal">
+<li><strong>EITHER:</strong>
+<ul>
+<li>Option A: Install R and Rstudio</li>
+<li>Option B: Register for RstudioCloud (free) and log in</li>
+</ul></li>
+<li>Start a new project for the course</li>
+<li>Change a few Rstudio settings (recommended)</li>
+<li>Install some R packages (the “tidyverse”)</li>
+<li>Create a new Rmarkdown document</li>
+<li>Complete today’s tasks and exercises</li>
+<li>Compile your Rmarkdown document</li>
+<li>Celebrate!</li>
+</ol>
+</div>
+<div id="r-rstudio-1" class="section level3 unnumbered">
+<h3>R &amp; Rstudio</h3>
+<div class="solution-begin">
+Option A: Installing R &amp; Rstudio (recommended)<span id="sol-start-1" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-1&#39;, &#39;sol-start-1&#39;)"></span>
+</div>
+<div id="sol-body-1" class="solution-body" style="display: none;">
+<ol style="list-style-type: decimal">
+<li>Download and install the most recent version of R:
+<ul>
+<li>If you are on a Mac: <a href="https://cran.r-project.org/bin/macosx/" class="uri">https://cran.r-project.org/bin/macosx/</a></li>
+<li>If you are on Windows: <a href="https://cran.r-project.org/bin/windows/base/" class="uri">https://cran.r-project.org/bin/windows/base/</a></li>
+</ul></li>
+<li>Download and install Rstudio:
+<ul>
+<li>Choose the appropriate downloaded for your computer (e.g.., MacOS/Windows): <a href="https://www.rstudio.com/products/rstudio/download/#download" class="uri">https://www.rstudio.com/products/rstudio/download/#download</a></li>
+</ul></li>
+<li>Open Rstudio:</li>
+<li>Create a new project:
+<ul>
+<li>File &gt; New Project..</li>
+<li>Click New Directory:<br />
+<img src="images/newproj1.png" /></li>
+<li>Click New Project:<br />
+<img src="images/newproj2.png" /></li>
+<li>Name the project, and decide where you want to save it on your computer by clicking on browse. Then click Create Project:<br />
+<img src="images/newproj3.png" /></li>
+</ul></li>
+</ol>
+<p class="solution-end">
+</p>
+</div>
+<div style="height:20px;">
+
+</div>
+<div class="solution-begin">
+Option B: Rstudio Cloud (for chromebook users)<span id="sol-start-2" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-2&#39;, &#39;sol-start-2&#39;)"></span>
+</div>
+<div id="sol-body-2" class="solution-body" style="display: none;">
+<ol style="list-style-type: decimal">
+<li>Register for Rstudio Cloud <a href="https://rstudio.cloud/">(https://rstudio.cloud/)</a>.</li>
+<li>Log in to Rstudio Cloud</li>
+<li>Create a new project
+<img src="images/rstudiocloud.png" /></li>
+<li>Rename the project
+<img src="images/rstudiocloud2.png" /></li>
+</ol>
+<p class="solution-end">
+</p>
+</div>
+<div style="height:20px;">
+
+</div>
 </div>
 <div id="intro-to-rstudio" class="section level3 unnumbered">
 <h3>Intro to Rstudio</h3>
-<p>useful settings -
-environment clearing
-soft-wrapping text</p>
+<p>Okay, now you should have a project open, and you should see something which looks more or less like the below, where there are several little windows.<br />
+TODO ss</p>
+<p>We’re going to explore what each of these little windows offer by just diving in and starting to do things.</p>
 </div>
 <div id="r-as-a-calculator" class="section level3 unnumbered">
 <h3>R as a calculator</h3>
+<p>Starting in the top left, you’ll notice the little blue arrow.
+This is where we R code gets <em>executed</em>.
+Type 2+2, and hit enter ↵<br />
+It’s a calculator!</p>
+<p>Let’s work through some of the basic operations (adding, subtracting etc).<br />
+Try these commands yourself:</p>
+<ul>
+<li><code>2+5</code></li>
+<li><code>10-4</code></li>
+<li><code>2*5</code></li>
+<li><code>10-(2*5)</code></li>
+<li><code>(10-2)*5</code></li>
+<li><code>10/2</code></li>
+</ul>
+<p>Now let’s take a sidestep. As well as performing calculations, we can <em>ask</em> R things, such as “Is 3 less than 5?”:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="dv">3</span><span class="op">&lt;</span><span class="dv">5</span></a></code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<p>Try the following:</p>
+<ul>
+<li><code>3&gt;5</code> - “is 3 greater than 5?”</li>
+<li><code>3&lt;=5</code> - “is 3 less than OR equal to 5?”</li>
+<li><code>3&gt;=3</code> - “is 3 greater than OR equal to 3?”</li>
+<li><code>3==5</code> - “is 3 equal to 5?”</li>
+<li><code>(2*5)==10</code> “is 2 times 5 equal to 10?”</li>
+<li><code>(2*5)!=11</code> “is 2 times 5 NOT equal to 11?”</li>
+</ul>
+<p>We can also store things in R’s memory, and we need to name them:</p>
+<p>TODO assignments</p>
+<p>TODO environment
+TODO image - look x is now up there.
+we can refer to x and it will give us the value!</p>
+<p>TODO exercise</p>
+<div class="yellow">
+<p><strong>Useful Settings</strong>
+environment clearing</p>
+</div>
+<p>TODO ss with console and environment highlighted.
+notice the console is in the bottom now, and there’s a new window top left.</p>
+<p>click file &gt; new rmd.</p>
 </div>
 <div id="rscripts-rmarkdown" class="section level3 unnumbered">
 <h3>Rscripts, Rmarkdown</h3>
+<div id="editor" class="section level4">
+<h4><span class="header-section-number">1.0.0.1</span> Editor</h4>
+<div class="yellow">
+<p><strong>Useful Settings</strong>
+soft wrap source files</p>
+</div>
+</div>
+<div id="files-etc." class="section level4">
+<h4><span class="header-section-number">1.0.0.2</span> Files etc.</h4>
+</div>
 </div>
 <div id="using-r-packages" class="section level3 unnumbered">
 <h3>Using R packages</h3>
@@ -339,6 +461,8 @@ tibble</p>
 </div>
 <div id="tasks-for-today" class="section level2 unnumbered">
 <h2>Tasks for today</h2>
+<div id="starting-a-new-.rmd-document" class="section level3 unnumbered">
+<h3>Starting a new .Rmd document</h3>
 <div class="question-begin">
 Task
 </div>
@@ -350,7 +474,7 @@ Task
 </p>
 </div>
 <p>The file which opens will have some template stuff in it. Delete everything below the first code chunk to start with a fresh document:</p>
-<p>TODO IMAGE</p>
+<p><img src="images/ss_newrmd.png" /></p>
 <div class="question-begin">
 Task
 </div>
@@ -362,21 +486,19 @@ Run the chunk and see that the output will be printed below.</p>
 <p class="question-end">
 </p>
 </div>
+<p>We’re going to use some functions which are in the <strong>tidverse</strong> package, which we have already installed earlier on.<br />
+However, to <em>use</em> the package, we need to load it using <code>library(tidyverse)</code>.</p>
+<div class="red">
+<p><strong>Important:</strong> When writing analysis, we want it to be <strong>reproducible</strong> - we want to be able to give somebody else our code and the data, and ensure that they can get the same results. To do this, we need to show what packages we use.<br />
+It is good practice to load any packages you use at the top of your code.</p>
+</div>
 <div class="question-begin">
 Task
 </div>
 <div class="question-body">
-<p>We’re going to use some functions which are in the <strong>tidverse</strong> package, which we have already installed earlier on.<br />
-However, to <em>use</em> the package, we need to load it using <code>library(tidyverse)</code>.</p>
-<div class="red">
-<p><strong>Important:</strong> When writing analysis, we want it to be <em>reproducible</em>.<br />
-We want to be able to give somebody else our code and the data, and ensure that they can get the same results.
-To do this, we need to show what packages we use.<br />
-It is good practice to load any packages you use at the top of your code.</p>
-</div>
 <p>In your first code chunk, type:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">#I&#39;m going to use these packages in this document:</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">#I&#39;m going to use these packages in this document:</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
 <p>and run the chunk.</p>
 <div class="yellow">
 <p>Note that the <code>#</code> in R code makes that line a comment, which basically means that R will ignore the line. Comments are useful for you to remind yourself of what your code is doing.</p>
@@ -389,11 +511,13 @@ Task
 </div>
 <div class="question-body">
 <p><strong>Below</strong> the code chunk, add a new line with the following:</p>
-<p><code># R code examples</code></p>
-<p>When the # is used in a Rmarkdown file, <strong>outside</strong> of a code-chunk, it makes that line a heading when we finally get to <em>compiling</em> the document. Below, what you see on the left will be compiled to look like those on the right:
-<img src="images/headings.png" width="1000px" style="display: block; margin: auto;" /></p>
+<p># R code examples</p>
 <p class="question-end">
 </p>
+</div>
+<div class="yellow">
+<p>When the # is used in a Rmarkdown file, <strong>outside</strong> of a code-chunk, it makes that line a heading when we finally get to <em>compiling</em> the document. Below, what you see on the left will be compiled to look like those on the right:<br />
+<img src="images/headings.png" /></p>
 </div>
 <div class="question-begin">
 Task
@@ -422,14 +546,14 @@ Write the explanation, and give an example in a code chunk.</p>
 <li><code>$</code></li>
 </ul>
 <p>You can see an example of the first few below:
-TODO IMAGE</p>
+<img src="images/ss_examples.png" /></p>
 <p class="question-end">
 </p>
 </div>
 <div class="solution-begin">
-Solution <span id="sol-start-1" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-1&#39;, &#39;sol-start-1&#39;)"></span>
+Solution <span id="sol-start-3" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-3&#39;, &#39;sol-start-3&#39;)"></span>
 </div>
-<div id="sol-body-1" class="solution-body" style="display: none;">
+<div id="sol-body-3" class="solution-body" style="display: none;">
 <p>Hopefully you managed to include examples for all of these, but we have provided a table below describing what each symbol does.</p>
 <table>
 <colgroup>
@@ -543,12 +667,16 @@ Solution <span id="sol-start-1" class="fa fa-plus-square solution-icon clickable
 <div style="height:20px;">
 
 </div>
+</div>
+<div id="storing-data" class="section level3 unnumbered">
+<h3>Storing data</h3>
 <div class="question-begin">
 Task
 </div>
 <div class="question-body">
-<p><strong>Outside</strong> of a code chunk, add a new heading with the following:</p>
-<p><code># Vectors and dataframes</code></p>
+<p>Add a new heading by typing the following:</p>
+<p># Vectors and dataframes</p>
+<p><strong>Remember:</strong> We make headings using the # <em>outside</em> of a code chunk.</p>
 <p class="question-end">
 </p>
 </div>
@@ -567,14 +695,14 @@ Task
 </p>
 </div>
 <div class="solution-begin">
-Solution <span id="sol-start-2" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-2&#39;, &#39;sol-start-2&#39;)"></span>
+Solution <span id="sol-start-4" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-4&#39;, &#39;sol-start-4&#39;)"></span>
 </div>
-<div id="sol-body-2" class="solution-body" style="display: none;">
+<div id="sol-body-4" class="solution-body" style="display: none;">
 <p>Because this is just a set of numbers, we store it as a <strong>vector</strong>, using <code>c()</code>.<br />
 We have named it <code>myvec</code>, but you can call yours whatever you like.</p>
 <p>The <code>sum()</code> function will add all of the numbers together!</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">myvec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">20</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">sum</span>(myvec)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">myvec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">sum</span>(myvec)</a></code></pre></div>
 <pre><code>[1] 90</code></pre>
 <p class="solution-end">
 </p>
@@ -592,10 +720,10 @@ Task
 </p>
 </div>
 <div class="solution-begin">
-Solution <span id="sol-start-3" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-3&#39;, &#39;sol-start-3&#39;)"></span>
+Solution <span id="sol-start-5" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-5&#39;, &#39;sol-start-5&#39;)"></span>
 </div>
-<div id="sol-body-3" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">myvec[<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>)]</a></code></pre></div>
+<div id="sol-body-5" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">myvec[<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>)]</a></code></pre></div>
 <pre><code>[1] 7 1 9</code></pre>
 <p class="solution-end">
 </p>
@@ -607,33 +735,33 @@ Solution <span id="sol-start-3" class="fa fa-plus-square solution-icon clickable
 Task
 </div>
 <div class="question-body">
-<p>Store the names and birth-years of the Beatle in the appropriate format in R. Name it <code>beatles</code>.
-John was born in 1940
+<p>In a new code-chunk, store the names and birth-years of the Beatle in the appropriate format in R. Name it <code>beatles</code>.</p>
+<p>John was born in 1940
 Paul was born in 1942
 George was born in 1943
 Ringo was born in 1940</p>
-<p><strong>Hint:</strong> We’re going to have two sequences here, the names, and the birth-years. The easiest way to think of this would be to have a row for each Beatle, and a column for each of name and birth-year.</p>
-<p>Check dimensions of the object using <code>dim()</code>. How many rows and how many columns are there?</p>
+<p><strong>Hint:</strong> We’ve got two sets of values here: the names and the birth-years. The easiest way to think of this would be to have a row for each Beatle, and a column for each of name and birth-year.<br />
+Check dimensions of the object using <code>dim()</code>. How many rows and how many columns are there?</p>
 <p class="question-end">
 </p>
 </div>
 <div class="solution-begin">
-Solution <span id="sol-start-4" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-4&#39;, &#39;sol-start-4&#39;)"></span>
+Solution <span id="sol-start-6" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-6&#39;, &#39;sol-start-6&#39;)"></span>
 </div>
-<div id="sol-body-4" class="solution-body" style="display: none;">
+<div id="sol-body-6" class="solution-body" style="display: none;">
 <p>TODO - decide dataframe/tibble
 We want a dataframe/tibble</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">beatles &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">    <span class="dt">name =</span> <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>,<span class="st">&quot;Paul&quot;</span>,<span class="st">&quot;George&quot;</span>,<span class="st">&quot;Ringo&quot;</span>),</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">    <span class="dt">birthyear =</span> <span class="kw">c</span>(<span class="dv">1940</span>,<span class="dv">1942</span>,<span class="dv">1943</span>,<span class="dv">1940</span>)</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">)</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">beatles &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">    <span class="dt">name =</span> <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>,<span class="st">&quot;Paul&quot;</span>,<span class="st">&quot;George&quot;</span>,<span class="st">&quot;Ringo&quot;</span>),</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">    <span class="dt">birthyear =</span> <span class="kw">c</span>(<span class="dv">1940</span>,<span class="dv">1942</span>,<span class="dv">1943</span>,<span class="dv">1940</span>)</a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">)</a></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">dim</span>(beatles)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">beatles &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">    <span class="dt">name =</span> <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>,<span class="st">&quot;Paul&quot;</span>,<span class="st">&quot;George&quot;</span>,<span class="st">&quot;Ringo&quot;</span>),</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">    <span class="dt">birthyear =</span> <span class="kw">c</span>(<span class="dv">1940</span>,<span class="dv">1942</span>,<span class="dv">1943</span>,<span class="dv">1940</span>)</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">)</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">beatles &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">    <span class="dt">name =</span> <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>,<span class="st">&quot;Paul&quot;</span>,<span class="st">&quot;George&quot;</span>,<span class="st">&quot;Ringo&quot;</span>),</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">    <span class="dt">birthyear =</span> <span class="kw">c</span>(<span class="dv">1940</span>,<span class="dv">1942</span>,<span class="dv">1943</span>,<span class="dv">1940</span>)</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">dim</span>(beatles)</a></code></pre></div>
 <pre><code>[1] 4 2</code></pre>
 <p>Four rows, and two columns!</p>
 <p class="solution-end">
@@ -642,7 +770,9 @@ We want a dataframe/tibble</p>
 <div style="height:20px;">
 
 </div>
-<hr />
+</div>
+<div id="reading-in-external-data" class="section level3 unnumbered">
+<h3>Reading in external data</h3>
 <p>So far, we’ve been manually inputting our data. However, R can read in data which has been created elsewhere (like in excel, or by some software which is used to present participants with experiments).</p>
 <p>TODO - link to data we’re going to use next couple of weeks</p>
 <p>First, click on the following link: <a href="https://uoe-psychology.github.io/uoe_psystats/multivar/data/women_computer_science.csv">link</a></p>
@@ -660,7 +790,7 @@ Task
 <div class="question-body">
 <p>Read the data into R. You can do this by giving <code>read_csv()</code> the url.</p>
 <p><strong>Hint:</strong> If you just type:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">read_csv</span>(<span class="st">&quot;https://uoe-psychology.github.io/uoe_psystats/multivar/data/women_computer_science.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">read_csv</span>(<span class="st">&quot;https://uoe-psychology.github.io/uoe_psystats/multivar/data/women_computer_science.csv&quot;</span>)</a></code></pre></div>
 <pre><code># A tibble: 192 x 3
     date field            pct_women_majors
    &lt;dbl&gt; &lt;chr&gt;                       &lt;dbl&gt;
@@ -676,7 +806,7 @@ Task
 10  1975 Computer.science            0.19 
 # … with 182 more rows</code></pre>
 <p>It will print out the dataset, but it won’t store it in R for you to do things with. To do that, we want to assign a name to the data:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">mydata &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://uoe-psychology.github.io/uoe_psystats/multivar/data/women_computer_science.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">mydata &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://uoe-psychology.github.io/uoe_psystats/multivar/data/women_computer_science.csv&quot;</span>)</a></code></pre></div>
 <p>Note that it now turns up in the <em>Environment</em> pane of Rstudio.<br />
 TODO image</p>
 <p class="question-end">
@@ -692,10 +822,10 @@ You can do this with the <code>dim()</code> function.</p>
 </p>
 </div>
 <div class="solution-begin">
-Solution <span id="sol-start-5" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-5&#39;, &#39;sol-start-5&#39;)"></span>
+Solution <span id="sol-start-7" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-7&#39;, &#39;sol-start-7&#39;)"></span>
 </div>
-<div id="sol-body-5" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">dim</span>(mydata)</a></code></pre></div>
+<div id="sol-body-7" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">dim</span>(mydata)</a></code></pre></div>
 <pre><code>[1] 192   3</code></pre>
 <p class="solution-end">
 </p>
@@ -713,10 +843,10 @@ Task
 </p>
 </div>
 <div class="solution-begin">
-Solution <span id="sol-start-6" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-6&#39;, &#39;sol-start-6&#39;)"></span>
+Solution <span id="sol-start-8" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-8&#39;, &#39;sol-start-8&#39;)"></span>
 </div>
-<div id="sol-body-6" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">mydata[<span class="dv">167</span>,]</a></code></pre></div>
+<div id="sol-body-8" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">mydata[<span class="dv">167</span>,]</a></code></pre></div>
 <pre><code># A tibble: 1 x 3
    date field             pct_women_majors
   &lt;dbl&gt; &lt;chr&gt;                        &lt;dbl&gt;
@@ -741,6 +871,7 @@ Task
 <h2 id="glossary" class="unnumbered">Glossary</h2>
 </div>
 
+</div>
 </div>
 </div>
             </section>
