@@ -4,19 +4,19 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Basics of probability theory | bookdown-demo.utf8</title>
+  <title>Chapter 6 Basics of probability theory |      Data Analysis for Psychology in R 1</title>
   <meta name="description" content="This book contains the lab materials for DAPR-1 at UoE." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 Basics of probability theory | bookdown-demo.utf8" />
+  <meta property="og:title" content="Chapter 6 Basics of probability theory |      Data Analysis for Psychology in R 1" />
   <meta property="og:type" content="book" />
   
   
   <meta property="og:description" content="This book contains the lab materials for DAPR-1 at UoE." />
-  <meta name="github-repo" content="UoE-Psychology/uoe_psystats" />
+  
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Basics of probability theory | bookdown-demo.utf8" />
+  <meta name="twitter:title" content="Chapter 6 Basics of probability theory |      Data Analysis for Psychology in R 1" />
   
   <meta name="twitter:description" content="This book contains the lab materials for DAPR-1 at UoE." />
   
@@ -54,95 +54,58 @@ function toggle_visibility(id1, id2) {
 var e = document.getElementById(id1);
 var f = document.getElementById(id2);
 e.style.display = ((e.style.display!='none') ? 'none' : 'block');
-if(f.classList.contains('fa-plus-square')) {
-    f.classList.add('fa-minus-square')
-    f.classList.remove('fa-plus-square')
+if(f.classList.contains('fa-plus')) {
+    f.classList.add('fa-minus')
+    f.classList.remove('fa-plus')
 } else {
-    f.classList.add('fa-plus-square')
-    f.classList.remove('fa-minus-square')
+    f.classList.add('fa-plus')
+    f.classList.remove('fa-minus')
 }
 }
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono|Roboto+Condensed|Lato|Karla|Lora|Fira+Sans");
-
-.book .book-body .page-wrapper .page-inner section.normal{
-  font-size: 140%;
-  font-family: 'Fira Sans', Karla, 'Roboto', Lora, Lato, Roboto, sans;
-  font-style: normal;
-}
-/*  page width     */
-.book .book-body .page-wrapper .page-inner {
-  max-width: 1000px !important;
-}
-.body{
-  background-color: #fffdf8;
-}
-
-.header-section-number {
-  padding-right: .2em;
-  font-weight: 500;
-}
-.level1 .header-section-number {
-  display: inline-block;
-  border-bottom: 3px solid;
-}
-.level1 h1 {
-  border-bottom: 1px solid;
-}
-.level2 .header-section-number {
-  border-bottom: none;
-}
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 300;
-}
-h1.title {
-  font-weight: 700;
-}
-.smallcaps {
-  font-variant: small-caps;
-}
-
 /*********************************************************************************/
 /* QUESTIONS AND SOLUTIONS                                                       */
 /*********************************************************************************/
 
 .question-begin{
-    background: #E2583E;
+    background: #F3E3E5;
     padding: 10px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    border-bottom: 1px solid #E2583E;
-    border-left: 1px solid #E2583E;
-    border-right: 1px solid #E2583E;
+    border-bottom: 1px solid #F3E3E5;
+    border-left: 1px solid #F3E3E5;
+    border-right: 1px solid #F3E3E5;
     margin-top: .85em;
+    font-weight: 600; 
 }
 .question-body{
     padding: 10px;
     background: #ffffff;
-    border-bottom: 1px solid #E2583E;
-    border-left: 1px solid #E2583E;
-    border-right: 1px solid #E2583E;
+    border-bottom: 1px solid #F3E3E5;
+    border-left: 1px solid #F3E3E5;
+    border-right: 1px solid #F3E3E5;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     margin-bottom: .85em;
 }
 .solution-begin{
-    background: #7BC4C4;
+    background: #dff0d8;
     padding: 10px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    border-bottom: 1px solid #7BC4C4;
-    border-left: 1px solid #7BC4C4;
-    border-right: 1px solid #7BC4C4;
+    border-bottom: 1px solid #dff0d8;
+    border-left: 1px solid #dff0d8;
+    border-right: 1px solid #dff0d8;
+    font-weight: 600; 
 }
 .solution-body{
     padding: 10px;
     background: #ffffff;
-    border-bottom: 1px solid #7BC4C4;
-    border-left: 1px solid #7BC4C4;
-    border-right: 1px solid #7BC4C4;
+    border-bottom: 1px solid #dff0d8;
+    border-left: 1px solid #dff0d8;
+    border-right: 1px solid #dff0d8;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     margin-bottom: .85em;
@@ -151,15 +114,12 @@ h1.title {
   float: right;
 }
 
-div.blue { background-color:#e6f0ff !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px; }
 
-div.green { background-color:#b8e6a1 !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px;}
 
-div.yellow { background-color:#fcf9e1 !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px; }
-
-div.red { background-color:#EBBCBC !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px; }
-
-div.frame {border: 1px solid #333333 !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px;}
+/*  page width  */
+.book .book-body .page-wrapper .page-inner {
+  max-width: 900px !important;
+}
 
 </style>
 
@@ -250,38 +210,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#textbook"><i class="fa fa-check"></i>Textbook</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html"><i class="fa fa-check"></i><b>1</b> Collecting Data</a><ul>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#introducing-r-rstudio"><i class="fa fa-check"></i>Introducing R &amp; Rstudio</a><ul>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#installing-r-rstudio"><i class="fa fa-check"></i>Installing R &amp; Rstudio</a></li>
+<li class="chapter" data-level="1.1" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#introducing-r-and-rstudio"><i class="fa fa-check"></i><b>1.1</b> Introducing R and Rstudio</a><ul>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#installing-r-and-rstudio"><i class="fa fa-check"></i>Installing R and Rstudio</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#first-look-at-rstudio"><i class="fa fa-check"></i>First look at Rstudio</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#r-as-a-calculator"><i class="fa fa-check"></i>R as a calculator</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#r-as-a-calculator-with-a-memory"><i class="fa fa-check"></i>R as a calculator with a memory</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#rscripts-and-rmarkdown"><i class="fa fa-check"></i>Rscripts and Rmarkdown</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#recap"><i class="fa fa-check"></i>Recap</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#take-a-breather"><i class="fa fa-check"></i>Take a breather!</a></li>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#data-in-r"><i class="fa fa-check"></i>Data in R</a><ul>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#sequences-vectors-of-values"><i class="fa fa-check"></i>Sequences (“Vectors”) of values</a></li>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#matrices"><i class="fa fa-check"></i>Matrices</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#more-tasks"><i class="fa fa-check"></i>More Tasks</a><ul>
+<li class="chapter" data-level="1.2" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#take-a-breather"><i class="fa fa-check"></i><b>1.2</b> Take a breather</a></li>
+<li class="chapter" data-level="1.3" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#data-in-r"><i class="fa fa-check"></i><b>1.3</b> Data in R</a><ul>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#installing-r-packages"><i class="fa fa-check"></i>Installing R packages</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#starting-a-new-.rmd-document"><i class="fa fa-check"></i>Starting a new .Rmd document</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#using-r-packages"><i class="fa fa-check"></i>Using R packages</a></li>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#storing-data"><i class="fa fa-check"></i>Storing data</a></li>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#reading-in-external-data"><i class="fa fa-check"></i>Reading in external data</a></li>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#storing-data-in-r-sequences-vectors-of-values"><i class="fa fa-check"></i>Storing data in R: Sequences (“Vectors”) of values</a></li>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#reading-in-data"><i class="fa fa-check"></i>Reading in data</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="chap-data-types.html"><a href="chap-data-types.html"><i class="fa fa-check"></i><b>2</b> Types of data</a></li>
+<li class="chapter" data-level="2" data-path="chap-data-types.html"><a href="chap-data-types.html"><i class="fa fa-check"></i><b>2</b> Types of data</a><ul>
+<li class="chapter" data-level="" data-path="chap-data-types.html"><a href="chap-data-types.html#matrices"><i class="fa fa-check"></i>Matrices</a></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="chap-visualising-distributions.html"><a href="chap-visualising-distributions.html"><i class="fa fa-check"></i><b>3</b> Visualising distributions</a></li>
 <li class="chapter" data-level="4" data-path="chap-describing-distributions.html"><a href="chap-describing-distributions.html"><i class="fa fa-check"></i><b>4</b> Describing distributions</a></li>
 <li class="chapter" data-level="5" data-path="chap-relationships.html"><a href="chap-relationships.html"><i class="fa fa-check"></i><b>5</b> Visualising and describing relationships</a></li>
-<li class="chapter" data-level="6" data-path="chap-probability-theory.html"><a href="chap-probability-theory.html"><i class="fa fa-check"></i><b>6</b> Basics of probability theory</a></li>
+<li class="chapter" data-level="6" data-path="chap-probability-theory.html"><a href="chap-probability-theory.html"><i class="fa fa-check"></i><b>6</b> Basics of probability theory</a><ul>
+<li class="chapter" data-level="6.1" data-path="chap-probability-theory.html"><a href="chap-probability-theory.html#probability"><i class="fa fa-check"></i><b>6.1</b> probability</a></li>
+<li class="chapter" data-level="6.2" data-path="chap-probability-theory.html"><a href="chap-probability-theory.html#statistics"><i class="fa fa-check"></i><b>6.2</b> statistics</a></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="chap-probability-rules.html"><a href="chap-probability-rules.html"><i class="fa fa-check"></i><b>7</b> Probability rules</a></li>
 <li class="chapter" data-level="8" data-path="chap-random-variables.html"><a href="chap-random-variables.html"><i class="fa fa-check"></i><b>8</b> Random variables</a></li>
 <li class="chapter" data-level="9" data-path="chap-sampling.html"><a href="chap-sampling.html"><i class="fa fa-check"></i><b>9</b> Sampling variability and sampling distributions</a></li>
 <li class="chapter" data-level="10" data-path="chap-bias-variance.html"><a href="chap-bias-variance.html"><i class="fa fa-check"></i><b>10</b> Bias-Variance Trade-off</a></li>
 <li class="divider"></li>
-<li><a href="https://github.com/UoE-Psychology/uoe_psystats" target="blank">Published with bookdown</a></li>
+<li><a href="https://www.handbooks.psy.ed.ac.uk/psychology-1a-and-1b/dapr1" target="blank">Psychology Handbooks</a></li>
 
 </ul>
 
@@ -292,12 +253,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><svg width="50" height="50">
-<rect x="0" y="0" width="50" height="50"
-  style="fill:#0F4C81;stroke:none;opacity:1" />
-</svg>
-<br>
-Data Analysis for Psychology in R 1</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><svg width="50" height="50"> <rect x="0" y="0" width="50" height="50" style="fill:#0F4C81;stroke:none;opacity:1" /> </svg> <br> Data Analysis for Psychology in R 1</a>
           </h1>
         </div>
 
@@ -307,7 +263,7 @@ Data Analysis for Psychology in R 1</a>
             <section class="normal" id="section-">
 <div id="chap-probability-theory" class="section level1">
 <h1><span class="header-section-number">Chapter 6</span> Basics of probability theory</h1>
-<div class="blue">
+<div class="lo">
 <h2 id="learning-objectives-5" class="unnumbered">Learning Objectives</h2>
 <ul>
 <li>LO1:</li>
@@ -315,7 +271,24 @@ Data Analysis for Psychology in R 1</a>
 <li>LO3:</li>
 </ul>
 </div>
+<p>thus far - we’ve talked about summarising a visualising datasets - “descriptive statistics”.</p>
+<p>this is only a small part of statistics, and we will now start to look at a much more powerful tool - how we can make statistical inferences.</p>
+<p>example -
+sample estimate, assumes representative
+would we be surprised to discover true param is different? how different?</p>
+<p>all based on probability theory</p>
+<div id="probability" class="section level2">
+<h2><span class="header-section-number">6.1</span> probability</h2>
+<p>p(heads)=0.5</p>
+<p>toss coin 6 times. how many am i likely to get heads on?</p>
+<p>probability is a known model of the world.
+we can use it to make predictions about events/data</p>
+</div>
+<div id="statistics" class="section level2">
+<h2><span class="header-section-number">6.2</span> statistics</h2>
+<p>in statistics we have only events/data, and we are interested in learning the truth about the world.</p>
 
+</div>
 </div>
             </section>
 
@@ -365,9 +338,9 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"download": ["template_book.pdf", "template_book.epub"],
 "toc": {
-"collapse": "section"
+"collapse": "subsection"
 }
 });
 });

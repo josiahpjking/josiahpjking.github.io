@@ -4,19 +4,19 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 Collecting Data | bookdown-demo.utf8</title>
+  <title>Chapter 1 Collecting Data |      Data Analysis for Psychology in R 1</title>
   <meta name="description" content="This book contains the lab materials for DAPR-1 at UoE." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 Collecting Data | bookdown-demo.utf8" />
+  <meta property="og:title" content="Chapter 1 Collecting Data |      Data Analysis for Psychology in R 1" />
   <meta property="og:type" content="book" />
   
   
   <meta property="og:description" content="This book contains the lab materials for DAPR-1 at UoE." />
-  <meta name="github-repo" content="UoE-Psychology/uoe_psystats" />
+  
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 Collecting Data | bookdown-demo.utf8" />
+  <meta name="twitter:title" content="Chapter 1 Collecting Data |      Data Analysis for Psychology in R 1" />
   
   <meta name="twitter:description" content="This book contains the lab materials for DAPR-1 at UoE." />
   
@@ -54,95 +54,58 @@ function toggle_visibility(id1, id2) {
 var e = document.getElementById(id1);
 var f = document.getElementById(id2);
 e.style.display = ((e.style.display!='none') ? 'none' : 'block');
-if(f.classList.contains('fa-plus-square')) {
-    f.classList.add('fa-minus-square')
-    f.classList.remove('fa-plus-square')
+if(f.classList.contains('fa-plus')) {
+    f.classList.add('fa-minus')
+    f.classList.remove('fa-plus')
 } else {
-    f.classList.add('fa-plus-square')
-    f.classList.remove('fa-minus-square')
+    f.classList.add('fa-plus')
+    f.classList.remove('fa-minus')
 }
 }
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono|Roboto+Condensed|Lato|Karla|Lora|Fira+Sans");
-
-.book .book-body .page-wrapper .page-inner section.normal{
-  font-size: 140%;
-  font-family: 'Fira Sans', Karla, 'Roboto', Lora, Lato, Roboto, sans;
-  font-style: normal;
-}
-/*  page width     */
-.book .book-body .page-wrapper .page-inner {
-  max-width: 1000px !important;
-}
-.body{
-  background-color: #fffdf8;
-}
-
-.header-section-number {
-  padding-right: .2em;
-  font-weight: 500;
-}
-.level1 .header-section-number {
-  display: inline-block;
-  border-bottom: 3px solid;
-}
-.level1 h1 {
-  border-bottom: 1px solid;
-}
-.level2 .header-section-number {
-  border-bottom: none;
-}
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 300;
-}
-h1.title {
-  font-weight: 700;
-}
-.smallcaps {
-  font-variant: small-caps;
-}
-
 /*********************************************************************************/
 /* QUESTIONS AND SOLUTIONS                                                       */
 /*********************************************************************************/
 
 .question-begin{
-    background: #E2583E;
+    background: #F3E3E5;
     padding: 10px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    border-bottom: 1px solid #E2583E;
-    border-left: 1px solid #E2583E;
-    border-right: 1px solid #E2583E;
+    border-bottom: 1px solid #F3E3E5;
+    border-left: 1px solid #F3E3E5;
+    border-right: 1px solid #F3E3E5;
     margin-top: .85em;
+    font-weight: 600; 
 }
 .question-body{
     padding: 10px;
     background: #ffffff;
-    border-bottom: 1px solid #E2583E;
-    border-left: 1px solid #E2583E;
-    border-right: 1px solid #E2583E;
+    border-bottom: 1px solid #F3E3E5;
+    border-left: 1px solid #F3E3E5;
+    border-right: 1px solid #F3E3E5;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     margin-bottom: .85em;
 }
 .solution-begin{
-    background: #7BC4C4;
+    background: #dff0d8;
     padding: 10px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    border-bottom: 1px solid #7BC4C4;
-    border-left: 1px solid #7BC4C4;
-    border-right: 1px solid #7BC4C4;
+    border-bottom: 1px solid #dff0d8;
+    border-left: 1px solid #dff0d8;
+    border-right: 1px solid #dff0d8;
+    font-weight: 600; 
 }
 .solution-body{
     padding: 10px;
     background: #ffffff;
-    border-bottom: 1px solid #7BC4C4;
-    border-left: 1px solid #7BC4C4;
-    border-right: 1px solid #7BC4C4;
+    border-bottom: 1px solid #dff0d8;
+    border-left: 1px solid #dff0d8;
+    border-right: 1px solid #dff0d8;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     margin-bottom: .85em;
@@ -151,15 +114,12 @@ h1.title {
   float: right;
 }
 
-div.blue { background-color:#e6f0ff !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px; }
 
-div.green { background-color:#b8e6a1 !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px;}
 
-div.yellow { background-color:#fcf9e1 !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px; }
-
-div.red { background-color:#EBBCBC !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px; }
-
-div.frame {border: 1px solid #333333 !important; border-radius: 5px; padding: 20px; margin-bottom: 15px; padding-top: 10px;}
+/*  page width  */
+.book .book-body .page-wrapper .page-inner {
+  max-width: 900px !important;
+}
 
 </style>
 
@@ -250,38 +210,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#textbook"><i class="fa fa-check"></i>Textbook</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html"><i class="fa fa-check"></i><b>1</b> Collecting Data</a><ul>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#introducing-r-rstudio"><i class="fa fa-check"></i>Introducing R &amp; Rstudio</a><ul>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#installing-r-rstudio"><i class="fa fa-check"></i>Installing R &amp; Rstudio</a></li>
+<li class="chapter" data-level="1.1" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#introducing-r-and-rstudio"><i class="fa fa-check"></i><b>1.1</b> Introducing R and Rstudio</a><ul>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#installing-r-and-rstudio"><i class="fa fa-check"></i>Installing R and Rstudio</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#first-look-at-rstudio"><i class="fa fa-check"></i>First look at Rstudio</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#r-as-a-calculator"><i class="fa fa-check"></i>R as a calculator</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#r-as-a-calculator-with-a-memory"><i class="fa fa-check"></i>R as a calculator with a memory</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#rscripts-and-rmarkdown"><i class="fa fa-check"></i>Rscripts and Rmarkdown</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#recap"><i class="fa fa-check"></i>Recap</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#take-a-breather"><i class="fa fa-check"></i>Take a breather!</a></li>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#data-in-r"><i class="fa fa-check"></i>Data in R</a><ul>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#sequences-vectors-of-values"><i class="fa fa-check"></i>Sequences (“Vectors”) of values</a></li>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#matrices"><i class="fa fa-check"></i>Matrices</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#more-tasks"><i class="fa fa-check"></i>More Tasks</a><ul>
+<li class="chapter" data-level="1.2" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#take-a-breather"><i class="fa fa-check"></i><b>1.2</b> Take a breather</a></li>
+<li class="chapter" data-level="1.3" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#data-in-r"><i class="fa fa-check"></i><b>1.3</b> Data in R</a><ul>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#installing-r-packages"><i class="fa fa-check"></i>Installing R packages</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#starting-a-new-.rmd-document"><i class="fa fa-check"></i>Starting a new .Rmd document</a></li>
 <li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#using-r-packages"><i class="fa fa-check"></i>Using R packages</a></li>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#storing-data"><i class="fa fa-check"></i>Storing data</a></li>
-<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#reading-in-external-data"><i class="fa fa-check"></i>Reading in external data</a></li>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#storing-data-in-r-sequences-vectors-of-values"><i class="fa fa-check"></i>Storing data in R: Sequences (“Vectors”) of values</a></li>
+<li class="chapter" data-level="" data-path="chap-collecting-data.html"><a href="chap-collecting-data.html#reading-in-data"><i class="fa fa-check"></i>Reading in data</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="chap-data-types.html"><a href="chap-data-types.html"><i class="fa fa-check"></i><b>2</b> Types of data</a></li>
+<li class="chapter" data-level="2" data-path="chap-data-types.html"><a href="chap-data-types.html"><i class="fa fa-check"></i><b>2</b> Types of data</a><ul>
+<li class="chapter" data-level="" data-path="chap-data-types.html"><a href="chap-data-types.html#matrices"><i class="fa fa-check"></i>Matrices</a></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="chap-visualising-distributions.html"><a href="chap-visualising-distributions.html"><i class="fa fa-check"></i><b>3</b> Visualising distributions</a></li>
 <li class="chapter" data-level="4" data-path="chap-describing-distributions.html"><a href="chap-describing-distributions.html"><i class="fa fa-check"></i><b>4</b> Describing distributions</a></li>
 <li class="chapter" data-level="5" data-path="chap-relationships.html"><a href="chap-relationships.html"><i class="fa fa-check"></i><b>5</b> Visualising and describing relationships</a></li>
-<li class="chapter" data-level="6" data-path="chap-probability-theory.html"><a href="chap-probability-theory.html"><i class="fa fa-check"></i><b>6</b> Basics of probability theory</a></li>
+<li class="chapter" data-level="6" data-path="chap-probability-theory.html"><a href="chap-probability-theory.html"><i class="fa fa-check"></i><b>6</b> Basics of probability theory</a><ul>
+<li class="chapter" data-level="6.1" data-path="chap-probability-theory.html"><a href="chap-probability-theory.html#probability"><i class="fa fa-check"></i><b>6.1</b> probability</a></li>
+<li class="chapter" data-level="6.2" data-path="chap-probability-theory.html"><a href="chap-probability-theory.html#statistics"><i class="fa fa-check"></i><b>6.2</b> statistics</a></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="chap-probability-rules.html"><a href="chap-probability-rules.html"><i class="fa fa-check"></i><b>7</b> Probability rules</a></li>
 <li class="chapter" data-level="8" data-path="chap-random-variables.html"><a href="chap-random-variables.html"><i class="fa fa-check"></i><b>8</b> Random variables</a></li>
 <li class="chapter" data-level="9" data-path="chap-sampling.html"><a href="chap-sampling.html"><i class="fa fa-check"></i><b>9</b> Sampling variability and sampling distributions</a></li>
 <li class="chapter" data-level="10" data-path="chap-bias-variance.html"><a href="chap-bias-variance.html"><i class="fa fa-check"></i><b>10</b> Bias-Variance Trade-off</a></li>
 <li class="divider"></li>
-<li><a href="https://github.com/UoE-Psychology/uoe_psystats" target="blank">Published with bookdown</a></li>
+<li><a href="https://www.handbooks.psy.ed.ac.uk/psychology-1a-and-1b/dapr1" target="blank">Psychology Handbooks</a></li>
 
 </ul>
 
@@ -292,12 +253,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><svg width="50" height="50">
-<rect x="0" y="0" width="50" height="50"
-  style="fill:#0F4C81;stroke:none;opacity:1" />
-</svg>
-<br>
-Data Analysis for Psychology in R 1</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><svg width="50" height="50"> <rect x="0" y="0" width="50" height="50" style="fill:#0F4C81;stroke:none;opacity:1" /> </svg> <br> Data Analysis for Psychology in R 1</a>
           </h1>
         </div>
 
@@ -307,12 +263,12 @@ Data Analysis for Psychology in R 1</a>
             <section class="normal" id="section-">
 <div id="chap-collecting-data" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Collecting Data</h1>
-<div class="blue">
+<div class="lo">
 <h2 id="learning-objectives" class="unnumbered">Learning Objectives</h2>
 <ul>
 <li>LO1: Install R &amp; Rstudio, and get comfortable with the layout<br />
 </li>
-<li>LO2: Learn about how data is stored in R</li>
+<li>LO2: Learn about how to read in and store data in R</li>
 <li>LO3: Produce your first Rmarkdown document<br />
 </li>
 </ul>
@@ -337,12 +293,12 @@ Data Analysis for Psychology in R 1</a>
 <li>Celebrate!</li>
 </ol>
 </div>
-<div id="introducing-r-rstudio" class="section level2 unnumbered">
-<h2>Introducing R &amp; Rstudio</h2>
-<div id="installing-r-rstudio" class="section level3 unnumbered">
-<h3>Installing R &amp; Rstudio</h3>
+<div id="introducing-r-and-rstudio" class="section level2">
+<h2><span class="header-section-number">1.1</span> Introducing R and Rstudio</h2>
+<div id="installing-r-and-rstudio" class="section level3 unnumbered">
+<h3>Installing R and Rstudio</h3>
 <div class="solution-begin">
-Option A: Installing R &amp; Rstudio (recommended)<span id="sol-start-1" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-1&#39;, &#39;sol-start-1&#39;)"></span>
+Option A: Installing R and Rstudio (recommended)<span id="sol-start-1" class="fa fa-plus solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-1&#39;, &#39;sol-start-1&#39;)"></span>
 </div>
 <div id="sol-body-1" class="solution-body" style="display: none;">
 <ol style="list-style-type: decimal">
@@ -374,7 +330,7 @@ Option A: Installing R &amp; Rstudio (recommended)<span id="sol-start-1" class="
 
 </div>
 <div class="solution-begin">
-Option B: Rstudio Cloud (for chromebook users)<span id="sol-start-2" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-2&#39;, &#39;sol-start-2&#39;)"></span>
+Option B: Rstudio Cloud (for chromebook users)<span id="sol-start-2" class="fa fa-plus solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-2&#39;, &#39;sol-start-2&#39;)"></span>
 </div>
 <div id="sol-body-2" class="solution-body" style="display: none;">
 <ol style="list-style-type: decimal">
@@ -413,6 +369,7 @@ Try these commands yourself:</p>
 <li><code>10-(2*5)</code></li>
 <li><code>(10-2)*5</code></li>
 <li><code>10/2</code></li>
+<li><code>3^2</code> (Hint, interpret the <code>^</code> symbol as “to the power of”)</li>
 </ul>
 <div class="frame">
 <p><strong>A little note</strong></p>
@@ -444,10 +401,10 @@ What about <code>x*3</code>?</p>
 <div class="green">
 <p><strong>Storing things in R</strong></p>
 <p>The <code>&lt;-</code> symbol is used to <em>assign</em> a value to a named object.</p>
-<p>[ <em>name</em> ] &lt;- [ <em>value</em> ]</p>
+<p><em>[name]</em> &lt;- <em>[value]</em></p>
 <p>Note, there are a few rules about names in R:</p>
 <ul>
-<li>No spaces - the spaces around the <code>&lt;-</code> don’t matter, but spaces <em>inside</em> a name are not allowed:
+<li>No spaces - spaces <em>inside</em> a name are not allowed (the spaces around the <code>&lt;-</code> don’t matter):
 <ul>
 <li><code>lucky_number &lt;- 5</code> ✔   <code>lucky number &lt;- 5</code> ❌<br />
 </li>
@@ -467,18 +424,17 @@ What about <code>x*3</code>?</p>
 </ul>
 </div>
 <p>You might have noticed that something else happened when you executed the code <code>x&lt;-5</code>.
-The thing we named <strong>x</strong> with a value of <strong>5</strong> suddenly appeared in the top-right window:</p>
+The thing we named <strong>x</strong> with a value of <strong>5</strong> suddenly appeared in the top-right window. This is known as the <strong>environment</strong>, and it shows everything that we store things in R:</p>
 <p><img src="images/installing_intro/rassign.png" /></p>
-<p>Okay, so we’ve now used a couple of the windows - we’ve executed R code in the <strong>console</strong>, and we’ve kept track of the things which we’ve named in the <strong>environment</strong>:</p>
+<p>We’ve now used a couple of the windows - we’ve been executing R code in the <strong>console</strong>, and learned about how we can store things in R’s memory (the <strong>environment</strong>) by assigning a name to them:</p>
 <p><img src="images/installing_intro/r4panel2.png" /></p>
 <p>Notice that in the screenshot above, we have moved the <strong>console</strong> down to the bottom-left, and introduced a new window above it. This is the one that we’re going to talk about next.</p>
 </div>
 <div id="rscripts-and-rmarkdown" class="section level3 unnumbered">
 <h3>Rscripts and Rmarkdown</h3>
-<p>Recap: We’ve just been executing R code in the <strong>console</strong>, and learned about how we can store things in R’s memory (the <strong>environment</strong>) by assigning a name to them.</p>
-<p>But what if we want to edit our code?<br />
+<p>What if we want to edit our code?<br />
 Whatever we write in the console just disappears upwards. What if we want to change things we did earlier on?</p>
-<p>Well, we can write our code <em>before</em> sending it to the <strong>console</strong> to be executed!!</p>
+<p>Well, we can write and edit our code in a separate place <em>before</em> sending it to the <strong>console</strong> to be executed!!</p>
 <div id="r-scripts" class="section level4 unnumbered">
 <h4>R scripts</h4>
 <div class="question-begin">
@@ -506,12 +462,14 @@ Task
 </p>
 </div>
 <p>Notice what has happened - it has sent the command <code>x&lt;-210</code> to the console, where it has been executed, and <strong>x</strong> is now in your environment.<br />
-Additionally, it has moved the text-cursor to the next line.</p>
+Additionally, it has moved the text-cursor to the next line.<br />
+<img src="images/installing_intro/reditor.png" /></p>
 <div class="question-begin">
 Task
 </div>
 <div class="question-body">
-<p>Press Ctrl + enter (Windows) or Cmd + enter (MacOS) again. Twice.</p>
+<p>Press Ctrl + enter (Windows) or Cmd + enter (MacOS) again.<br />
+Do it twice (this will run the next two lines).</p>
 <p>Then, change <strong>x</strong> to some other number in your R script, and run the lines again (starting at the top).</p>
 <p class="question-end">
 </p>
@@ -547,13 +505,13 @@ Task
 <h4>Rmarkdown</h4>
 <p>In addition to R scripts, there is another type of document we can create, known as an “Rmarkdown”.</p>
 <div class="frame">
-<p>Rmarkdown documents combines the analytical power of R and the utility of a text-processor.</p>
-<p>We can now have one document which contains all of our analysis as well as our written text, and can be <em>compiled</em> into a nicely formatted report.</p>
+<p>Rmarkdown documents combine the analytical power of R and the utility of a text-processor.</p>
+<p>We can have one document which contains all of our analysis as well as our written text, and can be <em>compiled</em> into a nicely formatted report.</p>
 <p>This saves us doing analysis in R and copying results across to Microsoft Word. It ensures our report accurately reflects our analysis.</p>
 <p>Everything that you’re reading now has all been written in Rmarkdown!</p>
 </div>
 <p>We’re going to use Rmarkdown documents throughout this course.
-We’ll get into it how to write them lower down, but Rmarkdown documents are basically text along with “code-chunks”. In the example below, you can see the grey boxes indicating the R code, with text in between.<br />
+We’ll get into it how to write them lower down, but Rmarkdown documents are basically written text interspersed with “code-chunks”. In the example below, you can see the grey boxes indicating the R code, with text in between.<br />
 We can then compile the document into either a <strong>.pdf</strong> or a <strong>.html</strong>.</p>
 <p><img src="images/installing_intro/compiling.png" /></p>
 </div>
@@ -564,15 +522,15 @@ We can then compile the document into either a <strong>.pdf</strong> or a <stron
 <ul>
 <li>The <strong>console</strong> is where R code gets executed</li>
 <li>The <strong>environment</strong> is R’s memory, you can <em>assign</em> something a name and store it here, and then refer to it by name in your code.</li>
-<li>The <strong>editor</strong> is where you can write and edit R code. You can then send this to the console for it to be executed.</li>
+<li>The <strong>editor</strong> is where you can write and edit R code and Rmarkdown documents. You can then send this to the console for it to be executed.</li>
 <li>The bottom-right window shows you the <strong>plots</strong> that you create, the <strong>files</strong> in your project, and some other things (we’ll get to these later).</li>
 </ul>
 <p><img src="images/installing_intro/r4panel3.png" /></p>
 <hr />
 </div>
 </div>
-<div id="take-a-breather" class="section level2 unnumbered">
-<h2>Take a breather!</h2>
+<div id="take-a-breather" class="section level2">
+<h2><span class="header-section-number">1.2</span> Take a breather</h2>
 <p>Below are a couple of our recommended settings for you to change as you begin your journey in R.
 After you’ve changed them, take a 5 minute break before moving on to learning about how we store data in R.</p>
 <div class="yellow">
@@ -592,8 +550,8 @@ This could quickly get messy within our project.</p>
 <p>In the editor, you might end up with a line of code which is really long:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="dv">2</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span><span class="dv">6</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span><span class="dv">45</span><span class="op">+</span><span class="dv">8467</span><span class="op">+</span><span class="dv">356</span><span class="op">+</span><span class="dv">8565</span><span class="op">+</span><span class="dv">34</span><span class="op">+</span><span class="dv">34</span><span class="op">+</span><span class="dv">657</span><span class="op">+</span><span class="dv">6756</span><span class="op">+</span><span class="dv">456</span><span class="op">+</span><span class="dv">456</span><span class="op">+</span><span class="dv">54</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span><span class="dv">78</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span><span class="dv">3476</span><span class="op">+</span><span class="dv">8</span><span class="op">+</span><span class="dv">4</span><span class="op">+</span><span class="dv">67</span><span class="op">+</span><span class="dv">456</span><span class="op">+</span><span class="dv">567</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span><span class="dv">34575</span><span class="op">+</span><span class="dv">45</span><span class="op">+</span><span class="dv">2</span><span class="op">+</span><span class="dv">6</span><span class="op">+</span><span class="dv">9</span><span class="op">+</span><span class="dv">5</span><span class="op">+</span><span class="dv">6</span></a></code></pre></div>
 <p>You can make Rstudio ‘wrap’ the line, so that you can see it all, without having to scroll.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="dv">2</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span><span class="dv">6</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span><span class="dv">45</span><span class="op">+</span><span class="dv">8467</span><span class="op">+</span><span class="dv">356</span><span class="op">+</span><span class="dv">8565</span><span class="op">+</span><span class="dv">34</span><span class="op">+</span><span class="dv">34</span><span class="op">+</span><span class="dv">657</span><span class="op">+</span><span class="dv">6756</span><span class="op">+</span><span class="dv">456</span><span class="op">+</span><span class="dv">456</span><span class="op">+</span><span class="dv">54</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span><span class="dv">78</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span><span class="dv">3476</span><span class="op">+</span><span class="dv">8</span><span class="op">+</span><span class="dv">4</span><span class="op">+</span><span class="dv">67</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="op">+</span><span class="dv">456</span><span class="op">+</span><span class="dv">567</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span><span class="dv">34575</span><span class="op">+</span><span class="dv">45</span><span class="op">+</span><span class="dv">2</span><span class="op">+</span><span class="dv">6</span><span class="op">+</span><span class="dv">9</span><span class="op">+</span><span class="dv">5</span><span class="op">+</span><span class="dv">6</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="dv">2</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span><span class="dv">6</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span><span class="dv">45</span><span class="op">+</span><span class="dv">8467</span><span class="op">+</span><span class="dv">356</span><span class="op">+</span><span class="dv">8565</span><span class="op">+</span><span class="dv">34</span><span class="op">+</span><span class="dv">34</span><span class="op">+</span><span class="dv">657</span><span class="op">+</span><span class="dv">6756</span><span class="op">+</span><span class="dv">456</span><span class="op">+</span><span class="dv">456</span><span class="op">+</span><span class="dv">54</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span><span class="dv">78</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span><span class="dv">3476</span><span class="op">+</span><span class="dv">8</span><span class="op">+</span><span class="dv">4</span><span class="op">+</span><span class="dv">67</span><span class="op">+</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="dv">456</span><span class="op">+</span><span class="dv">567</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span><span class="dv">34575</span><span class="op">+</span><span class="dv">45</span><span class="op">+</span><span class="dv">2</span><span class="op">+</span><span class="dv">6</span><span class="op">+</span><span class="dv">9</span><span class="op">+</span><span class="dv">5</span><span class="op">+</span><span class="dv">6</span></a></code></pre></div>
 <ol style="list-style-type: decimal">
 <li>In the top menu, click<br />
 <strong>Tools &gt; Global Options…</strong></li>
@@ -603,35 +561,8 @@ This could quickly get messy within our project.</p>
 </div>
 <hr />
 </div>
-<div id="data-in-r" class="section level2 unnumbered">
-<h2>Data in R</h2>
-<p>We’ve already seen how to assign a value to a name/symbol using <code>&lt;-</code>.<br />
-However, we’ve only seen how to assign a single number, e.g, <code>x&lt;-5</code>.</p>
-<div id="sequences-vectors-of-values" class="section level3 unnumbered">
-<h3>Sequences (“Vectors”) of values</h3>
-<p>To assign a sequence of values to R, we combine the values using <code>c()</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">myfirstvector &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">7</span>)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">myfirstvector</a></code></pre></div>
-<pre><code>[1] 1 5 3 7</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">myfirstvector <span class="op">+</span><span class="st"> </span><span class="dv">5</span></a></code></pre></div>
-<pre><code>[1]  6 10  8 12</code></pre>
-<p>Values don’t have to be numbers, but note what happens when we try to add 5 to a sequence which includes some non-numbers:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">mysecondvector &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="st">&quot;cat&quot;</span>,<span class="st">&quot;dog&quot;</span>,<span class="st">&quot;parrot&quot;</span>,<span class="st">&quot;peppapig&quot;</span>)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">mysecondvector <span class="op">+</span><span class="st"> </span><span class="dv">5</span></a></code></pre></div>
-</div>
-<div id="matrices" class="section level3 unnumbered">
-<h3>Matrices</h3>
-<p>We will often have several vectors in which the 1st value of each vector corresponds to the same observation, for instance:</p>
-<p>These</p>
-<p>vector
-matrix
-data.frame
-tibble</p>
-<p>accessors [], $</p>
-</div>
-</div>
-<div id="more-tasks" class="section level2 unnumbered">
-<h2>More Tasks</h2>
+<div id="data-in-r" class="section level2">
+<h2><span class="header-section-number">1.3</span> Data in R</h2>
 <div id="installing-r-packages" class="section level3 unnumbered">
 <h3>Installing R packages</h3>
 <p>Alongside the basic installation of R and Rstudio, there are many add-on packages which the R community create and maintain.</p>
@@ -689,13 +620,14 @@ Task
 </div>
 <div class="question-body">
 <p>In your first code chunk, type:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co">#I&#39;m going to use these packages in this document:</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
-<p>and run the chunk.</p>
-<div class="yellow">
-<p><strong>Comments in code</strong><br />
-Note that <code>#</code> in R code makes that line a comment, which basically means that R will ignore the line. Comments are useful for you to remind yourself of what your code is doing.</p>
-</div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">#I&#39;m going to use these packages in this document:</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<p>and run the chunk.<br />
+<em>Note, you might get various messages popping up below when you run this chunk, that is fine).</em><br />
+:::yellow<br />
+<strong>Comments in code</strong><br />
+Note that using <code>#</code> in R code makes that line a comment, which basically means that R will ignore the line. Comments are useful for you to remind yourself of what your code is doing.
+:::</p>
 <p class="question-end">
 </p>
 </div>
@@ -708,14 +640,13 @@ Task
 <p class="question-end">
 </p>
 </div>
-<p>Note that when the # is used in a Rmarkdown file, <strong>outside</strong> of a code-chunk, it will make that line a heading when we finally get to <em>compiling</em> the document. Below, what you see on the left will be compiled to look like those on the right:<br />
+<p>Note that when the # is used in a Rmarkdown file <strong>outside</strong> of a code-chunk, it will make that line a heading when we finally get to <em>compiling</em> the document. Below, what you see on the left will be compiled to look like those on the right:<br />
 <img src="images/installing_intro/headings.png" /></p>
 <div class="question-begin">
 Task
 </div>
 <div class="question-body">
-<p>In your Rmarkdown document, give an explanation of what each of the following does in R.
-Write the explanation, and give an example in a code chunk.</p>
+<p>In your Rmarkdown document, choose a few of the symbols below, and write an explanation of what it does, giving an example in a code chunk. You can see an example of the first few below.</p>
 <ul>
 <li><code>+</code></li>
 <li><code>-</code></li>
@@ -724,28 +655,158 @@ Write the explanation, and give an example in a code chunk.</p>
 <li><code>()</code></li>
 <li><code>^</code></li>
 <li><code>&lt;-</code></li>
-<li><code>=</code></li>
 <li><code>&lt;</code></li>
 <li><code>&gt;</code></li>
 <li><code>&lt;=</code></li>
 <li><code>&gt;=</code></li>
 <li><code>==</code></li>
 <li><code>!=</code></li>
-<li><code>data.frame()</code></li>
-<li><code>c()</code></li>
-<li><code>[]</code></li>
-<li><code>$</code></li>
 </ul>
-<p>You can see an example of the first few below:
-<img src="images/installing_intro/ss_examples.png" /></p>
+<p><img src="images/installing_intro/ss_examples.png" /></p>
 <p class="question-end">
 </p>
 </div>
-<div class="solution-begin">
-Solution <span id="sol-start-3" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-3&#39;, &#39;sol-start-3&#39;)"></span>
 </div>
-<div id="sol-body-3" class="solution-body" style="display: none;">
-<p>Hopefully you managed to include examples for all of these, but we have provided a table below describing what each symbol does.</p>
+<div id="storing-data-in-r-sequences-vectors-of-values" class="section level3 unnumbered">
+<h3>Storing data in R: Sequences (“Vectors”) of values</h3>
+<p>We’ve already seen how to assign a value to a name/symbol using <code>&lt;-</code>.<br />
+However, we’ve only seen how to assign a single number, e.g, <code>x&lt;-5</code>.</p>
+<p>To assign a sequence of values to R, we combine the values using <code>c()</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">myfirstvector &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">7</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">myfirstvector</a></code></pre></div>
+<pre><code>[1] 1 5 3 7</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">myfirstvector <span class="op">+</span><span class="st"> </span><span class="dv">5</span></a></code></pre></div>
+<pre><code>[1]  6 10  8 12</code></pre>
+<p>Values don’t have to be numbers, but note what happens when we try to add 5 to a sequence which includes some non-numbers:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">mysecondvector &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="st">&quot;cat&quot;</span>,<span class="st">&quot;dog&quot;</span>,<span class="st">&quot;parrot&quot;</span>,<span class="st">&quot;peppapig&quot;</span>)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">mysecondvector <span class="op">+</span><span class="st"> </span><span class="dv">5</span></a></code></pre></div>
+<p style="color:red">
+Error in mysecondvector + 5 : non-numeric argument to binary operator
+</p>
+</div>
+<div id="reading-in-data" class="section level3 unnumbered">
+<h3>Reading in data</h3>
+<p>While we can manually input data like we did above, more often, we will need to read in data which has been created elsewhere (like in excel, or by some software which is used to present participants with experiments).</p>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>Add a new heading by typing the following:</p>
+<p># Reading and storing data</p>
+<p><strong>Remember:</strong> We make headings using the # <em>outside</em> of a code chunk.</p>
+<p class="question-end">
+</p>
+</div>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>Open Microsoft Excel, or LibreOffice Calc, or whatever spreadsheet software you have available to you, and create some data with more than one variable.</p>
+<p>It can be whatever you want, but we’ve used a very small example here for you to follow, so feel free to use it if you like.</p>
+<p>We’ve got two sets of values here: the names and the birth-years of each member of the beatles. The easiest way to think of this would be to have a row for each Beatle, and a column for each of name and birth-year.</p>
+<p><img src="images/installing_intro/create_data.png" /></p>
+<p class="question-end">
+</p>
+</div>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>Save the data as a <strong>.csv</strong> file.</p>
+<p>Although R can read data when it’s saved in Microsoft/LibreOffice formats, the simplest, and most universal way to save data is as simple text, with the values separated by some character - <strong>.csv</strong> stands for <strong>comma separated values</strong>.</p>
+<p>In Microsoft Excel, if you go to:
+<strong>File &gt; Save as</strong><br />
+In the Save as Type box, choose to save the file as <strong>CSV (Comma delimited)</strong>.</p>
+<p><strong>Important:</strong> save your data in the project folder you created at the start of this lab.</p>
+<p class="question-end">
+</p>
+</div>
+<p>Back in Rstudio…</p>
+<p>Next, we’re going to read the data into R. We can do this by using the <code>read_csv()</code> function, and directing it to the file you just saved.</p>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>Create a new code-chunk in your Rmarkdown, and in the chunk, type:
+<code>read_csv(&quot;name-of-your-data.csv&quot;)</code>, where you replace <em>name-of-your-data</em> with whatever you just saved your data as in your spreadsheet software.</p>
+<div class="frame">
+<p><strong>Helpful tip</strong></p>
+<p>If you have your text-cursor inside the quotation marks, and press the tab key on your keyboard, it will show you the files inside your project. You can then use the arrow keys to choose between them and press enter to add the code:</p>
+<p>TODO - screencap gif</p>
+</div>
+<p>When you run the line of code you just wrote, it will print out the data, but will not store it. To do that, we need to assign it as something:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">beatles &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data_from_excel.csv&quot;</span>)</a></code></pre></div>
+<p>Note that this will now turn up in the <em>Environment</em> pane of Rstudio.</p>
+<p class="question-end">
+</p>
+</div>
+<p>Now that we’ve got our data in R, we can print it out by simply using its name:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">beatles</a></code></pre></div>
+<pre><code># A tibble: 4 x 2
+  name   birth_year
+  &lt;chr&gt;       &lt;dbl&gt;
+1 John         1940
+2 Paul         1942
+3 George       1943
+4 Ringo        1940</code></pre>
+<p>And we can do things such as ask R how many rows and columns there are:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">dim</span>(beatles)</a></code></pre></div>
+<pre><code>[1] 4 2</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">str</span>(beatles)</a></code></pre></div>
+<pre><code>Classes &#39;spec_tbl_df&#39;, &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    4 obs. of  2 variables:
+ $ name      : chr  &quot;John&quot; &quot;Paul&quot; &quot;George&quot; &quot;Ringo&quot;
+ $ birth_year: num  1940 1942 1943 1940
+ - attr(*, &quot;spec&quot;)=
+  .. cols(
+  ..   name = col_character(),
+  ..   birth_year = col_double()
+  .. )</code></pre>
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>Use <code>dim()</code> to confirm how many rows and columns are in your data.</p>
+<p>Use <code>str()</code> to take a look at the structure of the data.<br />
+Don’t worry about the output of <code>str()</code> right now, we’ll pick up with this in the next lab.</p>
+<p class="question-end">
+</p>
+</div>
+<hr />
+<div class="question-begin">
+Task
+</div>
+<div class="question-body">
+<p>By now, you should have an Rmardkown document ( <strong>.Rmd</strong> ) with your answers to the tasks we’ve been through today.</p>
+<p>Compile the document by clicking on the <strong>Knit</strong> button at the top. The little arrow to the right allows you to compile to either <strong>.pdf</strong> or <strong>.html</strong>.</p>
+<p class="question-end">
+</p>
+</div>
+<div class="frame">
+<p><strong>Checklist for today</strong></p>
+<ol style="list-style-type: decimal">
+<li><strong>EITHER:</strong>
+<ul>
+<li>Option A: Install R and Rstudio   ✔</li>
+<li>Option B: Register for RstudioCloud (free) and log in   ✔</li>
+</ul></li>
+<li>Start a new project for the course   ✔</li>
+<li>Change a few Rstudio settings (recommended)   ✔</li>
+<li>Install some R packages (the “tidyverse”)   ✔</li>
+<li>Create a new Rmarkdown document   ✔</li>
+<li>Complete today’s tasks and exercises   ✔</li>
+<li>Compile your Rmarkdown document   ✔</li>
+<li>Celebrate!   ✔ 🎉</li>
+</ol>
+</div>
+<div class="green">
+<h2 id="glossary" class="unnumbered">Glossary</h2>
+<ul>
+<li>console</li>
+<li>environment</li>
+<li>editor</li>
+<li>r script</li>
+<li>rmarkdown</li>
+</ul>
 <table>
 <colgroup>
 <col width="33%" />
@@ -835,257 +896,8 @@ Solution <span id="sol-start-3" class="fa fa-plus-square solution-icon clickable
 <td align="right">combines values into a vector (a sequence of values)</td>
 <td align="right"><code>c(1,2,3,4)</code></td>
 </tr>
-<tr class="even">
-<td align="right"><code>data.frame()</code></td>
-<td align="right">converts whatever is inside the brackets to a dataframe</td>
-<td align="right"><code>data.frame(values = c(1,2,3,4))</code></td>
-</tr>
-<tr class="odd">
-<td align="right"><code>[]</code></td>
-<td align="right">used to extract the 1st, 2nd, … <span class="math inline">\(i^{th}\)</span> elements in a set of numbers</td>
-<td align="right"><code>myvector[3]</code></td>
-</tr>
-<tr class="even">
-<td align="right"><code>$</code></td>
-<td align="right">used to extract a named column from a dataframe</td>
-<td align="right"><code>mydata$age_variable</code></td>
-</tr>
 </tbody>
 </table>
-<p class="solution-end">
-</p>
-</div>
-<div style="height:20px;">
-
-</div>
-</div>
-<div id="storing-data" class="section level3 unnumbered">
-<h3>Storing data</h3>
-<div class="question-begin">
-Task
-</div>
-<div class="question-body">
-<p>Add a new heading by typing the following:</p>
-<p># Vectors and dataframes</p>
-<p><strong>Remember:</strong> We make headings using the # <em>outside</em> of a code chunk.</p>
-<p class="question-end">
-</p>
-</div>
-<div class="question-begin">
-Task
-</div>
-<div class="question-body">
-<p>In a new code chunk, do the following:</p>
-<ol style="list-style-type: decimal">
-<li>store the following numbers as an object in R:<br />
-4,7,3,1,8,9,5,2,2,6,9,9,5,20<br />
-</li>
-<li>Try using the function <code>sum()</code>, with the name of your object inside the brackets.</li>
-</ol>
-<p class="question-end">
-</p>
-</div>
-<div class="solution-begin">
-Solution <span id="sol-start-4" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-4&#39;, &#39;sol-start-4&#39;)"></span>
-</div>
-<div id="sol-body-4" class="solution-body" style="display: none;">
-<p>Because this is just a set of numbers, we store it as a <strong>vector</strong>, using <code>c()</code>.<br />
-We have named it <code>myvec</code>, but you can call yours whatever you like.</p>
-<p>The <code>sum()</code> function will add all of the numbers together!</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">myvec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">20</span>)</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw">sum</span>(myvec)</a></code></pre></div>
-<pre><code>[1] 90</code></pre>
-<p class="solution-end">
-</p>
-</div>
-<div style="height:20px;">
-
-</div>
-<div class="question-begin">
-Task
-</div>
-<div class="question-body">
-<p>Using the square brackets - <code>[]</code> - pull out the 2nd, 4th and 6th values in the object you just created.</p>
-<p><strong>Hint:</strong> You will need to put inside the square brackets a <em>sequence of</em> numbers. How do we combine numbers in to a sequence in R? using <code>c()</code>!</p>
-<p class="question-end">
-</p>
-</div>
-<div class="solution-begin">
-Solution <span id="sol-start-5" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-5&#39;, &#39;sol-start-5&#39;)"></span>
-</div>
-<div id="sol-body-5" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">myvec[<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>)]</a></code></pre></div>
-<pre><code>[1] 7 1 9</code></pre>
-<p class="solution-end">
-</p>
-</div>
-<div style="height:20px;">
-
-</div>
-<div class="question-begin">
-Task
-</div>
-<div class="question-body">
-<p>In a new code-chunk, store the names and birth-years of the Beatle in the appropriate format in R. Name it <code>beatles</code>.</p>
-<ul>
-<li>John was born in 1940</li>
-<li>Paul was born in 1942</li>
-<li>George was born in 1943</li>
-<li>Ringo was born in 1940</li>
-</ul>
-<p><strong>Hint:</strong> We’ve got two sets of values here: the names and the birth-years. The easiest way to think of this would be to have a row for each Beatle, and a column for each of name and birth-year.<br />
-Check dimensions of the object using <code>dim()</code>. How many rows and how many columns are there?</p>
-<p class="question-end">
-</p>
-</div>
-<div class="solution-begin">
-Solution <span id="sol-start-6" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-6&#39;, &#39;sol-start-6&#39;)"></span>
-</div>
-<div id="sol-body-6" class="solution-body" style="display: none;">
-<p>TODO - decide dataframe/tibble
-We want a dataframe/tibble</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">beatles &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">    <span class="dt">name =</span> <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>,<span class="st">&quot;Paul&quot;</span>,<span class="st">&quot;George&quot;</span>,<span class="st">&quot;Ringo&quot;</span>),</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">    <span class="dt">birthyear =</span> <span class="kw">c</span>(<span class="dv">1940</span>,<span class="dv">1942</span>,<span class="dv">1943</span>,<span class="dv">1940</span>)</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">)</a>
-<a class="sourceLine" id="cb17-6" data-line-number="6">beatles &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="st">  </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb17-8" data-line-number="8">    <span class="dt">name =</span> <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>,<span class="st">&quot;Paul&quot;</span>,<span class="st">&quot;George&quot;</span>,<span class="st">&quot;Ringo&quot;</span>),</a>
-<a class="sourceLine" id="cb17-9" data-line-number="9">    <span class="dt">birthyear =</span> <span class="kw">c</span>(<span class="dv">1940</span>,<span class="dv">1942</span>,<span class="dv">1943</span>,<span class="dv">1940</span>)</a>
-<a class="sourceLine" id="cb17-10" data-line-number="10">)</a></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">dim</span>(beatles)</a></code></pre></div>
-<pre><code>[1] 4 2</code></pre>
-<p>Four rows, and two columns!</p>
-<p class="solution-end">
-</p>
-</div>
-<div style="height:20px;">
-
-</div>
-</div>
-<div id="reading-in-external-data" class="section level3 unnumbered">
-<h3>Reading in external data</h3>
-<p>So far, we’ve been manually inputting our data. However, R can read in data which has been created elsewhere (like in excel, or by some software which is used to present participants with experiments).</p>
-<p>TODO - link to data we’re going to use next couple of weeks</p>
-<p>First, click on the following link: <a href="https://uoe-psychology.github.io/uoe_psystats/multivar/data/women_computer_science.csv">link</a></p>
-<p>It should open a webpage and show you a dataset.
-There are two things to note.</p>
-<ul>
-<li>the values are separated by commas</li>
-<li>the url (in the top bar of your browser) ends with <strong>.csv</strong>.</li>
-</ul>
-<p>This stands for ‘comma separated value’.<br />
-The <strong>tidyverse</strong> package which we loaded at the top has a function to read this sort of data: <code>read_csv()</code>.</p>
-<div class="question-begin">
-Task
-</div>
-<div class="question-body">
-<p>Read the data into R. You can do this by giving <code>read_csv()</code> the url.</p>
-<p><strong>Hint:</strong> If you just type:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">read_csv</span>(<span class="st">&quot;https://uoe-psychology.github.io/uoe_psystats/multivar/data/women_computer_science.csv&quot;</span>)</a></code></pre></div>
-<pre><code># A tibble: 192 x 3
-    date field            pct_women_majors
-   &lt;dbl&gt; &lt;chr&gt;                       &lt;dbl&gt;
- 1  1966 Computer.science            0.146
- 2  1967 Computer.science            0.108
- 3  1968 Computer.science            0.12 
- 4  1969 Computer.science            0.13 
- 5  1970 Computer.science            0.129
- 6  1971 Computer.science            0.136
- 7  1972 Computer.science            0.136
- 8  1973 Computer.science            0.149
- 9  1974 Computer.science            0.164
-10  1975 Computer.science            0.19 
-# … with 182 more rows</code></pre>
-<p>It will print out the dataset, but it won’t store it in R for you to do things with. To do that, we want to assign a name to the data:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">mydata &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://uoe-psychology.github.io/uoe_psystats/multivar/data/women_computer_science.csv&quot;</span>)</a></code></pre></div>
-<p>Note that it now turns up in the <em>Environment</em> pane of Rstudio.<br />
-TODO image</p>
-<p class="question-end">
-</p>
-</div>
-<div class="question-begin">
-Task
-</div>
-<div class="question-body">
-<p>Check how many rows and columns you have in the dataset.
-You can do this with the <code>dim()</code> function.</p>
-<p class="question-end">
-</p>
-</div>
-<div class="solution-begin">
-Solution <span id="sol-start-7" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-7&#39;, &#39;sol-start-7&#39;)"></span>
-</div>
-<div id="sol-body-7" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">dim</span>(mydata)</a></code></pre></div>
-<pre><code>[1] 192   3</code></pre>
-<p class="solution-end">
-</p>
-</div>
-<div style="height:20px;">
-
-</div>
-<div class="question-begin">
-Task
-</div>
-<div class="question-body">
-<p>Using the square brackets, show the 167th row, with all columns.</p>
-<p><strong>Remember:</strong> When you are using <code>[]</code> with a dataframe, you specify <code>data[rows, columns]</code>. If you leave either rows or columns blank it will give all of them - for instance, <code>data[ , columns]</code> will give you all rows for some specified columns.</p>
-<p class="question-end">
-</p>
-</div>
-<div class="solution-begin">
-Solution <span id="sol-start-8" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility(&#39;sol-body-8&#39;, &#39;sol-start-8&#39;)"></span>
-</div>
-<div id="sol-body-8" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">mydata[<span class="dv">167</span>,]</a></code></pre></div>
-<pre><code># A tibble: 1 x 3
-   date field             pct_women_majors
-  &lt;dbl&gt; &lt;chr&gt;                        &lt;dbl&gt;
-1  1988 Physical.Sciences             0.32</code></pre>
-<p class="solution-end">
-</p>
-</div>
-<div style="height:20px;">
-
-</div>
-<hr />
-<div class="question-begin">
-Task
-</div>
-<div class="question-body">
-<p>By now, you should have an Rmardkown document ( <strong>.Rmd</strong> ) with your answers to the tasks we’ve been through today.</p>
-<p>Compile the document by clicking on the <strong>Knit</strong> button at the top. The little arrow to the right allows you to compile to either <strong>.pdf</strong> or <strong>.html</strong>.</p>
-<p class="question-end">
-</p>
-</div>
-<div class="frame">
-<p><strong>Checklist for today</strong></p>
-<ol style="list-style-type: decimal">
-<li><strong>EITHER:</strong>
-<ul>
-<li>Option A: Install R and Rstudio   ✔</li>
-<li>Option B: Register for RstudioCloud (free) and log in   ✔</li>
-</ul></li>
-<li>Start a new project for the course   ✔</li>
-<li>Change a few Rstudio settings (recommended)   ✔</li>
-<li>Install some R packages (the “tidyverse”)   ✔</li>
-<li>Create a new Rmarkdown document   ✔</li>
-<li>Complete today’s tasks and exercises   ✔</li>
-<li>Compile your Rmarkdown document   ✔</li>
-<li>Celebrate!   ✔ 🎉</li>
-</ol>
-</div>
-<div class="green">
-<h2 id="glossary" class="unnumbered">Glossary</h2>
-<ul>
-<li>console</li>
-<li>environment</li>
-<li>editor</li>
-<li>rmarkdown</li>
-<li></li>
-</ul>
 </div>
 
 </div>
@@ -1139,9 +951,9 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"download": ["template_book.pdf", "template_book.epub"],
 "toc": {
-"collapse": "section"
+"collapse": "subsection"
 }
 });
 });
