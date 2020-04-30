@@ -34,7 +34,6 @@ background-color: #e5e5e5;}
 
 
 .Lectures, .Labs, .Lecture-recordings, .Assessment, .Announcements, .Discussion-forum{
-  vertical-align: middle;
   text-align: center;
   font-family: "Arial, Helvetica, sans-serif";
   border: 2px solid #bdbdbd;
@@ -42,6 +41,13 @@ background-color: #e5e5e5;}
   border-radius: 25px;
 }
 
+.Contacts, .Links{
+  text-align: left;
+  font-family: "Arial, Helvetica, sans-serif";
+  border: 2px solid #bdbdbd;
+  padding: 10px;
+  border-radius: 25px;
+}
 
 /* For presentation only, no need to copy the code below */
 /*.grid-container * {
