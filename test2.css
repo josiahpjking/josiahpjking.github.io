@@ -9,28 +9,28 @@
 }
 
 .Contacts { grid-area: Contacts;
-  background-color: #e5e5e5; }
+  background-color: #E5DBD9; }
 
 .Lectures { grid-area: Lectures;
-  background-color: #e5e5e5; }
+  background-color: #ffbdbd; }
 
 .Labs { grid-area: Labs;
-background-color: #e5e5e5;}
+background-color: #f1cbff;}
 
 .Lecture-recordings { grid-area: Lecture-recordings;
-background-color: #e5e5e5;}
+background-color: #ffbdbd;}
 
 .Assessment { grid-area: Assessment;
-background-color: #e5e5e5;}
+background-color: #c9c9ff;}
 
 .Announcements { grid-area: Announcements;
-background-color: #e5e5e5;}
+background-color: #5784BA}
 
 .Discussion-forum { grid-area: Discussion-forum;
-background-color: #e5e5e5;}
+background-color: #218B82;}
 
 .Links { grid-area: Links;
-background-color: #e5e5e5;}
+background-color: #E5DBD9;}
 
 
 .Lectures, .Labs, .Lecture-recordings, .Assessment, .Announcements, .Discussion-forum{
