@@ -5,32 +5,33 @@
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   gap: 15px 15px;
-  grid-template-areas: "Contacts Contacts Contacts" "Contacts Contacts Contacts" "Announcements Lectures Lecture-recordings" "Labs Discussion-forum Assessment" "Links Links Links";
+  grid-template-areas: "Contacts Contacts Contacts" "Contacts Contacts Contacts" "Lectures Lecture-recordings Labs" "Announcements Discussion-forum Assessment" "Links Links Links";
 }
 
 .Contacts { grid-area: Contacts;
-  background-color: #E5DBD9; }
+  background-color: #FAF3DD; }
 
 .Lectures { grid-area: Lectures;
-  background-color: #ffbdbd; }
-
-.Labs { grid-area: Labs;
-background-color: #f1cbff;}
+  background-color: #8FC1A9; }
 
 .Lecture-recordings { grid-area: Lecture-recordings;
-background-color: #ffbdbd;}
+background-color: #8FC1A9;}
+
+.Labs { grid-area: Labs;
+background-color: #7CAA98;}
+
 
 .Assessment { grid-area: Assessment;
-background-color: #c9c9ff;}
+background-color: #C8D6B9;}
 
 .Announcements { grid-area: Announcements;
-background-color: #5784BA}
+background-color: #9DBAD5}
 
 .Discussion-forum { grid-area: Discussion-forum;
-background-color: #218B82;}
+background-color: #769ECB;}
 
 .Links { grid-area: Links;
-background-color: #E5DBD9;}
+background-color: #FAF3DD;}
 
 
 .Lectures, .Labs, .Lecture-recordings, .Assessment, .Announcements, .Discussion-forum{
