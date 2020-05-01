@@ -9,45 +9,44 @@
 }
 
 .Contacts { grid-area: Contacts;
-  background-color: #FAF3DD; }
+  background-color: #DBD5B5; }
 
 .Lectures { grid-area: Lectures;
-  background-color: #8FC1A9; }
+  background-color: #44AF69; }
 
 .Lecture-recordings { grid-area: Lecture-recordings;
-background-color: #8FC1A9;}
+background-color: #44AF69;}
 
 .Labs { grid-area: Labs;
-background-color: #7CAA98;}
+background-color: #2B9EB3;}
 
 
 .Assessment { grid-area: Assessment;
-background-color: #C8D6B9;}
+background-color: #FCAB10;}
 
 .Announcements { grid-area: Announcements;
-background-color: #9DBAD5}
+background-color: #F8333C}
 
 .Discussion-forum { grid-area: Discussion-forum;
-background-color: #769ECB;}
+background-color: #83BAB4;}
 
 .Links { grid-area: Links;
-background-color: #FAF3DD;}
+background-color: #DBD5B5;}
 
 
 .Lectures, .Labs, .Lecture-recordings, .Assessment, .Announcements, .Discussion-forum{
   text-align: center;
   font-family: "Arial, Helvetica, sans-serif";
-  border: 2px solid #bdbdbd;
+  color: black;
   padding: 10px;
-  border-radius: 25px;
+  border-radius: 5px;
 }
 
 .Contacts, .Links{
   text-align: left;
   font-family: "Arial, Helvetica, sans-serif";
-  border: 2px solid #bdbdbd;
   padding: 10px;
-  border-radius: 25px;
+  border-radius: 5px;
 }
 
 /* For presentation only, no need to copy the code below */
