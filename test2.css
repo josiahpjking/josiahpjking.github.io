@@ -9,7 +9,10 @@
 }
 
 .Contacts { grid-area: Contacts;
-  background-color: #DBD5B5; }
+  background-color: #F3F2E1; }
+
+.Links { grid-area: Links;
+  background-color: #F3F2E1;}
 
 .Lectures { grid-area: Lectures;
   background-color: #44AF69; }
@@ -30,8 +33,7 @@ background-color: #FA5D5F}
 .Discussion-forum { grid-area: Discussion-forum;
 background-color: #83BAB4;}
 
-.Links { grid-area: Links;
-background-color: #DBD5B5;}
+
 
 
 .Lectures, .Labs, .Lecture-recordings, .Assessment, .Announcements, .Discussion-forum{
@@ -48,6 +50,17 @@ background-color: #DBD5B5;}
   text-align: left;
   padding: 10px;
   border-radius: 5px;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 15px 15px;
+    grid-template-areas: "Contacts" "Contacts" "Lectures" "Lecture-recordings" "Labs" "Announcements" "Discussion-forum" "Assessment" "Links" "Links";
+  }
 }
 
 
