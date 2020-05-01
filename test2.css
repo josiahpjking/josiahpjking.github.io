@@ -39,16 +39,12 @@ background-color: #83BAB4;}
 .Lectures, .Labs, .Lecture-recordings, .Assessment, .Announcements, .Discussion-forum{
   display: inline-flex;
   align-items: center;
-  text-align: center;
+  justify-content:center;
   color: black;
   padding: 10px;
   border-radius: 5px;
+  margin: auto;
 }
-
-.Lectures a, .Labs a, .Lecture-recordings a, .Assessment a, .Announcements a, .Discussion-forum a{
-  text-align: center;
-}
-
 
 .Contacts, .Links{
   text-align: left;
