@@ -43,8 +43,12 @@ background-color: #83BAB4;}
   color: black;
   padding: 10px;
   border-radius: 5px;
-
 }
+
+.Lectures a, .Labs a, .Lecture-recordings a, .Assessment a, .Announcements a, .Discussion-forum a{
+  text-align: center;
+}
+
 
 .Contacts, .Links{
   text-align: left;
@@ -55,6 +59,7 @@ background-color: #83BAB4;}
 
 @media only screen and (max-width: 600px) {
   .grid-container {
+    width: 95%;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
