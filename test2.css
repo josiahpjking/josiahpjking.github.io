@@ -25,7 +25,7 @@ background-color: #2B9EB3;}
 background-color: #FCAB10;}
 
 .Announcements { grid-area: Announcements;
-background-color: #F8333C}
+background-color: #FA5D5F}
 
 .Discussion-forum { grid-area: Discussion-forum;
 background-color: #83BAB4;}
@@ -35,19 +35,22 @@ background-color: #DBD5B5;}
 
 
 .Lectures, .Labs, .Lecture-recordings, .Assessment, .Announcements, .Discussion-forum{
+  display: inline-flex;
+  align-items: center;
   text-align: center;
-  font-family: "Arial, Helvetica, sans-serif";
   color: black;
   padding: 10px;
   border-radius: 5px;
+
 }
 
 .Contacts, .Links{
   text-align: left;
-  font-family: "Arial, Helvetica, sans-serif";
   padding: 10px;
   border-radius: 5px;
 }
+
+
 
 /* For presentation only, no need to copy the code below */
 /*.grid-container * {
