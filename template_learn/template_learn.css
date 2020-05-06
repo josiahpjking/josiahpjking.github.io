@@ -9,7 +9,7 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   gap: 15px 15px;
-  grid-template-areas: "Contacts Contacts Contacts Contacts" "Contacts Contacts Contacts Contacts" "Lectures Lecture-recordings Labs Announcements" "Discussion-forum Assessment Timetabling DRPS";
+  grid-template-areas: "Contacts Contacts Contacts Contacts" "Contacts Contacts Contacts Contacts" "Lectures Lecture-recordings Labs Announcements" "Discussion-forum Assessment Quizzes Timetabling";
 }
 
 .Contacts { grid-area: Contacts;
@@ -28,6 +28,9 @@ background-color: #2B9EB3;}
 .Assessment { grid-area: Assessment;
 background-color: #FCAB10;}
 
+.Quizzes { grid-area: Quizzes;
+background-color: #aaad75;}
+
 .Announcements { grid-area: Announcements;
 background-color: #FA5D5F}
 
@@ -37,10 +40,8 @@ background-color: #83BAB4;}
 .Timetabling { grid-area: Timetabling;
 background-color: #cce5d6;}
 
-.DRPS { grid-area: DRPS;
-background-color: #aaad75;}
 
-.Lectures, .Labs, .Lecture-recordings, .Assessment, .Announcements, .Discussion-forum, .Timetabling, .DRPS{
+.Lectures, .Labs, .Lecture-recordings, .Assessment, .Announcements, .Discussion-forum, .Timetabling, .Quizzes{
   display: inline-flex;
   align-items: center;
   text-align: center;
@@ -51,7 +52,7 @@ background-color: #aaad75;}
   font-size: 22px;
 }
 
-.Lectures i, .Labs i, .Lecture-recordings i, .Assessment i, .Announcements i, .Discussion-forum i, .Timetabling i, .DRPS i{
+.Lectures i, .Labs i, .Lecture-recordings i, .Assessment i, .Announcements i, .Discussion-forum i, .Timetabling i, .Quizzes i{
     margin: 10px;
 }
 
@@ -79,7 +80,7 @@ background-color: #aaad75;}
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     gap: 15px 15px;
-    grid-template-areas: "Contacts" "Contacts" "Lectures" "Lecture-recordings" "Labs" "Announcements" "Discussion-forum" "Assessment" "Timetabling" "DRPS";
+    grid-template-areas: "Contacts" "Contacts" "Lectures" "Lecture-recordings" "Labs" "Announcements" "Discussion-forum" "Assessment" "Quizzes" "Timetabling";
   }
 }
 
