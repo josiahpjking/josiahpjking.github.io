@@ -1,18 +1,19 @@
-.grid-container { height: 100%; margin: 0; min-height: 500px}
+.grid-container { margin: auto; min-height: 100px; max-width: 1000px}
+
+.grid-container a, .grid-container p, .grid-container h1, .grid-container h2, .grid-container h3, .grid-container h4{
+    font-family: 'Source Sans Pro', sans-serif;
+}
 
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   gap: 15px 15px;
-  grid-template-areas: "Contacts Contacts Contacts" "Contacts Contacts Contacts" "Lectures Lecture-recordings Labs" "Announcements Discussion-forum Assessment" "Links Links Links";
+  grid-template-areas: "Contacts Contacts Contacts Contacts" "Contacts Contacts Contacts Contacts" "Lectures Lecture-recordings Labs Announcements" "Discussion-forum Assessment Timetabling DRPS";
 }
 
 .Contacts { grid-area: Contacts;
   background-color: #FEFEEE; }
-
-.Links { grid-area: Links;
-  background-color: #FEFEEE;}
 
 .Lectures { grid-area: Lectures;
   background-color: #44AF69; }
@@ -33,24 +34,41 @@ background-color: #FA5D5F}
 .Discussion-forum { grid-area: Discussion-forum;
 background-color: #83BAB4;}
 
+.Timetabling { grid-area: Timetabling;
+background-color: #cce5d6;}
 
+.DRPS { grid-area: DRPS;
+background-color: #aaad75;}
 
-
-.Lectures, .Labs, .Lecture-recordings, .Assessment, .Announcements, .Discussion-forum{
+.Lectures, .Labs, .Lecture-recordings, .Assessment, .Announcements, .Discussion-forum, .Timetabling, .DRPS{
   display: inline-flex;
   align-items: center;
+  text-align: center;
   justify-content:center;
   color: black;
   padding: 10px;
   border-radius: 5px;
-  font-size: 25px;
+  font-size: 22px;
 }
 
-.Contacts, .Links{
+.Lectures i, .Labs i, .Lecture-recordings i, .Assessment i, .Announcements i, .Discussion-forum i, .Timetabling i, .DRPS i{
+    margin: 10px;
+}
+
+
+.Contacts{
   text-align: left;
   padding: 20px;
   border-radius: 5px;
 }
+
+.cont-col{
+    width: 40%;
+    display:inline-block;
+    margin: 15px;
+    vertical-align: top;
+}
+
 
 
 @media only screen and (max-width: 600px) {
@@ -61,7 +79,7 @@ background-color: #83BAB4;}
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     gap: 15px 15px;
-    grid-template-areas: "Contacts" "Contacts" "Lectures" "Lecture-recordings" "Labs" "Announcements" "Discussion-forum" "Assessment" "Links" "Links";
+    grid-template-areas: "Contacts" "Contacts" "Lectures" "Lecture-recordings" "Labs" "Announcements" "Discussion-forum" "Assessment" "Timetabling" "DRPS";
   }
 }
 
@@ -80,3 +98,4 @@ background-color: #83BAB4;}
  top: 0;
  left: 0;
 }*/
+
