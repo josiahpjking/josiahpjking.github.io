@@ -6,11 +6,11 @@
 
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   /*grid-template-rows: 1fr 1fr 1fr;*/
   grid-auto-rows: 1fr;
   gap: 15px 15px;
-  grid-template-areas: "Contacts Contacts Contacts Contacts" "Contacts Contacts Contacts Contacts" "Weekly Weekly Weekly Weekly" "Announcements Discussion-forum Assessment Timetabling";
+  grid-template-areas: "Contacts Contacts Contacts" "Contacts Contacts Contacts" "Weekly Weekly Discussion-forum" "Announcements Assessment Timetabling";
 }
 
 .Contacts { grid-area: Contacts;
@@ -83,7 +83,7 @@ background-color: #cce5d6;}
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     gap: 15px 15px;
-    grid-template-areas: "Contacts" "Contacts" "Weekly" "Announcements" "Discussion-forum" "Assessment" "Timetabling";
+    grid-template-areas: "Contacts" "Contacts" "Weekly" "Discussion-forum" "Announcements" "Discussion-forum" "Assessment" "Timetabling";
   }
 }
 
