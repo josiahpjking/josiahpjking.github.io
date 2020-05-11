@@ -87,9 +87,10 @@ background-color: #cce5d6;}
     grid-template-areas: "Contacts" "Contacts" "Weekly" "Discussion-forum" "Announcements" "Assessment" "Timetabling" !important;
   }
   .cont-col{
-    width: 100% !important;
+    width: 90% !important;
     display:block !important;
-    margin: 15px !important;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
     vertical-align: top !important;
   }
 }
