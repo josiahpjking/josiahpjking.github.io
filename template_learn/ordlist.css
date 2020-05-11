@@ -1,4 +1,5 @@
 ol {
+    max-width: 95%;
     counter-reset: li; /* Initiate a counter */
     list-style: none; /* Remove default numbering */
     *list-style: decimal; /* Keep using default numbering for IE6/7 */
