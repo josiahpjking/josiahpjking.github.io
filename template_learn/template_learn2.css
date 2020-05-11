@@ -76,7 +76,7 @@ background-color: #cce5d6;}
 
 
 
-@media only screen and (max-width: 736px) and (min-width: 0) {
+@media only screen and (max-width: 736px){
   .grid-container {
     width: 95%;
     margin-left: 2.5% !important;
