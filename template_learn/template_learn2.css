@@ -81,7 +81,7 @@ background-color: #cce5d6;}
     margin-right: 2.5%;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     gap: 15px 15px;
     grid-template-areas: "Contacts" "Contacts" "Weekly" "Discussion-forum" "Announcements" "Discussion-forum" "Assessment" "Timetabling";
   }

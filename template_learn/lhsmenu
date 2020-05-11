@@ -1,0 +1,66 @@
+Learn setup
+    - weekly materials
+        - ordered checklist each week of activities 
+
+    - discussion forum
+        - weekly forum space
+      
+All teaching staff 
+    - add avatar to blackboard
+    (sign in on blackboard. top right menu, click name, settings, personal information, personalise my settings)
+    - subscribe to all discussion forum
+
+
+-----------------------
+----------------------
+
+    
+0. pre-reqs
+
+lab link, e.g. uoepsy.github.io/dapr1/labs/
+lectures link e.g., uoepsy.github.io/dapr1/lectures
+
+
+1. set up blank course. add things in LHS menu:
+
+home - content area
+-
+labs - web link
+lecture slides - web link
+lecture recordings - ?
+-
+discussion forum - tool link
+virtual classroom - tool link
+-
+quizzes - content area
+assessment - content area
+
+
+2. 
+
+Go to each of the pages, and copy the url for each
+discussion forum
+announcements
+assessments
+quiz
+
+discussion forum url
+https://www.learn.ed.ac.uk/webapps/discussionboard/do/conference?toggle_mode=read&action=list_forums&course_id=_77718_1&nav=discussion_board_entry&mode=view
+
+announcements page url
+https://www.learn.ed.ac.uk/webapps/blackboard/execute/announcement?method=search&context=course_entry&course_id=_77718_1&handle=announcements_entry&mode=view
+
+quiz page url
+https://www.learn.ed.ac.uk/webapps/blackboard/content/listContent.jsp?course_id=_77718_1&content_id=_4657487_1&mode=reset
+
+Assessment page url
+https://www.learn.ed.ac.uk/webapps/blackboard/content/listContent.jsp?course_id=_77718_1&content_id=_4657491_1&mode=reset
+
+
+3. open template_learndash.html
+3a. edit contacts section - CO, STC, TO, etc.
+3b. add in the hrefs for each of the buttons (labs, lectures, discussion forum, etc...)
+ 
+
+4. build item on home page in learn. 
+copy html into the html editor for item.
