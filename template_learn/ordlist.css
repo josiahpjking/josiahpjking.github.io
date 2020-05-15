@@ -1,4 +1,5 @@
 ol {
+    display: block;
     max-width: 95%;
     counter-reset: li; /* Initiate a counter */
     list-style: none; /* Remove default numbering */
