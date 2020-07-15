@@ -8,6 +8,7 @@ output: html_document
 
 ```{r}
 library(ggplot2)  # for plotting
+library(lme4)
 # deviations from the mean (from Lab 7 Solution)
 outliers <- function(obs, x = 3) {
   # return TRUE if outlier, FALSE otherwise for each element of 'obs'
@@ -193,5 +194,15 @@ with(offNP, plot(outcome, age))
 # END
 # -----------------------------------------------------------------------------
 
+load(url("https://edin.ac/2TieJK0"))
+#make 3rd-order orth poly
+source("https://uoe-psychology.github.io/uoe_psystats/multivar/functions/code_poly.R")
+TargetFix <- code_poly(TargetFix, predictor="timeBin", poly.order=3, draw.poly=F)
+# fit logisitc GCA model
+m.log <- glmer(cbind(sumFix, N-sumFix) ~ (poly1+poly2+poly3)*Condition +
+                 (poly1+poly2+poly3 | Subject) +
+                 (poly1+poly2 | Subject:Condition),
+               data=TargetFix, family=binomial, control = glmerControl(optimizer = "bobyqa"))
+summary(m.log)
 ```
 
