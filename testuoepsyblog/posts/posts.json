@@ -1,0 +1,34 @@
+[
+  {
+    "path": "posts/2020-07-17-jk/",
+    "title": "Recommendations of the week example",
+    "description": "This week's recommendations are from ...",
+    "author": [
+      {
+        "name": "Josiah King",
+        "url": {}
+      }
+    ],
+    "date": "2020-07-17",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2020-07-17T09:13:09+01:00",
+    "input_file": "jk.utf8.md"
+  },
+  {
+    "path": "posts/2020-07-17-tombooth/",
+    "title": "Tom's recommendations",
+    "description": "A short description of the post.",
+    "author": [
+      {
+        "name": "Tom Booth",
+        "url": {}
+      }
+    ],
+    "date": "2020-07-17",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2020-07-17T09:45:08+01:00",
+    "input_file": "tombooth.utf8.md"
+  }
+]
