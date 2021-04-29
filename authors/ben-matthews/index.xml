@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ben Matthews | Josiah King</title>
-    <link>/authors/ben-matthews/</link>
-      <atom:link href="/authors/ben-matthews/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://josiahpjking.github.io/authors/ben-matthews/</link>
+      <atom:link href="https://josiahpjking.github.io/authors/ben-matthews/index.xml" rel="self" type="application/rss+xml" />
     <description>Ben Matthews</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 05 Aug 2019 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://josiahpjking.github.io/img/icon-192.png</url>
       <title>Ben Matthews</title>
-      <link>/authors/ben-matthews/</link>
+      <link>https://josiahpjking.github.io/authors/ben-matthews/</link>
     </image>
     
     <item>
       <title>What&#39;s driving Scotland&#39;s falling reconviction rate?</title>
-      <link>/publication/reconvictions-blog/</link>
+      <link>https://josiahpjking.github.io/publication/reconvictions-blog/</link>
       <pubDate>Mon, 05 Aug 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/reconvictions-blog/</guid>
+      <guid>https://josiahpjking.github.io/publication/reconvictions-blog/</guid>
       <description></description>
     </item>
     
     <item>
       <title>DasGuptR - R package for implementation of Prithwis Das Gupta&#39;s 1993 standardisation and decomposition of rates</title>
-      <link>/publication/dasguptr/</link>
+      <link>https://josiahpjking.github.io/publication/dasguptr/</link>
       <pubDate>Thu, 01 Aug 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/dasguptr/</guid>
+      <guid>https://josiahpjking.github.io/publication/dasguptr/</guid>
       <description></description>
     </item>
     

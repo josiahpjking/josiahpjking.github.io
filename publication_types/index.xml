@@ -2,31 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Publication_types | Josiah King</title>
-    <link>/publication_types/</link>
-      <atom:link href="/publication_types/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://josiahpjking.github.io/publication_types/</link>
+      <atom:link href="https://josiahpjking.github.io/publication_types/index.xml" rel="self" type="application/rss+xml" />
     <description>Publication_types</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 13 Nov 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://josiahpjking.github.io/img/icon-192.png</url>
       <title>Publication_types</title>
-      <link>/publication_types/</link>
+      <link>https://josiahpjking.github.io/publication_types/</link>
     </image>
-    
-    <item>
-      <title>2</title>
-      <link>/publication_types/2/</link>
-      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>/publication_types/2/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>0</title>
-      <link>/publication_types/0/</link>
-      <pubDate>Mon, 05 Aug 2019 00:00:00 +0000</pubDate>
-      <guid>/publication_types/0/</guid>
-      <description></description>
-    </item>
     
   </channel>
 </rss>

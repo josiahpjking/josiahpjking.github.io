@@ -2,39 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags | Josiah King</title>
-    <link>/tags/</link>
-      <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://josiahpjking.github.io/tags/</link>
+      <atom:link href="https://josiahpjking.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <description>Tags</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 16 Oct 2019 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://josiahpjking.github.io/img/icon-192.png</url>
       <title>Tags</title>
-      <link>/tags/</link>
+      <link>https://josiahpjking.github.io/tags/</link>
     </image>
-    
-    <item>
-      <title>crontab</title>
-      <link>/tags/crontab/</link>
-      <pubDate>Wed, 16 Oct 2019 00:00:00 +0000</pubDate>
-      <guid>/tags/crontab/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>procrastination</title>
-      <link>/tags/procrastination/</link>
-      <pubDate>Wed, 16 Oct 2019 00:00:00 +0000</pubDate>
-      <guid>/tags/procrastination/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>wordcount</title>
-      <link>/tags/wordcount/</link>
-      <pubDate>Wed, 16 Oct 2019 00:00:00 +0000</pubDate>
-      <guid>/tags/wordcount/</guid>
-      <description></description>
-    </item>
     
   </channel>
 </rss>

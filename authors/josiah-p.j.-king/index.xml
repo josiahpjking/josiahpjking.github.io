@@ -2,53 +2,53 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Josiah P.J. King | Josiah King</title>
-    <link>/authors/josiah-p.j.-king/</link>
-      <atom:link href="/authors/josiah-p.j.-king/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://josiahpjking.github.io/authors/josiah-p.j.-king/</link>
+      <atom:link href="https://josiahpjking.github.io/authors/josiah-p.j.-king/index.xml" rel="self" type="application/rss+xml" />
     <description>Josiah P.J. King</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 09 Mar 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://josiahpjking.github.io/img/icon-192.png</url>
       <title>Josiah P.J. King</title>
-      <link>/authors/josiah-p.j.-king/</link>
+      <link>https://josiahpjking.github.io/authors/josiah-p.j.-king/</link>
     </image>
     
     <item>
       <title>Interpreting nonverbal cues to deception in real time</title>
-      <link>/publication/interpreting-nonverbal-cues-to-deception-in-real-time/</link>
-      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>/publication/interpreting-nonverbal-cues-to-deception-in-real-time/</guid>
+      <link>https://josiahpjking.github.io/publication/interpreting-nonverbal-cues-to-deception-in-real-time/</link>
+      <pubDate>Mon, 09 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/publication/interpreting-nonverbal-cues-to-deception-in-real-time/</guid>
       <description></description>
     </item>
     
     <item>
       <title>What&#39;s driving Scotland&#39;s falling reconviction rate?</title>
-      <link>/publication/reconvictions-blog/</link>
+      <link>https://josiahpjking.github.io/publication/reconvictions-blog/</link>
       <pubDate>Mon, 05 Aug 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/reconvictions-blog/</guid>
+      <guid>https://josiahpjking.github.io/publication/reconvictions-blog/</guid>
       <description></description>
     </item>
     
     <item>
       <title>DasGuptR - R package for implementation of Prithwis Das Gupta&#39;s 1993 standardisation and decomposition of rates</title>
-      <link>/publication/dasguptr/</link>
+      <link>https://josiahpjking.github.io/publication/dasguptr/</link>
       <pubDate>Thu, 01 Aug 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/dasguptr/</guid>
+      <guid>https://josiahpjking.github.io/publication/dasguptr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Contextual effects on online pragmatic inferences of deception</title>
-      <link>/publication/contextual-effects-on-online-pragmatic-inferences-to-deception/</link>
+      <link>https://josiahpjking.github.io/publication/contextual-effects-on-online-pragmatic-inferences-to-deception/</link>
       <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
-      <guid>/publication/contextual-effects-on-online-pragmatic-inferences-to-deception/</guid>
+      <guid>https://josiahpjking.github.io/publication/contextual-effects-on-online-pragmatic-inferences-to-deception/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Scottish Crime and Justice Survey Shiny App</title>
-      <link>/publication/scottish-crime-justice-survey-shiny/</link>
+      <link>https://josiahpjking.github.io/publication/scottish-crime-justice-survey-shiny/</link>
       <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
-      <guid>/publication/scottish-crime-justice-survey-shiny/</guid>
+      <guid>https://josiahpjking.github.io/publication/scottish-crime-justice-survey-shiny/</guid>
       <description></description>
     </item>
     
