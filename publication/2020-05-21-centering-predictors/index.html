@@ -32,7 +32,7 @@
  Centering predictors in standard regression In our model1 $ _0 &#43; _1 &#43; $, linear transformations of our predictor (such as mean-centering/standardising etc) make no difference to the estimated slope.">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://josiahpjking.github.io/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors/">
+  <link rel="alternate" hreflang="en-us" href="https://josiahpjking.github.io/publication/2020-05-21-centering-predictors/">
 
   
 
@@ -101,7 +101,7 @@
   <link rel="icon" type="image/png" href="/img/icon-32.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="https://josiahpjking.github.io/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors/">
+  <link rel="canonical" href="https://josiahpjking.github.io/publication/2020-05-21-centering-predictors/">
 
   
   
@@ -117,7 +117,7 @@
   <meta property="twitter:creator" content="@JPJKing">
   
   <meta property="og:site_name" content="Josiah King">
-  <meta property="og:url" content="https://josiahpjking.github.io/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors/">
+  <meta property="og:url" content="https://josiahpjking.github.io/publication/2020-05-21-centering-predictors/">
   <meta property="og:title" content="Centering Predictors | Josiah King">
   <meta property="og:description" content="Early birds: Introducing a silly toy example Suppose we are interested in evaluating the veracity of the idiom “the early bird catches the worm”. We observe 120 birds, noting down the time at which each one arrives in the garden, and then how many worms they have caught by the end of the day:
  Centering predictors in standard regression In our model1 $ _0 &#43; _1 &#43; $, linear transformations of our predictor (such as mean-centering/standardising etc) make no difference to the estimated slope."><meta property="og:image" content="https://josiahpjking.github.io/img/icon-192.png">
@@ -139,8 +139,6 @@
 
 
 
-  
-
 
 
 
@@ -149,10 +147,10 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "BlogPosting",
+  "@type": "Article",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://josiahpjking.github.io/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors/"
+    "@id": "https://josiahpjking.github.io/publication/2020-05-21-centering-predictors/"
   },
   "headline": "Centering Predictors",
   
@@ -360,7 +358,7 @@
 </nav>
 
 
-  <article class="article">
+  <div class="pub">
 
   
 
@@ -412,20 +410,13 @@
     
     
       
-          Last updated on
-      
     
-    May 21, 2021
+    May 2021
   </span>
   
 
   
 
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    5 min read
-  </span>
   
 
   
@@ -459,8 +450,15 @@
 
   <div class="article-container">
 
+    
+
+    
+
+    
+
+    <div class="space-below"></div>
+
     <div class="article-style">
-      
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
@@ -471,7 +469,7 @@
 <div id="early-birds-introducing-a-silly-toy-example" class="section level2">
 <h2>Early birds: Introducing a silly toy example</h2>
 <p>Suppose we are interested in evaluating the veracity of the idiom “the early bird catches the worm”. We observe 120 birds, noting down the time at which each one arrives in the garden, and then how many worms they have caught by the end of the day:</p>
-<p><img src="/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/publication/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <!-- Our question can easily be thought about in terms of the linear model:  -->
 <!-- $$ -->
 <!-- \text{worms eaten} \sim \beta_0 + \beta_1 \cdot \text{arrival time} + \epsilon -->
@@ -487,20 +485,20 @@
 <h2>Centering predictors in standard regression</h2>
 <p>In our model<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> $  _0 + _1  + $, linear transformations of our predictor (such as mean-centering/standardising etc) make no difference to the estimated slope. They change the intercept estimate, because they change where “zero” is.
 One way to think about this is changing where the y-axis cuts the x-axis - we are simply shifting it right/left-wards, and thus moving the intercept estimate (see the plots below, in which the data and regression model are indentical, but the intercept (larger black dot) is shifted according to what zero represents on the x-axis).
-<img src="/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<img src="/publication/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <!-- ## centering with an interaction -->
 <!-- When we have interactions in our model, the logic of centering a predictor stays the same - we are moving "where zero is" - but the implications of this may initially seem more pronounced in our model summary.  -->
 <!-- In the model $y \sim \beta_0 + \beta_1 \cdot x + \beta_2 \cdot x_2 + \beta_3 \cdot x \cdot x_2 + \epsilon$, mean centering $x$ alters what the estimate is for the $x_2$ coefficient $\beta_2$, because this is the estimated effect of $x_2$ _conditional upon $x = 0$._ Mean centering makes "zero" on $x$ represent the mean, so we now have the effect of $x_2$ conditional upon $x = \bar{x}$. The significance of the conditional $\beta_2$ term may change after applying a linear transformation to $x$, but that is because _the meaning of these $\beta_2$ also changes._  -->
 <!-- The interaction remains the same (and as above, scaling will multiple estimates by $s_x$).  -->
 <p>When you have an interaction, applying a linear transformation to a predictor again makes no difference to our estimate of the interaction term. It will change the intercept and the conditional effect of the interacting variable, again because it changes “what zero means”.<br />
 You can see this intuition in the visualisation below, in which we have a continuous (arrival_time) <span class="math inline">\(\times\)</span> categorical (blackbird vs wren) interaction. The difference between blackbirds and wrens (distance between large black and large brown dots) “at zero” on x-axis is different depending on the transformation of x.</p>
-<p><img src="/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/publication/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="centering-predictors-in-mlm" class="section level2">
 <h2>Centering predictors in MLM</h2>
 <p>Suppose that we had birds clustered into different gardens. The average arrival time varies between gardens (if you want some context for the example, imagine that we’re on an island and all the island birds nest in the forest in the center of the island. Some gardens are further away than others, so the average arrival time for birds in these gardens is later than those closer to the forest).</p>
 <p>There are two different mechanisms going on here, generally known as between and within effects. Gardens to which birds on average arrive later seem to result in a greater yield of worms (maybe the worms are slow to wake up and there are more of them around later in the day?). However, <em>within</em> a given garden it would seem that the later a bird arrives the fewer worms they catch.</p>
-<p><img src="/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/publication/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>If we were <em>only</em> interested in the between effects, we might be inclined to fit a linear regression with cluster robust variance estimates. If we are potentially interested in both, then we’ll likely want to use a mixed effects model.</p>
 <p>However, we have some options of how to fit our model:</p>
 <ul>
@@ -544,19 +542,19 @@ We also have the “within-between” approach. The within-between model uses th
 <h2>Mundlak vs Within-between</h2>
 <p>To understand the difference in the estimates of the between effect for the Mundlak model and the Within-between model, let’s take a specific datapoint.
 Bird number 21 arrived at her garden at 5am, but unfortunately caught zero worms:</p>
-<p><img src="/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/publication/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>In the Mundlak model, the coefficient estimate for the group mean effect of 4.09 represents the answer to the question:</p>
 <ul>
 <li>in the hypothetical world where Bird 21’s garden has an average arrival time of 4:10am, rather than the observed 3:10am, and Bird 21 continues to wake up at 5, how many more worms will she get?</li>
 </ul>
 <p>We can visualise this counterfactual scenario (in blue below), by increasing the mean arrival time for the garden by 1hr. The Mundlak between coefficient is the estimated difference between the actual predicted (red) and the counterfactual predicted (blue), assuming that Bird 21 <strong>doesn’t</strong> change her arrival time.
-<img src="/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<img src="/publication/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The within-between model, on the other hand, provides the estimate for the group mean effect of 1.11, which assumes that an increase in the average arrival time for birds in the garden will also entail Bird 21’s arrival time increasing. So if Bird 21 continues to arrive at the same time relative to the other birds in that garden, and they all simply arrive an hour later, this is how many worms she gets.
 It answers the question:</p>
 <ul>
 <li>In the hypothetical world where Bird 21’s garden has an average arrival time of 4:10am as opposed to the observed 3:10am (thereby Bird 21 would have an arrival time of 6am as opposed to the observed 5am), how many more worms will she get?</li>
 </ul>
-<p><img src="/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/publication/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>blah blah blah.<br />
 I just wanted to makes some plots really.</p>
 <p>For a (much) better discussion, see:
@@ -569,8 +567,7 @@ Bell, A., Fairbrother, M. &amp; Jones, K. <em>Fixed and random effects models: m
 <li id="fn1"><p>Let’s just ignore the fact that we should possibly be fitting a poisson regression here.. <a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
-
-    </div>
+</div>
 
     
 
@@ -605,7 +602,7 @@ Bell, A., Fairbrother, M. &amp; Jones, K. <em>Fixed and random effects models: m
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://josiahpjking.github.io/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors/&amp;text=Centering%20Predictors" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://josiahpjking.github.io/publication/2020-05-21-centering-predictors/&amp;text=Centering%20Predictors" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -618,7 +615,7 @@ Bell, A., Fairbrother, M. &amp; Jones, K. <em>Fixed and random effects models: m
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://josiahpjking.github.io/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors/&amp;t=Centering%20Predictors" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://josiahpjking.github.io/publication/2020-05-21-centering-predictors/&amp;t=Centering%20Predictors" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook-f"></i>
         </a>
       </li>
@@ -631,7 +628,7 @@ Bell, A., Fairbrother, M. &amp; Jones, K. <em>Fixed and random effects models: m
       
       
       <li>
-        <a href="mailto:?subject=Centering%20Predictors&amp;body=https://josiahpjking.github.io/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Centering%20Predictors&amp;body=https://josiahpjking.github.io/publication/2020-05-21-centering-predictors/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -644,7 +641,7 @@ Bell, A., Fairbrother, M. &amp; Jones, K. <em>Fixed and random effects models: m
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://josiahpjking.github.io/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors/&amp;title=Centering%20Predictors" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://josiahpjking.github.io/publication/2020-05-21-centering-predictors/&amp;title=Centering%20Predictors" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -657,7 +654,7 @@ Bell, A., Fairbrother, M. &amp; Jones, K. <em>Fixed and random effects models: m
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=Centering%20Predictors%20https://josiahpjking.github.io/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=Centering%20Predictors%20https://josiahpjking.github.io/publication/2020-05-21-centering-predictors/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -670,7 +667,7 @@ Bell, A., Fairbrother, M. &amp; Jones, K. <em>Fixed and random effects models: m
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://josiahpjking.github.io/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors/&amp;title=Centering%20Predictors" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https://josiahpjking.github.io/publication/2020-05-21-centering-predictors/&amp;title=Centering%20Predictors" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -728,20 +725,11 @@ Bell, A., Fairbrother, M. &amp; Jones, K. <em>Fixed and random effects models: m
 
   
   
-  <div class="article-widget content-widget-hr">
-    <h3>Related</h3>
-    <ul>
-      
-      <li><a href="/publication/2020-05-21-centering-predictors/">Centering Predictors</a></li>
-      
-    </ul>
-  </div>
-  
 
 
 
   </div>
-</article>
+</div>
 
       
 

@@ -53,8 +53,8 @@ One way to think about this is changing where the y-axis cuts the x-axis - we ar
 You can see this intuition in the visualisation below, in which we have a continuous (arrival_time) &lt;span class=&#34;math inline&#34;&gt;\(\times\)&lt;/span&gt; categorical (blackbird vs wren) interaction. The difference between blackbirds and wrens (distance between large black and large brown dots) “at zero” on x-axis is different depending on the transformation of x.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://josiahpjking.github.io/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;centering-predictors-in-mlm&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Centering predictors in MLM&lt;/h1&gt;
+&lt;div id=&#34;centering-predictors-in-mlm&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Centering predictors in MLM&lt;/h2&gt;
 &lt;p&gt;Suppose that we had birds clustered into different gardens. The average arrival time varies between gardens (if you want some context for the example, imagine that we’re on an island and all the island birds nest in the forest in the center of the island. Some gardens are further away than others, so the average arrival time for birds in these gardens is later than those closer to the forest).&lt;/p&gt;
 &lt;p&gt;There are two different mechanisms going on here, generally known as between and within effects. Gardens to which birds on average arrive later seem to result in a greater yield of worms (maybe the worms are slow to wake up and there are more of them around later in the day?). However, &lt;em&gt;within&lt;/em&gt; a given garden it would seem that the later a bird arrives the fewer worms they catch.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://josiahpjking.github.io/post/2021-05-21-centering-predictors/2020-05-21-centering-predictors_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
@@ -96,6 +96,7 @@ We also have the “within-between” approach. The within-between model uses th
 ## 3 mundlak            4.27        -2.98     4.09        0.983        2.33
 ## 4 withinbetween      4.27        -2.98     1.11        0.983        2.33&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+&lt;/div&gt;
 &lt;div id=&#34;mundlak-vs-within-between&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Mundlak vs Within-between&lt;/h2&gt;
 &lt;p&gt;To understand the difference in the estimates of the between effect for the Mundlak model and the Within-between model, let’s take a specific datapoint.
@@ -118,7 +119,6 @@ I just wanted to makes some plots really.&lt;/p&gt;
 &lt;p&gt;For a (much) better discussion, see:
 Bell, A., Fairbrother, M. &amp;amp; Jones, K. &lt;em&gt;Fixed and random effects models: making an informed choice.&lt;/em&gt; Qual Quant 53, 1051–1074 (2019). &lt;a href=&#34;https://doi.org/10.1007/s11135-018-0802-x&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1007/s11135-018-0802-x&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Additionally, for a discussion on the limitations of using group means as a level-2 predictor, see Croon, M. A., &amp;amp; van Veldhoven, M. J. P. M. (2007). &lt;em&gt;Predicting group-level outcome variables from variables measured at the individual level: A latent variable multilevel model.&lt;/em&gt; Psychological Methods, 12(1), 45–57. &lt;a href=&#34;https://doi.org/10.1037/1082-989X.12.1.45&#34; class=&#34;uri&#34;&gt;https://doi.org/10.1037/1082-989X.12.1.45&lt;/a&gt; and the R package &lt;a href=&#34;https://cran.r-project.org/web/packages/MicroMacroMultilevel/MicroMacroMultilevel.pdf&#34;&gt;MicroMacroMultilevel&lt;/a&gt; which provides the functionality to calculate adjusted group means to include as predictors of group-level outcomes.&lt;/p&gt;
-&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&#34;footnotes&#34;&gt;
 &lt;hr /&gt;
