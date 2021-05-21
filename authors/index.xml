@@ -5,12 +5,135 @@
     <link>https://josiahpjking.github.io/authors/</link>
       <atom:link href="https://josiahpjking.github.io/authors/index.xml" rel="self" type="application/rss+xml" />
     <description>Authors</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 13 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 21 May 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://josiahpjking.github.io/img/icon-192.png</url>
       <title>Authors</title>
       <link>https://josiahpjking.github.io/authors/</link>
     </image>
+    
+    <item>
+      <title>Josiah P.J. King</title>
+      <link>https://josiahpjking.github.io/authors/josiah-p.j.-king/</link>
+      <pubDate>Fri, 21 May 2021 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/authors/josiah-p.j.-king/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>A. Millen</title>
+      <link>https://josiahpjking.github.io/authors/a.-millen/</link>
+      <pubDate>Fri, 13 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/authors/a.-millen/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>B. Dering</title>
+      <link>https://josiahpjking.github.io/authors/b.-dering/</link>
+      <pubDate>Fri, 13 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/authors/b.-dering/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C. Levitan</title>
+      <link>https://josiahpjking.github.io/authors/c.-levitan/</link>
+      <pubDate>Fri, 13 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/authors/c.-levitan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>H. Rabagliati</title>
+      <link>https://josiahpjking.github.io/authors/h.-rabagliati/</link>
+      <pubDate>Fri, 13 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/authors/h.-rabagliati/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>J. King</title>
+      <link>https://josiahpjking.github.io/authors/j.-king/</link>
+      <pubDate>Fri, 13 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/authors/j.-king/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>J. Loy</title>
+      <link>https://josiahpjking.github.io/authors/j.-loy/</link>
+      <pubDate>Fri, 13 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/authors/j.-loy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>M. Corley</title>
+      <link>https://josiahpjking.github.io/authors/m.-corley/</link>
+      <pubDate>Fri, 13 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/authors/m.-corley/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>P. Hancock</title>
+      <link>https://josiahpjking.github.io/authors/p.-hancock/</link>
+      <pubDate>Fri, 13 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/authors/p.-hancock/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>too many!</title>
+      <link>https://josiahpjking.github.io/authors/too-many/</link>
+      <pubDate>Fri, 13 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/authors/too-many/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hannah Rohde</title>
+      <link>https://josiahpjking.github.io/authors/hannah-rohde/</link>
+      <pubDate>Mon, 09 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/authors/hannah-rohde/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Jia E. Loy</title>
+      <link>https://josiahpjking.github.io/authors/jia-e.-loy/</link>
+      <pubDate>Mon, 09 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/authors/jia-e.-loy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Martin Corley</title>
+      <link>https://josiahpjking.github.io/authors/martin-corley/</link>
+      <pubDate>Mon, 09 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/authors/martin-corley/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ben Matthews</title>
+      <link>https://josiahpjking.github.io/authors/ben-matthews/</link>
+      <pubDate>Mon, 05 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/authors/ben-matthews/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://josiahpjking.github.io/authors/admin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://josiahpjking.github.io/authors/admin/</guid>
+      <description>&lt;p&gt;I am currently working as a senior teaching coordinator in statistics in the Department of Psychology at the University of Edinburgh. I coordinate the teaching of undergraduate and postgraduate courses in statistics &amp;amp; quantitative methods using R.&lt;/p&gt;
+
+&lt;p&gt;I have previously worked for the &lt;a href=&#34;https://www.scadr.ac.uk&#34; target=&#34;_blank&#34;&gt;Scottish Centre for Administrative Data Research (SCADR)&lt;/a&gt;, and Scottish Government. I completed my PhD in Psychology at the University of Edinburgh, studying nonverbal behaviour in relation to deception and cognitive load. I was supervised by (and I&amp;rsquo;m still doing work with) &lt;a href=&#34;http://homepages.ed.ac.uk/martinc/&#34; target=&#34;_blank&#34;&gt;Martin Corley&lt;/a&gt; and &lt;a href=&#34;http://www.lel.ed.ac.uk/~hrohde/&#34; target=&#34;_blank&#34;&gt;Hannah Rohde&lt;/a&gt;, and I did a lot of work with &lt;a href=&#34;https://jialoy.github.io/&#34; target=&#34;_blank&#34;&gt;Jia Loy&lt;/a&gt; too.&lt;/p&gt;
+</description>
+    </item>
     
   </channel>
 </rss>

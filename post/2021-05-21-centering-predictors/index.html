@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.5.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Josiah King">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Early birds: Introducing a silly toy example Suppose we are interested in evaluating the veracity of the idiom “the early bird catches the worm”. We observe 120 birds, noting down the time at which each one arrives in the garden, and then how many worms they have caught by the end of the day:
+ Centering predictors in standard regression In our model1 \(\text{worms eaten} \sim \beta_0 &#43; \beta_1 \cdot \text{arrival time} &#43; \epsilon\), linear transformations of our predictor (such as mean-centering/standardising etc) make no difference to the estimated slope.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://josiahpjking.github.io/post/2021-05-21-centering-predictors/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="hsl(339, 90%, 68%)">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light" disabled>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark">
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://josiahpjking.github.io/post/2021-05-21-centering-predictors/">
+
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="twitter:site" content="@JPJKing">
+  <meta property="twitter:creator" content="@JPJKing">
+  
+  <meta property="og:site_name" content="Josiah King">
+  <meta property="og:url" content="https://josiahpjking.github.io/post/2021-05-21-centering-predictors/">
+  <meta property="og:title" content="Centering Predictors | Josiah King">
+  <meta property="og:description" content="Early birds: Introducing a silly toy example Suppose we are interested in evaluating the veracity of the idiom “the early bird catches the worm”. We observe 120 birds, noting down the time at which each one arrives in the garden, and then how many worms they have caught by the end of the day:
+ Centering predictors in standard regression In our model1 \(\text{worms eaten} \sim \beta_0 &#43; \beta_1 \cdot \text{arrival time} &#43; \epsilon\), linear transformations of our predictor (such as mean-centering/standardising etc) make no difference to the estimated slope."><meta property="og:image" content="https://josiahpjking.github.io/img/icon-192.png">
+  <meta property="twitter:image" content="https://josiahpjking.github.io/img/icon-192.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2021-05-21T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2021-05-21T21:28:08&#43;01:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://josiahpjking.github.io/post/2021-05-21-centering-predictors/"
+  },
+  "headline": "Centering Predictors",
+  
+  "datePublished": "2021-05-21T00:00:00Z",
+  "dateModified": "2021-05-21T21:28:08+01:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Josiah King"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Josiah King",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://josiahpjking.github.io/img/icon-512.png"
+    }
+  },
+  "description": "Early birds: Introducing a silly toy example Suppose we are interested in evaluating the veracity of the idiom “the early bird catches the worm”. We observe 120 birds, noting down the time at which each one arrives in the garden, and then how many worms they have caught by the end of the day:\n Centering predictors in standard regression In our model1 \\(\\text{worms eaten} \\sim \\beta_0 + \\beta_1 \\cdot \\text{arrival time} + \\epsilon\\), linear transformations of our predictor (such as mean-centering/standardising etc) make no difference to the estimated slope."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Centering Predictors | Josiah King</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="dark">
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Josiah King</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publications"><span>Things</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Centering Predictors</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    May 21, 2021
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+<script src="https://josiahpjking.github.io/post/2021-05-21-centering-predictors/index.en_files/header-attrs/header-attrs.js"></script>
+
+
+<!-- # Centering predictors in standard linear regression -->
+<!-- It makes little difference whether you mean-center or standardise a predictor in your basic regression model. These are simple linear transformations of a predictor $x$, and it does nothing to the significance of our coefficients.   -->
+<!-- It will, however, change the meaning, and significance, of the intercept term. Why? Because the intercept provides an estimated mean $y$ where $x = 0$, and by centering we are changing what being "zero" on $x$ means. Scaling (or "standardising") a predictor does just the same as mean-centering, but also multiples the estimate of the coefficient for $x$ by the standard deviation of $x$ $(s_x)$, and this makes no difference to the statistical inferences made.   -->
+<!-- Let's look at it in a nice little thought example.  -->
+<div id="early-birds-introducing-a-silly-toy-example" class="section level2">
+<h2>Early birds: Introducing a silly toy example</h2>
+<p>Suppose we are interested in evaluating the veracity of the idiom “the early bird catches the worm”. We observe 120 birds, noting down the time at which each one arrives in the garden, and then how many worms they have caught by the end of the day:</p>
+<p><img src="https://josiahpjking.github.io/post/2021-05-21-centering-predictors/index.en_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<!-- Our question can easily be thought about in terms of the linear model:  -->
+<!-- $$ -->
+<!-- \text{worms eaten} \sim \beta_0 + \beta_1 \cdot \text{arrival time} + \epsilon -->
+<!-- $$ -->
+<!-- Which can be added to our visualisation as in the below. Our estimate $\hat{\beta}_0$ is represented by the larger black point - where the line intersects the y-axis. Our estimate $\hat{\beta}_1$ is the increase in the height of the blue line associated with an increase of 1 on the x-axis.  -->
+<!-- i.e.  -->
+<!-- - $\hat{\beta}_0$: estimated number of worms caught by a bird that arrives at midnight.   -->
+<!-- - $\hat{\beta}_1$: estimated number of additional worms caught for every hour later that a bird arrives (the slope of the line).  -->
+<!-- We can mean-center, standardise, minimum-center, _anything_-center our predictor variable, without making any changes to our inferences about $\hat{\beta}_1$ or the overall fit of our model. When applying a linear transformation of this sort to an explanatory variable, we are simply changing "what zero means" on our x-axis. The model stays just the same (the slope of the line remains identical) as we essentially simply change the location of the y-axis relative to the bulk of the data (and so change the meaning of our intercept term $\hat{\beta}_0$.  -->
+<!-- Note that standardising the predictor (bottom right plot) also changes what moving from 0 to 1 on the x-axis represents - in this case it now represents 1 standard deviation. In doing so, our estimate $\hat{\beta}_1$ is multiplied by the standard deviation of the predictor.  -->
+</div>
+<div id="centering-predictors-in-standard-regression" class="section level2">
+<h2>Centering predictors in standard regression</h2>
+<p>In our model<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> <span class="math inline">\(\text{worms eaten} \sim \beta_0 + \beta_1 \cdot \text{arrival time} + \epsilon\)</span>, linear transformations of our predictor (such as mean-centering/standardising etc) make no difference to the estimated slope. They change the intercept estimate, because they change where “zero” is.
+One way to think about this is changing where the y-axis cuts the x-axis - we are simply shifting it right/left-wards, and thus moving the intercept estimate (see the plots below, in which the data and regression model are indentical, but the intercept (larger black dot) is shifted according to what zero represents on the x-axis).
+<img src="https://josiahpjking.github.io/post/2021-05-21-centering-predictors/index.en_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<!-- ## centering with an interaction -->
+<!-- When we have interactions in our model, the logic of centering a predictor stays the same - we are moving "where zero is" - but the implications of this may initially seem more pronounced in our model summary.  -->
+<!-- In the model $y \sim \beta_0 + \beta_1 \cdot x + \beta_2 \cdot x_2 + \beta_3 \cdot x \cdot x_2 + \epsilon$, mean centering $x$ alters what the estimate is for the $x_2$ coefficient $\beta_2$, because this is the estimated effect of $x_2$ _conditional upon $x = 0$._ Mean centering makes "zero" on $x$ represent the mean, so we now have the effect of $x_2$ conditional upon $x = \bar{x}$. The significance of the conditional $\beta_2$ term may change after applying a linear transformation to $x$, but that is because _the meaning of these $\beta_2$ also changes._  -->
+<!-- The interaction remains the same (and as above, scaling will multiple estimates by $s_x$).  -->
+<p>When you have an interaction, applying a linear transformation to a predictor again makes no difference to our estimate of the interaction term. It will change the intercept and the conditional effect of the interacting variable, again because it changes “what zero means”.<br />
+You can see this intuition in the visualisation below, in which we have a continuous (arrival_time) <span class="math inline">\(\times\)</span> categorical (blackbird vs wren) interaction. The difference between blackbirds and wrens (distance between large black and large brown dots) “at zero” on x-axis is different depending on the transformation of x.</p>
+<p><img src="https://josiahpjking.github.io/post/2021-05-21-centering-predictors/index.en_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="centering-predictors-in-mlm" class="section level1">
+<h1>Centering predictors in MLM</h1>
+<p>Suppose that we had birds clustered into different gardens. The average arrival time varies between gardens (if you want some context for the example, imagine that we’re on an island and all the island birds nest in the forest in the center of the island. Some gardens are further away than others, so the average arrival time for birds in these gardens is later than those closer to the forest).</p>
+<p>There are two different mechanisms going on here, generally known as between and within effects. Gardens to which birds on average arrive later seem to result in a greater yield of worms (maybe the worms are slow to wake up and there are more of them around later in the day?). However, <em>within</em> a given garden it would seem that the later a bird arrives the fewer worms they catch.</p>
+<p><img src="https://josiahpjking.github.io/post/2021-05-21-centering-predictors/index.en_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>If we were <em>only</em> interested in the between effects, we might be inclined to fit a linear regression with cluster robust variance estimates. If we are potentially interested in both, then we’ll likely want to use a mixed effects model.</p>
+<p>However, we have some options of how to fit our model:</p>
+<ul>
+<li><p><strong>random effect (re)</strong></p>
+<pre class="r"><code>library(lme4)
+mod_re &lt;- lmer(nworms~arrival_time+(1|gardenid), data=df)</code></pre></li>
+<li><p><strong>Within</strong><br />
+We can group mean center, which essentially provides our “within” estimate:</p>
+<pre class="r"><code>df &lt;- df %&gt;% 
+  group_by(gardenid) %&gt;%
+  mutate(
+    arrival_time_groupcentered = arrival_time - mean(arrival_time)
+  )
+
+mod_within &lt;- lmer(nworms ~ arrival_time_groupcentered + (1|gardenid), data=df)</code></pre></li>
+<li><p><strong>Mundlak</strong>
+We can also specify our between effect, by including the group means. One possibility here is the “Mundlak” approach, in which the raw (not group-mean centered) predictor is included along with the group means</p>
+<pre class="r"><code>df &lt;- df %&gt;% group_by(gardenid) %&gt;%
+  mutate(
+    garden_m = mean(arrival_time)
+  )
+
+mod_mundlak &lt;- lmer(nworms ~ arrival_time + garden_m + (1|gardenid), data=df)</code></pre></li>
+<li><p><strong>Within-between</strong><br />
+We also have the “within-between” approach. The within-between model uses the group-mean centered values.</p>
+<pre class="r"><code>mod_withinbetween &lt;- lmer(nworms ~ arrival_time_groupcentered + garden_m + (1|gardenid), data=df)</code></pre></li>
+</ul>
+<div id="model-estimates" class="section level3">
+<h3>Model estimates</h3>
+<p>We’ve got similar estimates in all models for the within-group effect, but note that the between-group effect is quite different in the Mundlak and Within-between models. What exactly do they represent?</p>
+<pre><code>## # A tibble: 4 x 6
+##   name          intercept arrival_time garden_m sd_intercept sd_residual
+##   &lt;chr&gt;             &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+## 1 re                31.3         -2.82    NA           8.90         2.33
+## 2 within            11.9         -2.98    NA           2.66         2.33
+## 3 mundlak            4.27        -2.98     4.09        0.983        2.33
+## 4 withinbetween      4.27        -2.98     1.11        0.983        2.33</code></pre>
+</div>
+<div id="mundlak-vs-within-between" class="section level2">
+<h2>Mundlak vs Within-between</h2>
+<p>To understand the difference in the estimates of the between effect for the Mundlak model and the Within-between model, let’s take a specific datapoint.
+Bird number 21 arrived at her garden at 5am, but unfortunately caught zero worms:</p>
+<p><img src="https://josiahpjking.github.io/post/2021-05-21-centering-predictors/index.en_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>In the Mundlak model, the coefficient estimate for the group mean effect of 4.09 represents the answer to the question:</p>
+<ul>
+<li>in the hypothetical world where Bird 21’s garden has an average arrival time of 4:10am, rather than the observed 3:10am, and Bird 21 continues to wake up at 5, how many more worms will she get?</li>
+</ul>
+<p>We can visualise this counterfactual scenario (in blue below), by increasing the mean arrival time for the garden by 1hr. The Mundlak between coefficient is the estimated difference between the actual predicted (red) and the counterfactual predicted (blue), assuming that Bird 21 <strong>doesn’t</strong> change her arrival time.
+<img src="https://josiahpjking.github.io/post/2021-05-21-centering-predictors/index.en_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The within-between model, on the other hand, provides the estimate for the group mean effect of 1.11, which assumes that an increase in the average arrival time for birds in the garden will also entail Bird 21’s arrival time increasing. So if Bird 21 continues to arrive at the same time relative to the other birds in that garden, and they all simply arrive an hour later, this is how many worms she gets.
+It answers the question:</p>
+<ul>
+<li>In the hypothetical world where Bird 21’s garden has an average arrival time of 4:10am as opposed to the observed 3:10am (thereby Bird 21 would have an arrival time of 6am as opposed to the observed 5am), how many more worms will she get?</li>
+</ul>
+<p><img src="https://josiahpjking.github.io/post/2021-05-21-centering-predictors/index.en_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>blah blah blah.<br />
+I just wanted to makes some plots really.</p>
+<p>For a (much) better discussion, see:
+Bell, A., Fairbrother, M. &amp; Jones, K. <em>Fixed and random effects models: making an informed choice.</em> Qual Quant 53, 1051–1074 (2019). <a href="https://doi.org/10.1007/s11135-018-0802-x" class="uri">https://doi.org/10.1007/s11135-018-0802-x</a></p>
+<p>Additionally, for a discussion on the limitations of using group means as a level-2 predictor, see Croon, M. A., &amp; van Veldhoven, M. J. P. M. (2007). <em>Predicting group-level outcome variables from variables measured at the individual level: A latent variable multilevel model.</em> Psychological Methods, 12(1), 45–57. <a href="https://doi.org/10.1037/1082-989X.12.1.45" class="uri">https://doi.org/10.1037/1082-989X.12.1.45</a> and the R package <a href="https://cran.r-project.org/web/packages/MicroMacroMultilevel/MicroMacroMultilevel.pdf">MicroMacroMultilevel</a> which provides the functionality to calculate adjusted group means to include as predictors of group-level outcomes.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Let’s just ignore the fact that we should possibly be fitting a poisson regression here.. <a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/centering/">centering</a>
+  
+  <a class="badge badge-light" href="/tags/within/">within</a>
+  
+  <a class="badge badge-light" href="/tags/between/">between</a>
+  
+  <a class="badge badge-light" href="/tags/mundlak/">mundlak</a>
+  
+  <a class="badge badge-light" href="/tags/model/">model</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://josiahpjking.github.io/post/2021-05-21-centering-predictors/&amp;text=Centering%20Predictors" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://josiahpjking.github.io/post/2021-05-21-centering-predictors/&amp;t=Centering%20Predictors" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Centering%20Predictors&amp;body=https://josiahpjking.github.io/post/2021-05-21-centering-predictors/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://josiahpjking.github.io/post/2021-05-21-centering-predictors/&amp;title=Centering%20Predictors" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Centering%20Predictors%20https://josiahpjking.github.io/post/2021-05-21-centering-predictors/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://josiahpjking.github.io/post/2021-05-21-centering-predictors/&amp;title=Centering%20Predictors" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu08ac57443b35d616337c2f207a15e06b_186858_250x250_fill_q90_lanczos_center.jpg" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://josiahpjking.github.io/">Josiah King</a></h5>
+      <h6 class="card-subtitle">Senior Teaching Coordinator in Statistics</h6>
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/JPJKing" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/josiahpjking" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/files/cv.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+      
+
+      
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.d6bd04fdad2ad213aa8111c5a3b72fc5.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
