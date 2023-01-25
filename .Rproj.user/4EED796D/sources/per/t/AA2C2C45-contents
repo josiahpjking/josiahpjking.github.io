@@ -1,0 +1,22 @@
+project:
+  output-dir: docs
+  type: website
+
+website:
+  title: "Josiah King"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - things.qmd
+
+format:
+  html:
+    theme: 
+      light: pulse
+      dark: slate
+    css: styles.css
+    toc: true
+
+
+
