@@ -6,9 +6,6 @@ about:
   image-shape: rounded
   image-width: 15em
   links:
-    - text: Twitter
-      icon: twitter
-      href: https://twitter.com/JPJKing
     - text: GitHub
       icon: github
       href: https://github.com/josiahpjking
@@ -20,6 +17,6 @@ about:
       href: https://outlook.office365.com/owa/calendar/JosiahKing@uoe.onmicrosoft.com/bookings/
 ---
 
-I am currently working as a senior teaching coordinator in statistics in the Department of Psychology at the University of Edinburgh. I coordinate the teaching of undergraduate and postgraduate courses in statistics & quantitative methods using R.
+I am currently a lecturer in the Department of Psychology at the [University of Edinburgh](https://www.ed.ac.uk/){target="_blank"}. I coordinate the teaching of undergraduate and postgraduate courses in statistics & quantitative methods using R and provide statistics and coding support to students and staff.  
 
-I have previously worked for the Scottish Centre for Administrative Data Research (SCADR), and Scottish Government. I completed my PhD in Psychology at the University of Edinburgh, studying nonverbal behaviour in relation to deception and cognitive load. 
+I have previously worked for the Scottish Centre for Administrative Data Research (SCADR), and for the Scottish Government. I completed my PhD in Psychology at the University of Edinburgh, studying nonverbal behaviour in relation to deception and cognitive load. 
