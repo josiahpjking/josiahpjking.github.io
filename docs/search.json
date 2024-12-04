@@ -1,16 +1,16 @@
 [
   {
+    "objectID": "things.html",
+    "href": "things.html",
+    "title": "Things",
+    "section": "",
+    "text": "Here are some things..\nFor publications (there aren’t many) look on Google Scholar\n\nFor the last few years, most of my time has been spent on developing and teaching the various courses in quantitative methodology delivered in the Psychology department at the University of Edinburgh Psychology department.\nAll our course materials can be found at https://uoepsy.github.io.\nPreviously, I spent a little while implementing Das Gupta’s standardisation and decomposition of rates in R, which you can find at https://github.com/josiahpjking/DasGuptR.\nI am not good at maintaining it, but send me an email/file an issue if something doesn’t work.\nYou can see a little blog written with Ben Matthews where we used this methodology to better understand what is driving Scotland’s reconviction rates.\nAges ago now I wrote a shiny app for the Scottish Government to present police division breakdowns of the results of the Scottish Crime and Justice Survey: https://scotland.shinyapps.io/sg-scottish-crime-justice-survey"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Josiah King",
     "section": "",
     "text": "I am currently a lecturer in the Department of Psychology at the University of Edinburgh. I coordinate the teaching of undergraduate and postgraduate courses in statistics & quantitative methods using R and provide statistics and coding support to students and staff.\nI have previously worked for the Scottish Centre for Administrative Data Research (SCADR), and for the Scottish Government. I completed my PhD in Psychology at the University of Edinburgh, studying nonverbal behaviour in relation to deception and cognitive load."
-  },
-  {
-    "objectID": "things.html",
-    "href": "things.html",
-    "title": "Things",
-    "section": "",
-    "text": "Here are some things..\nFor publications (there aren’t many) look on Google Scholar\n\nFor the last few years, most of my time has been spent on developing and teaching the various courses in quantitative methodology delivered in the Psychology department at the University of Edinburgh Psychology department.\nAll our course materials can be found at https://uoepsy.github.io.\nPreviously, I spent a little while implementing Das Gupta’s standardisation and decomposition of rates in R, which you can find at https://github.com/josiahpjking/DasGuptR.\nI am not good at maintaining it.\nYou can see a little blog written with Ben Matthews where we used this methodology to better understand what is driving Scotland’s reconviction rates.\nAges ago now I wrote a shiny app for the Scottish Government to present police division breakdowns of the results of the Scottish Crime and Justice Survey: https://scotland.shinyapps.io/sg-scottish-crime-justice-survey"
   }
 ]

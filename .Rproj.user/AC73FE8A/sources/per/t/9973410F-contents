@@ -1,0 +1,16 @@
+---
+title: "Things"
+---
+
+Here are some things..  
+For publications (there aren't many) look on [Google Scholar](https://scholar.google.com/citations?user=xCUGwJgAAAAJ){target="_blank"}
+
+
+- For the last few years, most of my time has been spent on developing and teaching the various courses in quantitative methodology delivered in the Psychology department at the University of Edinburgh Psychology department.  
+All our course materials can be found at [https://uoepsy.github.io](https://uoepsy.github.io){target="_blank"}.  
+
+- Previously, I spent a little while implementing [Das Gupta's standardisation and decomposition of rates](https://babel.hathitrust.org/cgi/pt?id=osu.32437011198450){target="_blank"} in R, which you can find at [https://github.com/josiahpjking/DasGuptR](https://github.com/josiahpjking/DasGuptR){target="_blank"}.  
+I am not good at maintaining it, but send me an email/file an issue if something doesn't work.  
+You can see a little blog written with Ben Matthews where we used this methodology to better understand what is driving [Scotland's reconviction rates](http://www.understanding-inequalities.ac.uk/news-and-blog/what%E2%80%99s-driving-scotland%E2%80%99s-falling-reconviction-rate){target="_blank"}.  
+
+- Ages ago now I wrote a shiny app for the Scottish Government to present police division breakdowns of the results of the Scottish Crime and Justice Survey: [https://scotland.shinyapps.io/sg-scottish-crime-justice-survey](https://scotland.shinyapps.io/sg-scottish-crime-justice-survey){target="_blank"}
