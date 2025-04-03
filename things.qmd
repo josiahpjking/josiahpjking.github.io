@@ -7,10 +7,14 @@ For publications (there aren't many) look on [Google Scholar](https://scholar.go
 
 
 - For the last few years, most of my time has been spent on developing and teaching the various courses in quantitative methodology delivered in the Psychology department at the University of Edinburgh Psychology department.  
-All our course materials can be found at [https://uoepsy.github.io](https://uoepsy.github.io){target="_blank"}.  
+All our course materials can be found at [https://uoepsy.github.io](https://uoepsy.github.io){target="_blank"} 
 
-- Previously, I spent a little while implementing [Das Gupta's standardisation and decomposition of rates](https://babel.hathitrust.org/cgi/pt?id=osu.32437011198450){target="_blank"} in R, which you can find at [https://github.com/josiahpjking/DasGuptR](https://github.com/josiahpjking/DasGuptR){target="_blank"}.  
-I am not good at maintaining it, but send me an email/file an issue if something doesn't work.  
-You can see a little blog written with Ben Matthews where we used this methodology to better understand what is driving [Scotland's reconviction rates](http://www.understanding-inequalities.ac.uk/news-and-blog/what%E2%80%99s-driving-scotland%E2%80%99s-falling-reconviction-rate){target="_blank"}.  
+- I took up painting a couple of years ago - there are photos of bits and pieces [here](https://josiahpjking.github.io/paintings.html)
 
-- Ages ago now I wrote a shiny app for the Scottish Government to present police division breakdowns of the results of the Scottish Crime and Justice Survey: [https://scotland.shinyapps.io/sg-scottish-crime-justice-survey](https://scotland.shinyapps.io/sg-scottish-crime-justice-survey){target="_blank"}
+- I have a dog - [here he is](images/dug.jpg){target="_blank"} 
+
+- Want quick historical Scottish weather visualisations? See [https://shinyapps.io/josiahpjking/scotweather](https://shinyapps.io/josiahpjking/scotweather){target="_blank"}
+
+- Previously, Ben Matthews and I spent a little while implementing [Das Gupta's standardisation and decomposition of rates](https://babel.hathitrust.org/cgi/pt?id=osu.32437011198450){target="_blank"} in R, which you can find at [https://github.com/josiahpjking/DasGuptR](https://github.com/josiahpjking/DasGuptR){target="_blank"}. We try our best to maintain it, but just file an issue/drop an email if you have any questions.  
+
+- I've been involved in the development of various ShinyApps, including for the [Scottish Crime and Justice Survey](https://scotland.shinyapps.io/sg-scottish-crime-justice-survey){target="_blank"} and for a researcher tool for [counterfactual analysis](){target="_blank"}. 
