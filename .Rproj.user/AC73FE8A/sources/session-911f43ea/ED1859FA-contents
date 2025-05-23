@@ -2076,3 +2076,4 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-suitcase2-fill::before { content: "\f901"; }
 .bi-suitcase2::before { content: "\f902"; }
 .bi-vignette::before { content: "\f903"; }
+.bi-bluesky::before{ content: "\f7f9"; }

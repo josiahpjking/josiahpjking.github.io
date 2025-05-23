@@ -3,7 +3,7 @@
     "path": "C:/Users/jking34/Desktop/jk_projects/josiahpjking.github.io/index.qmd",
     "project_path": "index.qmd",
     "type": "quarto_markdown",
-    "hash": "2102224280",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1733340663287.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "23,56",
-        "scrollLine": "0"
+        "cursorPosition": "11,19",
+        "scrollLine": "4"
     },
     "folds": "",
-    "lastKnownWriteTime": 1743497084,
+    "lastKnownWriteTime": 1748020425,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1743497084335,
+    "last_content_update": 1748020425639,
     "read_only": false,
     "read_only_alternatives": []
 }

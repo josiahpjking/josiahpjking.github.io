@@ -19,7 +19,7 @@ title: "paintings"
   }
 
 .zoomImg {
-  width: 150%;
+  width: 100%;
 }
 </style>
   <script type="text/javascript">
@@ -28,7 +28,7 @@ title: "paintings"
     // onClick function for all plots (img's)
     $('img:not(.zoomImg)').click(function() {
       $('.zoomImg').attr('src', $(this).attr('src'));
-      $('.zoomDiv').css({opacity: '1', width: '60%'});
+      $('.zoomDiv').css({opacity: '1', width: '70%'});
     });
     // onClick function for zoomImg
     $('img.zoomImg').click(function() {
@@ -40,6 +40,7 @@ title: "paintings"
 
 ```{r}
 #| echo: false
+#| out-width: "250px"
 pp = list.files("paintings",full.names=TRUE)
 knitr::include_graphics(pp[length(pp):1])
 ```

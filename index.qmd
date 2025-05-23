@@ -9,6 +9,9 @@ about:
     - text: GitHub
       icon: github
       href: https://github.com/josiahpjking
+    - text: Bluesky
+      icon: bi-bluesky
+      href: https://bsky.app/profile/josiahking.bsky.social
     - text: Scholar
       icon: bi-mortarboard
       href: https://scholar.google.com/citations?user=xCUGwJgAAAAJ
