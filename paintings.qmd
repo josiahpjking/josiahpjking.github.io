@@ -38,10 +38,47 @@ title: "paintings"
 </script>
 
 
+## Landscapes 
+
+::: {layout-ncol=2}
 ```{r}
 #| echo: false
-#| out-width: "250px"
-pp = list.files("paintings",full.names=TRUE)
-knitr::include_graphics(pp[length(pp):1])
+pp = list.files("paintings/landscapes",full.names=TRUE)
+ppidx = split(1:length(pp),rep(1:2,e=ceiling(length(pp)/2))[1:length(pp)])
+knitr::include_graphics(pp[ppidx[[1]]])
 ```
+```{r}
+#| echo: false
+knitr::include_graphics(pp[ppidx[[2]]])
+```
+:::
 
+## Animals
+
+::: {layout-ncol=2}
+```{r}
+#| echo: false
+pp = list.files("paintings/animals",full.names=TRUE)
+ppidx = split(1:length(pp),rep(1:2,e=ceiling(length(pp)/2))[1:length(pp)])
+knitr::include_graphics(pp[ppidx[[1]]])
+```
+```{r}
+#| echo: false
+knitr::include_graphics(pp[ppidx[[2]]])
+```
+:::
+
+## People
+
+::: {layout-ncol=2}
+```{r}
+#| echo: false
+pp = list.files("paintings/people/",full.names=TRUE)
+ppidx = split(1:length(pp),rep(1:2,e=ceiling(length(pp)/2))[1:length(pp)])
+knitr::include_graphics(pp[ppidx[[1]]])
+```
+```{r}
+#| echo: false
+knitr::include_graphics(pp[ppidx[[2]]])
+```
+:::
