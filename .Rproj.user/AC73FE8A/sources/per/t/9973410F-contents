@@ -1,0 +1,21 @@
+---
+title: "Things"
+---
+
+Here are some things..  
+For publications (there aren't many) look on [Google Scholar](https://scholar.google.com/citations?user=xCUGwJgAAAAJ){target="_blank"}
+
+
+- For the last few years, most of my time has been spent on developing and teaching the various courses in quantitative methodology delivered in the Psychology department at the University of Edinburgh Psychology department.  
+All our course materials can be found at [https://uoepsy.github.io](https://uoepsy.github.io){target="_blank"} 
+
+- I took up painting a couple of years ago - there are photos of bits and pieces [here](paintings.html)
+
+- I have a dog - [here he is](images/dug.jpg){target="_blank"} 
+
+- Want quick historical Scottish weather visualisations? See [https://josiahpjking.shinyapps.io/scotweather](https://josiahpjking.shinyapps.io/scotweather){target="_blank"}
+
+- Previously, Ben Matthews and I spent a little while implementing [Das Gupta's standardisation and decomposition of rates](https://babel.hathitrust.org/cgi/pt?id=osu.32437011198450){target="_blank"} in R, which you can find at [https://cran.r-project.org/package=DasGuptR](https://cran.r-project.org/package=DasGuptR){target="_blank"}. We try our best to maintain it, but just [file an issue](https://github.com/josiahpjking/DasGuptR/issues)/drop an email if you have any questions.  
+    - draft paper [here](paper_drafts/dg_paper.html)
+
+- I've been involved in the development of various ShinyApps, including for the [Scottish Crime and Justice Survey](https://scotland.shinyapps.io/sg-scottish-crime-justice-survey){target="_blank"} and for a researcher tool for [counterfactual analysis](){target="_blank"}. 
