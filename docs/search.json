@@ -4,14 +4,28 @@
     "href": "things.html",
     "title": "Things",
     "section": "",
-    "text": "Here are some things..\nFor publications (there aren’t many) look on Google Scholar\n\nFor the last few years, most of my time has been spent on developing and teaching the various courses in quantitative methodology delivered in the Psychology department at the University of Edinburgh Psychology department.\nAll our course materials can be found at https://uoepsy.github.io\nI took up painting a couple of years ago - there are photos of bits and pieces here\nI have a dog - here he is\nWant quick historical Scottish weather visualisations? See https://josiahpjking.shinyapps.io/scotweather\nPreviously, Ben Matthews and I spent a little while implementing Das Gupta’s standardisation and decomposition of rates in R, which you can find at https://cran.r-project.org/package=DasGuptR. We try our best to maintain it, but just file an issue/drop an email if you have any questions.\nI’ve been involved in the development of various ShinyApps, including for the Scottish Crime and Justice Survey and for a researcher tool for counterfactual analysis."
+    "text": "Here are some things.."
+  },
+  {
+    "objectID": "things.html#publications-etc.",
+    "href": "things.html#publications-etc.",
+    "title": "Things",
+    "section": "publications etc.",
+    "text": "publications etc.\n(There aren’t many as I have been mainly teaching focussed for the last 6 years.)\n\n\nEbersole, Charles R, Maya B Mathur, Erica Baranski, Diane-Jo Bart-Plange, Nicholas R Buttrick, Christopher R Chartier, Katherine S Corker, et al. 2020. “Many Labs 5: Testing Pre-Data-Collection Peer Review as an Intervention to Increase Replicability.” Advances in Methods and Practices in Psychological Science 3 (3): 309–31.\n\n\nJosiah, King, and Ben Matthews. 2025. “DasGuptR r Package to Implement Prithwis Das Gupta’s 1993 Standardisation and Decomposition of Population Rates.” https://doi.org/10.32614/CRAN.package.DasGuptR.\n\n\nKing, Josiah PJ, Jia E Loy, and Martin Corley. 2018. “Contextual Effects on Online Pragmatic Inferences of Deception.” Discourse Processes 55 (2): 123–35.\n\n\nKing, Josiah PJ, Jia E Loy, Hannah Rohde, and Martin Corley. 2020. “Interpreting Nonverbal Cues to Deception in Real Time.” PLoS One 15 (3): e0229486.\n\n\nRabagliati, Hugh, Martin Corley, Benjamin Dering, Peter JB Hancock, Josiah PJ King, Carmel A Levitan, Jia E Loy, and Ailsa E Millen. 2020. “Many Labs 5: Registered Replication of Crosby, Monin, and Richardson (2008).” Advances in Methods and Practices in Psychological Science 3 (3): 353–65."
+  },
+  {
+    "objectID": "things.html#other-things",
+    "href": "things.html#other-things",
+    "title": "Things",
+    "section": "other things",
+    "text": "other things\n\nFor the last few years, most of my time has been spent on developing and teaching the various courses in quantitative methodology delivered in the Psychology department at the University of Edinburgh Psychology department. All our course materials can be found at https://uoepsy.github.io\nI have a dog - here he is"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Josiah King",
     "section": "",
-    "text": "I am currently a lecturer in quantitative methods in psychology at the University of Edinburgh. I coordinate the teaching of undergraduate and postgraduate courses in statistics & quantitative methods using R and provide support to students and staff.\nI have previously worked for the Scottish Centre for Administrative Data Research (SCADR), and for the Scottish Government. I completed my PhD in Psychology at the University of Edinburgh, studying nonverbal behaviour in relation to deception and cognitive load.\nI am open to collaborations and PhD (co-)supervision on anything methods-y. You can contact me at josiah dot king @ed.ac.uk"
+    "text": "I am currently a lecturer in quantitative methods in psychology at the University of Edinburgh. I coordinate the teaching of undergraduate and postgraduate courses in quantitative methods using R and provide statistical support to students and staff.\nI have previously worked for the Scottish Centre for Administrative Data Research (SCADR), and for the Scottish Government. I completed my PhD in Psychology at the University of Edinburgh.\nI am open to collaborations and PhD (co-)supervision on anything methods-y. You can contact me at josiah dot king @ed.ac.uk"
   },
   {
     "objectID": "paintings.html#animals",

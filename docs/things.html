@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -94,10 +114,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./things.html" aria-current="page"> 
-<span class="menu-text">Things</span></a>
-  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -110,8 +126,15 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#publications-etc." id="toc-publications-etc." class="nav-link active" data-scroll-target="#publications-etc.">publications etc.</a></li>
+  <li><a href="#other-things" id="toc-other-things" class="nav-link" data-scroll-target="#other-things">other things</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -135,19 +158,41 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Here are some things..<br>
-For publications (there aren’t many) look on <a href="https://scholar.google.com/citations?user=xCUGwJgAAAAJ">Google Scholar</a></p>
+<p>Here are some things..</p>
+<section id="publications-etc." class="level2">
+<h2 class="anchored" data-anchor-id="publications-etc.">publications etc.</h2>
+<p><em>(There aren’t many as I have been mainly teaching focussed for the last 6 years.)</em></p>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-ebersole2020many" class="csl-entry" role="listitem">
+Ebersole, Charles R, Maya B Mathur, Erica Baranski, Diane-Jo Bart-Plange, Nicholas R Buttrick, Christopher R Chartier, Katherine S Corker, et al. 2020. <span>“Many Labs 5: Testing Pre-Data-Collection Peer Review as an Intervention to Increase Replicability.”</span> <em>Advances in Methods and Practices in Psychological Science</em> 3 (3): 309–31.
+</div>
+<div id="ref-josiah2025dasguptr" class="csl-entry" role="listitem">
+Josiah, King, and Ben Matthews. 2025. <span>“DasGuptR r Package to Implement Prithwis Das Gupta’s 1993 Standardisation and Decomposition of Population Rates.”</span> <a href="https://doi.org/10.32614/CRAN.package.DasGuptR">https://doi.org/10.32614/CRAN.package.DasGuptR</a>.
+</div>
+<div id="ref-king2018contextual" class="csl-entry" role="listitem">
+King, Josiah PJ, Jia E Loy, and Martin Corley. 2018. <span>“Contextual Effects on Online Pragmatic Inferences of Deception.”</span> <em>Discourse Processes</em> 55 (2): 123–35.
+</div>
+<div id="ref-king2020interpreting" class="csl-entry" role="listitem">
+King, Josiah PJ, Jia E Loy, Hannah Rohde, and Martin Corley. 2020. <span>“Interpreting Nonverbal Cues to Deception in Real Time.”</span> <em>PLoS One</em> 15 (3): e0229486.
+</div>
+<div id="ref-rabagliati2020many" class="csl-entry" role="listitem">
+Rabagliati, Hugh, Martin Corley, Benjamin Dering, Peter JB Hancock, Josiah PJ King, Carmel A Levitan, Jia E Loy, and Ailsa E Millen. 2020. <span>“Many Labs 5: Registered Replication of Crosby, Monin, and Richardson (2008).”</span> <em>Advances in Methods and Practices in Psychological Science</em> 3 (3): 353–65.
+</div>
+</div>
+</section>
+<section id="other-things" class="level2">
+<h2 class="anchored" data-anchor-id="other-things">other things</h2>
 <ul>
-<li><p>For the last few years, most of my time has been spent on developing and teaching the various courses in quantitative methodology delivered in the Psychology department at the University of Edinburgh Psychology department.<br>
-All our course materials can be found at <a href="https://uoepsy.github.io" target="_blank">https://uoepsy.github.io</a></p></li>
-<li><p>I took up painting a couple of years ago - there are photos of bits and pieces <a href="paintings.html">here</a></p></li>
+<li><p>For the last few years, most of my time has been spent on developing and teaching the various courses in quantitative methodology delivered in the Psychology department at the University of Edinburgh Psychology department. All our course materials can be found at <a href="https://uoepsy.github.io" target="_blank">https://uoepsy.github.io</a></p></li>
 <li><p>I have a dog - <a href="images/dug.jpg">here he is</a></p></li>
-<li><p>Want quick historical Scottish weather visualisations? See <a href="https://josiahpjking.shinyapps.io/scotweather" target="_blank">https://josiahpjking.shinyapps.io/scotweather</a></p></li>
-<li><p>Previously, Ben Matthews and I spent a little while implementing <a href="https://babel.hathitrust.org/cgi/pt?id=osu.32437011198450" target="_blank">Das Gupta’s standardisation and decomposition of rates</a> in R, which you can find at <a href="https://cran.r-project.org/package=DasGuptR" target="_blank">https://cran.r-project.org/package=DasGuptR</a>. We try our best to maintain it, but just <a href="https://github.com/josiahpjking/DasGuptR/issues">file an issue</a>/drop an email if you have any questions.</p></li>
-<li><p>I’ve been involved in the development of various ShinyApps, including for the <a href="https://scotland.shinyapps.io/sg-scottish-crime-justice-survey" target="_blank">Scottish Crime and Justice Survey</a> and for a researcher tool for <a href="" target="_blank">counterfactual analysis</a>.</p></li>
+<li></li>
 </ul>
+<!-- - I took up painting a couple of years ago - there are photos of bits and pieces [here](paintings.html) -->
+<!-- - Want quick historical Scottish weather visualisations? See [https://josiahpjking.shinyapps.io/scotweather](https://josiahpjking.shinyapps.io/scotweather){target="_blank"} -->
+<!-- - I've been involved in the development of various ShinyApps, including for the [Scottish Crime and Justice Survey](https://scotland.shinyapps.io/sg-scottish-crime-justice-survey){target="_blank"} and for a researcher tool for [counterfactual analysis](){target="_blank"}.  -->
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
